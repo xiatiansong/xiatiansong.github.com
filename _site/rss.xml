@@ -4,8 +4,8 @@
     <title>天松的个人博客</title>
     <description>86后，工作在深圳；Java程序员、Hadoop工程师；主要关注Java、Scala、Hadoop、Kettle、关注大数据处理技术。</description>
     <link>http://blog.xiatiansong.com/rss.xml</link>
-    <lastBuildDate>2015-01-17T12:14:52+08:00</lastBuildDate>
-    <pubDate>2015-01-17T12:14:52+08:00</pubDate>
+    <lastBuildDate>2015-01-17T12:29:07+08:00</lastBuildDate>
+    <pubDate>2015-01-17T12:29:07+08:00</pubDate>
     <ttl>1800</ttl>
 
     
@@ -3123,7 +3123,7 @@ python manage.py runserver
 
 &lt;p&gt;下图显示了JPA核心类和JPA接口。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://javachen-rs.qiniudn.com/images/jpa/JPA-01.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaotian120.qiniudn.com/images/jpa/JPA-01.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 
 &lt;table&gt;&lt;thead&gt;
 &lt;tr&gt;
@@ -3159,7 +3159,7 @@ python manage.py runserver
 
 &lt;p&gt;在上述体系结构中，类和接口之间的关系属于javax.persistence包。下图显示了它们之间的关系。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://javachen-rs.qiniudn.com/images/jpa/JPA-02.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaotian120.qiniudn.com/images/jpa/JPA-02.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;EntityManagerFactory 和 EntityManager 的关系是1对多。这是一个工厂类 EntityManager 实例。&lt;/li&gt;
@@ -8641,7 +8641,7 @@ python mail.py &lt;span class=&quot;s2&quot;&gt;&amp;quot;Table count in $datest
 
 &lt;p&gt;Spring 总共有十几个组件，其中核心组件只有三个：Core、Context 和 Beans。以下是 Spring3的总体架构图。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://javachen-rs.qiniudn.com/images/spring/spring3-modules.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaotian120.qiniudn.com/images/spring/spring3-modules.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 
 &lt;p&gt;组成 Spring 框架的每个模块（或组件）都可以单独存在，或者与其他一个或多个模块联合实现。每个模块的功能如下：&lt;/p&gt;
 
@@ -8657,7 +8657,7 @@ python mail.py &lt;span class=&quot;s2&quot;&gt;&amp;quot;Table count in $datest
 
 &lt;p&gt;从下图（该图来自&lt;a href=&quot;http://www.javastar.org/?p=847&quot;&gt;SPRING 3.2.X 源代码分析之二: SPRING源码的包结构&lt;/a&gt;）可以看出 Spring 各个模块之间的依赖关系。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://javachen-rs.qiniudn.com/images/spring/spring-packages.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaotian120.qiniudn.com/images/spring/spring-packages.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 
 &lt;p&gt;从图中可以看出，IOC 的实现包 spring-beans 和 AOP 的实现包 spring-aop 也是整个框架的基础，而 spring-core 是整个框架的核心，基础的功能都在这里。&lt;/p&gt;
 
@@ -8696,7 +8696,7 @@ python mail.py &lt;span class=&quot;s2&quot;&gt;&amp;quot;Table count in $datest
 
 &lt;h2 id=&quot;spring4-的系统架构图&quot;&gt;Spring4 的系统架构图&lt;/h2&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://javachen-rs.qiniudn.com/images/spring/spring4-modules.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaotian120.qiniudn.com/images/spring/spring4-modules.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 
 &lt;p&gt;Spring 4.0.x对比Spring3.2.x的系统架构变化（以下文字摘抄于&lt;a href=&quot;http://www.javastar.org/?p=872&quot;&gt;SPRING 3.2.X 源代码分析之三: SPRING源码的整体架构分析&lt;/a&gt;）:&lt;/p&gt;
 
@@ -13866,7 +13866,7 @@ Map&amp;lt;String,List&amp;lt;String&amp;gt;&amp;gt; m=HashMap.newInstance();
 
 &lt;p&gt;首先来看看写过程的序列图：&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://javachen-rs.qiniudn.com/images/2014/hbase-htable-put-sequence.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaotian120.qiniudn.com/images/2014/hbase-htable-put-sequence.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 
 &lt;h1 id=&quot;客户端代码&quot;&gt;客户端代码&lt;/h1&gt;
 
@@ -14108,7 +14108,7 @@ Map&amp;lt;String,List&amp;lt;String&amp;gt;&amp;gt; m=HashMap.newInstance();
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;上面this.rsServices.getFlushRequester()其实际上返回的是MemStoreFlusher类。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://javachen-rs.qiniudn.com/images/2014/hbase-MemStoreFlusher-class.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaotian120.qiniudn.com/images/2014/hbase-MemStoreFlusher-class.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 
 &lt;p&gt;MemStoreFlusher内部有一个队列和一个Map：&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;c1&quot;&gt;//保存待flush的对象&lt;/span&gt;
@@ -17892,7 +17892,7 @@ dpkg-buildpackage: error: unable to determine source changed by
 
 &lt;p&gt;下图展示了JVM的主要结构：&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://javachen-rs.qiniudn.com/images/2014/Java-Memory.png&quot; alt=&quot;Java-Memory.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaotian120.qiniudn.com/images/2014/Java-Memory.png&quot; alt=&quot;Java-Memory.png&quot;&gt;&lt;/p&gt;
 
 &lt;p&gt;可以看出，JVM主要由运行时数据区（内存空间）、执行引擎以及与本地库接口等组成。其中运行时数据区又由方法区、堆、虚拟机栈、程序计数器、本地方法栈组成。&lt;/p&gt;
 
@@ -18021,7 +18021,7 @@ dpkg-buildpackage: error: unable to determine source changed by
 
 &lt;h2 id=&quot;垃圾回收过程&quot;&gt;垃圾回收过程&lt;/h2&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://javachen-rs.qiniudn.com/images/2014/jvm-heap.png&quot; alt=&quot;jvm-heap.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaotian120.qiniudn.com/images/2014/jvm-heap.png&quot; alt=&quot;jvm-heap.png&quot;&gt;&lt;/p&gt;
 
 &lt;p&gt;JVM采用一种分代回收 (generational collection) 的策略，用较高的频率对年轻的对象(young generation)进行扫描和回收，这种叫做minor collection，而对老对象(old generation)的检查回收频率要低很多，称为major collection。这样就不需要每次GC都将内存中所有对象都检查一遍。&lt;/p&gt;
 
@@ -21198,7 +21198,7 @@ Mode: follower
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;通过 &lt;a href=&quot;http://192.168.56.121:8080/solr/&quot;&gt;http://192.168.56.121:8080/solr/&lt;/a&gt; 进行访问，界面如图提示 &lt;code class=&quot;prettyprint&quot;&gt;There are no SolrCores running.&lt;/code&gt;，这是因为配置文件尚未配置 solrcore。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://javachen-rs.qiniudn.com/images/2014/solr-no-solrcores.png&quot; alt=&quot;There are no SolrCores running&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaotian120.qiniudn.com/images/2014/solr-no-solrcores.png&quot; alt=&quot;There are no SolrCores running&quot;&gt;&lt;/p&gt;
 
 &lt;h1 id=&quot;7.-创建-collection、shard-和-replication&quot;&gt;7. 创建 Collection、Shard 和 Replication&lt;/h1&gt;
 
@@ -21251,7 +21251,7 @@ Mode: follower
 
 &lt;p&gt;可以通过 Web 管理页面，访问 &lt;code class=&quot;prettyprint&quot;&gt;http://192.168.56.121:8888/solr/#/~cloud&lt;/code&gt;，查看 SolrCloud 集群的分片信息，如图所示:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://javachen-rs.qiniudn.com/images/2014/solrcloud-collection-shard.png&quot; alt=&quot;SolrCloud-collection-shard&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaotian120.qiniudn.com/images/2014/solrcloud-collection-shard.png&quot; alt=&quot;SolrCloud-collection-shard&quot;&gt;&lt;/p&gt;
 
 &lt;p&gt;实际上，我们从192.168.56.121节点可以看到，SOLR 的配置文件内容，已经发生了变化，如下所示：&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot; ?&amp;gt;&lt;/span&gt;
@@ -21290,7 +21290,7 @@ drwxr-xr-x 3 root root 4096 Mar 10 17:02 primary_shard2_replica1
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;到此为止，我们已经基于3个节点，配置完成了 SolrCloud 集群。最后效果如下：&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://javachen-rs.qiniudn.com/images/2014/solrcloud-collection-shard-replica.png&quot; alt=&quot;solrcloud-collection-shard-replica&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaotian120.qiniudn.com/images/2014/solrcloud-collection-shard-replica.png&quot; alt=&quot;solrcloud-collection-shard-replica&quot;&gt;&lt;/p&gt;
 
 &lt;h1 id=&quot;8.-其他说明&quot;&gt;8. 其他说明&lt;/h1&gt;
 
@@ -21412,7 +21412,7 @@ drwxr-xr-x 3 root root 4096 Mar 10 17:02 primary_shard2_replica1
 
 &lt;p&gt;HRegionServer类继承关系如下：&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://javachen-rs.qiniudn.com/images/2014/hbase-hregionserver-class.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaotian120.qiniudn.com/images/2014/hbase-hregionserver-class.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 
 &lt;h1 id=&quot;构造方法&quot;&gt;构造方法&lt;/h1&gt;
 
@@ -21669,7 +21669,7 @@ drwxr-xr-x 3 root root 4096 Mar 10 17:02 primary_shard2_replica1
 
 &lt;p&gt;HMaster类继承关系如下图：&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://javachen-rs.qiniudn.com/images/2014/hbase-hmaster-class.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaotian120.qiniudn.com/images/2014/hbase-hmaster-class.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 
 &lt;h1 id=&quot;hmaster的构造方法&quot;&gt;HMaster的构造方法&lt;/h1&gt;
 
@@ -22188,7 +22188,7 @@ http://localhost:8080/solr/primary/select?q=*:*&amp;amp;fl=productId&amp;amp;fq=
 
 &lt;p&gt;Solr是一个基于Lucene java库的企业级搜索服务器，包含XML/HTTP，JSON API，高亮查询结果，缓存，复制，还有一个WEB管理界面。Solr运行在Servlet容器中，其架构如下：&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://javachen-rs.qiniudn.com/images/2014/solr-architecture.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaotian120.qiniudn.com/images/2014/solr-architecture.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 
 &lt;p&gt;主要功能包括全文检索，高亮命中，分面搜索(faceted search)，近实时索引，动态集群，数据库集成，富文本索引，空间搜索；通过提供分布式索引，复制，负载均衡查询，自动故障转移和恢复，集中配置等功能实现高可用，可伸缩和可容错。&lt;/p&gt;
 
@@ -24054,7 +24054,7 @@ create &amp;#39;$META_TABLE&amp;#39;,
 
 &lt;p&gt;总结一下，&lt;code class=&quot;prettyprint&quot;&gt;tsdb&lt;/code&gt;表结构如下：&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://javachen-rs.qiniudn.com/images/2014/opentsdb-tsdb-schema.png&quot; alt=&quot;opentsdb-tsdb-schema&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaotian120.qiniudn.com/images/2014/opentsdb-tsdb-schema.png&quot; alt=&quot;opentsdb-tsdb-schema&quot;&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;3.3.2-uid-table-schema&quot;&gt;3.3.2 UID Table Schema&lt;/h3&gt;
 
@@ -24103,7 +24103,7 @@ cdh1 id:tagv \x00\x00\x01
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;总结一下，&lt;code class=&quot;prettyprint&quot;&gt;tsdb-uid&lt;/code&gt;表结构如下：&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://javachen-rs.qiniudn.com/images/2014/opentsdb-tsdb-uid-schema.png&quot; alt=&quot;opentsdb-tsdb-uid-schema&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaotian120.qiniudn.com/images/2014/opentsdb-tsdb-uid-schema.png&quot; alt=&quot;opentsdb-tsdb-uid-schema&quot;&gt;&lt;/p&gt;
 
 &lt;p&gt;上图对应的一个datapoint如下：&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;proc.stat.cpu 1292148123 80 host=cdh1
@@ -27496,7 +27496,7 @@ public UserGroupInformation getUGIForConf(Configuration conf) throws IOException
 
 &lt;p&gt;下图是从hive-server2启动到执行HadoopLoginModule的commit()方法的调用图：&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://javachen-rs.qiniudn.com/images/2013/hive-server2-invoke.png&quot; alt=&quot;hive-server2启动过程&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaotian120.qiniudn.com/images/2013/hive-server2-invoke.png&quot; alt=&quot;hive-server2启动过程&quot;&gt;&lt;/p&gt;
 
 &lt;p&gt;获取登陆用户的关键代码就在commit()，逻辑如下：&lt;/p&gt;
 
@@ -27543,7 +27543,7 @@ public UserGroupInformation getUGIForConf(Configuration conf) throws IOException
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;查看yarn监控地址&lt;code class=&quot;prettyprint&quot;&gt;http://192.168.56.101:8088/cluster&lt;/code&gt;，可以看到提交的mapreduce任务由june用户来运行。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://javachen-rs.qiniudn.com/images/2013/20131017-01.png&quot; alt=&quot;yarn cluster monitor page&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaotian120.qiniudn.com/images/2013/20131017-01.png&quot; alt=&quot;yarn cluster monitor page&quot;&gt;&lt;/p&gt;
 
 &lt;p&gt;如何修改mapreduce任务的运行用户呢？如果了解hive提交mapreduce任务的过程的话，就应该知道hive任务会通过&lt;code class=&quot;prettyprint&quot;&gt;org.apache.hadoop.mapred.JobClient&lt;/code&gt;来提交。在JobClient的init方法中有如下代码：&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;  public void init(JobConf conf) throws IOException {
@@ -27602,7 +27602,7 @@ public UserGroupInformation getUGIForConf(Configuration conf) throws IOException
 
 &lt;p&gt;编译代码、替换class文件，然后重新运行HiveServer2以及jdbc测试类，查看yarn监控地址&lt;code class=&quot;prettyprint&quot;&gt;http://192.168.56.101:8088/cluster&lt;/code&gt;，截图如下：&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://javachen-rs.qiniudn.com/images/2013/20131017-02.png&quot; alt=&quot;yarn cluster monitor page&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaotian120.qiniudn.com/images/2013/20131017-02.png&quot; alt=&quot;yarn cluster monitor page&quot;&gt;&lt;/p&gt;
 
 &lt;p&gt;这时候mapreduce的运行用户变为NoName，这是因为从JobConf环境变量中找不到myExecuteName变量而使用默认值NoName的原因。&lt;/p&gt;
 
@@ -27703,7 +27703,7 @@ drwxrwxrwt   - yarn         mapred          0 2013-10-16 07:30 /tmp/logs
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;监控页面截图：&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://javachen-rs.qiniudn.com/images/2013/20131017-03.png&quot; alt=&quot;yarn cluster monitor page&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaotian120.qiniudn.com/images/2013/20131017-03.png&quot; alt=&quot;yarn cluster monitor page&quot;&gt;&lt;/p&gt;
 
 &lt;p&gt;除了简单测试之外，还需要测试修改后的代码是否影响源代码的运行以及hive cli的运行。&lt;/p&gt;
 
@@ -27906,7 +27906,7 @@ HiveInputFormat
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;HiveInputFormat的子类有：&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://javachen-rs.qiniudn.com/images/2013/implement-of-hiveinputformat.png&quot; alt=&quot;HiveInputFormat的子类&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaotian120.qiniudn.com/images/2013/implement-of-hiveinputformat.png&quot; alt=&quot;HiveInputFormat的子类&quot;&gt;&lt;/p&gt;
 
 &lt;h1 id=&quot;hiveinputformat&quot;&gt;HiveInputFormat&lt;/h1&gt;
 
@@ -28446,7 +28446,7 @@ background: #f5f5f5;
 
 &lt;p&gt;基于ZooKeeper的特性,借助ZooKeeper可以实现一个可靠的、简单的、修改配置能够实时生效的配置信息存储方案,整体的设计方案如图：&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://javachen-rs.qiniudn.com/images/2013/zookeeper-01.jpg&quot; alt=&quot;基于zookeeper的方案&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaotian120.qiniudn.com/images/2013/zookeeper-01.jpg&quot; alt=&quot;基于zookeeper的方案&quot;&gt;&lt;/p&gt;
 
 &lt;p&gt;整个配置信息存储方案由三部分组成:ZooKeeper服务器集群、配置管理程序、分布式应用程序。&lt;/p&gt;
 
@@ -28454,7 +28454,7 @@ background: #f5f5f5;
 
 &lt;p&gt;当配置信息发生变化时,分布式应用会更新程序中使用配置信息。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://javachen-rs.qiniudn.com/images/2013/zookeeper-02.jpg&quot; alt=&quot;修改配置的时许图&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaotian120.qiniudn.com/images/2013/zookeeper-02.jpg&quot; alt=&quot;修改配置的时许图&quot;&gt;&lt;/p&gt;
 
 &lt;h1 id=&quot;源代码&quot;&gt;源代码&lt;/h1&gt;
 
@@ -28506,7 +28506,7 @@ background: #f5f5f5;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Driver类的主要作用是用来编译并执行hive命令，然后返回执行结果。这里主要分析Driver类的运行逻辑，其时序图如下：&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://javachen-rs.qiniudn.com/images/2013/Hive-Driver-sequence.jpg&quot; alt=&quot;hive-driver&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaotian120.qiniudn.com/images/2013/Hive-Driver-sequence.jpg&quot; alt=&quot;hive-driver&quot;&gt;&lt;/p&gt;
 
 &lt;p&gt;从时序图上可以看出有以下步骤：&lt;/p&gt;
 
@@ -28733,7 +28733,7 @@ hive.metastore.init.hooks
 
 &lt;p&gt;hive Driver类的执行过程如下（该图是根据hive-0.11版本画出来的）：&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://javachen-rs.qiniudn.com/images/2013/hive-driver.jpg&quot; alt=&quot;hive-driver&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaotian120.qiniudn.com/images/2013/hive-driver.jpg&quot; alt=&quot;hive-driver&quot;&gt;&lt;/p&gt;
 
 &lt;h1 id=&quot;参考文章&quot;&gt;参考文章&lt;/h1&gt;
 
@@ -28772,7 +28772,7 @@ hive.metastore.init.hooks
 
 &lt;p&gt;CliDriver类中的方法有：&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://javachen-rs.qiniudn.com/images/2013/Hive-CliDriver-method.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaotian120.qiniudn.com/images/2013/Hive-CliDriver-method.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 
 &lt;p&gt;main方法代码如下：&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;throws&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Exception&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
@@ -28835,7 +28835,7 @@ hive.metastore.init.hooks
 
 &lt;p&gt;以本地模式运行时，会通过CommandProcessorFactory工厂解析输入的语句来获得一个CommandProcessor，CommandProcessor接口的实现类见下图：&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://javachen-rs.qiniudn.com/images/2013/CommandProcessor-implements.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaotian120.qiniudn.com/images/2013/CommandProcessor-implements.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 
 &lt;p&gt;从上图可以看到指定的命令(&lt;code class=&quot;prettyprint&quot;&gt;set/dfs/add/delete/reset&lt;/code&gt;)交给指定的CommandProcessor处理，其余的(指hql语句)交给Driver类来处理。&lt;/p&gt;
 
@@ -28845,7 +28845,7 @@ hive.metastore.init.hooks
 
 &lt;p&gt;作为尝试，第一次使用思维导图分析代码逻辑，简单整理了一下CliDriver类的运行逻辑，如下图。以后还需要加强画图和表达能力。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://javachen-rs.qiniudn.com/images/2013/hive-cli-clidriver.jpg&quot; alt=&quot;hive-cli-clidriver&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaotian120.qiniudn.com/images/2013/hive-cli-clidriver.jpg&quot; alt=&quot;hive-cli-clidriver&quot;&gt;&lt;/p&gt;
 
 &lt;h1 id=&quot;参考文章&quot;&gt;参考文章&lt;/h1&gt;
 
@@ -29586,7 +29586,7 @@ Could not initialize database server.
 
 &lt;p&gt;以下是网络上流传的HBase存储架构图:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://javachen-rs.qiniudn.com/images/2013/hbase-structure.jpg&quot; alt=&quot;hbase-structure&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaotian120.qiniudn.com/images/2013/hbase-structure.jpg&quot; alt=&quot;hbase-structure&quot;&gt;&lt;/p&gt;
 
 &lt;p&gt;HBase中的每张表都通过行键按照一定的范围被分割成多个子表（HRegion），默认一个HRegion超过256M就要被分割成两个，这个过程由HRegionServer管理，而HRegion的分配由HMaster管理。&lt;/p&gt;
 
@@ -29664,11 +29664,11 @@ Could not initialize database server.
 
 &lt;p&gt;Data Block是hbase io的基本单元，为了提高效率，HRegionServer中又基于LRU的block cache机制。每个Data块的大小可以在创建一个Table的时候通过参数指定（默认块大小64KB），大号的Block有利于顺序Scan，小号的Block利于随机查询。每个Data块除了开头的Magic以外就是一个个KeyValue对拼接而成，Magic内容就是一些随机数字，目的是烦着数据损坏，结构如下。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://javachen-rs.qiniudn.com/images/2014/hfile-keyvalue-structure.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaotian120.qiniudn.com/images/2014/hfile-keyvalue-structure.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 
 &lt;p&gt;HFile结构图如下：&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://javachen-rs.qiniudn.com/images/2014/hfile-structure.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaotian120.qiniudn.com/images/2014/hfile-structure.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 
 &lt;p&gt;Data Block段用来保存表中的数据，这部分可以被压缩。&lt;/p&gt;
 
@@ -29682,7 +29682,7 @@ Could not initialize database server.
 
 &lt;p&gt;HFile的Data Block，Meta Block通常采用压缩方式存储，压缩之后可以大大减少网络IO和磁盘IO，随之而来的开销当然是需要花费cpu进行压缩和解压缩。目标HFile的压缩支持两种方式：gzip、lzo。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://javachen-rs.qiniudn.com/images/2014/hfile-data-storeage.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaotian120.qiniudn.com/images/2014/hfile-data-storeage.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 
 &lt;p&gt;另外，针对目前针对现有HFile的两个主要缺陷：&lt;/p&gt;
 
@@ -29700,11 +29700,11 @@ Sequence File的value是key时HLogKey对象，其中记录了写入数据的归�
 
 &lt;p&gt;Sequence File的value是HBase的KeyValue对象，即对应HFile中的KeyValue。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://javachen-rs.qiniudn.com/images/2014/hlog-structure.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaotian120.qiniudn.com/images/2014/hlog-structure.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 
 &lt;p&gt;HLog(WAL log)：WAL意为write ahead log，用来做灾难恢复使用，HLog记录数据的所有变更，一旦region server 宕机，就可以从log中进行恢复。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://javachen-rs.qiniudn.com/images/2013/hbase-write-hlog-process.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaotian120.qiniudn.com/images/2013/hbase-write-hlog-process.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 
 &lt;p&gt;LogFlusher&lt;/p&gt;
 
@@ -30183,7 +30183,7 @@ Sequence File的value是key时HLogKey对象，其中记录了写入数据的归�
 
 &lt;h1 id=&quot;线程状态图&quot;&gt;线程状态图&lt;/h1&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://javachen-rs.qiniudn.com/images/2014/thread-state.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaotian120.qiniudn.com/images/2014/thread-state.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 
 &lt;p&gt;说明：&lt;br&gt;
 线程共包括以下5种状态。&lt;/p&gt;
@@ -30747,7 +30747,7 @@ data-integration/plugins/pentaho-big-data-plugin/hadoop-configurations/idh2.3/li
 &lt;li&gt;打开hbase output组件，配置zookeeper的host和port&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://javachen-rs.qiniudn.com/images/2013/hbase-output-setup-for-idh-2.3.png&quot; alt=&quot;hbase-output-setup-for-idh-2.3&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaotian120.qiniudn.com/images/2013/hbase-output-setup-for-idh-2.3.png&quot; alt=&quot;hbase-output-setup-for-idh-2.3&quot;&gt;&lt;/p&gt;
 
 &lt;ol&gt;
 &lt;li&gt;在&lt;code class=&quot;prettyprint&quot;&gt;Create/Edit mappings&lt;/code&gt; tab页点击&lt;code class=&quot;prettyprint&quot;&gt;Get table names&lt;/code&gt;，发现该组件卡住，kettle控制台提示异常则需要检查客户端jar版本和服务端是否一致：&lt;/li&gt;
@@ -30791,17 +30791,17 @@ at org.apache.hadoop.hbase.ipc.HBaseClient$Connection.run(HBaseClient.java:538)
 
 &lt;p&gt;第一个问题可以使用kettle中&lt;code class=&quot;prettyprint&quot;&gt;获取系统信息&lt;/code&gt;组件，定义一个变量，该值来自命令行参数，见下图：&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://javachen-rs.qiniudn.com/images/2013/get-a-field-from-paramter.png&quot; alt=&quot;get-a-field-from-paramter&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaotian120.qiniudn.com/images/2013/get-a-field-from-paramter.png&quot; alt=&quot;get-a-field-from-paramter&quot;&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;问题2&quot;&gt;问题2&lt;/h2&gt;
 
 &lt;p&gt;第二个问题可以使用kettle中&lt;code class=&quot;prettyprint&quot;&gt;记录关联 (笛卡尔输出)&lt;/code&gt;组件将两个组件关联起来，输出一个笛卡尔结果集，关联条件设定恒为true，在运行前设置第一个参数的值，然后运行即可。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://javachen-rs.qiniudn.com/images/2013/run-kettle-for-join-two-inputs.png&quot; alt=&quot;run-kettle-for-join-two-inputs&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaotian120.qiniudn.com/images/2013/run-kettle-for-join-two-inputs.png&quot; alt=&quot;run-kettle-for-join-two-inputs&quot;&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;下载脚本&quot;&gt;下载脚本&lt;/h2&gt;
 
-&lt;p&gt;最后，kettle转换文件下载地址：&lt;a href=&quot;http://javachen-rs.qiniudn.com/images/2013/join-a-paramter-to-input-in-kettle.zip&quot;&gt;在这里&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;最后，kettle转换文件下载地址：&lt;a href=&quot;http://xiaotian120.qiniudn.com/images/2013/join-a-paramter-to-input-in-kettle.zip&quot;&gt;在这里&lt;/a&gt;。&lt;/p&gt;
 </description>
       <link>http://blog.xiatiansong.com/2013/04/07/add-a-field-from-paramter-to-output/</link>
       <guid>http://blog.xiatiansong.com/2013/04/07/add-a-field-from-paramter-to-output/</guid>
@@ -33804,7 +33804,7 @@ CREATE TABLE a1&lt;br&gt;
 
 &lt;p&gt;我们将上述功能处理为“this”表达式。其功能模型为：&lt;br&gt;
 &lt;div class=&quot;pic&quot;&gt;&lt;br&gt;
-&lt;img src=&quot;http://javachen-rs.qiniudn.com/images/2012/02/this-expression-of-el.jpg&quot; alt=&quot;&quot; title=&quot;this expression of el&quot;/&gt;&lt;br&gt;
+&lt;img src=&quot;http://xiaotian120.qiniudn.com/images/2012/02/this-expression-of-el.jpg&quot; alt=&quot;&quot; title=&quot;this expression of el&quot;/&gt;&lt;br&gt;
 &lt;/div&gt;&lt;br&gt;
 页面A和页面B分别引用了通用功能T,内含this相关的El表达式，通过分析处理，分别映射到对应的页面动作类的属性A.name和B.name。A和B可以从相同的基类C派生而来，只需C类实现了name属性即可，A类和B类也可以毫不相关，但是它们具有相同的属性name。&lt;/p&gt;
 
@@ -33816,7 +33816,7 @@ CREATE TABLE a1&lt;br&gt;
 &lt;p&gt;&lt;strong&gt;“this”EL表达式算法&lt;/strong&gt;&lt;br&gt;
 算法流程如下图：&lt;br&gt;
 &lt;div class=&quot;pic&quot;&gt;&lt;br&gt;
-&lt;img src=&quot;http://javachen-rs.qiniudn.com/images/2012/02/this-expression-flow-of-el.jpg&quot; alt=&quot;&quot; title=&quot;this expression flow of el&quot;/&gt;&lt;br&gt;
+&lt;img src=&quot;http://xiaotian120.qiniudn.com/images/2012/02/this-expression-flow-of-el.jpg&quot; alt=&quot;&quot; title=&quot;this expression flow of el&quot;/&gt;&lt;br&gt;
 &lt;/div&gt;&lt;/p&gt;
 </description>
       <link>http://blog.xiatiansong.com/2012/02/14/this-expression-of-jsf-el/</link>
@@ -33835,14 +33835,14 @@ CREATE TABLE a1&lt;br&gt;
 
 &lt;p&gt;下图是kettle中的一个表输出组件。&lt;br&gt;
 &lt;div class=&quot;pic&quot;&gt;&lt;br&gt;
-&lt;a href=&quot;http://javachen-rs.qiniudn.com/images/2012/01/kettle-table-out.png&quot;&gt;&lt;img class=&quot;size-medium wp-image-2480 aligncenter&quot; title=&quot;kettle-table-out&quot; src=&quot;http://javachen-rs.qiniudn.com/images/2012/01/kettle-table-out-269x300.png&quot; alt=&quot;kettle中的表输出组件&quot; width=&quot;269&quot; height=&quot;300&quot; /&gt;&lt;/a&gt;&lt;br&gt;
+&lt;a href=&quot;http://xiaotian120.qiniudn.com/images/2012/01/kettle-table-out.png&quot;&gt;&lt;img class=&quot;size-medium wp-image-2480 aligncenter&quot; title=&quot;kettle-table-out&quot; src=&quot;http://xiaotian120.qiniudn.com/images/2012/01/kettle-table-out-269x300.png&quot; alt=&quot;kettle中的表输出组件&quot; width=&quot;269&quot; height=&quot;300&quot; /&gt;&lt;/a&gt;&lt;br&gt;
 &lt;/div&gt;&lt;/p&gt;
 
 &lt;p&gt;在该组件里可以指定表名、字段等信息，并且还可以建表的sql语句。打开建表的sql语句，你可以看到该语句里只指定了字段名称和类型，没有指定主外键、约束、和索引。显然，该组件只是完成了数据的输出并没有将表的主键迁移过去。&lt;br&gt;
 &amp;lt;!--more--&amp;gt;&lt;br&gt;
 下图是kettle中纬度更新/查询的组件。&lt;br&gt;
 &lt;div class=&quot;pic&quot;&gt;&lt;br&gt;
-&lt;a href=&quot;http://javachen-rs.qiniudn.com/images/2012/01/kettle-look-up.png&quot;&gt;&lt;img class=&quot;size-medium wp-image-2481 aligncenter&quot; title=&quot;kettle-look-up&quot; src=&quot;http://javachen-rs.qiniudn.com/images/2012/01/kettle-look-up-292x300.png&quot; alt=&quot;kettle中纬度更新/查询的组件&quot; width=&quot;292&quot; height=&quot;300&quot; /&gt;&lt;/a&gt;&lt;br&gt;
+&lt;a href=&quot;http://xiaotian120.qiniudn.com/images/2012/01/kettle-look-up.png&quot;&gt;&lt;img class=&quot;size-medium wp-image-2481 aligncenter&quot; title=&quot;kettle-look-up&quot; src=&quot;http://xiaotian120.qiniudn.com/images/2012/01/kettle-look-up-292x300.png&quot; alt=&quot;kettle中纬度更新/查询的组件&quot; width=&quot;292&quot; height=&quot;300&quot; /&gt;&lt;/a&gt;&lt;br&gt;
 &lt;/div&gt;&lt;br&gt;
 该组件可以指定输出表名、映射字段、纬度字段、并且指定主键（图中翻译为关键字段），该组件比表输出组件多了一个功能，即指定主键。&lt;br&gt;
 从上面两个组件中可以看出，kettle实际上预留了设置主键的接口，具体的接口说明需要查看api或者源代码，只是kettle没有智能的查处输入表的主键字段，而是需要用户在kettle ui界面指定一个主键名称。&lt;/p&gt;
@@ -33963,7 +33963,7 @@ if (!Const.isEmpty(pksql)) {
 
 &lt;p&gt;最后的效果图如下：&lt;br&gt;
 &lt;div class=&quot;pic&quot;&gt;&lt;br&gt;
-&lt;a href=&quot;http://javachen-rs.qiniudn.com/images/2012/01/kettle-add-primary-key-and-indexes.png&quot;&gt;&lt;img class=&quot;aligncenter size-medium wp-image-2483&quot; title=&quot;kettle-add-primary-key-and-indexes&quot; src=&quot;http://javachen-rs.qiniudn.com/images/2012/01/kettle-add-primary-key-and-indexes-300x79.png&quot; alt=&quot;&quot; width=&quot;300&quot; height=&quot;79&quot; /&gt;&lt;/a&gt;&lt;br&gt;
+&lt;a href=&quot;http://xiaotian120.qiniudn.com/images/2012/01/kettle-add-primary-key-and-indexes.png&quot;&gt;&lt;img class=&quot;aligncenter size-medium wp-image-2483&quot; title=&quot;kettle-add-primary-key-and-indexes&quot; src=&quot;http://xiaotian120.qiniudn.com/images/2012/01/kettle-add-primary-key-and-indexes-300x79.png&quot; alt=&quot;&quot; width=&quot;300&quot; height=&quot;79&quot; /&gt;&lt;/a&gt;&lt;br&gt;
 &lt;/div&gt;&lt;/p&gt;
 
 &lt;div class=&quot;infor&quot;&gt;说明：
@@ -34251,7 +34251,7 @@ XUL用户界面语言是一种可用于开发Mozilla独立应用程序和浏览�
 
 &lt;p&gt;将上面三个工程导入到一个工程然后打开sample.html页面，效果如下：&lt;br&gt;
 &lt;div class=&quot;pic&quot;&gt;&lt;br&gt;
-&lt;img src=&quot;http://javachen-rs.qiniudn.com/images/2011/08/export-dhtmlxgrid-to-pdf.png&quot; alt=&quot;&quot; title=&quot;export dhtmlxgrid to pdf&quot; width=&quot;300&quot; height=&quot;166&quot; class=&quot;aligncenter size-medium wp-image-2385&quot; /&gt;&lt;br&gt;
+&lt;img src=&quot;http://xiaotian120.qiniudn.com/images/2011/08/export-dhtmlxgrid-to-pdf.png&quot; alt=&quot;&quot; title=&quot;export dhtmlxgrid to pdf&quot; width=&quot;300&quot; height=&quot;166&quot; class=&quot;aligncenter size-medium wp-image-2385&quot; /&gt;&lt;br&gt;
 &lt;/div&gt;&lt;br&gt;
 点击Get as PDF按钮，你会发现会打开一个新的窗口，然后页面什么都没有，而eclipse控制台报空指针异常。异常的主要原因在于下段代码：。&lt;br&gt;
 &lt;pre lang=&quot;java&quot;&gt;&lt;br&gt;
@@ -34404,7 +34404,7 @@ public String[] getCells() {
 
 &lt;p&gt;这样xml字符串就能正常解析了，然后使用pdfjet.jar包就可以导出pdf了，最后的效果如下：&lt;br&gt;
 &lt;div class=&quot;pic&quot;&gt;&lt;br&gt;
-&lt;img src=&quot;http://javachen-rs.qiniudn.com/images/2011/08/export-dhtmlx-to-pdf-pdf.png&quot; alt=&quot;&quot; title=&quot;export dhtmlx to pdf -pdf&quot; width=&quot;300&quot; height=&quot;134&quot; class=&quot;aligncenter size-medium wp-image-2386&quot; /&gt;&lt;br&gt;
+&lt;img src=&quot;http://xiaotian120.qiniudn.com/images/2011/08/export-dhtmlx-to-pdf-pdf.png&quot; alt=&quot;&quot; title=&quot;export dhtmlx to pdf -pdf&quot; width=&quot;300&quot; height=&quot;134&quot; class=&quot;aligncenter size-medium wp-image-2386&quot; /&gt;&lt;br&gt;
 &lt;/div&gt;&lt;/p&gt;
 
 &lt;h2&gt;结论：&lt;/h2&gt;
@@ -34426,9 +34426,9 @@ public String[] getCells() {
       <description>&lt;p&gt;dhtmlxGrid可以定义表头菜单以及表格右键菜单，表格右键菜单可以自定义，但是表头菜单只能使用其提供的菜单。dhtmlxGrid默认的表头菜单可以决定表格中每一列是否在表格中显示，并没有提供更多的扩展，如果我想自定义表头菜单，该怎么做呢？本文就是基于自定义表格菜单，说说我的实现方式。&lt;br&gt;
 以下是dhtmlxGrid的表头菜单效果：&lt;br&gt;
 &lt;div class=&quot;pic&quot;&gt;&lt;br&gt;
-&lt;img class=&quot;aligncenter size-medium wp-image-2287&quot; title=&quot;dhtmlxgrid-head-menu&quot; src=&quot;http://javachen-rs.qiniudn.com/images/2011/07/dhtmlxgrid-head-menu.jpg&quot; alt=&quot;&quot; width=&quot;300&quot; height=&quot;174&quot; /&gt;&lt;/div&gt;&lt;br&gt;
+&lt;img class=&quot;aligncenter size-medium wp-image-2287&quot; title=&quot;dhtmlxgrid-head-menu&quot; src=&quot;http://xiaotian120.qiniudn.com/images/2011/07/dhtmlxgrid-head-menu.jpg&quot; alt=&quot;&quot; width=&quot;300&quot; height=&quot;174&quot; /&gt;&lt;/div&gt;&lt;br&gt;
 其功能过于单一，以下是表格右键菜单效果：&lt;br&gt;
-&lt;div class=&quot;pic&quot;&gt;&lt;img class=&quot;aligncenter size-medium wp-image-2288&quot; title=&quot;dhtmlxgrid-context-menu&quot; src=&quot;http://javachen-rs.qiniudn.com/images/2011/07/dhtmlxgrid-context-menu.jpg&quot; alt=&quot;&quot; width=&quot;300&quot; height=&quot;126&quot; /&gt;&lt;/div&gt;&lt;br&gt;
+&lt;div class=&quot;pic&quot;&gt;&lt;img class=&quot;aligncenter size-medium wp-image-2288&quot; title=&quot;dhtmlxgrid-context-menu&quot; src=&quot;http://xiaotian120.qiniudn.com/images/2011/07/dhtmlxgrid-context-menu.jpg&quot; alt=&quot;&quot; width=&quot;300&quot; height=&quot;126&quot; /&gt;&lt;/div&gt;&lt;br&gt;
 如果能够像表格菜单一样自定义表头菜单，那会是一件非常有意义的事情，因为dhtmlxGrid菜单都是一些针对行和单元格的操作，没有提过针对列的操作，比如我可能需要在某一列上实现该列的显示与隐藏、排序、改变列属性以及在该列右边添加一新的列，等等。&lt;br&gt;
 如何实现表头菜单的自定义呢？可不可将表格右键菜单移到表头上去呢？&amp;lt;!--more--&amp;gt;&lt;br&gt;
 首先，来看看context menu的实现方式，下面代码来自dhtmlxGrid Samples中的Context menu例子源码：&lt;/p&gt;
@@ -34634,7 +34634,7 @@ for ( var i = 0; i &amp;lt; header_row.cells.length; i++) {
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;效果图如下;&lt;br&gt;
 &lt;div class=&quot;pic&quot;&gt;&lt;br&gt;
-&lt;img src=&quot;http://javachen-rs.qiniudn.com/images/2011/07/dhtmlxgrid-custom-head-menu.jpg&quot; alt=&quot;&quot; title=&quot;dhtmlxgrid-custom-head-menu&quot; width=&quot;300&quot; height=&quot;154&quot; class=&quot;aligncenter size-medium wp-image-2291&quot; /&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;img src=&quot;http://xiaotian120.qiniudn.com/images/2011/07/dhtmlxgrid-custom-head-menu.jpg&quot; alt=&quot;&quot; title=&quot;dhtmlxgrid-custom-head-menu&quot; width=&quot;300&quot; height=&quot;154&quot; class=&quot;aligncenter size-medium wp-image-2291&quot; /&gt;&lt;/div&gt;&lt;/p&gt;
 </description>
       <link>http://blog.xiatiansong.com/2011/07/31/custom-dhtmlxgrid-header-menu/</link>
       <guid>http://blog.xiatiansong.com/2011/07/31/custom-dhtmlxgrid-header-menu/</guid>
@@ -34731,7 +34731,7 @@ tree.dragger.addDragLanding(sinput, new s_control);&lt;br&gt;
 
 &lt;p&gt;该方法主要做的事情是计算拖拽落脚时候鼠标焦点所在的列，然后在其右边添加一新的列。&lt;br&gt;
 &lt;div class=&quot;pic&quot;&gt;&lt;br&gt;
-&lt;img class=&quot;aligncenter&quot; title=&quot;QQ20110724211631&quot; src=&quot;http://javachen-rs.qiniudn.com/images/2011/07/QQ20110724211631.png&quot; alt=&quot;&quot; /&gt;&lt;br&gt;
+&lt;img class=&quot;aligncenter&quot; title=&quot;QQ20110724211631&quot; src=&quot;http://xiaotian120.qiniudn.com/images/2011/07/QQ20110724211631.png&quot; alt=&quot;&quot; /&gt;&lt;br&gt;
 &lt;/div&gt;&lt;/p&gt;
 
 &lt;p&gt;本例最后的代码：&lt;br&gt;
@@ -35181,7 +35181,7 @@ RabbitMQ and Nova：&lt;a href=&quot;http://blog.163.com/clevertanglei900@126/bl
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h2 id=&quot;安装php-adodb&quot;&gt;安装php-adodb&lt;/h2&gt;
 
-&lt;p&gt;从&lt;a href=&quot;http://sourceforge.net/projects/adodbhttp://javachen-rs.qiniudn.com/images/adodb-php5-only%E4%B8%8B%E8%BD%BD&quot;&gt;http://sourceforge.net/projects/adodbhttp://javachen-rs.qiniudn.com/images/adodb-php5-only下载&lt;/a&gt; &lt;/p&gt;
+&lt;p&gt;从&lt;a href=&quot;http://sourceforge.net/projects/adodbhttp://xiaotian120.qiniudn.com/images/adodb-php5-only%E4%B8%8B%E8%BD%BD&quot;&gt;http://sourceforge.net/projects/adodbhttp://xiaotian120.qiniudn.com/images/adodb-php5-only下载&lt;/a&gt; &lt;/p&gt;
 
 &lt;p&gt;注意：将adobd包解压拷贝到/var/www/html/onemc/include/，将文件名改为adobd&lt;/p&gt;
 
@@ -36461,7 +36461,7 @@ CC连接着云控制器CLC和控制节点NC。&lt;/td&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;最后做成的效果图，如下：&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://javachen-rs.qiniudn.com/images/2014/bjsasc.bmp&quot; alt=&quot;bjsasc&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaotian120.qiniudn.com/images/2014/bjsasc.bmp&quot; alt=&quot;bjsasc&quot;&gt;&lt;/p&gt;
 
 &lt;p&gt;如果你想要获取更详细说明，请移步：&lt;a href=&quot;/2009/10/31/ext_readxml_in_bjsasc_wuzi_continue/&quot;&gt;Extjs读取xml文件生成动态表格和表单(续)&lt;/a&gt;&lt;/p&gt;
 </description>

@@ -64,7 +64,7 @@
       <div class="wrapper">
         <div class="row">
           <div id="search-loader" style="display:none;text-align:center">
-            <img src="http://javachen-rs.qiniudn.com/images/loading.gif">
+            <img src="http://xiaotian120.qiniudn.com/images/loading.gif">
           </div>
           <div class="col-md-12">
   <article class="news-item">
@@ -77,7 +77,7 @@
 
 <p>以下是网络上流传的HBase存储架构图:</p>
 
-<p><img src="http://javachen-rs.qiniudn.com/images/2013/hbase-structure.jpg" alt="hbase-structure"></p>
+<p><img src="http://xiaotian120.qiniudn.com/images/2013/hbase-structure.jpg" alt="hbase-structure"></p>
 
 <p>HBase中的每张表都通过行键按照一定的范围被分割成多个子表（HRegion），默认一个HRegion超过256M就要被分割成两个，这个过程由HRegionServer管理，而HRegion的分配由HMaster管理。</p>
 
@@ -155,11 +155,11 @@
 
 <p>Data Block是hbase io的基本单元，为了提高效率，HRegionServer中又基于LRU的block cache机制。每个Data块的大小可以在创建一个Table的时候通过参数指定（默认块大小64KB），大号的Block有利于顺序Scan，小号的Block利于随机查询。每个Data块除了开头的Magic以外就是一个个KeyValue对拼接而成，Magic内容就是一些随机数字，目的是烦着数据损坏，结构如下。</p>
 
-<p><img src="http://javachen-rs.qiniudn.com/images/2014/hfile-keyvalue-structure.jpg" alt=""></p>
+<p><img src="http://xiaotian120.qiniudn.com/images/2014/hfile-keyvalue-structure.jpg" alt=""></p>
 
 <p>HFile结构图如下：</p>
 
-<p><img src="http://javachen-rs.qiniudn.com/images/2014/hfile-structure.jpg" alt=""></p>
+<p><img src="http://xiaotian120.qiniudn.com/images/2014/hfile-structure.jpg" alt=""></p>
 
 <p>Data Block段用来保存表中的数据，这部分可以被压缩。</p>
 
@@ -173,7 +173,7 @@
 
 <p>HFile的Data Block，Meta Block通常采用压缩方式存储，压缩之后可以大大减少网络IO和磁盘IO，随之而来的开销当然是需要花费cpu进行压缩和解压缩。目标HFile的压缩支持两种方式：gzip、lzo。</p>
 
-<p><img src="http://javachen-rs.qiniudn.com/images/2014/hfile-data-storeage.jpg" alt=""></p>
+<p><img src="http://xiaotian120.qiniudn.com/images/2014/hfile-data-storeage.jpg" alt=""></p>
 
 <p>另外，针对目前针对现有HFile的两个主要缺陷：</p>
 
@@ -191,11 +191,11 @@ Sequence File的value是key时HLogKey对象，其中记录了写入数据的归�
 
 <p>Sequence File的value是HBase的KeyValue对象，即对应HFile中的KeyValue。</p>
 
-<p><img src="http://javachen-rs.qiniudn.com/images/2014/hlog-structure.jpg" alt=""></p>
+<p><img src="http://xiaotian120.qiniudn.com/images/2014/hlog-structure.jpg" alt=""></p>
 
 <p>HLog(WAL log)：WAL意为write ahead log，用来做灾难恢复使用，HLog记录数据的所有变更，一旦region server 宕机，就可以从log中进行恢复。</p>
 
-<p><img src="http://javachen-rs.qiniudn.com/images/2013/hbase-write-hlog-process.jpg" alt=""></p>
+<p><img src="http://xiaotian120.qiniudn.com/images/2013/hbase-write-hlog-process.jpg" alt=""></p>
 
 <p>LogFlusher</p>
 
@@ -214,7 +214,7 @@ Sequence File的value是key时HLogKey对象，其中记录了写入数据的归�
         <br>
         <section>
   <h4>Sponsor</h4>
-	<img src="http://javachen-rs.qiniudn.com/images/alipay.png" width="150/">
+	<img src="http://xiaotian120.qiniudn.com/images/alipay.png" width="150/">
   <p class="small">觉得此博客对你有帮助，支付宝扫码赞助吧</p>
 </section>
 
