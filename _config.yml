@@ -1,11 +1,11 @@
 # Site settings
-title : 夏天松的个人博客
+title : 天松的个人博客
 keywords : java, hadoop, hive, hbase, spark, linux, scala, python, mysql
 description: 86后，工作在深圳；Java程序员、Hadoop工程师；主要关注Java、Scala、Hadoop、Kettle、关注大数据处理技术。
 
 url: "http://blog.xiatiansong.com"
 author:
-    name: 夏天松
+    name: 天松
     github: xiatiansong
     email: wuskyfantasy@gmail.com
     twitter:
