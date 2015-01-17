@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Mondrian and OLAP - 小天的个人博客</title>
+  <meta name="description" content="Mondrian是一个用Java编写的OLAP引擎。他执行用MDX语言编写的查询，从关系数据库（RDBMS）中读取数据并且通过Java API以多维度的格式展示查询结果。">
+  <meta name="keywords" content="java, hadoop, hive, hbase, spark, linux, scala, python, mysql">
+  <meta name="author" content="小天">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="360-site-verification" content="9b7a87a1d52051c96644f0a9b8b79898" />
+  <meta name="sogou_site_verification" content="ofwXWFdthV"/>
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" >
+
+  <link rel="canonical" href="http://blog.xiaotian.com/2011/12/07/mondrian-and-olap">
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css" media="all">
+  <link rel="stylesheet" href="/static/css/style.css" media="all">
+  <link rel="stylesheet" href="/static/css/pygments.css" media="all">
+  <link rel="stylesheet" href="/static/css/font-awesome.css" media="all">
+
+  <!-- atom & rss feed -->
+  <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="小天的个人博客 RSS Feed">
+  <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="小天的个人博客 ATOM Feed">
+</head>
+
+
+  <body>
+    <div class="container">
+      <!--[if lte IE 9]>
+<div class="alert alert-warning">
+  <p>Your Internet Explorer is not supported. Please upgrade your Internet Explorer to version 9+, or use latest <a href="http://www.google.com/chrome/" target="_blank" class="alert-link">Google chrome</a>、<a href="http://www.mozilla.org/firefox/" target="_blank" class="alert-link">Mozilla Firefox</a>.</p>
+  <p>If you are using IE 9 or later, make sure you <a href="http://windows.microsoft.com/en-us/internet-explorer/use-compatibility-view#ie=ie-8" target="_blank" class="alert-link">turn off "Compatibility view"</a>.</p>
+</div>
+<![endif]-->
+<header class="header">
+  <div class="title"><a title="小天的个人博客" href="/">小天的个人博客</a></div>
+  <ul class="nav navbar-nav navbar-right visible-lg visible-md">
+    <li>
+    <form id="search-form" class="form-group has-success visible-lg" role="form">
+      <input type="text" class="form-control input-sm" placeholder="Search" id="query" style="width: 160px;">
+    </form>
+    </li>
+    <li><a href="/archive.html" title="Archive"><span class='fa fa-archive fa-2x'></span></a></li>
+    <li><a href="/categories.html" title="Categories"><span class='fa fa-navicon fa-2x'></span></a></li>
+    <li><a href="/tags.html" title="Tags"><span class='fa fa-tags fa-2x'></span></a></li>
+    <li><a href="/about.html" title="About"><span class='fa fa-user fa-2x'></span></a></li>
+    
+    <li><a href="https://github.com/wuskyfantasy" target="_blank" title="Github"><span class='fa fa-github fa-2x'></span></a></li>
+    
+    
+    
+    
+    
+    <li><a href="http://weibo.com/xiaotian120" target="_blank" title="Weibo"><span class="fa fa-weibo fa-2x"></span></a></li>
+    
+
+    <li><a href="/rss.xml" target="_blank" title="RSS"><span class='fa fa-rss fa-2x'></span></a></li>
+  </ul>
+</header>
+
+
+      <div class="wrapper">
+        <div class="row">
+          <div id="search-loader" style="display:none;text-align:center">
+            <img src="http://javachen-rs.qiniudn.com/images/loading.gif">
+          </div>
+          <div class="col-md-12">
+  <article class="news-item">
+
+      <h2  class="news-item"> Mondrian and OLAP  
+        <time class="small">2011.12.07</time>
+      </h2>
+
+      <div><p>Mondrian是一个用Java编写的OLAP引擎。他执行用MDX语言编写的查询，从关系数据库（RDBMS）中读取数据并且通过Java API以多维度的格式展示查询结果。</p>
+
+<p><strong><span style="color: #00ff00;">Online Analytical Processing</span></strong>
+联机分析处理（OLAP）指在线实时的分析大量数据。与联机事务处理系统（On-<wbr>Line Transaction Processing，简称OLTP）不同，OLTP中典型的操作如读和修改单个的少量的记录，而OLAP批量处理数据并且所有操作都是只读的。“online”意味着即使是处理大量的数据----百万条数据记录，占有几个GB内存----系统必须足够快的反回查询结果以允许数据的交互式响应。正如我们将看到，数据展示面临相当大的技术挑战。</wbr></p>
+
+<p>OLAP引入了一种多维度查询的技术。鉴于一个关系数据库以行和列的形式存储所有数据，一个多维数据集包括轴和列。考虑下面的数据集：</p>
+
+<p><a href="/file/2011/12/olap_examples20111217.jpg"><img class="size-medium wp-image-2469 aligncenter" title="olap_examples20111217" src="/file/2011/12/olap_examples20111217-300x129.jpg" alt="olap多维视图" width="300" height="129" /></a></p>
+
+<p>行轴包括"All products", "Books","Fiction"等等，并且列轴包括生产年份"2000"”和"2001"、"Growth"的计算值以及"Unit sales"和"Dollar sales"的测量值。每个单元代表在某一年的一个产品类别的销售额，例如2001年Magazines的$销售额是2426美元。</p>
+
+<p>这是一个比关系型数据库展现出来的更加丰富的视图。多维数据集的只不是永远都来自于一个关系数据库的列。 'Total', 'Books' and 'Fiction' 是一个具有层次结构连续的成员，每一个成员都包括其下一层的成员。即使是在"2000"和"2001"一行，"Growth"是一个计算出来的值，它引入一个公式从其他列计算当前列的值。</p>
+
+<p>该例中使用的维度有：产品、生产线和测量值，仅仅是这个数据集可以分类和过滤的许多维度中的三个。维度，层次结构和测量值的集合被称为一个立方体。</p>
+
+<p><strong><span style="color: #00ff00;">结论</span></strong>
+我希望我已经证明垛位是一个首选的数据显示方式。虽然一些多维数据库以多维度的格式存储数据库，我仍然认为这比以关系的格式存储数据要简单。<br />
+现在，你可以看看OLAP系统的架构。查看Mondrian architecture。http://mondrian.pentaho.com/documentation/architecture.php</p>
+
+<p><strong><span style="color: #00ff00;">说明</span></strong>
+<div class="note">
+这是一篇翻译，原文来自http://mondrian.pentaho.com/documentation/olap.php。翻译水平有限，难免翻译不当，请见谅。</div></p>
+</div>
+
+
+      <div id="pay" style="text-align:center;">
+        ----EOF-----
+        <br>
+        <section>
+  <h4>Sponsor</h4>
+	<img src="http://javachen-rs.qiniudn.com/images/alipay.png" width="150/">
+  <p class="small">觉得此博客对你有帮助，支付宝扫码赞助吧</p>
+</section>
+
+      </div>
+
+      <p class="meta">
+      	
+            Categories:
+      	    
+          	<a class="btn btn-default btn-xs" href="/categories.html#pentaho">pentaho</a>
+          
+      	
+
+      	
+            Tags:
+      	    
+          	<a class="btn btn-default btn-xs" href="/tags.html#mondrian">mondrian</a>
+          
+      	
+      </p>
+	</article>
+
+	<ul class="pager">
+	  
+	  <li class="previous"><a class="btn btn-xs" href="/2011/11/25/xml-user-interface-language-introuction" title="XUL 用户界面语言介绍">&larr; Prev</a></li>
+	  
+	  
+	  <li class="next"><a class="btn btn-xs" href="/2012/01/04/some-problems-about-migrating-database-datas-with-kettle" title="kettle进行数据迁移遇到的问题">Next &rarr;</a></li>
+	  
+	</ul>
+
+  
+<div id="comments">
+  <div class="ds-thread" data-thread-key="/2011/12/07/mondrian-and-olap"  data-title="Mondrian and OLAP - 小天的个人博客"></div>
+</div>
+
+
+
+</div>
+
+        </div>
+      </div>
+
+      <footer class="footer text-center">
+  <p>&copy; 2009-2015 <a href="/" target="_blank" title="86后，工作在深圳；Java程序员、Hadoop工程师；主要关注Java、Hadoop、Kettle、关注大数据处理技术。">小天</a>. With Help from <a href="//jekyllrb.com/" target="_blank" title="Transform your plain text into static websites and blogs.">Jekyll</a> and <a href="//getbootstrap.com/" target="_blank" title="Bootstrap is the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web.">Bootstrap</a>, theme from <a href="http://havee.me/" target="_blank" title="http://havee.me/">Havee</a>.
+
+  <span style="float:right;"><a href="/about.html">About</a></span>
+
+	
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+  </p>
+  <div id="toTop" style="display: block;">
+    <a href="#">▲</a><a href="#footer">▼</a>
+  </div>
+</footer>
+
+    </div>
+
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/core.js"></script>
+
+    
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+    
+    <!-- duoshuo Begin -->
+    <script type="text/javascript">
+      var duoshuoQuery = {short_name:"xiaotian120"};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] ||
+        document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+    </script>
+    <!-- duoshuo End -->
+    
+  </body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Pentaho现场支持遇到问题及解决办法 - 小天的个人博客</title>
+  <meta name="description" content="Pentaho现场支持遇到问题及解决办法">
+  <meta name="keywords" content="java, hadoop, hive, hbase, spark, linux, scala, python, mysql">
+  <meta name="author" content="小天">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="360-site-verification" content="9b7a87a1d52051c96644f0a9b8b79898" />
+  <meta name="sogou_site_verification" content="ofwXWFdthV"/>
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" >
+
+  <link rel="canonical" href="http://blog.xiaotian.com/2011/09/26/resolved-pentaho-problems-9-16">
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css" media="all">
+  <link rel="stylesheet" href="/static/css/style.css" media="all">
+  <link rel="stylesheet" href="/static/css/pygments.css" media="all">
+  <link rel="stylesheet" href="/static/css/font-awesome.css" media="all">
+
+  <!-- atom & rss feed -->
+  <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="小天的个人博客 RSS Feed">
+  <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="小天的个人博客 ATOM Feed">
+</head>
+
+
+  <body>
+    <div class="container">
+      <!--[if lte IE 9]>
+<div class="alert alert-warning">
+  <p>Your Internet Explorer is not supported. Please upgrade your Internet Explorer to version 9+, or use latest <a href="http://www.google.com/chrome/" target="_blank" class="alert-link">Google chrome</a>、<a href="http://www.mozilla.org/firefox/" target="_blank" class="alert-link">Mozilla Firefox</a>.</p>
+  <p>If you are using IE 9 or later, make sure you <a href="http://windows.microsoft.com/en-us/internet-explorer/use-compatibility-view#ie=ie-8" target="_blank" class="alert-link">turn off "Compatibility view"</a>.</p>
+</div>
+<![endif]-->
+<header class="header">
+  <div class="title"><a title="小天的个人博客" href="/">小天的个人博客</a></div>
+  <ul class="nav navbar-nav navbar-right visible-lg visible-md">
+    <li>
+    <form id="search-form" class="form-group has-success visible-lg" role="form">
+      <input type="text" class="form-control input-sm" placeholder="Search" id="query" style="width: 160px;">
+    </form>
+    </li>
+    <li><a href="/archive.html" title="Archive"><span class='fa fa-archive fa-2x'></span></a></li>
+    <li><a href="/categories.html" title="Categories"><span class='fa fa-navicon fa-2x'></span></a></li>
+    <li><a href="/tags.html" title="Tags"><span class='fa fa-tags fa-2x'></span></a></li>
+    <li><a href="/about.html" title="About"><span class='fa fa-user fa-2x'></span></a></li>
+    
+    <li><a href="https://github.com/wuskyfantasy" target="_blank" title="Github"><span class='fa fa-github fa-2x'></span></a></li>
+    
+    
+    
+    
+    
+    <li><a href="http://weibo.com/xiaotian120" target="_blank" title="Weibo"><span class="fa fa-weibo fa-2x"></span></a></li>
+    
+
+    <li><a href="/rss.xml" target="_blank" title="RSS"><span class='fa fa-rss fa-2x'></span></a></li>
+  </ul>
+</header>
+
+
+      <div class="wrapper">
+        <div class="row">
+          <div id="search-loader" style="display:none;text-align:center">
+            <img src="http://javachen-rs.qiniudn.com/images/loading.gif">
+          </div>
+          <div class="col-md-12">
+  <article class="news-item">
+
+      <h2  class="news-item"> Pentaho现场支持遇到问题及解决办法  
+        <time class="small">2011.09.26</time>
+      </h2>
+
+      <div><p>很久没写文章了，最近在关注Pentaho。<br />
+ 以下是9月16日现场提出的问题解决办法：<br />
+      1、PDF预览中文没显示，txt预览中文乱码：<br />
+           1）、设置File->Configuration ->output-pageable-pdf的encoding 为Identity-H<br />
+           2）、将需要输出中文的报表项目的字体设置为中文字体，例如宋体<br />
+           3）、如要发布到服务器，需要修改如下的配置：<br />
+             pentaho/server/biserver-ee/tomcat/webapps/pentaho/WEB-INF/classes/classic-engine.properties：<br />
+             org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Encoding=Identity-H<br />
+     2、实现文件拷贝方式发布报表<br />
+           可以通过文件方式发布，只要将报表的prpt文件拷贝到Solution的目录（Pentaho安装路径的server\biserver-ee\pentaho-solutions）下就可以了<br />
+     3、报表链接参数传递问题<br />
+          由于参数带中文造成的，可以对参数的值URLENCODE("value"; "utf-8")来解决<br />
+     4、查询参数缺省值问题<br />
+          关于日期的默认值。可以使用报表系统提供的日期变量设置，如TODAY，DATE，YEAR。。。<br />
+     5、实现在pie chart上显示文字<br />
+          以把label默认显示的百分比改为文字：label-formate = {0}， 但是label显示百分比，同时在pie图的划分区域显示文字是不能的。<br />
+     6、报表集成时候垂直滚动条是否可以去掉<br />
+          改变报表的高度：报表设计器 file-page setup<br />
+     7、报表中的chart不能导出到Excel2007<br />
+          目前为系统bug，excel2003能够正常导出<br />
+     8、实现隔行换色<br />
+          选中Details中的field再attribute面板上设置name的名称（如“row-band”），然后通过Format-->Row-Banding，可以设置Visible Color 、Inisible Color，再Element中输入"row-band"<br />
+     9、显示top N  ：托一个message field，在里面输入表达式，如，$（topn）,topn为传入的参数</p>
+</div>
+
+
+      <div id="pay" style="text-align:center;">
+        ----EOF-----
+        <br>
+        <section>
+  <h4>Sponsor</h4>
+	<img src="http://javachen-rs.qiniudn.com/images/alipay.png" width="150/">
+  <p class="small">觉得此博客对你有帮助，支付宝扫码赞助吧</p>
+</section>
+
+      </div>
+
+      <p class="meta">
+      	
+            Categories:
+      	    
+          	<a class="btn btn-default btn-xs" href="/categories.html#pentaho">pentaho</a>
+          
+      	
+
+      	
+            Tags:
+      	    
+          	<a class="btn btn-default btn-xs" href="/tags.html#pentaho">pentaho</a>
+          
+      	
+      </p>
+	</article>
+
+	<ul class="pager">
+	  
+	  <li class="previous"><a class="btn btn-xs" href="/2011/08/20/install-eucalyptus-on-fedora-15" title="在Fedora 15 上搭建Eucalyptus">&larr; Prev</a></li>
+	  
+	  
+	  <li class="next"><a class="btn btn-xs" href="/2011/09/28/build-pentaho-bi-server-source-code-in-eclipse" title="在eclipse中构建Pentaho BI Server工程">Next &rarr;</a></li>
+	  
+	</ul>
+
+  
+<div id="comments">
+  <div class="ds-thread" data-thread-key="/2011/09/26/resolved-pentaho-problems-9-16"  data-title="Pentaho现场支持遇到问题及解决办法 - 小天的个人博客"></div>
+</div>
+
+
+
+</div>
+
+        </div>
+      </div>
+
+      <footer class="footer text-center">
+  <p>&copy; 2009-2015 <a href="/" target="_blank" title="86后，工作在深圳；Java程序员、Hadoop工程师；主要关注Java、Hadoop、Kettle、关注大数据处理技术。">小天</a>. With Help from <a href="//jekyllrb.com/" target="_blank" title="Transform your plain text into static websites and blogs.">Jekyll</a> and <a href="//getbootstrap.com/" target="_blank" title="Bootstrap is the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web.">Bootstrap</a>, theme from <a href="http://havee.me/" target="_blank" title="http://havee.me/">Havee</a>.
+
+  <span style="float:right;"><a href="/about.html">About</a></span>
+
+	
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+  </p>
+  <div id="toTop" style="display: block;">
+    <a href="#">▲</a><a href="#footer">▼</a>
+  </div>
+</footer>
+
+    </div>
+
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/core.js"></script>
+
+    
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+    
+    <!-- duoshuo Begin -->
+    <script type="text/javascript">
+      var duoshuoQuery = {short_name:"xiaotian120"};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] ||
+        document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+    </script>
+    <!-- duoshuo End -->
+    
+  </body>
+</html>

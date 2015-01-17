@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>如何创建一个Django网站 - 小天的个人博客</title>
+  <meta name="description" content="本文演示如何创建一个简单的 django 网站，使用的 django 版本为1.7。">
+  <meta name="keywords" content="java, hadoop, hive, hbase, spark, linux, scala, python, mysql">
+  <meta name="author" content="小天">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="360-site-verification" content="9b7a87a1d52051c96644f0a9b8b79898" />
+  <meta name="sogou_site_verification" content="ofwXWFdthV"/>
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" >
+
+  <link rel="canonical" href="http://blog.xiaotian.com/2014/01/11/how-to-create-a-django-site">
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css" media="all">
+  <link rel="stylesheet" href="/static/css/style.css" media="all">
+  <link rel="stylesheet" href="/static/css/pygments.css" media="all">
+  <link rel="stylesheet" href="/static/css/font-awesome.css" media="all">
+
+  <!-- atom & rss feed -->
+  <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="小天的个人博客 RSS Feed">
+  <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="小天的个人博客 ATOM Feed">
+</head>
+
+
+  <body>
+    <div class="container">
+      <!--[if lte IE 9]>
+<div class="alert alert-warning">
+  <p>Your Internet Explorer is not supported. Please upgrade your Internet Explorer to version 9+, or use latest <a href="http://www.google.com/chrome/" target="_blank" class="alert-link">Google chrome</a>、<a href="http://www.mozilla.org/firefox/" target="_blank" class="alert-link">Mozilla Firefox</a>.</p>
+  <p>If you are using IE 9 or later, make sure you <a href="http://windows.microsoft.com/en-us/internet-explorer/use-compatibility-view#ie=ie-8" target="_blank" class="alert-link">turn off "Compatibility view"</a>.</p>
+</div>
+<![endif]-->
+<header class="header">
+  <div class="title"><a title="小天的个人博客" href="/">小天的个人博客</a></div>
+  <ul class="nav navbar-nav navbar-right visible-lg visible-md">
+    <li>
+    <form id="search-form" class="form-group has-success visible-lg" role="form">
+      <input type="text" class="form-control input-sm" placeholder="Search" id="query" style="width: 160px;">
+    </form>
+    </li>
+    <li><a href="/archive.html" title="Archive"><span class='fa fa-archive fa-2x'></span></a></li>
+    <li><a href="/categories.html" title="Categories"><span class='fa fa-navicon fa-2x'></span></a></li>
+    <li><a href="/tags.html" title="Tags"><span class='fa fa-tags fa-2x'></span></a></li>
+    <li><a href="/about.html" title="About"><span class='fa fa-user fa-2x'></span></a></li>
+    
+    <li><a href="https://github.com/wuskyfantasy" target="_blank" title="Github"><span class='fa fa-github fa-2x'></span></a></li>
+    
+    
+    
+    
+    
+    <li><a href="http://weibo.com/xiaotian120" target="_blank" title="Weibo"><span class="fa fa-weibo fa-2x"></span></a></li>
+    
+
+    <li><a href="/rss.xml" target="_blank" title="RSS"><span class='fa fa-rss fa-2x'></span></a></li>
+  </ul>
+</header>
+
+
+      <div class="wrapper">
+        <div class="row">
+          <div id="search-loader" style="display:none;text-align:center">
+            <img src="http://javachen-rs.qiniudn.com/images/loading.gif">
+          </div>
+          <div class="col-md-12">
+  <article class="news-item">
+
+      <h2  class="news-item"> 如何创建一个Django网站  
+        <time class="small">2014.01.11</time>
+      </h2>
+
+      <div><p>本文演示如何创建一个简单的 django 网站，使用的 django 版本为1.7。</p>
+
+<h1 id="1.-创建工程">1. 创建工程</h1>
+
+<p>运行下面命令就可以创建一个 django 工程，工程名字叫 todo_site ：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>django-admin.py startproject todo_site
+</code></pre></div>
+<p>创建后的工程目录如下：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">todo_site
+├── manage.py
+└── todo_site
+    ├── __init__.py
+    ├── settings.py
+    ├── templates
+    ├── urls.py
+    └── wsgi.py
+</code></pre></div>
+<p>说明：</p>
+
+<ul>
+<li><code class="prettyprint">__init__.py</code> ：让 Python 把该目录当成一个开发包 (即一组模块)所需的文件。 这是一个空文件，一般你不需要修改它。</li>
+<li><code class="prettyprint">manage.py</code> ：一种命令行工具，允许你以多种方式与该 Django 项目进行交互。 键入<code class="prettyprint">python manage.py help</code>，看一下它能做什么。 你应当不需要编辑这个文件；在这个目录下生成它纯是为了方便。</li>
+<li><code class="prettyprint">settings.py</code> ：该 Django 项目的设置或配置。</li>
+<li><code class="prettyprint">urls.py</code>：Django项目的URL路由设置。目前，它是空的。</li>
+</ul>
+
+<h1 id="2.-运行项目">2. 运行项目</h1>
+
+<p>在todo工程下运行下面命令：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>python manage.py runserver
+</code></pre></div>
+<p>你会看到些像这样的</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">Performing system checks...
+
+System check identified no issues (0 silenced).
+October 28, 2014 - 09:10:27
+Django version 1.7.1, using settings &#39;todo_site.settings&#39;
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+</code></pre></div>
+<p>这将会在端口8000启动一个本地服务器, 并且只能从你的这台电脑连接和访问。 既然服务器已经运行起来了，现在用网页浏览器访问 <a href="http://127.0.0.1:8000/">http://127.0.0.1:8000/</a>。你应该可以看到一个令人赏心悦目的淡蓝色 Django 欢迎页面它开始工作了。</p>
+
+<p>你也可以指定启动端口:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>python manage.py runserver 8080
+</code></pre></div>
+<p>以及指定ip：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>python manage.py runserver 0.0.0.0:8000
+</code></pre></div>
+<p>接下来，在另一个终端，输入命令初始化数据库：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>python manage.py syncdb
+</code></pre></div>
+<p>这里会提示你是否创建一个超级用户，输入yes，再输入 email 和密码，当超级用户创建成功了的时候，再到浏览器里输入 <a href="http://127.0.0.1:8000/admin">http://127.0.0.1:8000/admin</a> 这时就可以进行站点管理了！</p>
+
+<p>注意：提示需要创建超级用户，是因为 settings.py 中默认安装了 <code class="prettyprint">django.contrib.admin</code>、<code class="prettyprint">django.contrib.auth</code>、<code class="prettyprint">django.contrib.sessions</code> 等应用模块。</p>
+
+<h1 id="3.-创建-todo-app">3. 创建 todo app</h1>
+
+<p>在终端输入：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd </span>todo
+<span class="nv">$ </span>python manage.py startapp todo
+</code></pre></div>
+<p>如果操作成功，你会在 todo_site 文件夹下看到已经多了一个叫 todo 的文件夹，目录结构如下：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">.
+├── manage.py
+├── todo_site
+│   ├── __init__.py
+│   ├── __init__.pyc
+│   ├── settings.py
+│   ├── settings.pyc
+│   ├── urls.py
+│   └── wsgi.py
+└── todo
+    ├── __init__.py
+    ├── admin.py
+    ├── migrations
+    │   └── __init__.py
+    ├── models.py
+    ├── tests.py
+    └── views.py
+
+3 directories, 13 files
+</code></pre></div>
+<h1 id="4.-模型">4. 模型</h1>
+
+<ul>
+<li>每一个 Django Model 都继承自 django.db.models.Model</li>
+<li>在 Model 当中每一个属性 attribute 都代表一个 database field</li>
+<li>通过 Django Model API 可以执行数据库的增删改查, 而不需要写一些数据库的查询语句</li>
+</ul>
+
+<p>打开 todo 文件夹下的 models.py 文件。创建两个模型以及注册后台的管理：</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">todo.models</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
+
+<span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="c"># Create your models here.</span>
+<span class="k">class</span> <span class="nc">List</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+    <span class="n">slug</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">SlugField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">editable</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">group</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Group</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">ordering</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;name&quot;</span><span class="p">]</span>
+        <span class="n">verbose_name_plural</span> <span class="o">=</span> <span class="s">&quot;Lists&quot;</span>
+
+        <span class="c"># Prevents (at the database level) creation of two lists with the same name in the same group</span>
+        <span class="n">unique_together</span> <span class="o">=</span> <span class="p">(</span><span class="s">&quot;group&quot;</span><span class="p">,</span> <span class="s">&quot;slug&quot;</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Item</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">140</span><span class="p">)</span>
+    <span class="nb">list</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">List</span><span class="p">)</span>
+    <span class="n">created_date</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateField</span><span class="p">(</span><span class="n">auto_now</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">auto_now_add</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">due_date</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateField</span><span class="p">(</span><span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="p">)</span>
+    <span class="n">completed</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">()</span>
+    <span class="n">completed_date</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateField</span><span class="p">(</span><span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">created_by</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s">&#39;todo_created_by&#39;</span><span class="p">)</span>
+    <span class="n">assigned_to</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s">&#39;todo_assigned_to&#39;</span><span class="p">)</span>
+    <span class="n">note</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">priority</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">PositiveIntegerField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">ordering</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;priority&quot;</span><span class="p">]</span>
+
+<span class="k">class</span> <span class="nc">Comment</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Not using Django&#39;s built-in comments because we want to be able to save</span>
+<span class="sd">    a comment and change task details at the same time. Rolling our own since it&#39;s easy.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">author</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">User</span><span class="p">)</span>
+    <span class="n">task</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Item</span><span class="p">)</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">)</span>
+    <span class="n">body</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s"> - </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">author</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">date</span><span class="p">,</span>
+        <span class="p">)</span>                
+</code></pre></div>
+<p>然后在 settings.py 中安装模型：</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s">&#39;django.contrib.admin&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.contrib.auth&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.contrib.contenttypes&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.contrib.sessions&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.contrib.messages&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.contrib.staticfiles&#39;</span><span class="p">,</span>
+    <span class="s">&#39;todo&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>用下面的命令验证模型的有效性：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>python manage.py validate
+</code></pre></div>
+<p>validate 命令检查你的模型的语法和逻辑是否正确。 如果一切正常，你会看到 <code class="prettyprint">System check identified no issues (0 silenced).</code> 消息。如果出错，请检查你输入的模型代码。 错误输出会给出非常有用的错误信息来帮助你修正你的模型。</p>
+
+<p>一旦你觉得你的模型可能有问题，运行 <code class="prettyprint">python manage.py validate</code> 。 它可以帮助你捕获一些常见的模型定义错误。</p>
+
+<p>模型确认没问题了，运行下面的命令来生成 CREATE TABLE 语句：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>python manage.py sqlall todo
+</code></pre></div>
+<p>在这个命令行中，todo 是 app 的名称。 和你运行 <code class="prettyprint">manage.py startapp</code> 中的一样。执行之后，如果输出如下：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">CommandError: App &#39;todo&#39; has migrations. Only the sqlmigrate and sqlflush commands can be used when an app has migrations.
+</code></pre></div>
+<p>则，执行数据迁移：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>python manage.py makemigrations
+<span class="nv">$ </span>python manage.py migrate
+</code></pre></div>
+<p>最后同步数据库：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">python manage.py syncdb
+</code></pre></div>
+<h1 id="5.-视图和url配置">5. 视图和URL配置</h1>
+
+<p>Django 中 views 里面的代码就是一个一个函数逻辑，处理客户端(浏览器)发送的HTTPRequest，然后返回HTTPResponse。</p>
+
+<p>创建 <code class="prettyprint">view.py</code> 文件并添加如下内容：</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
+<span class="k">def</span> <span class="nf">hello</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="s">&#39;hello, world!&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p>在 <code class="prettyprint">urls.py</code> 中添加一个 url 映射：</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">django.conf.urls</span> <span class="kn">import</span> <span class="n">patterns</span><span class="p">,</span> <span class="n">include</span><span class="p">,</span> <span class="n">url</span>
+<span class="kn">from</span> <span class="nn">view</span> <span class="kn">import</span> <span class="n">hello</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="n">patterns</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">,</span>
+    <span class="n">url</span><span class="p">(</span><span class="s">r&#39;^hello/$&#39;</span><span class="p">,</span> <span class="n">hello</span><span class="p">),</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>在上面视图文件中，三我们只是告诉 Django，所有指向 URL <code class="prettyprint">/hello/</code> 的请求都应由 hello 这个视图函数来处理。</p>
+
+<p>Django 在检查 URL 模式前，移除每一个申请的URL开头的斜杠(<code class="prettyprint">/</code>)。 这意味着我们为 <code class="prettyprint">/hello/</code> 写URL模式不用包含斜杠(<code class="prettyprint">/</code>)。</p>
+
+<p>模式包含了一个尖号(<code class="prettyprint">^</code>)和一个美元符号(<code class="prettyprint">$</code>)。这些都是正则表达式符号，并且有特定的含义： <sup>要求表达式对字符串的头部进行匹配，$符号则要求表达式对字符串的尾部进行匹配。</sup></p>
+
+<p>如果你访问 <code class="prettyprint">/hello</code>，默认会重定向到末尾带有反斜杠的请求上去，这是受配置文件setting中<code class="prettyprint">APPEND_SLASH</code>项控制的。</p>
+
+<p>如果你是喜欢所有URL都以 &#39;/&#39;结尾的人（Django开发者的偏爱），那么你只需要在每个 URL 后添加斜杠，并且设置 <code class="prettyprint">APPEND_SLASH</code> 为 &quot;True&quot;。如果不喜欢URL以斜杠结尾或者根据每个 URL 来决定，那么需要设置 <code class="prettyprint">APPEND_SLASH</code> 为 &quot;False&quot;，并且根据你自己的意愿来添加结尾斜杠/在URL模式后。</p>
+
+<h2 id="正则表达式">正则表达式</h2>
+
+<p>正则表达式是通用的文本模式匹配的方法。 Django URLconfs 允许你使用任意的正则表达式来做强有力的 URL 映射，不过通常你实际上可能只需要使用很少的一部分功能。这里是一些基本的语法。</p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">符号</th>
+<th style="text-align: left">匹配</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">.</td>
+<td style="text-align: left">任意单一字符</td>
+</tr>
+<tr>
+<td style="text-align: left">\d</td>
+<td style="text-align: left">任意一位数字</td>
+</tr>
+<tr>
+<td style="text-align: left">[A-Z]</td>
+<td style="text-align: left">A 到 Z中任意一个字符（大写）</td>
+</tr>
+<tr>
+<td style="text-align: left">[a-z]</td>
+<td style="text-align: left">a 到 z中任意一个字符（小写）</td>
+</tr>
+<tr>
+<td style="text-align: left">[A-Za-z]</td>
+<td style="text-align: left">a 到 z中任意一个字符（不区分大小写）</td>
+</tr>
+<tr>
+<td style="text-align: left">+</td>
+<td style="text-align: left">匹配一个或更多 (例如, \d+ 匹配一个或 多个数字字符)</td>
+</tr>
+<tr>
+<td style="text-align: left">[<sup>/]+</sup></td>
+<td style="text-align: left">一个或多个不为‘/’的字符</td>
+</tr>
+<tr>
+<td style="text-align: left">*</td>
+<td style="text-align: left">零个或一个之前的表达式（例如：\d? 匹配零个或一个数字）</td>
+</tr>
+<tr>
+<td style="text-align: left">*</td>
+<td style="text-align: left">匹配0个或更多 (例如, \d* 匹配0个 或更多数字字符)</td>
+</tr>
+<tr>
+<td style="text-align: left">{1,3}</td>
+<td style="text-align: left">介于一个和三个（包含）之前的表达式（例如，\d{1,3}匹配一个或两个或三个数字）</td>
+</tr>
+</tbody></table>
+
+<p>有关正则表达式的更多内容，请访问<a href="http://www.djangoproject.com/r/python/re-module/">http://www.djangoproject.com/r/python/re-module/</a></p>
+
+<h2 id="django-是怎么处理请求的">Django 是怎么处理请求的</h2>
+
+<p>当你运行 <code class="prettyprint">python manage.py runserver</code>，脚本将在于 manage.py 同一个目录下查找名为 <code class="prettyprint">setting.py</code> 的文件。这个文件包含了所有有关这个 Django 项目的配置信息，均大写： <code class="prettyprint">TEMPLATE_DIRS</code> ，<code class="prettyprint">DATABASE_NAME</code> 等。 最重要的设置时 <code class="prettyprint">ROOT_URLCONF</code>，它将作为 URLconf 告诉 Django 在这个站点中那些 Python 的模块将被用到。</p>
+
+<p>打开文件 <code class="prettyprint">settings.py</code> 你将看到如下：</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">ROOT_URLCONF</span> <span class="o">=</span> <span class="s">&#39;todo.urls&#39;</span>
+</code></pre></div>
+<p>当访问 <code class="prettyprint">/index1/</code> 时，Django 根据 <code class="prettyprint">ROOT_URLCONF</code> 的设置装载 URLconf 。然后按顺序逐个匹配 URLconf 里的 URLpatterns，直到找到一个匹配的。 当找到这个匹配的 URLpatterns 就调用相关联的view函数，并把 HttpRequest 对象作为第一个参数。一个视图功能必须返回一个 HttpResponse，Django 将转换 Python 的对象到一个合适的带有 HTTP 头和 body 的 Web Response。</p>
+
+<h2 id="动态内容">动态内容</h2>
+
+<p>接下来创建动态内容，修改 todo/views.py 内容如下：</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="k">def</span> <span class="nf">hello</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="s">&quot;Hello world&quot;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">current_datetime</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+    <span class="n">html</span> <span class="o">=</span> <span class="s">&quot;&lt;html&gt;&lt;body&gt;It is now </span><span class="si">%s</span><span class="s">.&lt;/body&gt;&lt;/html&gt;&quot;</span> <span class="o">%</span> <span class="n">now</span>
+    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">html</span><span class="p">)</span>
+</code></pre></div>
+<p>上面添加了一个 <code class="prettyprint">current_datetime</code> 方法，返回值是一个动态的 html 内容。该方法没有接收参数，我们可以再添加一个方法：</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">hours_ahead</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">offset</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">offset</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">Http404</span><span class="p">()</span>
+    <span class="n">dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">+</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="n">offset</span><span class="p">)</span>
+    <span class="n">html</span> <span class="o">=</span> <span class="s">&quot;&lt;html&gt;&lt;body&gt;In </span><span class="si">%s</span><span class="s"> hour(s), it will be </span><span class="si">%s</span><span class="s">.&lt;/body&gt;&lt;/html&gt;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">html</span><span class="p">)</span>
+</code></pre></div>
+<p>这个方法接收一个整数型参数，将当期时间加上指定参数的小时数，返回到前台页面。</p>
+
+<p>增加了两个方法后，todo_site/urls.py 修改成如下：</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">django.conf.urls.defaults</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">todo.views</span> <span class="kn">import</span> <span class="n">hello</span><span class="p">,</span> <span class="n">current_datetime</span><span class="p">,</span> <span class="n">hours_ahead</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="n">patterns</span><span class="p">(</span>
+    <span class="s">&#39;&#39;</span><span class="p">,</span>
+    <span class="n">url</span><span class="p">(</span><span class="s">r&#39;^admin/(.*)&#39;</span><span class="p">,</span> <span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">root</span><span class="p">),</span>
+    <span class="n">url</span><span class="p">(</span><span class="s">r&#39;^hello/$&#39;</span><span class="p">,</span> <span class="n">hello</span><span class="p">),</span>
+    <span class="n">url</span><span class="p">(</span><span class="s">r&#39;^time/$&#39;</span><span class="p">,</span> <span class="n">current_datetime</span><span class="p">),</span>
+    <span class="n">url</span><span class="p">(</span><span class="s">r&#39;^time/plus/(\d{1,2})/$&#39;</span><span class="p">,</span> <span class="n">hours_ahead</span><span class="p">),</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>查看第三个 url 表达式，可以发现正则匹配的内容会作为参数传递到 <code class="prettyprint">hours_ahead</code> 方法里。</p>
+
+<p>另外你访问 <a href="http://localhost:8000/time/plus/2/">http://localhost:8000/time/plus/2/</a> ，会发现时区似乎设置不对。解决办法是修改 settings.py 中的 <code class="prettyprint">TIME_ZONE</code> 值为 <code class="prettyprint">Asia/Shanghai</code> 即可。</p>
+
+<p>接下来创建一个页面展示所有的 Item，名称为 item-list.html 该页面保存在 todo_site/todo/templates/ 目录下，内容如下：</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;h2&gt;</span>todo<span class="nt">&lt;/h2&gt;</span>
+</code></pre></div>
+<p>然后在 todo/views.py 中增加一个方法：</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
+<span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render_to_response</span>
+<span class="kn">from</span> <span class="nn">models</span> <span class="kn">import</span> <span class="n">Item</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="c"># Create your views here.</span>
+
+<span class="k">def</span> <span class="nf">hello</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="s">&quot;Hello world&quot;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">current_datetime</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+    <span class="n">html</span> <span class="o">=</span> <span class="s">&quot;&lt;html&gt;&lt;body&gt;It is now </span><span class="si">%s</span><span class="s">.&lt;/body&gt;&lt;/html&gt;&quot;</span> <span class="o">%</span> <span class="n">now</span>
+    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">html</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">hours_ahead</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">offset</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">offset</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">Http404</span><span class="p">()</span>
+    <span class="n">dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">+</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="n">offset</span><span class="p">)</span>
+    <span class="n">html</span> <span class="o">=</span> <span class="s">&quot;&lt;html&gt;&lt;body&gt;In </span><span class="si">%s</span><span class="s"> hour(s), it will be </span><span class="si">%s</span><span class="s">.&lt;/body&gt;&lt;/html&gt;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">html</span><span class="p">)</span>  
+
+<span class="k">def</span> <span class="nf">list_item</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">items</span> <span class="o">=</span> <span class="n">Item</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">render_to_response</span><span class="p">(</span><span class="s">&#39;item-list.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s">&#39;items&#39;</span><span class="p">:</span> <span class="n">items</span><span class="p">})</span>
+</code></pre></div>
+<p>因为用到了模板，需要设置模板位置，在 settings.py 中添加下面代码：</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">TEMPLATE_DIRS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="c"># Put strings here, like &quot;/home/html/django_templates&quot; or &quot;C:/www/django/templates&quot;.</span>
+    <span class="c"># Always use forward slashes, even on Windows.</span>
+    <span class="c"># Don&#39;t forget to use absolute paths, not relative paths.</span>
+    <span class="s">&#39;/Users/june/workspace/pythonProjects/todo_site/todo/templates&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>或者，使用编码的方式：</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">TEMPLATE_DIRS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASE_DIR</span><span class="p">,</span><span class="s">&#39;templates&#39;</span><span class="p">),</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>在 todo/urls.py 添加一个映射：</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">django.conf.urls</span> <span class="kn">import</span> <span class="n">patterns</span><span class="p">,</span> <span class="n">include</span><span class="p">,</span> <span class="n">url</span>
+<span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
+<span class="kn">from</span> <span class="nn">todo.views</span> <span class="kn">import</span> <span class="n">hello</span><span class="p">,</span> <span class="n">current_datetime</span><span class="p">,</span> <span class="n">hours_ahead</span><span class="p">,</span> <span class="n">list_item</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="n">patterns</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">,</span>
+    <span class="c"># Examples:</span>
+    <span class="c"># url(r&#39;^$&#39;, &#39;todo.views.home&#39;, name=&#39;home&#39;),</span>
+    <span class="c"># url(r&#39;^blog/&#39;, include(&#39;blog.urls&#39;)),</span>
+
+    <span class="n">url</span><span class="p">(</span><span class="s">r&#39;^admin/&#39;</span><span class="p">,</span> <span class="n">include</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">urls</span><span class="p">)),</span>
+
+    <span class="n">url</span><span class="p">(</span><span class="s">r&#39;^hello/$&#39;</span><span class="p">,</span> <span class="n">hello</span><span class="p">),</span>
+    <span class="n">url</span><span class="p">(</span><span class="s">r&#39;^time/$&#39;</span><span class="p">,</span> <span class="n">current_datetime</span><span class="p">),</span>
+    <span class="n">url</span><span class="p">(</span><span class="s">r&#39;^time/plus/(\d{1,2})/$&#39;</span><span class="p">,</span> <span class="n">hours_ahead</span><span class="p">),</span>
+    <span class="n">url</span><span class="p">(</span><span class="s">r&#39;^item/list/$&#39;</span><span class="p">,</span> <span class="n">list_item</span><span class="p">),</span>
+
+<span class="p">)</span>
+</code></pre></div>
+<p>在浏览器里访问 <a href="http://127.0.0.1:8000/item/list/">http://127.0.0.1:8000/item/list/</a></p>
+
+<h1 id="6.-admin">6. Admin</h1>
+
+<p>Django有一个优秀的特性, 内置了Django admin后台管理界面, 方便管理者进行添加和删除网站的内容.</p>
+
+<p>新建的项目系统已经为我们设置好了后台管理功能，见 todo/settings.py：</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s">&#39;django.contrib.admin&#39;</span><span class="p">,</span> <span class="c">#默认添加后台管理功能</span>
+    <span class="s">&#39;django.contrib.auth&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.contrib.contenttypes&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.contrib.sessions&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.contrib.messages&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.contrib.staticfiles&#39;</span><span class="p">,</span>
+    <span class="s">&#39;todo&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>同时也已经添加了进入后台管理的 url, 可以在  todo/urls.py 中查看：</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">url</span><span class="p">(</span><span class="s">r&#39;^admin/&#39;</span><span class="p">,</span> <span class="n">include</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">urls</span><span class="p">)),</span> <span class="c">#可以使用设置好的url进入网站后台</span>
+</code></pre></div>
+<p>使用如下命令账号创建超级用户(如果使用了 <code class="prettyprint">python manage.py syncdb</code> 会要求你创建一个超级用户)</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">python</span> <span class="n">manage</span><span class="o">.</span><span class="n">py</span> <span class="n">createsuperuser</span>
+<span class="n">Username</span> <span class="p">(</span><span class="n">leave</span> <span class="n">blank</span> <span class="n">to</span> <span class="n">use</span> <span class="s">&#39;root&#39;</span><span class="p">):</span> <span class="n">root</span>
+<span class="n">Email</span> <span class="n">address</span><span class="p">:</span>
+<span class="n">Password</span><span class="p">:</span>
+<span class="n">Password</span> <span class="p">(</span><span class="n">again</span><span class="p">):</span>
+<span class="n">Superuser</span> <span class="n">created</span> <span class="n">successfully</span><span class="o">.</span>
+</code></pre></div>
+<p>输入用户名, 邮箱, 密码就能够创建一个超级用户 现在可以在浏览器中输入 <a href="http://127.0.0.1:8000/admin">http://127.0.0.1:8000/admin</a> ，然后输入账户和密码进入后台管理</p>
+
+<p>但是你会发现并没有数据库信息的增加和删除, 现在我们编辑 todoapp/admin.py，将三个 model 注册到 admin 应用中去，todoapp/admin.py 修改成如下：</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
+<span class="kn">from</span> <span class="nn">todo.models</span> <span class="kn">import</span> <span class="n">Item</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Comment</span>
+
+<span class="c"># Register your models here.</span>
+
+<span class="k">class</span> <span class="nc">ItemAdmin</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">ModelAdmin</span><span class="p">):</span>
+    <span class="n">list_display</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;title&#39;</span><span class="p">,</span> <span class="s">&#39;list&#39;</span><span class="p">,</span> <span class="s">&#39;priority&#39;</span><span class="p">,</span> <span class="s">&#39;due_date&#39;</span><span class="p">)</span>
+    <span class="n">list_filter</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;list&#39;</span><span class="p">,)</span>
+    <span class="n">ordering</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;priority&#39;</span><span class="p">,)</span>
+    <span class="n">search_fields</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,)</span>
+
+<span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">List</span><span class="p">)</span>
+<span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Comment</span><span class="p">)</span>
+<span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Item</span><span class="p">,</span> <span class="n">ItemAdmin</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="使用第三方插件">使用第三方插件</h2>
+
+<p>Django现在已经相对成熟, 已经有许多不错的可以使用的第三方插件可以使用, 这些插件各种各样, 现在我们使用一个第三方插件使后台管理界面更加美观, 目前大部分第三方插件可以在 <a href="https://www.djangopackages.com/">Django Packages</a> 中查看，尝试使用 <a href="https://github.com/douglasmiranda/django-admin-bootstrap">django-admin-bootstrap</a> 美化后台管理界面。</p>
+
+<p>安装：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>pip install bootstrap-admin
+</code></pre></div>
+<p>然后在 todo/settings.py 中修改 INSTALLED_APPS：</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s">&#39;bootstrap_admin&#39;</span><span class="p">,</span>  <span class="c">#一定要放在`django.contrib.admin`前面</span>
+    <span class="s">&#39;django.contrib.admin&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.contrib.auth&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.contrib.contenttypes&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.contrib.sessions&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.contrib.messages&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.contrib.staticfiles&#39;</span><span class="p">,</span>
+    <span class="s">&#39;todo&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">global_settings</span>
+<span class="n">TEMPLATE_CONTEXT_PROCESSORS</span> <span class="o">=</span> <span class="n">global_settings</span><span class="o">.</span><span class="n">TEMPLATE_CONTEXT_PROCESSORS</span> <span class="o">+</span> <span class="p">(</span>
+    <span class="s">&#39;django.core.context_processors.request&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">BOOTSTRAP_ADMIN_SIDEBAR_MENU</span> <span class="o">=</span> <span class="bp">True</span>
+</code></pre></div>
+<p>保存后，再次刷新页面，访问 <a href="http://127.0.0.1:8000/admin">http://127.0.0.1:8000/admin</a>。</p>
+
+<h1 id="7.-总结">7. 总结</h1>
+
+<p>通过上面的介绍，对 django 的安装、运行以及如何创建视图和模型有了一个清晰的认识，接下来就可以深入的学习 django 的模板、持久化、中间件、国际化等知识。</p>
+
+<h1 id="8.-参考文章">8. 参考文章</h1>
+
+<ul>
+<li><a href="http://markchen.me/django-instance-tutorial-blog-1/">django实例教程–blog(1)</a></li>
+<li><a href="http://djangobook.py3k.cn/2.0/">The Django book 2.0</a></li>
+<li><a href="http://andrew-liu.gitbooks.io/django-blog/content/">Django搭建简易博客</a></li>
+</ul>
+</div>
+
+
+      <div id="pay" style="text-align:center;">
+        ----EOF-----
+        <br>
+        <section>
+  <h4>Sponsor</h4>
+	<img src="http://javachen-rs.qiniudn.com/images/alipay.png" width="150/">
+  <p class="small">觉得此博客对你有帮助，支付宝扫码赞助吧</p>
+</section>
+
+      </div>
+
+      <p class="meta">
+      	
+            Categories:
+      	    
+          	<a class="btn btn-default btn-xs" href="/categories.html#python">python</a>
+          
+      	
+
+      	
+            Tags:
+      	    
+          	<a class="btn btn-default btn-xs" href="/tags.html#python">python</a>
+          
+          	<a class="btn btn-default btn-xs" href="/tags.html#django">django</a>
+          
+      	
+      </p>
+	</article>
+
+	<ul class="pager">
+	  
+	  <li class="previous"><a class="btn btn-xs" href="/2014/01/09/after-reinstall-the-system" title="重装Linux-Mint系统之后">&larr; Prev</a></li>
+	  
+	  
+	  <li class="next"><a class="btn btn-xs" href="/2014/01/13/about-sitemesh" title="SiteMesh介绍">Next &rarr;</a></li>
+	  
+	</ul>
+
+  
+<div id="comments">
+  <div class="ds-thread" data-thread-key="/2014/01/11/how-to-create-a-django-site"  data-title="如何创建一个Django网站 - 小天的个人博客"></div>
+</div>
+
+
+
+</div>
+
+        </div>
+      </div>
+
+      <footer class="footer text-center">
+  <p>&copy; 2009-2015 <a href="/" target="_blank" title="86后，工作在深圳；Java程序员、Hadoop工程师；主要关注Java、Hadoop、Kettle、关注大数据处理技术。">小天</a>. With Help from <a href="//jekyllrb.com/" target="_blank" title="Transform your plain text into static websites and blogs.">Jekyll</a> and <a href="//getbootstrap.com/" target="_blank" title="Bootstrap is the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web.">Bootstrap</a>, theme from <a href="http://havee.me/" target="_blank" title="http://havee.me/">Havee</a>.
+
+  <span style="float:right;"><a href="/about.html">About</a></span>
+
+	
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+  </p>
+  <div id="toTop" style="display: block;">
+    <a href="#">▲</a><a href="#footer">▼</a>
+  </div>
+</footer>
+
+    </div>
+
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/core.js"></script>
+
+    
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+    
+    <!-- duoshuo Begin -->
+    <script type="text/javascript">
+      var duoshuoQuery = {short_name:"xiaotian120"};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] ||
+        document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+    </script>
+    <!-- duoshuo End -->
+    
+  </body>
+</html>

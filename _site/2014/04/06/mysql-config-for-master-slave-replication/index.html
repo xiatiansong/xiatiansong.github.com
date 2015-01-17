@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>RHEL系统安装MySQL主备环境 - 小天的个人博客</title>
+  <meta name="description" content="本文介绍如何在RHEL系统安装MySQL主备环境">
+  <meta name="keywords" content="java, hadoop, hive, hbase, spark, linux, scala, python, mysql">
+  <meta name="author" content="小天">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="360-site-verification" content="9b7a87a1d52051c96644f0a9b8b79898" />
+  <meta name="sogou_site_verification" content="ofwXWFdthV"/>
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" >
+
+  <link rel="canonical" href="http://blog.xiaotian.com/2014/04/06/mysql-config-for-master-slave-replication">
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css" media="all">
+  <link rel="stylesheet" href="/static/css/style.css" media="all">
+  <link rel="stylesheet" href="/static/css/pygments.css" media="all">
+  <link rel="stylesheet" href="/static/css/font-awesome.css" media="all">
+
+  <!-- atom & rss feed -->
+  <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="小天的个人博客 RSS Feed">
+  <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="小天的个人博客 ATOM Feed">
+</head>
+
+
+  <body>
+    <div class="container">
+      <!--[if lte IE 9]>
+<div class="alert alert-warning">
+  <p>Your Internet Explorer is not supported. Please upgrade your Internet Explorer to version 9+, or use latest <a href="http://www.google.com/chrome/" target="_blank" class="alert-link">Google chrome</a>、<a href="http://www.mozilla.org/firefox/" target="_blank" class="alert-link">Mozilla Firefox</a>.</p>
+  <p>If you are using IE 9 or later, make sure you <a href="http://windows.microsoft.com/en-us/internet-explorer/use-compatibility-view#ie=ie-8" target="_blank" class="alert-link">turn off "Compatibility view"</a>.</p>
+</div>
+<![endif]-->
+<header class="header">
+  <div class="title"><a title="小天的个人博客" href="/">小天的个人博客</a></div>
+  <ul class="nav navbar-nav navbar-right visible-lg visible-md">
+    <li>
+    <form id="search-form" class="form-group has-success visible-lg" role="form">
+      <input type="text" class="form-control input-sm" placeholder="Search" id="query" style="width: 160px;">
+    </form>
+    </li>
+    <li><a href="/archive.html" title="Archive"><span class='fa fa-archive fa-2x'></span></a></li>
+    <li><a href="/categories.html" title="Categories"><span class='fa fa-navicon fa-2x'></span></a></li>
+    <li><a href="/tags.html" title="Tags"><span class='fa fa-tags fa-2x'></span></a></li>
+    <li><a href="/about.html" title="About"><span class='fa fa-user fa-2x'></span></a></li>
+    
+    <li><a href="https://github.com/wuskyfantasy" target="_blank" title="Github"><span class='fa fa-github fa-2x'></span></a></li>
+    
+    
+    
+    
+    
+    <li><a href="http://weibo.com/xiaotian120" target="_blank" title="Weibo"><span class="fa fa-weibo fa-2x"></span></a></li>
+    
+
+    <li><a href="/rss.xml" target="_blank" title="RSS"><span class='fa fa-rss fa-2x'></span></a></li>
+  </ul>
+</header>
+
+
+      <div class="wrapper">
+        <div class="row">
+          <div id="search-loader" style="display:none;text-align:center">
+            <img src="http://javachen-rs.qiniudn.com/images/loading.gif">
+          </div>
+          <div class="col-md-12">
+  <article class="news-item">
+
+      <h2  class="news-item"> RHEL系统安装MySQL主备环境  
+        <time class="small">2014.04.06</time>
+      </h2>
+
+      <div><h1 id="环境准备">环境准备</h1>
+
+<ul>
+<li>操作系统： rhel6.4</li>
+<li>数据库： percona 5.6.14</li>
+<li>使用3306端口保证端口未被占用，selinux关闭状态</li>
+</ul>
+
+<h1 id="原理说明">原理说明</h1>
+
+<p>mysql的复制（Replication)是一个异步的复制，从一个mysql instance(称之为master)复制到另一个mysql instance(称之为slave).实现整个复制操作主要由三个进程完成的，其中俩个进程在slave(sql进程和io进程），另外一个进程在master（IO进程）上。</p>
+
+<p>要实施复制，首先要打开master端的binary log(bin-log)功能，否则无法实现。因为整个复制过程实际上就是slave从master端获取该日志然后在自己升上完全顺序的执行日志中所记录的各种操作。</p>
+
+<h1 id="配置说明">配置说明</h1>
+
+<h2 id="1.-配置master并启动">1. 配置master并启动</h2>
+
+<p>拷贝配置文件：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">cp /usr/share/doc/Percona-Server-server-56-5.6.14/my-default.cnf /etc/my.cnf
+</code></pre></div>
+<p>编辑<code class="prettyprint">/etc/my.cnf</code>：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">[mysqld]
+explicit_defaults_for_timestamp=true   ##开启查询缓存
+# log_bin
+log_bin = mysql-bin
+server_id = 36
+</code></pre></div>
+<p>启动mysql服务：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">service mysql start 
+</code></pre></div>
+<h2 id="2.-配置slave并启动">2. 配置slave并启动</h2>
+
+<p>拷贝配置文件：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">cp /usr/share/doc/Percona-Server-server-56-5.6.14/my-default.cnf /etc/my.cnf
+</code></pre></div>
+<p>编辑<code class="prettyprint">/etc/my.cnf</code>：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">[mysqld]
+explicit_defaults_for_timestamp=true 
+log_bin = mysql-bin
+server_id = 37
+relay_log=/var/lib/mysql/mysql-relay-bin ##传送过来的日志存放目录
+log_slave_updates=1
+read_only=1 ##这个参数只对普通用户生效，超级用户和复制用户无效
+</code></pre></div>
+<p>启动mysql服务：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">service mysql start 
+</code></pre></div>
+<h2 id="3.-主从分别授权用户">3. 主从分别授权用户</h2>
+
+<p>在master,slave分别执行以下命令：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">#mysql
+mysql-&gt;grant replication slave,replication client on *.* to repl@&#39;%&#39; identified by  &#39;123456&#39;;
+mysql-&gt;flush priviledges;
+</code></pre></div>
+<h2 id="4.-主库数据备份到从库">4. 主库数据备份到从库</h2>
+
+<p>master上运行：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"># mysqldump -A &gt;all.sql
+</code></pre></div>
+<p>slave上运行：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"># mysql &lt;all.sql
+</code></pre></div>
+<h2 id="5.-根据主状态启动从库">5. 根据主状态启动从库</h2>
+
+<p>(1) 查询主库状态</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">mysql-&gt;show master status \G
+ *************************** 1. row ***************************
+             File: mysql-bin.000001
+         Position: 697
+     Binlog_Do_DB: 
+ Binlog_Ignore_DB: 
+Executed_Gtid_Set: 
+1 row in set (0.00 sec)
+</code></pre></div>
+<p>(2) 从库启动复制</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">#mysql
+mysql-&gt;change master to
+        -&gt;master_host=&quot;192.168.0.114&quot;,master_port=3306,master_user=&quot;repl&quot;,master_password=&quot;123456&quot;,master_log_file=&quot;mysql-bin.000001&quot;,master_log_pos=697;
+mysql-&gt;start slave;
+</code></pre></div>
+<p>(3) 从库状态</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">mysql&gt; show slave status \G
+*************************** 1. row ***************************
+               Slave_IO_State: Waiting for master to send event
+                  Master_Host: 192.168.0.114
+                  Master_User: repl
+                  Master_Port: 3306
+                Connect_Retry: 60
+              Master_Log_File: mysql-bin.000001
+          Read_Master_Log_Pos: 697
+               Relay_Log_File: mysql-relay-bin.000002
+                Relay_Log_Pos: 563
+        Relay_Master_Log_File: mysql-bin.000001
+         ....Exec_Master_Log_Pos: 697
+         ....
+</code></pre></div>
+<h2 id="6.-主从用于复制的进程">6. 主从用于复制的进程</h2>
+
+<p>在master上查看进程：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">mysql-&gt;show processlist
+</code></pre></div>
+<p>1个如下状态的进程:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">Master has sent all binlog to slave; waiting for binlog to be updated
+</code></pre></div>
+<p>在slave上查看进程：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">mysql-&gt;show processlist
+</code></pre></div>
+<p>2个如下状态的进程</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">Waiting for master to send event
+Slave has read all relay log; waiting for the slave I/O thread to update it
+</code></pre></div>
+<h1 id="7.-主从状态监控">7. 主从状态监控</h1>
+
+<p>常规做法是slave上<code class="prettyprint">show slave status\G</code>中的两个变量的差值（<code class="prettyprint">Read_Master_Log_Pos</code>，<code class="prettyprint">Exec_Master_Log_Pos</code>),也可以使用percona提供的工具包<code class="prettyprint">pt-heartbeat</code>。</p>
+
+<h2 id="8.-percona-tookit-安装及pg-heartbeat使用">8. Percona-tookit 安装及pg-heartbeat使用</h2>
+
+<p>工具集中包含<code class="prettyprint">pt-heartbeat</code>, 安装依赖perl-DBD-MySQL， perl-IO-Socket-SSL:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">% rpm -ivh percona-toolkit-2.2.6-1.noarch.rpm
+</code></pre></div>
+<p><strong>pg-heartbeat功能介绍：</strong></p>
+
+<ul>
+<li>监控复制延迟</li>
+<li>测量复制落后时间</li>
+</ul>
+
+<p><em>实现机制：</em></p>
+
+<ul>
+<li>第一步，pt-heartbeat的--update线程会在指定的时间间隔更新一个时间戳。</li>
+<li>第二步，pt-heartbeat的–monitor线程或者–check线程连接到从上检查前面更新的时间戳，和主当地时间做比较，得出时间差。</li>
+</ul>
+
+<p><em>使用例子：</em></p>
+
+<p>1）初始化环境，创建一个后台进程定期更新主上的test库heartbeat表,默认是一秒可以–interval指定，执行后会生成一个heartbeat表，test为需要监控的同步库</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">pt-heartbeat -D test --update -u repl -p 123456 -h 192.168.0.108 --create-table --daemonize
+</code></pre></div>
+<p>2）监控并输出slave落后时间</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">pt-heartbeat -D test --monitor -u repl -p 123456 -h 192.168.0.115
+0.00s [  0.00s,  0.00s,  0.00s ]           ###瞬时延迟 [一分钟平均延迟，五分钟平均延迟，十五分钟平均延迟]
+0.00s [  0.00s,  0.00s,  0.00s ]
+0.00s [  0.00s,  0.00s,  0.00s ]
+</code></pre></div>
+<p>结果如下 会一直输出,断开一下连接得到如下结果，最后同步</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">0.00s [  0.34s,  0.07s,  0.02s ]
+0.00s [  0.00s,  0.07s,  0.02s ]
+</code></pre></div>
+<p>3）只输出瞬时的差值</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">#pt-heartbeat -D test --test -u repl -p 123456 -h 192.168.0.115
+0.00 ###只代表瞬时延迟
+</code></pre></div>
+<h2 id="9.-mysql主从互换">9. mysql主从互换</h2>
+
+<p>(1) 停止从库复制,从新设置状态</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">mysql-&gt;stop slave;
+mysql-&gt;reset master;
+mysql-&gt;reset slave;
+</code></pre></div>
+<p>(2) 如配置文件相同的情况下，配置文件无需更改。否者主备的配置文件交换。</p>
+
+<p>(3) 原先的主变为备</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">mysql-&gt;reset master;
+mysql-&gt;reset slave;
+</code></pre></div>
+<p>从新配置change master to参数</p>
+
+<p>(4) 服务器重启</p>
+
+<p>如原先的主中有bin日志在从上为实现同步，可以认为读取bin日志的内容，在新的主中执行</p>
+</div>
+
+
+      <div id="pay" style="text-align:center;">
+        ----EOF-----
+        <br>
+        <section>
+  <h4>Sponsor</h4>
+	<img src="http://javachen-rs.qiniudn.com/images/alipay.png" width="150/">
+  <p class="small">觉得此博客对你有帮助，支付宝扫码赞助吧</p>
+</section>
+
+      </div>
+
+      <p class="meta">
+      	
+            Categories:
+      	    
+          	<a class="btn btn-default btn-xs" href="/categories.html#database">database</a>
+          
+      	
+
+      	
+            Tags:
+      	    
+          	<a class="btn btn-default btn-xs" href="/tags.html#mysql">mysql</a>
+          
+      	
+      </p>
+	</article>
+
+	<ul class="pager">
+	  
+	  <li class="previous"><a class="btn btn-xs" href="/2014/04/06/install-mysql-on-rhel-system" title="RHEL系统安装MySql">&larr; Prev</a></li>
+	  
+	  
+	  <li class="next"><a class="btn btn-xs" href="/2014/04/07/install-postgresql-on-rhel-system" title="RHEL系统安装PostgreSQL">Next &rarr;</a></li>
+	  
+	</ul>
+
+  
+<div id="comments">
+  <div class="ds-thread" data-thread-key="/2014/04/06/mysql-config-for-master-slave-replication"  data-title="RHEL系统安装MySQL主备环境 - 小天的个人博客"></div>
+</div>
+
+
+
+</div>
+
+        </div>
+      </div>
+
+      <footer class="footer text-center">
+  <p>&copy; 2009-2015 <a href="/" target="_blank" title="86后，工作在深圳；Java程序员、Hadoop工程师；主要关注Java、Hadoop、Kettle、关注大数据处理技术。">小天</a>. With Help from <a href="//jekyllrb.com/" target="_blank" title="Transform your plain text into static websites and blogs.">Jekyll</a> and <a href="//getbootstrap.com/" target="_blank" title="Bootstrap is the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web.">Bootstrap</a>, theme from <a href="http://havee.me/" target="_blank" title="http://havee.me/">Havee</a>.
+
+  <span style="float:right;"><a href="/about.html">About</a></span>
+
+	
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+  </p>
+  <div id="toTop" style="display: block;">
+    <a href="#">▲</a><a href="#footer">▼</a>
+  </div>
+</footer>
+
+    </div>
+
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/core.js"></script>
+
+    
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+    
+    <!-- duoshuo Begin -->
+    <script type="text/javascript">
+      var duoshuoQuery = {short_name:"xiaotian120"};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] ||
+        document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+    </script>
+    <!-- duoshuo End -->
+    
+  </body>
+</html>

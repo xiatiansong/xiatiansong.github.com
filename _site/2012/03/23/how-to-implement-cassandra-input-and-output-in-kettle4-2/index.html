@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>如何在Kettle4.2上面实现cassandra的输入与输出 - 小天的个人博客</title>
+  <meta name="description" content="这是在QQ群里有人问到的一个问题。如何在pdi-ce-4.2.X-stable上面实现cassandra的输入与输出,或是实现hadoop,hbase,mapreduce,mongondb的输入输出?">
+  <meta name="keywords" content="kettle, cassandra, pentaho">
+  <meta name="author" content="小天">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="360-site-verification" content="9b7a87a1d52051c96644f0a9b8b79898" />
+  <meta name="sogou_site_verification" content="ofwXWFdthV"/>
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" >
+
+  <link rel="canonical" href="http://blog.xiaotian.com/2012/03/23/how-to-implement-cassandra-input-and-output-in-kettle4-2">
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css" media="all">
+  <link rel="stylesheet" href="/static/css/style.css" media="all">
+  <link rel="stylesheet" href="/static/css/pygments.css" media="all">
+  <link rel="stylesheet" href="/static/css/font-awesome.css" media="all">
+
+  <!-- atom & rss feed -->
+  <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="小天的个人博客 RSS Feed">
+  <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="小天的个人博客 ATOM Feed">
+</head>
+
+
+  <body>
+    <div class="container">
+      <!--[if lte IE 9]>
+<div class="alert alert-warning">
+  <p>Your Internet Explorer is not supported. Please upgrade your Internet Explorer to version 9+, or use latest <a href="http://www.google.com/chrome/" target="_blank" class="alert-link">Google chrome</a>、<a href="http://www.mozilla.org/firefox/" target="_blank" class="alert-link">Mozilla Firefox</a>.</p>
+  <p>If you are using IE 9 or later, make sure you <a href="http://windows.microsoft.com/en-us/internet-explorer/use-compatibility-view#ie=ie-8" target="_blank" class="alert-link">turn off "Compatibility view"</a>.</p>
+</div>
+<![endif]-->
+<header class="header">
+  <div class="title"><a title="小天的个人博客" href="/">小天的个人博客</a></div>
+  <ul class="nav navbar-nav navbar-right visible-lg visible-md">
+    <li>
+    <form id="search-form" class="form-group has-success visible-lg" role="form">
+      <input type="text" class="form-control input-sm" placeholder="Search" id="query" style="width: 160px;">
+    </form>
+    </li>
+    <li><a href="/archive.html" title="Archive"><span class='fa fa-archive fa-2x'></span></a></li>
+    <li><a href="/categories.html" title="Categories"><span class='fa fa-navicon fa-2x'></span></a></li>
+    <li><a href="/tags.html" title="Tags"><span class='fa fa-tags fa-2x'></span></a></li>
+    <li><a href="/about.html" title="About"><span class='fa fa-user fa-2x'></span></a></li>
+    
+    <li><a href="https://github.com/wuskyfantasy" target="_blank" title="Github"><span class='fa fa-github fa-2x'></span></a></li>
+    
+    
+    
+    
+    
+    <li><a href="http://weibo.com/xiaotian120" target="_blank" title="Weibo"><span class="fa fa-weibo fa-2x"></span></a></li>
+    
+
+    <li><a href="/rss.xml" target="_blank" title="RSS"><span class='fa fa-rss fa-2x'></span></a></li>
+  </ul>
+</header>
+
+
+      <div class="wrapper">
+        <div class="row">
+          <div id="search-loader" style="display:none;text-align:center">
+            <img src="http://javachen-rs.qiniudn.com/images/loading.gif">
+          </div>
+          <div class="col-md-12">
+  <article class="news-item">
+
+      <h2  class="news-item"> 如何在Kettle4.2上面实现cassandra的输入与输出  
+        <time class="small">2012.03.23</time>
+      </h2>
+
+      <div><p>这是在QQ群里有人问到的一个问题。</p>
+
+<p>如何在pdi-ce-4.2.X-stable上面实现cassandra的输入与输出,或是实现hadoop,hbase,mapreduce,mongondb的输入输出?</p>
+
+<p>在kettle中实现cassandra的输入与输出有以下两种方式:</p>
+
+<ul>
+<li>第一种方式:自己编写cassandra输入输出组件</li>
+<li>第二种方式:使用别人编写好的插件,将其集成进来</li>
+</ul>
+
+<p>当然还有第三种方法,直接使用4.3版本的pdi.</p>
+
+<p>第一种方法需要对cassandra很熟悉编写插件才可以做到,第二种方法可以通过拷贝pdi-ce-big-data-4.3.0-preview中的文件来完成.</p>
+
+<p>在pdi-ce-big-data-4.3.0-preview<a href="http://ci.pentaho.com/job/pentaho-big-data-plugin/lastSuccessfulBuild/artifact/pentaho-big-data-plugin/dist/" target="_blank">(下载页面</a>)版本中可以看到kettle开始支持cassandra的输入和输出.</p>
+
+<p>故我们可以将4.3版本中的cassandra相关文件拷贝到4.2.1中.我使用的是pdi-ce-4.2.1-stable.</p>
+
+<p>在pdi-ce-big-data-4.3.0-preview/plugins目录下有以下目录或文件:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">.
+|-- databases
+|-- hour-partitioner.jar
+|-- jobentries
+|-- kettle-gpload-plugin
+|-- kettle-hl7-plugin
+|-- kettle-palo-plugin
+|-- pentaho-big-data-plugin
+|-- repositories
+|-- spoon
+|-- steps
+`-- versioncheck
+</code></pre></div>
+<p>pentaho-big-data-plugin目录是kettle对大数据的集成与支持,我们只需要将该目录拷贝到pdi-ce-4.2.1-stable/plugins目录下即可.最后的结构如下</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">.
+|-- databases
+|-- hour-partitioner.jar
+|-- jobentries
+|   `-- DummyJob
+|       |-- DPL.png
+|       |-- dummyjob.jar
+|       `-- plugin.xml
+|-- pentaho-big-data-plugin
+|   |-- lib
+|   |   |-- apache-cassandra-1.0.0.jar
+|   |   |-- apache-cassandra-thrift-1.0.0.jar
+|   |   |-- aws-java-sdk-1.0.008.jar
+|   |   |-- commons-cli-1.2.jar
+|   |   |-- guava-r08.jar
+|   |   |-- hbase-comparators-TRUNK-SNAPSHOT.jar
+|   |   |-- jline-0.9.94.jar
+|   |   |-- libthrift-0.6.jar
+|   |   |-- mongo-java-driver-2.7.2.jar
+|   |   |-- pig-0.8.1.jar
+|   |   |-- xpp3_min-1.1.4c.jar
+|   |   `-- xstream-1.3.1.jar
+|   `-- pentaho-big-data-plugin-TRUNK-SNAPSHOT.jar
+|-- repositories
+|-- spoon
+|-- steps
+|   |-- DummyPlugin
+|   |   |-- DPL.png
+|   |   |-- dummy.jar
+|   |   `-- plugin.xml
+|   |-- S3CsvInput
+|   |   |-- jets3t-0.7.0.jar
+|   |   |-- plugin.xml
+|   |   |-- S3CIN.png
+|   |   `-- s3csvinput.jar
+|   `-- ShapeFileReader3
+|       |-- plugin.xml
+|       |-- SFR.png
+|       `-- shapefilereader3.jar
+`-- versioncheck
+    |-- kettle-version-checker-0.2.0.jar
+    `-- lib
+    `-- pentaho-versionchecker.jar
+
+13 directories, 29 files
+</code></pre></div>
+<p>启动pdi-ce-4.2.1-stable之后,打开一个转换,在核心对象窗口就可以看到Big Data步骤目录了.<br>
+<div class="pic"><br>
+<a href="http://ww4.sinaimg.cn/mw600/48e24b4cjw1dr9zaa66nbj.jpg" target="_blank"><br>
+<img alt="" src="http://ww4.sinaimg.cn/mw600/48e24b4cjw1dr9zaa66nbj.jpg" title="pdi big data plugin in kette 4.2" class="aligncenter" width="600" height="375" /><br>
+</a><br>
+</div></p>
+
+<p><strong>获取pentaho-big-data-plugin源码</strong><br>
+如果想在eclipse中查看或修改pentaho-big-data-plugin源码,该怎么做呢?<br>
+你可以从<a href="http://ci.pentaho.com/job/pentaho-big-data-plugin/lastSuccessfulBuild/artifact/pentaho-big-data-plugin/dist/pentaho-big-data-plugin-TRUNK-SNAPSHOT-sources.zip" target="_blank">这里</a>下载到源码,然后将src下的文件拷贝到你的pdi-ce-4.2.1-stable源码工程中.</p>
+
+<p>然后,需要在kettle-steps.xml中注册步骤节点<br>
+例如,下面是MongoDbInput步骤的注册方法,请针对不同插件的不同类路径加以修改.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">&lt;step id=&quot;MongoDbInput&quot;&gt;
+&lt;description&gt;i18n:org.pentaho.di.trans.step:BaseStep.TypeLongDesc.MongoDbInput
+&lt;classname&gt;org.pentaho.di.trans.steps.mongodbinput.MongoDbInputMeta
+&lt;category&gt;i18n:org.pentaho.di.trans.step:BaseStep.Category.Input
+&lt;tooltip&gt;i18n:org.pentaho.di.trans.step:BaseStep.TypeTooltipDesc.MongoDbInput
+&lt;iconfile&gt;ui/images/mongodb-input.png
+&lt;/iconfile&gt;&lt;/tooltip&gt;
+&lt;/category&gt;
+&lt;/classname&gt;
+&lt;/description&gt;
+&lt;/step&gt;
+</code></pre></div>
+<div class="note">
+<h>注意:
+由于pdi-ce-4.2.1-stable中存在hive组件,故添加pentaho-big-data-plugin插件之后有可能会出现找不到类的情况,这是由于jar重复版本不一致导致的,按照异常信息,找到重复的jar并按情况删除一个jar包即可.
+</h></div>
+
+<p><strong>扩展阅读:</strong></p>
+
+<ul>
+<li>Pentaho Big Data Plugin <a href="http://wiki.pentaho.com/display/BAD/Getting+Started+for+Java+Developers" target="_blank"><a href="http://wiki.pentaho.com/display/BAD/Getting+Started+for+Java+Developers">http://wiki.pentaho.com/display/BAD/Getting+Started+for+Java+Developers</a></a></li>
+<li>pentaho-big-data-plugin ci
+<a href="http://ci.pentaho.com/job/pentaho-big-data-plugin/lastSuccessfulBuild/artifact/pentaho-big-data-plugin/dist/" target="_blank">http://- - ci.pentaho.com/job/pentaho-big-data-plugin/lastSuccessfulBuild/artifact/pentaho-big-data-plugin/dist/</a></li>
+<li>Pentaho Community Edition (CE) downloads <a href="http://wiki.pentaho.com/display/BAD/Downloads" target="_blank"><a href="http://wiki.pentaho.com/display/BAD/Downloads">http://wiki.pentaho.com/display/BAD/Downloads</a></a></li>
+</ul>
+</div>
+
+
+      <div id="pay" style="text-align:center;">
+        ----EOF-----
+        <br>
+        <section>
+  <h4>Sponsor</h4>
+	<img src="http://javachen-rs.qiniudn.com/images/alipay.png" width="150/">
+  <p class="small">觉得此博客对你有帮助，支付宝扫码赞助吧</p>
+</section>
+
+      </div>
+
+      <p class="meta">
+      	
+            Categories:
+      	    
+          	<a class="btn btn-default btn-xs" href="/categories.html#pentaho">pentaho</a>
+          
+      	
+
+      	
+            Tags:
+      	    
+          	<a class="btn btn-default btn-xs" href="/tags.html#kettle">kettle</a>
+          
+          	<a class="btn btn-default btn-xs" href="/tags.html#cassandra">cassandra</a>
+          
+          	<a class="btn btn-default btn-xs" href="/tags.html#pentaho">pentaho</a>
+          
+      	
+      </p>
+	</article>
+
+	<ul class="pager">
+	  
+	  <li class="previous"><a class="btn btn-xs" href="/2012/02/26/summary-of-the-work-in-2011" title="2011年度年终总结">&larr; Prev</a></li>
+	  
+	  
+	  <li class="next"><a class="btn btn-xs" href="/2012/03/26/hash-and-hash-functions" title="哈希表">Next &rarr;</a></li>
+	  
+	</ul>
+
+  
+<div id="comments">
+  <div class="ds-thread" data-thread-key="/2012/03/23/how-to-implement-cassandra-input-and-output-in-kettle4-2"  data-title="如何在Kettle4.2上面实现cassandra的输入与输出 - 小天的个人博客"></div>
+</div>
+
+
+
+</div>
+
+        </div>
+      </div>
+
+      <footer class="footer text-center">
+  <p>&copy; 2009-2015 <a href="/" target="_blank" title="86后，工作在深圳；Java程序员、Hadoop工程师；主要关注Java、Hadoop、Kettle、关注大数据处理技术。">小天</a>. With Help from <a href="//jekyllrb.com/" target="_blank" title="Transform your plain text into static websites and blogs.">Jekyll</a> and <a href="//getbootstrap.com/" target="_blank" title="Bootstrap is the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web.">Bootstrap</a>, theme from <a href="http://havee.me/" target="_blank" title="http://havee.me/">Havee</a>.
+
+  <span style="float:right;"><a href="/about.html">About</a></span>
+
+	
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+  </p>
+  <div id="toTop" style="display: block;">
+    <a href="#">▲</a><a href="#footer">▼</a>
+  </div>
+</footer>
+
+    </div>
+
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/core.js"></script>
+
+    
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+    
+    <!-- duoshuo Begin -->
+    <script type="text/javascript">
+      var duoshuoQuery = {short_name:"xiaotian120"};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] ||
+        document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+    </script>
+    <!-- duoshuo End -->
+    
+  </body>
+</html>

@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Java笔记：Java内容模型 - 小天的个人博客</title>
+  <meta name="description" content="关于Java内容模型和垃圾回收的过程">
+  <meta name="keywords" content="Java内容模型">
+  <meta name="author" content="小天">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="360-site-verification" content="9b7a87a1d52051c96644f0a9b8b79898" />
+  <meta name="sogou_site_verification" content="ofwXWFdthV"/>
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" >
+
+  <link rel="canonical" href="http://blog.xiaotian.com/2014/04/09/note-about-jvm-memery-model">
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css" media="all">
+  <link rel="stylesheet" href="/static/css/style.css" media="all">
+  <link rel="stylesheet" href="/static/css/pygments.css" media="all">
+  <link rel="stylesheet" href="/static/css/font-awesome.css" media="all">
+
+  <!-- atom & rss feed -->
+  <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="小天的个人博客 RSS Feed">
+  <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="小天的个人博客 ATOM Feed">
+</head>
+
+
+  <body>
+    <div class="container">
+      <!--[if lte IE 9]>
+<div class="alert alert-warning">
+  <p>Your Internet Explorer is not supported. Please upgrade your Internet Explorer to version 9+, or use latest <a href="http://www.google.com/chrome/" target="_blank" class="alert-link">Google chrome</a>、<a href="http://www.mozilla.org/firefox/" target="_blank" class="alert-link">Mozilla Firefox</a>.</p>
+  <p>If you are using IE 9 or later, make sure you <a href="http://windows.microsoft.com/en-us/internet-explorer/use-compatibility-view#ie=ie-8" target="_blank" class="alert-link">turn off "Compatibility view"</a>.</p>
+</div>
+<![endif]-->
+<header class="header">
+  <div class="title"><a title="小天的个人博客" href="/">小天的个人博客</a></div>
+  <ul class="nav navbar-nav navbar-right visible-lg visible-md">
+    <li>
+    <form id="search-form" class="form-group has-success visible-lg" role="form">
+      <input type="text" class="form-control input-sm" placeholder="Search" id="query" style="width: 160px;">
+    </form>
+    </li>
+    <li><a href="/archive.html" title="Archive"><span class='fa fa-archive fa-2x'></span></a></li>
+    <li><a href="/categories.html" title="Categories"><span class='fa fa-navicon fa-2x'></span></a></li>
+    <li><a href="/tags.html" title="Tags"><span class='fa fa-tags fa-2x'></span></a></li>
+    <li><a href="/about.html" title="About"><span class='fa fa-user fa-2x'></span></a></li>
+    
+    <li><a href="https://github.com/wuskyfantasy" target="_blank" title="Github"><span class='fa fa-github fa-2x'></span></a></li>
+    
+    
+    
+    
+    
+    <li><a href="http://weibo.com/xiaotian120" target="_blank" title="Weibo"><span class="fa fa-weibo fa-2x"></span></a></li>
+    
+
+    <li><a href="/rss.xml" target="_blank" title="RSS"><span class='fa fa-rss fa-2x'></span></a></li>
+  </ul>
+</header>
+
+
+      <div class="wrapper">
+        <div class="row">
+          <div id="search-loader" style="display:none;text-align:center">
+            <img src="http://javachen-rs.qiniudn.com/images/loading.gif">
+          </div>
+          <div class="col-md-12">
+  <article class="news-item">
+
+      <h2  class="news-item"> Java笔记：Java内容模型  
+        <time class="small">2014.04.09</time>
+      </h2>
+
+      <div><h1 id="基本概念">基本概念</h1>
+
+<p>《深入理解Java内容模型》详细讲解了java的内存模型，这里对其中的一些基本概念做个简单的笔记。以下内容摘自 <a href="http://www.cnblogs.com/skywang12345/p/3447546.html">《深入理解Java内存模型》读书总结</a></p>
+
+<h2 id="1.-并发">1. 并发</h2>
+
+<p>定义：即，并发(同时)发生。在操作系统中，是指一个时间段中有几个程序都处于已启动运行到运行完毕之间，且这几个程序都是在同一个处理机上运行，但任一个时刻点上只有一个程序在处理机上运行。</p>
+
+<p>并发需要处理两个关键问题：线程之间如何通信及线程之间如何同步。</p>
+
+<ul>
+<li>通信 —— 是指线程之间如何交换信息。在命令式编程中，线程之间的通信机制有两种：共享内存和消息传递。</li>
+<li>同步—— 是指程序用于控制不同线程之间操作发生相对顺序的机制。在Java中，可以通过volatile，synchronized, 锁等方式实现同步。</li>
+</ul>
+
+<h2 id="2.-主内存和本地内存">2. 主内存和本地内存</h2>
+
+<p>主内存 —— 即main memory。在java中，实例域、静态域和数组元素是线程之间共享的数据，它们存储在主内存中。</p>
+
+<p>本地内存 —— 即local memory。 局部变量，方法定义参数 和 异常处理器参数是不会在线程之间共享的，它们存储在线程的本地内存中。</p>
+
+<h2 id="3.-重排序">3. 重排序</h2>
+
+<p>定义：重排序是指“编译器和处理器”为了提高性能，而在程序执行时会对程序进行的重排序。</p>
+
+<p>说明：重排序分为——“编译器”和“处理器”两个方面，而“处理器”重排序又包括“指令级重排序”和“内存的重排序”。</p>
+
+<p>关于重排序，我们需要理解它的思想：为了提高程序的并发度，从而提高性能！但是对于多线程程序，重排序可能会导致程序执行的结果不是我们需要的结果！因此，就需要我们通过“volatile，synchronize，锁等方式”作出正确的实现同步。</p>
+
+<h2 id="4.内存屏障">4.内存屏障</h2>
+
+<p>定义：包括LoadLoad, LoadStore, StoreLoad, StoreStore共4种内存屏障。内存屏障是与相应的内存重排序相对应的。</p>
+
+<p>作用：通过内存屏障可以禁止特定类型处理器的重排序，从而让程序按我们预想的流程去执行。</p>
+
+<h2 id="5.-happens-before">5. happens-before</h2>
+
+<p>定义：JDK5(JSR-133)提供的概念，用于描述多线程操作之间的内存可见性。如果一个操作执行的结果需要对另一个操作可见，那么这两个操作之间必须存在happens-before关系。</p>
+
+<p>作用：描述多线程操作之间的内存可见性。</p>
+
+<h2 id="6.-数据依赖性">6. 数据依赖性</h2>
+
+<p>定义：如果两个操作访问同一个变量，且这两个操作中有一个为写操作，此时这两个操作之间就存在数据依赖性。</p>
+
+<p>作用：编译器和处理器不会对“存在数据依赖关系的两个操作”执行重排序。</p>
+
+<h2 id="7.-as-if-serial">7. as-if-serial</h2>
+
+<p>定义：不管怎么重排序，程序的执行结果不能被改变。</p>
+
+<h2 id="8.-顺序一致性内存模型">8. 顺序一致性内存模型</h2>
+
+<p>定义：它是理想化的内存模型。有以下规则：</p>
+
+<ul>
+<li>一个线程中的所有操作必须按照程序的顺序来执行。</li>
+<li>所有线程都只能看到一个单一的操作执行顺序。在顺序一致性内存模型中，每个操作都必须原子执行且立刻对所有线程可见。</li>
+</ul>
+
+<h2 id="9.-jmm">9. JMM</h2>
+
+<p>定义：Java Memory Mode，即Java内存模型。它是Java线程之间通信的控制机制。</p>
+
+<p>说明：JMM对Java程序作出保证——如果程序是正确同步的，程序的执行将具有顺序一致性。即，程序的执行结果与该程序在顺序一致性内存模型中的执行结果相同。</p>
+
+<h2 id="10.-可见性">10. 可见性</h2>
+
+<p>可见性一般用于指不同线程之间的数据是否可见。</p>
+
+<p>在java中， 实例域、静态域和数组元素这些数据是线程之间共享的数据，它们存储在主内存中；主内存中的所有数据对该内存中的线程都是可见的。而局部变量，方法定义参数 和 异常处理器参数这些数据是不会在线程之间共享的，它们存储在线程的本地内存中；它们对其它线程是不可见的。</p>
+
+<p>此外，对于主内存中的数据，在本地内存中会对应的创建该数据的副本(相当于缓冲)；这些副本对于其它线程也是不可见的。</p>
+
+<h2 id="11.-原子性">11. 原子性</h2>
+
+<p>是指一个操作是按原子的方式执行的。要么该操作不被执行；要么以原子方式执行，即执行过程中不会被其它线程中断。</p>
+
+<h1 id="jvm内存区域">JVM内存区域</h1>
+
+<p>虽然平时我们用的大多是Sun（现已被Oracle收购）JDK提供的JVM，但是JVM本身是一个<a href="http://java.sun.com/docs/books/jvms/second_edition/html/VMSpecTOC.doc.html">规范</a>，所以可以有多种实现，除了<a href="http://www.oracle.com/technetwork/java/javase/tech/index-jsp-136373.html">Hotspot</a>外，还有诸如Oracle的<a href="http://www.oracle.com/technetwork/middleware/jrockit/overview/index.html">JRockit</a>、IBM的<a href="http://en.wikipedia.org/wiki/IBM_J9">J9</a>也都是非常有名的JVM。</p>
+
+<p>下图展示了JVM的主要结构：</p>
+
+<p><img src="http://javachen-rs.qiniudn.com/images/2014/Java-Memory.png" alt="Java-Memory.png"></p>
+
+<p>可以看出，JVM主要由运行时数据区（内存空间）、执行引擎以及与本地库接口等组成。其中运行时数据区又由方法区、堆、虚拟机栈、程序计数器、本地方法栈组成。</p>
+
+<p>从上图中还可以看出，在内存空间中方法区和堆是所有Java线程共享的，而J虚拟机栈、程序计数器、本地方法栈则由每个线程私有。</p>
+
+<blockquote>
+<p>众所周知，Java语言具有跨平台的特性，这也是由JVM来实现的。更准确地说，是Sun利用JVM在不同平台上的实现帮我们把平台相关性的问题给解决了，这就好比是HTML语言可以在不同厂商的浏览器上呈现元素（虽然某些浏览器在对W3C标准的支持上还有一些问题）。同时，Java语言支持通过JNI（Java Native Interface）来实现本地方法的调用，但是需要注意到，如果你在Java程序用调用了本地方法，那么你的程序就很可能不再具有跨平台性，即本地方法会破坏平台无关性。</p>
+</blockquote>
+
+<h2 id="线程隔离数据区">线程隔离数据区</h2>
+
+<p>所谓线程隔离数据区是指在多线程环境下，每个线程所独享的数据区域。主要有程序计数器、Java虚拟机栈、本地方法栈三个数据区。</p>
+
+<h3 id="程序计数器">程序计数器</h3>
+
+<p><a href="http://baike.baidu.com/view/178145.htm?fr=aladdin">程序计数器</a> —- 计算机处理器中的寄存器，它包含当前正在执行的指令的地址（位置）。当每个指令被获取，程序计数器的存储地址加一。在每个指令被获取之后，程序计数器指向顺序中的下一个指令。当计算机重启或复位时，程序计数器通常恢复到零。</p>
+
+<p>在Java中程序计数器是一块较小的内存空间，充当当前线程所执行的字节码的行号指示器的角色。</p>
+
+<p>在多线程环境下，当某个线程失去处理器执行权时，需要记录该线程被切换出去时所执行的程序位置。从而方便该线程被切换回来(重新被处理器处理)时能恢复到当初的执行位置，因此每个线程都需要有一个独立的程序计数器。各个线程的程序计数器互不影响，并且独立存储。</p>
+
+<ul>
+<li>当线程正在执行一个java方法时，这个程序计数器记录的时正在执行的虚拟机字节码指令的地址。</li>
+<li>当线程执行的是<a href="http://www.enet.com.cn/article/2007/1029/A20071029886398.shtml">Native方法</a>，这个计数器值为空。</li>
+<li>此内存区域是唯一一个在java虚拟机规范中没有规定任何OutOfMemoryError情况的区域。</li>
+</ul>
+
+<h3 id="java虚拟机栈">Java虚拟机栈</h3>
+
+<p>Java虚拟机栈描述的是Java方法执行的内存模型，每个方法在执行的同时都会创建一个<a href="http://baike.baidu.com/view/8128123.htm?fr=aladdin">栈帧</a>用于存储<a href="http://blog.csdn.net/kevin_luan/article/details/22986081">局部变量表</a>、<a href="http://denverj.iteye.com/blog/1218359">操作数栈</a>、<a href="http://jnn.iteye.com/blog/83105">动态链接</a>、方法出口等信息。每个方法从调用直至执行完成的过程，对应着一个栈帧在虚拟机中入栈到进栈的过程。</p>
+
+<p>Java虚拟机栈栈的主要任务是存储方法参数、局部变量、中间运算结果，并且提供部分其它模块工作需要的数据。前面已经提到Java栈是线程私有的，这就保证了线程安全性，使得程序员无需考虑栈同步访问的问题，只有线程本身可以访问它自己的局部变量区。</p>
+
+<p>它分为三部分：局部变量区、操作数栈、帧数据区。</p>
+
+<p>1、局部变量区</p>
+
+<p>局部变量区是以字长为单位的数组，在这里，byte、short、char类型会被转换成int类型存储，除了long和double类型占两个字长以外，其余类型都只占用一个字长。特别地，boolean类型在编译时会被转换成int或byte类型，boolean数组会被当做byte类型数组来处理。局部变量区也会包含对象的引用，包括类引用、接口引用以及数组引用。</p>
+
+<p>局部变量区包含了方法参数和局部变量，此外，实例方法隐含第一个局部变量this，它指向调用该方法的对象引用。对于对象，局部变量区中永远只有指向堆的引用。</p>
+
+<p>2、操作数栈</p>
+
+<p>操作数栈也是以字长为单位的数组，但是正如其名，它只能进行入栈出栈的基本操作。在进行计算时，操作数被弹出栈，计算完毕后再入栈。</p>
+
+<p>3、帧数据区</p>
+
+<p>帧数据区的任务主要有：</p>
+
+<p>a.记录指向类的常量池的指针，以便于解析。</p>
+
+<p>b.帮助方法的正常返回，包括恢复调用该方法的栈帧，设置PC寄存器指向调用方法对应的下一条指令，把返回值压入调用栈帧的操作数栈中。</p>
+
+<p>c.记录异常表，发生异常时将控制权交由对应异常的catch子句，如果没有找到对应的catch子句，会恢复调用方法的栈帧并重新抛出异常。</p>
+
+<p>局部变量区和操作数栈的大小依照具体方法在编译时就已经确定。调用方法时会从方法区中找到对应类的类型信息，从中得到具体方法的局部变量区和操作数栈的大小，依此分配栈帧内存，压入Java栈。</p>
+
+<p>如果线程请求的栈深度大于虚拟机所能允许的深度时将抛出*StackOverflowError异常(可以通过无限递归呈现此异常)，<br>
+如果虚拟机在扩展时无法申请到足够的内存空间，则抛出OutOfMemoryError异常。</p>
+
+<h3 id="本地方法栈">本地方法栈</h3>
+
+<p>本地方法栈与虚拟机栈作用相似，区别在于虚拟机栈为虚拟机执行Java方法服务，而本地方法栈则为虚拟机使用到得Native方法服务。</p>
+
+<ul>
+<li>Sun HotSpot虚拟机将本地方法栈和虚拟机栈合二为一了。</li>
+<li>其所会产生与Java虚拟机栈一样异常种类</li>
+</ul>
+
+<h2 id="线程共享数据区">线程共享数据区</h2>
+
+<p>所谓线程共享数据区，是指在多线程环境下，该部分区域数据可以被所有线程所共享。主要有Java堆、方法区数据区。</p>
+
+<h3 id="堆">堆</h3>
+
+<p>堆用于存储对象实例以及数组值。堆中有指向类数据的指针，该指针指向了方法区中对应的类型信息。堆中还可能存放了指向方法表的指针。堆是所有线程共享的，所以在进行实例化对象等操作时，需要解决同步问题。此外，堆中的实例数据中还包含了对象锁，并且针对不同的垃圾收集策略，可能存放了引用计数或清扫标记等数据。</p>
+
+<p>在堆的管理上，Sun JDK从1.2版本开始引入了分代管理的方式。主要分为新生代、旧生代。分代方式大大改善了垃圾收集的效率。</p>
+
+<p>1、新生代（New Generation）</p>
+
+<p>大多数情况下新对象都被分配在新生代中，新生代由Eden Space和两块相同大小的Survivor Space组成，后两者主要用于Minor GC时的对象复制（Minor GC的过程在此不详细讨论）。</p>
+
+<p>JVM在Eden Space中会开辟一小块独立的TLAB（Thread Local Allocation Buffer）区域用于更高效的内存分配，我们知道在堆上分配内存需要锁定整个堆，而在TLAB上则不需要，JVM在分配对象时会尽量在TLAB上分配，以提高效率。</p>
+
+<p>2、旧生代（Old Generation/Tenuring Generation）</p>
+
+<p>在新生代中存活时间较久的对象将会被转入旧生代，旧生代进行垃圾收集的频率没有新生代高。</p>
+
+<h3 id="方法区">方法区</h3>
+
+<p>类型信息和类的静态变量都存储在方法区中。方法区中对于每个类存储了以下数据：</p>
+
+<ul>
+<li>a.类及其父类的全限定名（java.lang.Object没有父类）</li>
+<li>b.类的类型（Class or Interface）</li>
+<li>c.访问修饰符（public, abstract, final）</li>
+<li>d.实现的接口的全限定名的列表</li>
+<li>e.常量池</li>
+<li>f.字段信息</li>
+<li>g.方法信息</li>
+<li>h.静态变量</li>
+<li>i.ClassLoader引用</li>
+<li>j.Class引用</li>
+</ul>
+
+<p>可见类的所有信息都存储在方法区中。由于方法区是所有线程共享的，所以必须保证线程安全，举例来说，如果两个类同时要加载一个尚未被加载的类，那么一个类会请求它的ClassLoader去加载需要的类，另一个类只能等待而不会重复加载。</p>
+
+<p>如果方法区无法满足内存分配需求时候就会抛出OutOfMemoryError异常。</p>
+
+<p><strong>说明：</strong></p>
+
+<p>在Sun JDK中，方法区对应了持久代（Permanent Generation），默认最小值为16MB，最大值为64MB。</p>
+
+<p>永久代这块内存主要是被JVM存放类加载的信息和元数据信息，Class在被Loader时就会被放到PermGen space中，它和存放类实例(Instance)的Heap区域不同，GC不会在主程序运行期对PermGen space进行清理，所以如果你的应用中有很多CLASS的话，就很可能出现PermGen space错误。</p>
+
+<p>垃圾收集行为在这个区域比较少出现，这个区域的内存回收目标主要针对常量池的回收和对类型的卸载。</p>
+
+<h2 id="直接内存">直接内存</h2>
+
+<p>直接内存(Direct Memory)并不是虚拟机运行时数据区的一部分，也不是Java虚拟机规范中定义的内存区域。</p>
+
+<p>JDK1.4中出现了NIO，其引入了一种基于通道(Channel)与缓冲区(Buffer)的I/O方式，它可以使用Native函数库直接分配堆外内存，然后通过一个存储在Java堆中得DirectoryByteBuffer对象作为这块内存的引用进行操作。这样可以避免Java堆和Native堆之间的来回复制数据。</p>
+
+<p>当机器直接内存去除JVM内存之后的内存不能满足直接内存大小要求其，将会抛出OutOfMemoryError异常。</p>
+
+<h2 id="垃圾回收过程">垃圾回收过程</h2>
+
+<p><img src="http://javachen-rs.qiniudn.com/images/2014/jvm-heap.png" alt="jvm-heap.png"></p>
+
+<p>JVM采用一种分代回收 (generational collection) 的策略，用较高的频率对年轻的对象(young generation)进行扫描和回收，这种叫做minor collection，而对老对象(old generation)的检查回收频率要低很多，称为major collection。这样就不需要每次GC都将内存中所有对象都检查一遍。</p>
+
+<p>当一个URL被访问时，内存申请过程 如下：</p>
+
+<ul>
+<li>A. JVM会试图为相关Java对象在Eden中初始化一块内存区域</li>
+<li>B. 当Eden空间足够时，内存申请结束。否则到下一步</li>
+<li>C. JVM试图释放在Eden中所有不活跃的对象，释放后若Eden空间仍然不足以放入新对象，则试图将部分Eden中活跃对象放入Survivor区</li>
+<li>D. Survivor区被用来作为Eden及OLD的中间交换区域，当OLD区空间足够时，Survivor区的对象会被移到Old区，否则会被保留在Survivor区</li>
+<li>E. 当OLD区空间不够时，JVM会在OLD区进行完全的垃圾收集</li>
+<li>F. 完全垃圾收集后，若Survivor及OLD区仍然无法存放从Eden复制过来的部分对象，导致JVM无法在Eden区为新对象创建内存区域，则出现”out of memory错误”</li>
+</ul>
+
+<p>对象衰老的过程：</p>
+
+<p>young generation的内存，由一块Eden和两块Survivor Space(1.4文档中称为semi-space)构成。新创建的对象的内存都分配自eden。两块Survivor Space总有会一块是空闲的，用作copying collection的目标空间。</p>
+
+<p>Minor collection的过程就是将eden和在用survivor space中的活对象copy到空闲survivor space中。所谓survivor，也就是大部分对象在伊甸园出生后，根本活不过一次GC。对象在young generation里经历了一定次数的minor collection后，年纪大了，就会被移到old generation中，称为tenuring。</p>
+
+<p>剩余内存空间不足会触发GC，如eden空间不够了就要进行minor collection，old generation空间不够要进行major collection，permanent generation空间不足会引发full GC。</p>
+</div>
+
+
+      <div id="pay" style="text-align:center;">
+        ----EOF-----
+        <br>
+        <section>
+  <h4>Sponsor</h4>
+	<img src="http://javachen-rs.qiniudn.com/images/alipay.png" width="150/">
+  <p class="small">觉得此博客对你有帮助，支付宝扫码赞助吧</p>
+</section>
+
+      </div>
+
+      <p class="meta">
+      	
+            Categories:
+      	    
+          	<a class="btn btn-default btn-xs" href="/categories.html#java">java</a>
+          
+      	
+
+      	
+            Tags:
+      	    
+          	<a class="btn btn-default btn-xs" href="/tags.html#java">java</a>
+          
+          	<a class="btn btn-default btn-xs" href="/tags.html#jvm">jvm</a>
+          
+      	
+      </p>
+	</article>
+
+	<ul class="pager">
+	  
+	  <li class="previous"><a class="btn btn-xs" href="/2014/04/09/install-jira5-on-rhel-system" title="RHEL系统下安装atlassian-jira-5">&larr; Prev</a></li>
+	  
+	  
+	  <li class="next"><a class="btn btn-xs" href="/2014/04/17/building-bigtop-on-ubuntu" title="Ubuntu系统编译Bigtop">Next &rarr;</a></li>
+	  
+	</ul>
+
+  
+<div id="comments">
+  <div class="ds-thread" data-thread-key="/2014/04/09/note-about-jvm-memery-model"  data-title="Java笔记：Java内容模型 - 小天的个人博客"></div>
+</div>
+
+
+
+</div>
+
+        </div>
+      </div>
+
+      <footer class="footer text-center">
+  <p>&copy; 2009-2015 <a href="/" target="_blank" title="86后，工作在深圳；Java程序员、Hadoop工程师；主要关注Java、Hadoop、Kettle、关注大数据处理技术。">小天</a>. With Help from <a href="//jekyllrb.com/" target="_blank" title="Transform your plain text into static websites and blogs.">Jekyll</a> and <a href="//getbootstrap.com/" target="_blank" title="Bootstrap is the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web.">Bootstrap</a>, theme from <a href="http://havee.me/" target="_blank" title="http://havee.me/">Havee</a>.
+
+  <span style="float:right;"><a href="/about.html">About</a></span>
+
+	
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+  </p>
+  <div id="toTop" style="display: block;">
+    <a href="#">▲</a><a href="#footer">▼</a>
+  </div>
+</footer>
+
+    </div>
+
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/core.js"></script>
+
+    
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+    
+    <!-- duoshuo Begin -->
+    <script type="text/javascript">
+      var duoshuoQuery = {short_name:"xiaotian120"};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] ||
+        document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+    </script>
+    <!-- duoshuo End -->
+    
+  </body>
+</html>

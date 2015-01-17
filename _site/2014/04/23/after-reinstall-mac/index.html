@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>重装Mac系统之后 - 小天的个人博客</title>
+  <meta name="description" content="重装Mac系统之后的一些软件安装和环境变量配置。">
+  <meta name="keywords" content="重装Mac系统">
+  <meta name="author" content="小天">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="360-site-verification" content="9b7a87a1d52051c96644f0a9b8b79898" />
+  <meta name="sogou_site_verification" content="ofwXWFdthV"/>
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" >
+
+  <link rel="canonical" href="http://blog.xiaotian.com/2014/04/23/after-reinstall-mac">
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css" media="all">
+  <link rel="stylesheet" href="/static/css/style.css" media="all">
+  <link rel="stylesheet" href="/static/css/pygments.css" media="all">
+  <link rel="stylesheet" href="/static/css/font-awesome.css" media="all">
+
+  <!-- atom & rss feed -->
+  <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="小天的个人博客 RSS Feed">
+  <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="小天的个人博客 ATOM Feed">
+</head>
+
+
+  <body>
+    <div class="container">
+      <!--[if lte IE 9]>
+<div class="alert alert-warning">
+  <p>Your Internet Explorer is not supported. Please upgrade your Internet Explorer to version 9+, or use latest <a href="http://www.google.com/chrome/" target="_blank" class="alert-link">Google chrome</a>、<a href="http://www.mozilla.org/firefox/" target="_blank" class="alert-link">Mozilla Firefox</a>.</p>
+  <p>If you are using IE 9 or later, make sure you <a href="http://windows.microsoft.com/en-us/internet-explorer/use-compatibility-view#ie=ie-8" target="_blank" class="alert-link">turn off "Compatibility view"</a>.</p>
+</div>
+<![endif]-->
+<header class="header">
+  <div class="title"><a title="小天的个人博客" href="/">小天的个人博客</a></div>
+  <ul class="nav navbar-nav navbar-right visible-lg visible-md">
+    <li>
+    <form id="search-form" class="form-group has-success visible-lg" role="form">
+      <input type="text" class="form-control input-sm" placeholder="Search" id="query" style="width: 160px;">
+    </form>
+    </li>
+    <li><a href="/archive.html" title="Archive"><span class='fa fa-archive fa-2x'></span></a></li>
+    <li><a href="/categories.html" title="Categories"><span class='fa fa-navicon fa-2x'></span></a></li>
+    <li><a href="/tags.html" title="Tags"><span class='fa fa-tags fa-2x'></span></a></li>
+    <li><a href="/about.html" title="About"><span class='fa fa-user fa-2x'></span></a></li>
+    
+    <li><a href="https://github.com/wuskyfantasy" target="_blank" title="Github"><span class='fa fa-github fa-2x'></span></a></li>
+    
+    
+    
+    
+    
+    <li><a href="http://weibo.com/xiaotian120" target="_blank" title="Weibo"><span class="fa fa-weibo fa-2x"></span></a></li>
+    
+
+    <li><a href="/rss.xml" target="_blank" title="RSS"><span class='fa fa-rss fa-2x'></span></a></li>
+  </ul>
+</header>
+
+
+      <div class="wrapper">
+        <div class="row">
+          <div id="search-loader" style="display:none;text-align:center">
+            <img src="http://javachen-rs.qiniudn.com/images/loading.gif">
+          </div>
+          <div class="col-md-12">
+  <article class="news-item">
+
+      <h2  class="news-item"> 重装Mac系统之后  
+        <time class="small">2014.04.23</time>
+      </h2>
+
+      <div><p>本文主要记录重装Mac系统之后的一些软件安装和环境变量配置。</p>
+
+<h1 id="系统偏好配置">系统偏好配置</h1>
+
+<p>设置主机名：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sudo scutil --set HostName june－mac
+</code></pre></div>
+<p>设置鼠标滚轮滑动的方向：系统偏好设置－－&gt;鼠标－－&gt;&quot;滚动方向：自然&quot;前面的勾去掉</p>
+
+<p>显示/隐藏Mac隐藏文件：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">defaults write com.apple.finder AppleShowAllFiles -bool <span class="nb">true</span>  <span class="c">#显示Mac隐藏文件的命令</span>
+defaults write com.apple.finder AppleShowAllFiles -bool <span class="nb">false</span> <span class="c">#隐藏Mac隐藏文件的命令</span>
+</code></pre></div>
+<ul>
+<li>触控板
+
+<ul>
+<li>光标与点按 &gt; 三指移动 ：这样就可以三指拖动文件了</li>
+<li>光标与点按 &gt; 轻拍来点按 ：习惯了轻点完成实际按击</li>
+<li>光标与点按 &gt; 跟踪速度 ：默认的指针滑动速度有点慢，设置成刻度7差不多了 </li>
+</ul></li>
+<li>键盘
+
+<ul>
+<li>快捷键 &gt; 服务 &gt; 新建位于文件夹位置的终端标签：勾选这设置并设置了快捷键（control+cmt+c），以后在Finder中选择一个目录按下快捷键就可以打开终端并来到当前当前目录，功能很实用啊！注意：在Finder中文件列表使用分栏方式显示时快捷键是无效的。</li>
+</ul></li>
+<li>网络
+-高级... &gt; DNS ：公共DNS是必须添加的
+
+<ul>
+<li>223.6.6.6 阿里提供的</li>
+<li>8.8.4.4 google提供的</li>
+<li>114.114.114.114 114服务提供的</li>
+</ul></li>
+</ul>
+
+<h1 id="下载常用软件">下载常用软件</h1>
+
+<ul>
+<li>下载jdk6：<a href="http://support.apple.com/downloads/DL1572/en_US/JavaForOSX2013-05.dmg">http://support.apple.com/downloads/DL1572/en_US/JavaForOSX2013-05.dmg</a></li>
+<li>下载jdk7：<a href="http://download.oracle.com/otn-pub/java/jdk/7u60-b19/jdk-7u60-macosx-x64.dmg?AuthParam=1403450902_0b8ed262d4128ca82031dcbdc2627aaf">http://download.oracle.com/otn-pub/java/jdk/7u60-b19/jdk-7u60-macosx-x64.dmg?AuthParam=1403450902_0b8ed262d4128ca82031dcbdc2627aaf</a></li>
+<li>下载VirtualBox：<a href="http://dlc.sun.com.edgesuite.net/virtualbox/4.3.10/VirtualBox-4.3.10-93012-OSX.dmg">http://dlc.sun.com.edgesuite.net/virtualbox/4.3.10/VirtualBox-4.3.10-93012-OSX.dmg</a></li>
+<li>下载vagrant：<a href="https://dl.bintray.com/mitchellh/vagrant/vagrant_1.5.4.dmg">https://dl.bintray.com/mitchellh/vagrant/vagrant_1.5.4.dmg</a></li>
+</ul>
+
+<p>其他常用软件：</p>
+
+<ul>
+<li>Unarchiver: 支持多种格式（包括 windows下的格式）的压缩/解压缩工具</li>
+<li>Spectacle : 让窗口成比例的显示，在写代码调试的时候很方便</li>
+<li>OminiFocus ：时间管理工具</li>
+<li>Mou：Markdown 编辑器，国人出品</li>
+<li>CheatSheet : 长按 command ，将能查看当前程序的快捷键</li>
+</ul>
+
+<h1 id="安装homebrew">安装Homebrew</h1>
+
+<p><a href="http://brew.sh/">Brew</a> 是 Mac 下面的包管理工具，通过 Github 托管适合 Mac 的编译配置以及 Patch，可以方便的安装开发工具。</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>ruby -e <span class="s2">&quot;$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)&quot;</span>
+</code></pre></div>
+<p>通过brew安装软件：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>brew install git git-flow  curl  wget  putty  gawk tmux ack <span class="nb">source</span>-highlight aria2 dos2unix nmap iotop htop  ctags readline
+</code></pre></div>
+<h1 id="brew-cask">Brew cask</h1>
+
+<p><a href="https://github.com/phinze/homebrew-cask">Brew cask</a> 是类似 Brew 的管理工具， 直接提供 dmg 级别的二进制包，（Brew 是不带源码，只有对应项目所在的 URL）。</p>
+
+<p>Brew cask 安装：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>brew tap phinze/homebrew-cask
+<span class="nv">$ </span>brew install brew-cask
+</code></pre></div>
+<p>我通过 Brew cask 安装的软件：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>brew cask install qq omnigraffle xtrafinder
+</code></pre></div>
+<h1 id="安装oh-my-zsh">安装oh-my-zsh</h1>
+
+<p>把默认 Shell 换为 zsh。</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>chsh -s /bin/zsh
+</code></pre></div>
+<p>然后用下面的两句（任选其一）可以自动安装 oh-my-zsh：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh <span class="p">|</span> sh
+</code></pre></div><div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>wget --no-check-certificate https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O - <span class="p">|</span> sh
+</code></pre></div>
+<p>编辑 <code class="prettyprint">~/.zshrc</code>：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">echo &#39;source ~/.bashrc&#39; &gt;&gt;~/.zshrc
+echo &#39;source ~/.bash_profile&#39; &gt;&gt;~/.zshrc
+</code></pre></div>
+<p>使用 <code class="prettyprint">ctrl+r</code> 查找历史命令，在 <code class="prettyprint">~/.zshrc</code> 中添加：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">bindkey &quot;^R&quot; history-incremental-search-backward
+</code></pre></div>
+<p>使用上默认加了很多快捷映射，如：</p>
+
+<ul>
+<li><code class="prettyprint">~</code>: 进入用户根目录，可以少打cd三个字符了</li>
+<li><code class="prettyprint">l</code>: 相当于ls -lah</li>
+<li><code class="prettyprint">..</code>: 返回上层目录</li>
+<li><code class="prettyprint">...</code>: 返回上上层目录</li>
+<li><code class="prettyprint">-</code>: 打开上次所在目录</li>
+</ul>
+
+<p>具体的可以查看其<a href="https://github.com/robbyrussell/oh-my-zsh/blob/master/lib/aliases.zsh">配置文件</a>。</p>
+
+<h1 id="安装vim插件">安装Vim插件</h1>
+
+<p>安装pathogen：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>mkdir -p ~/.vim/autoload ~/.vim/bundle<span class="p">;</span> <span class="se">\</span>
+<span class="nv">$ </span>curl -Sso ~/.vim/autoload/pathogen.vim <span class="se">\</span>
+    https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim
+</code></pre></div>
+<p>安装NERDTree：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd</span> ~/.vim/bundle
+<span class="nv">$ </span>git clone https://github.com/scrooloose/nerdtree.git
+</code></pre></div>
+<p>更多请参考：<a href="/2014/01/14/vim-config-and-plugins/">vim配置和插件管理</a></p>
+
+<h1 id="安装ruby">安装Ruby</h1>
+
+<p>先安装依赖：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>brew install libksba autoconf automake libtool gcc46 libyaml readline
+</code></pre></div>
+<p>通过rvm安装ruby：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>curl -L get.rvm.io <span class="p">|</span> bash -s stable <span class="nv">$ </span><span class="nb">source</span> ~/.bash_profile
+<span class="nv">$ </span>sed -i -e <span class="s1">&#39;s/ftp\.ruby-lang\.org\/pub\/ruby/ruby\.taobao\.org\/mirrors\/ruby/g&#39;</span> ~/.rvm/config/db
+<span class="nv">$ </span>sudo rvm install 1.9.3 --with-gcc<span class="o">=</span>clang
+<span class="nv">$ </span>rvm --default 1.9.3
+</code></pre></div>
+<h1 id="安装jekyll">安装Jekyll</h1>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sudo gem install rdoc
+<span class="nv">$ </span>sudo gem install jekyll redcarpet
+</code></pre></div>
+<p>设置环境变量：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">echo</span> <span class="s1">&#39;export PATH=$PATH:$HOME/.rvm/bin&#39;</span> &gt;&gt; ~/.bash_profile
+<span class="nv">$ </span><span class="nb">echo</span> <span class="s1">&#39;[[ -s &quot;$HOME/.rvm/scripts/rvm&quot; ]] &amp;&amp; . &quot;$HOME/.rvm/scripts/rvm&quot;&#39;</span> &gt;&gt; ~/.bash_profile
+</code></pre></div>
+<h1 id="java开发环境">Java开发环境</h1>
+
+<p>安装软件，包括ant、maven、ivy、forrest、docker等：</p>
+
+<p>设置 java_home:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">export JAVA_HOME=$(/usr/libexec/java_home)
+</code></pre></div>
+<p>使用brew来安装</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>brew install https://raw.github.com/Homebrew/homebrew-versions/master/maven30.rb ant ivy apache-forrest docker 
+</code></pre></div>
+<p>配置ant、maven和ivy仓库：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>rm -rf ~/.ivy2/cache ~/.m2/repository
+<span class="nv">$ </span>mkdir -p ~/.ivy2 ~/.m2
+<span class="nv">$ </span>ln -s ~/app/repository/cache/  ~/.ivy2/cache
+<span class="nv">$ </span>ln -s ~/app/repository/m2/  ~/.m2/repository
+</code></pre></div>
+<p>注意，这里我在<code class="prettyprint">~/app/repository</code>有两个目录，cache用于存放ivy下载的文件，m2用于存放maven的仓库。</p>
+
+<h1 id="python开发环境">Python开发环境</h1>
+
+<p>TODO</p>
+
+<h1 id="参考文章">参考文章</h1>
+
+<ul>
+<li><a href="http://nootn.com/blog/archives/87/">MacBook Pro 配置</a></li>
+</ul>
+</div>
+
+
+      <div id="pay" style="text-align:center;">
+        ----EOF-----
+        <br>
+        <section>
+  <h4>Sponsor</h4>
+	<img src="http://javachen-rs.qiniudn.com/images/alipay.png" width="150/">
+  <p class="small">觉得此博客对你有帮助，支付宝扫码赞助吧</p>
+</section>
+
+      </div>
+
+      <p class="meta">
+      	
+            Categories:
+      	    
+          	<a class="btn btn-default btn-xs" href="/categories.html#others">others</a>
+          
+      	
+
+      	
+            Tags:
+      	    
+          	<a class="btn btn-default btn-xs" href="/tags.html#mac">mac</a>
+          
+      	
+      </p>
+	</article>
+
+	<ul class="pager">
+	  
+	  <li class="previous"><a class="btn btn-xs" href="/2014/04/17/building-bigtop-on-ubuntu" title="Ubuntu系统编译Bigtop">&larr; Prev</a></li>
+	  
+	  
+	  <li class="next"><a class="btn btn-xs" href="/2014/04/24/all-things-markdown" title="All Things Markdown">Next &rarr;</a></li>
+	  
+	</ul>
+
+  
+<div id="comments">
+  <div class="ds-thread" data-thread-key="/2014/04/23/after-reinstall-mac"  data-title="重装Mac系统之后 - 小天的个人博客"></div>
+</div>
+
+
+
+</div>
+
+        </div>
+      </div>
+
+      <footer class="footer text-center">
+  <p>&copy; 2009-2015 <a href="/" target="_blank" title="86后，工作在深圳；Java程序员、Hadoop工程师；主要关注Java、Hadoop、Kettle、关注大数据处理技术。">小天</a>. With Help from <a href="//jekyllrb.com/" target="_blank" title="Transform your plain text into static websites and blogs.">Jekyll</a> and <a href="//getbootstrap.com/" target="_blank" title="Bootstrap is the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web.">Bootstrap</a>, theme from <a href="http://havee.me/" target="_blank" title="http://havee.me/">Havee</a>.
+
+  <span style="float:right;"><a href="/about.html">About</a></span>
+
+	
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+  </p>
+  <div id="toTop" style="display: block;">
+    <a href="#">▲</a><a href="#footer">▼</a>
+  </div>
+</footer>
+
+    </div>
+
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/core.js"></script>
+
+    
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+    
+    <!-- duoshuo Begin -->
+    <script type="text/javascript">
+      var duoshuoQuery = {short_name:"xiaotian120"};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] ||
+        document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+    </script>
+    <!-- duoshuo End -->
+    
+  </body>
+</html>

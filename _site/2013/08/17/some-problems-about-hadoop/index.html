@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>使用Hadoop中遇到的一些问题 - 小天的个人博客</title>
+  <meta name="description" content="本文主要记录安装hadoop过程需要注意的一些细节以及使用hadoop过程中发现的一些问题以及对应解决办法，有些地方描述的不是很清楚可能还会不准确，之后会重现问题然后修改完善这篇文章。">
+  <meta name="keywords" content="java, hadoop, hive, hbase, spark, linux, scala, python, mysql">
+  <meta name="author" content="小天">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="360-site-verification" content="9b7a87a1d52051c96644f0a9b8b79898" />
+  <meta name="sogou_site_verification" content="ofwXWFdthV"/>
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" >
+
+  <link rel="canonical" href="http://blog.xiaotian.com/2013/08/17/some-problems-about-hadoop">
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css" media="all">
+  <link rel="stylesheet" href="/static/css/style.css" media="all">
+  <link rel="stylesheet" href="/static/css/pygments.css" media="all">
+  <link rel="stylesheet" href="/static/css/font-awesome.css" media="all">
+
+  <!-- atom & rss feed -->
+  <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="小天的个人博客 RSS Feed">
+  <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="小天的个人博客 ATOM Feed">
+</head>
+
+
+  <body>
+    <div class="container">
+      <!--[if lte IE 9]>
+<div class="alert alert-warning">
+  <p>Your Internet Explorer is not supported. Please upgrade your Internet Explorer to version 9+, or use latest <a href="http://www.google.com/chrome/" target="_blank" class="alert-link">Google chrome</a>、<a href="http://www.mozilla.org/firefox/" target="_blank" class="alert-link">Mozilla Firefox</a>.</p>
+  <p>If you are using IE 9 or later, make sure you <a href="http://windows.microsoft.com/en-us/internet-explorer/use-compatibility-view#ie=ie-8" target="_blank" class="alert-link">turn off "Compatibility view"</a>.</p>
+</div>
+<![endif]-->
+<header class="header">
+  <div class="title"><a title="小天的个人博客" href="/">小天的个人博客</a></div>
+  <ul class="nav navbar-nav navbar-right visible-lg visible-md">
+    <li>
+    <form id="search-form" class="form-group has-success visible-lg" role="form">
+      <input type="text" class="form-control input-sm" placeholder="Search" id="query" style="width: 160px;">
+    </form>
+    </li>
+    <li><a href="/archive.html" title="Archive"><span class='fa fa-archive fa-2x'></span></a></li>
+    <li><a href="/categories.html" title="Categories"><span class='fa fa-navicon fa-2x'></span></a></li>
+    <li><a href="/tags.html" title="Tags"><span class='fa fa-tags fa-2x'></span></a></li>
+    <li><a href="/about.html" title="About"><span class='fa fa-user fa-2x'></span></a></li>
+    
+    <li><a href="https://github.com/wuskyfantasy" target="_blank" title="Github"><span class='fa fa-github fa-2x'></span></a></li>
+    
+    
+    
+    
+    
+    <li><a href="http://weibo.com/xiaotian120" target="_blank" title="Weibo"><span class="fa fa-weibo fa-2x"></span></a></li>
+    
+
+    <li><a href="/rss.xml" target="_blank" title="RSS"><span class='fa fa-rss fa-2x'></span></a></li>
+  </ul>
+</header>
+
+
+      <div class="wrapper">
+        <div class="row">
+          <div id="search-loader" style="display:none;text-align:center">
+            <img src="http://javachen-rs.qiniudn.com/images/loading.gif">
+          </div>
+          <div class="col-md-12">
+  <article class="news-item">
+
+      <h2  class="news-item"> 使用Hadoop中遇到的一些问题  
+        <time class="small">2013.08.17</time>
+      </h2>
+
+      <div><p>本文主要记录安装hadoop过程需要注意的一些细节以及使用hadoop过程中发现的一些问题以及对应解决办法，有些地方描述的不是很清楚可能还会不准确，之后会重现问题然后修改完善这篇文章。</p>
+
+<h1 id="安装hadoop过程中需要注意以下几点：">安装hadoop过程中需要注意以下几点：</h1>
+
+<ol>
+<li>每个节点配置hosts</li>
+<li>每个节点配置时钟同步</li>
+<li>如果没有特殊要求，关闭防火墙</li>
+<li>hadoop需要在<code class="prettyprint">/tmp</code>目录下存放一些日志和临时文件，要求<code class="prettyprint">/tmp</code>目录权限必须为<code class="prettyprint">1777</code></li>
+</ol>
+
+<hr>
+
+<!-- more -->
+
+<h1 id="使用intel的hadoop发行版idh过程遇到问题：">使用intel的hadoop发行版IDH过程遇到问题：</h1>
+
+<p>1、 IDH集群中需要配置管理节点到集群各节点的无密码登录，公钥文件存放路径为<code class="prettyprint">/etc/intelcloud</code>目录下，文件名称为<code class="prettyprint">idh-id_rsa</code>。</p>
+
+<p>如果在管理界面发现不能启动/停止hadoop组件的进程，请检查ssh无密码登录是否有问题。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">ssh -i /etc/intelcloud/idh-id_rsa nodeX
+</code></pre></div>
+<p>如果存在问题，请重新配置无密码登录：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">scp -i /etc/intelcloud/idh-id_rsa nodeX
+</code></pre></div>
+<p>2、 IDH使用puppt和shell脚本来管理hadoop集群，shell脚本中有一处调用puppt的地方存在问题，详细说明待整理！！</p>
+
+<hr>
+
+<h1 id="使用cdh4.3.0的hadoop（通过rpm安装）过程中发现如下问题：">使用CDH4.3.0的hadoop（通过rpm安装）过程中发现如下问题：</h1>
+
+<h2 id="说明：以下问题不局限于cdh的hadoop版本。">说明：以下问题不局限于CDH的hadoop版本。</h2>
+
+<p>1、 在hive运行过程中会打印如下日志</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">Starting Job = job_1374551537478_0001, Tracking URL = http://june-fedora:8088/proxy/application_1374551537478_0001/
+Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1374551537478_0001
+</code></pre></div>
+<p>通过上面的<code class="prettyprint">kill command</code>可以killjob，但是运行过程中发现提示错误，错误原因：<code class="prettyprint">HADOOP_LIBEXEC_DIR</code>未做设置</p>
+
+<p>解决方法：在hadoop-env.sh中添加如下代码</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">export HADOOP_LIBEXEC_DIR=$HADOOP_COMMON_HOME/libexec
+</code></pre></div>
+<p>2、 查看java进程中发现，JVM参数中-Xmx重复出现</p>
+
+<p>解决办法：<code class="prettyprint">/etc/hadoop/conf/hadoop-env.sh</code>去掉第二行。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">export HADOOP_OPTS=&quot;-Djava.net.preferIPv4Stack=true $HADOOP_OPTS&quot;
+</code></pre></div>
+<p>3、 hive中mapreduce运行为本地模式，而不是远程模式</p>
+
+<p>解决办法：<code class="prettyprint">/etc/hadoop/conf/hadoop-env.sh</code>设置<code class="prettyprint">HADOOP_MAPRED_HOME</code>变量</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">export HADOOP_MAPRED_HOME=/usr/lib/hadoop-mapreduce
+</code></pre></div>
+<p>4、 如何设置hive的jvm启动参数</p>
+
+<p>hive脚本运行顺序：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">hive--&gt;hive-config.sh--&gt;hive-env.sh--&gt;hadoop-config.sh--&gt;hadoop-env.sh
+</code></pre></div>
+<p>故如果hadoop-env.sh中设置了<code class="prettyprint">HADOOP_HEAPSIZE</code>，则hive-env.sh中设置的无效</p>
+
+<p>5、如何设置JOB_HISTORYSERVER的jvm参数</p>
+
+<p>在<code class="prettyprint">/etc/hadoop/conf/hadoop-env.sh</code>添加如下代码：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">export HADOOP_JOB_HISTORYSERVER_HEAPSIZE=256
+</code></pre></div></div>
+
+
+      <div id="pay" style="text-align:center;">
+        ----EOF-----
+        <br>
+        <section>
+  <h4>Sponsor</h4>
+	<img src="http://javachen-rs.qiniudn.com/images/alipay.png" width="150/">
+  <p class="small">觉得此博客对你有帮助，支付宝扫码赞助吧</p>
+</section>
+
+      </div>
+
+      <p class="meta">
+      	
+            Categories:
+      	    
+          	<a class="btn btn-default btn-xs" href="/categories.html#hadoop">hadoop</a>
+          
+      	
+
+      	
+            Tags:
+      	    
+          	<a class="btn btn-default btn-xs" href="/tags.html#hadoop">hadoop</a>
+          
+          	<a class="btn btn-default btn-xs" href="/tags.html#hive">hive</a>
+          
+          	<a class="btn btn-default btn-xs" href="/tags.html#hbase">hbase</a>
+          
+          	<a class="btn btn-default btn-xs" href="/tags.html#mapreduce">mapreduce</a>
+          
+      	
+      </p>
+	</article>
+
+	<ul class="pager">
+	  
+	  <li class="previous"><a class="btn btn-xs" href="/2013/08/02/hadoop-install-script" title="Hadoop自动化安装shell脚本">&larr; Prev</a></li>
+	  
+	  
+	  <li class="next"><a class="btn btn-xs" href="/2013/08/21/hive-CliDriver" title="Hive源码分析：CLI入口类">Next &rarr;</a></li>
+	  
+	</ul>
+
+  
+<div id="comments">
+  <div class="ds-thread" data-thread-key="/2013/08/17/some-problems-about-hadoop"  data-title="使用Hadoop中遇到的一些问题 - 小天的个人博客"></div>
+</div>
+
+
+
+</div>
+
+        </div>
+      </div>
+
+      <footer class="footer text-center">
+  <p>&copy; 2009-2015 <a href="/" target="_blank" title="86后，工作在深圳；Java程序员、Hadoop工程师；主要关注Java、Hadoop、Kettle、关注大数据处理技术。">小天</a>. With Help from <a href="//jekyllrb.com/" target="_blank" title="Transform your plain text into static websites and blogs.">Jekyll</a> and <a href="//getbootstrap.com/" target="_blank" title="Bootstrap is the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web.">Bootstrap</a>, theme from <a href="http://havee.me/" target="_blank" title="http://havee.me/">Havee</a>.
+
+  <span style="float:right;"><a href="/about.html">About</a></span>
+
+	
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+  </p>
+  <div id="toTop" style="display: block;">
+    <a href="#">▲</a><a href="#footer">▼</a>
+  </div>
+</footer>
+
+    </div>
+
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/core.js"></script>
+
+    
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+    
+    <!-- duoshuo Begin -->
+    <script type="text/javascript">
+      var duoshuoQuery = {short_name:"xiaotian120"};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] ||
+        document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+    </script>
+    <!-- duoshuo End -->
+    
+  </body>
+</html>

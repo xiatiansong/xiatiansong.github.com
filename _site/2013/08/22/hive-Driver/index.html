@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Hive源码分析：Driver类运行过程 - 小天的个人博客</title>
+  <meta name="description" content="记录hive Driver类运行过程，本文的源码分析基于hive-0.12.0-cdh5.0.1。">
+  <meta name="keywords" content="java, hadoop, hive, hbase, spark, linux, scala, python, mysql">
+  <meta name="author" content="小天">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="360-site-verification" content="9b7a87a1d52051c96644f0a9b8b79898" />
+  <meta name="sogou_site_verification" content="ofwXWFdthV"/>
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" >
+
+  <link rel="canonical" href="http://blog.xiaotian.com/2013/08/22/hive-Driver">
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css" media="all">
+  <link rel="stylesheet" href="/static/css/style.css" media="all">
+  <link rel="stylesheet" href="/static/css/pygments.css" media="all">
+  <link rel="stylesheet" href="/static/css/font-awesome.css" media="all">
+
+  <!-- atom & rss feed -->
+  <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="小天的个人博客 RSS Feed">
+  <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="小天的个人博客 ATOM Feed">
+</head>
+
+
+  <body>
+    <div class="container">
+      <!--[if lte IE 9]>
+<div class="alert alert-warning">
+  <p>Your Internet Explorer is not supported. Please upgrade your Internet Explorer to version 9+, or use latest <a href="http://www.google.com/chrome/" target="_blank" class="alert-link">Google chrome</a>、<a href="http://www.mozilla.org/firefox/" target="_blank" class="alert-link">Mozilla Firefox</a>.</p>
+  <p>If you are using IE 9 or later, make sure you <a href="http://windows.microsoft.com/en-us/internet-explorer/use-compatibility-view#ie=ie-8" target="_blank" class="alert-link">turn off "Compatibility view"</a>.</p>
+</div>
+<![endif]-->
+<header class="header">
+  <div class="title"><a title="小天的个人博客" href="/">小天的个人博客</a></div>
+  <ul class="nav navbar-nav navbar-right visible-lg visible-md">
+    <li>
+    <form id="search-form" class="form-group has-success visible-lg" role="form">
+      <input type="text" class="form-control input-sm" placeholder="Search" id="query" style="width: 160px;">
+    </form>
+    </li>
+    <li><a href="/archive.html" title="Archive"><span class='fa fa-archive fa-2x'></span></a></li>
+    <li><a href="/categories.html" title="Categories"><span class='fa fa-navicon fa-2x'></span></a></li>
+    <li><a href="/tags.html" title="Tags"><span class='fa fa-tags fa-2x'></span></a></li>
+    <li><a href="/about.html" title="About"><span class='fa fa-user fa-2x'></span></a></li>
+    
+    <li><a href="https://github.com/wuskyfantasy" target="_blank" title="Github"><span class='fa fa-github fa-2x'></span></a></li>
+    
+    
+    
+    
+    
+    <li><a href="http://weibo.com/xiaotian120" target="_blank" title="Weibo"><span class="fa fa-weibo fa-2x"></span></a></li>
+    
+
+    <li><a href="/rss.xml" target="_blank" title="RSS"><span class='fa fa-rss fa-2x'></span></a></li>
+  </ul>
+</header>
+
+
+      <div class="wrapper">
+        <div class="row">
+          <div id="search-loader" style="display:none;text-align:center">
+            <img src="http://javachen-rs.qiniudn.com/images/loading.gif">
+          </div>
+          <div class="col-md-12">
+  <article class="news-item">
+
+      <h2  class="news-item"> Hive源码分析：Driver类运行过程  
+        <time class="small">2013.08.22</time>
+      </h2>
+
+      <div><p>说明：</p>
+
+<p>本文的源码分析基于hive-0.12.0-cdh5.0.1。</p>
+
+<h1 id="概括">概括</h1>
+
+<p>从《<a href="/2013/08/21/hive-CliDriver/">hive cli的入口类</a>》中可以知道hive中处理hive命令的处理器一共有以下几种：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">（1）set       SetProcessor，设置修改参数,设置到SessionState的HiveConf里。 
+（2）dfs       DfsProcessor，使用hadoop的FsShell运行hadoop的命令。 
+（3）add       AddResourceProcessor，添加到SessionState的resource_map里，运行提交job的时候会写入Hadoop的Distributed Cache。 
+（4）delete    DeleteResourceProcessor，从SessionState的resource_map里删除。
+（5）reset     RestResourceProcessor，重置终端输出
+（6）其他命令   Driver 
+</code></pre></div>
+<p>Driver类的主要作用是用来编译并执行hive命令，然后返回执行结果。这里主要分析Driver类的运行逻辑，其时序图如下：</p>
+
+<p><img src="http://javachen-rs.qiniudn.com/images/2013/Hive-Driver-sequence.jpg" alt="hive-driver"></p>
+
+<p>从时序图上可以看出有以下步骤：</p>
+
+<ul>
+<li>run方法调用内部方法runInternal</li>
+<li>在runInternal方法内部先，调用HiveDriverRunHookContext的preDriverRun方法</li>
+<li>调用compileInternal方法</li>
+<li>compileInternal方法内部调用compile方法</li>
+<li>compile方法内，先调用HiveSemanticAnalyzerHookContext的preAnalyze方法</li>
+<li>再进行语法分析，调用BaseSemanticAnalyzer的analyze方法</li>
+<li>调用HiveSemanticAnalyzerHookContext的postAnalyze方法</li>
+<li>再进行语法校验，调用BaseSemanticAnalyzer的validate方法</li>
+<li>compileInternal方法运行完成之后，调用checkConcurrency方法</li>
+<li>再来运行execute方法，该方法用于运行任务</li>
+<li>最后，调用HiveDriverRunHookContext的postDriverRun方法</li>
+</ul>
+
+<h1 id="driver初始化">Driver初始化</h1>
+
+<p>在继续分析之前，需要弄清楚Driver类初始化时做了什么事情。</p>
+
+<p>在CliDriver的<code class="prettyprint">processCmd(String cmd)</code>方法中可以看到proc是在CommandProcessorFactory类中new出来的并调用了init方法。</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="o">}</span> <span class="k">else</span> <span class="o">{</span> <span class="c1">// local mode</span>
+      <span class="n">CommandProcessor</span> <span class="n">proc</span> <span class="o">=</span> <span class="n">CommandProcessorFactory</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">tokens</span><span class="o">[</span><span class="mi">0</span><span class="o">],</span> <span class="o">(</span><span class="n">HiveConf</span><span class="o">)</span> <span class="n">conf</span><span class="o">);</span>
+      <span class="n">ret</span> <span class="o">=</span> <span class="n">processLocalCmd</span><span class="o">(</span><span class="n">cmd</span><span class="o">,</span> <span class="n">proc</span><span class="o">,</span> <span class="n">ss</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div>
+<p>CommandProcessorFactory.get方法代码片段：</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="k">if</span> <span class="o">(</span><span class="n">conf</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+<span class="k">return</span> <span class="k">new</span> <span class="nf">Driver</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="n">Driver</span> <span class="n">drv</span> <span class="o">=</span> <span class="n">mapDrivers</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">conf</span><span class="o">);</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">drv</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+<span class="n">drv</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Driver</span><span class="o">();</span>
+<span class="n">mapDrivers</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">conf</span><span class="o">,</span> <span class="n">drv</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="n">drv</span><span class="o">.</span><span class="na">init</span><span class="o">();</span>
+</code></pre></div>
+<p>init方法和构造方法代码如下：</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">init</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">Operator</span><span class="o">.</span><span class="na">resetId</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="nf">Driver</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">SessionState</span><span class="o">.</span><span class="na">get</span><span class="o">()</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">conf</span> <span class="o">=</span> <span class="n">SessionState</span><span class="o">.</span><span class="na">get</span><span class="o">().</span><span class="na">getConf</span><span class="o">();</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+</code></pre></div>
+<p>从上可以看出仅仅是初始化了conf属性和重置了Operator的id。</p>
+
+<h2 id="run方法过程">run方法过程</h2>
+
+<p>1、调用runInternal方法，根据该方法返回值判断是否出错。</p>
+
+<p>2、runInternal方法内，运行HiveDriverRunHook的前置方法preDriverRun</p>
+
+<p>3、判断是否需要编译，如果需要，则运行<code class="prettyprint">compileInternal(command)</code>方法，并根据返回值判断是否该释放Hive锁。hive中可以配置<code class="prettyprint">hive.support.concurrency</code>值为true并设置zookeeper的服务器地址和端口，基于zookeeper实现分布式锁以支持hive的多并发访问。这部分内容不是本文重点故不做介绍。</p>
+
+<blockquote>
+<p><code class="prettyprint">compileInternal(command)</code>方法内部代码说明见下文。</p>
+</blockquote>
+
+<p>4、判断是否需要对Task加锁。如果需要，则调用checkConcurrency方法。</p>
+
+<p>5、调用execute()方法执行任务。</p>
+
+<ul>
+<li>执行计划开始：<code class="prettyprint">plan.setStarted();</code></li>
+<li>先运行ExecuteWithHookContext的前置hook方法，ExecuteWithHookContext类型有三种：前置、运行失败、后置。</li>
+<li>然后创建DriverContext用于维护正在运行的task任务，正在运行的task任务会添加到队列runnable中去。</li>
+<li>其次，在while循环中遍历队列中的任务，然后启动任务让其执行，并且轮训任务执行结果，如果任务运行完成，则将其从running中删除并将当前任务的子任务加入队列中；如果运行失败，则会启动备份的任务，并运行失败的hook。</li>
+</ul>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="k">while</span> <span class="o">(</span><span class="n">runnable</span><span class="o">.</span><span class="na">peek</span><span class="o">()</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">running</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">&lt;</span> <span class="n">maxthreads</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">Task</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">Serializable</span><span class="o">&gt;</span> <span class="n">tsk</span> <span class="o">=</span> <span class="n">runnable</span><span class="o">.</span><span class="na">remove</span><span class="o">();</span>
+  <span class="n">launchTask</span><span class="o">(</span><span class="n">tsk</span><span class="o">,</span> <span class="n">queryId</span><span class="o">,</span> <span class="n">noName</span><span class="o">,</span> <span class="n">running</span><span class="o">,</span> <span class="n">jobname</span><span class="o">,</span> <span class="n">jobs</span><span class="o">,</span> <span class="n">driverCxt</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div>
+<ul>
+<li>在launchTask方法中，先判断是否支持并发执行，如果支持则调用TaskRunner的start()方法，否则调用<code class="prettyprint">tskRun.runSequential()</code>方法顺序执行，只有当是MapReduce任务时，才执行并发执行：</li>
+</ul>
+<div class="highlight"><pre><code class="language-java" data-lang="java">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">launchTask</span><span class="o">(</span><span class="n">Task</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">Serializable</span><span class="o">&gt;</span> <span class="n">tsk</span><span class="o">,</span> <span class="n">String</span> <span class="n">queryId</span><span class="o">,</span> <span class="kt">boolean</span> <span class="n">noName</span><span class="o">,</span>
+      <span class="n">Map</span><span class="o">&lt;</span><span class="n">TaskResult</span><span class="o">,</span> <span class="n">TaskRunner</span><span class="o">&gt;</span> <span class="n">running</span><span class="o">,</span> <span class="n">String</span> <span class="n">jobname</span><span class="o">,</span> <span class="kt">int</span> <span class="n">jobs</span><span class="o">,</span> <span class="n">DriverContext</span> <span class="n">cxt</span><span class="o">)</span> <span class="o">{</span>
+
+    <span class="k">if</span> <span class="o">(</span><span class="n">SessionState</span><span class="o">.</span><span class="na">get</span><span class="o">()</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">SessionState</span><span class="o">.</span><span class="na">get</span><span class="o">().</span><span class="na">getHiveHistory</span><span class="o">().</span><span class="na">startTask</span><span class="o">(</span><span class="n">queryId</span><span class="o">,</span> <span class="n">tsk</span><span class="o">,</span> <span class="n">tsk</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getName</span><span class="o">());</span>
+    <span class="o">}</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">tsk</span><span class="o">.</span><span class="na">isMapRedTask</span><span class="o">()</span> <span class="o">&amp;&amp;</span> <span class="o">!(</span><span class="n">tsk</span> <span class="k">instanceof</span> <span class="n">ConditionalTask</span><span class="o">))</span> <span class="o">{</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">noName</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">conf</span><span class="o">.</span><span class="na">setVar</span><span class="o">(</span><span class="n">HiveConf</span><span class="o">.</span><span class="na">ConfVars</span><span class="o">.</span><span class="na">HADOOPJOBNAME</span><span class="o">,</span> <span class="n">jobname</span> <span class="o">+</span> <span class="s">&quot;(&quot;</span> <span class="o">+</span> <span class="n">tsk</span><span class="o">.</span><span class="na">getId</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot;)&quot;</span><span class="o">);</span>
+      <span class="o">}</span>
+      <span class="n">cxt</span><span class="o">.</span><span class="na">incCurJobNo</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+      <span class="n">console</span><span class="o">.</span><span class="na">printInfo</span><span class="o">(</span><span class="s">&quot;Launching Job &quot;</span> <span class="o">+</span> <span class="n">cxt</span><span class="o">.</span><span class="na">getCurJobNo</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot; out of &quot;</span> <span class="o">+</span> <span class="n">jobs</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="n">tsk</span><span class="o">.</span><span class="na">initialize</span><span class="o">(</span><span class="n">conf</span><span class="o">,</span> <span class="n">plan</span><span class="o">,</span> <span class="n">cxt</span><span class="o">);</span>
+    <span class="n">TaskResult</span> <span class="n">tskRes</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TaskResult</span><span class="o">();</span>
+    <span class="n">TaskRunner</span> <span class="n">tskRun</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TaskRunner</span><span class="o">(</span><span class="n">tsk</span><span class="o">,</span> <span class="n">tskRes</span><span class="o">);</span>
+
+    <span class="c1">// Launch Task</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">HiveConf</span><span class="o">.</span><span class="na">getBoolVar</span><span class="o">(</span><span class="n">conf</span><span class="o">,</span> <span class="n">HiveConf</span><span class="o">.</span><span class="na">ConfVars</span><span class="o">.</span><span class="na">EXECPARALLEL</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="n">tsk</span><span class="o">.</span><span class="na">isMapRedTask</span><span class="o">())</span> <span class="o">{</span>
+      <span class="c1">// Launch it in the parallel mode, as a separate thread only for MR tasks</span>
+      <span class="n">tskRun</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+      <span class="n">tskRun</span><span class="o">.</span><span class="na">runSequential</span><span class="o">();</span>
+    <span class="o">}</span>
+    <span class="n">running</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">tskRes</span><span class="o">,</span> <span class="n">tskRun</span><span class="o">);</span>
+    <span class="k">return</span><span class="o">;</span>
+  <span class="o">}</span>
+</code></pre></div>
+<p>最后任务的执行情况，就要看具体的<code class="prettyprint">Task&lt;? extends Serializable&gt;</code>的实现类的逻辑了。</p>
+
+<ul>
+<li>执行计划完成：<code class="prettyprint">plan.setDone();</code></li>
+</ul>
+
+<p>6、运行HiveDriverRunHook的后置方法postDriverRun</p>
+
+<h2 id="compileinternal方法过程">compileInternal方法过程</h2>
+
+<p>1、保存当前查询状态</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">QueryState</span> <span class="n">queryState</span> <span class="o">=</span> <span class="k">new</span> <span class="n">QueryState</span><span class="o">();</span>
+
+<span class="k">if</span> <span class="o">(</span><span class="n">plan</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">close</span><span class="o">();</span>
+  <span class="n">plan</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="k">if</span> <span class="o">(</span><span class="n">resetTaskIds</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">TaskFactory</span><span class="o">.</span><span class="na">resetId</span><span class="o">();</span>
+<span class="o">}</span>
+<span class="n">saveSession</span><span class="o">(</span><span class="n">queryState</span><span class="o">);</span>
+</code></pre></div>
+<p>QueryState中保存了HiveOperation以及当前查询语句或者命令。</p>
+
+<p>2、创建Context上下文</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">command</span> <span class="o">=</span> <span class="k">new</span> <span class="n">VariableSubstitution</span><span class="o">().</span><span class="na">substitute</span><span class="o">(</span><span class="n">conf</span><span class="o">,</span><span class="n">command</span><span class="o">);</span>
+<span class="n">ctx</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Context</span><span class="o">(</span><span class="n">conf</span><span class="o">);</span>
+<span class="n">ctx</span><span class="o">.</span><span class="na">setTryCount</span><span class="o">(</span><span class="n">getTryCount</span><span class="o">());</span>
+<span class="n">ctx</span><span class="o">.</span><span class="na">setCmd</span><span class="o">(</span><span class="n">command</span><span class="o">);</span>
+<span class="n">ctx</span><span class="o">.</span><span class="na">setHDFSCleanup</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+</code></pre></div>
+<p>3、创建ParseDriver对象，然后解析命令、生成AST树。语法和词法分析内容，不是本文重点故不做介绍。</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">ParseDriver</span> <span class="n">pd</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ParseDriver</span><span class="o">();</span>
+<span class="n">ASTNode</span> <span class="n">tree</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="n">command</span><span class="o">,</span> <span class="n">ctx</span><span class="o">);</span>
+<span class="n">tree</span> <span class="o">=</span> <span class="n">ParseUtils</span><span class="o">.</span><span class="na">findRootNonNullToken</span><span class="o">(</span><span class="n">tree</span><span class="o">);</span>
+</code></pre></div>
+<p>简单归纳来说，解析程包括如下：</p>
+
+<ul>
+<li>词法分析，生成AST树，ParseDriver完成。 </li>
+<li>分析AST树，AST拆分成查询子块，信息记录在QB，这个QB在下面几个阶段都需要用到，SemanticAnalyzer.doPhase1完成。 </li>
+<li>从metastore中获取表的信息，SemanticAnalyzer.getMetaData完成。 </li>
+<li>生成逻辑执行计划，SemanticAnalyzer.genPlan完成。 </li>
+<li>优化逻辑执行计划，Optimizer完成，ParseContext作为上下文信息进行传递。 </li>
+<li>生成物理执行计划，SemanticAnalyzer.genMapRedTasks完成。 </li>
+<li>物理计划优化，PhysicalOptimizer完成，PhysicalContext作为上下文信息进行传递。</li>
+</ul>
+
+<p>4、读取环境变量，如果配置了语法分析的hook，参数为：<code class="prettyprint">hive.semantic.analyzer.hook</code>，则:先用反射得到<code class="prettyprint">AbstractSemanticAnalyzerHook</code>的集合，调用<code class="prettyprint">hook.preAnalyze(hookCtx, tree)</code>方法,然后再调用<code class="prettyprint">sem.analyze(tree, ctx)</code>方法，该方法才是用来作语法分析的,最后再调用<code class="prettyprint">hook.postAnalyze(hookCtx, tree)</code>方法执行一些用户定义的后置操作；</p>
+
+<p>否则，直接调用<code class="prettyprint">sem.analyze(tree, ctx)</code>进行语法分析。</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java">  <span class="n">BaseSemanticAnalyzer</span> <span class="n">sem</span> <span class="o">=</span> <span class="n">SemanticAnalyzerFactory</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">conf</span><span class="o">,</span> <span class="n">tree</span><span class="o">);</span>
+  <span class="n">List</span><span class="o">&lt;</span><span class="n">AbstractSemanticAnalyzerHook</span><span class="o">&gt;</span> <span class="n">saHooks</span> <span class="o">=</span>
+      <span class="n">getHooks</span><span class="o">(</span><span class="n">HiveConf</span><span class="o">.</span><span class="na">ConfVars</span><span class="o">.</span><span class="na">SEMANTIC_ANALYZER_HOOK</span><span class="o">,</span>
+               <span class="n">AbstractSemanticAnalyzerHook</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+
+  <span class="c1">// Do semantic analysis and plan generation</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">saHooks</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">HiveSemanticAnalyzerHookContext</span> <span class="n">hookCtx</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HiveSemanticAnalyzerHookContextImpl</span><span class="o">();</span>
+    <span class="n">hookCtx</span><span class="o">.</span><span class="na">setConf</span><span class="o">(</span><span class="n">conf</span><span class="o">);</span>
+    <span class="n">hookCtx</span><span class="o">.</span><span class="na">setUserName</span><span class="o">(</span><span class="n">userName</span><span class="o">);</span>
+    <span class="k">for</span> <span class="o">(</span><span class="n">AbstractSemanticAnalyzerHook</span> <span class="n">hook</span> <span class="o">:</span> <span class="n">saHooks</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">tree</span> <span class="o">=</span> <span class="n">hook</span><span class="o">.</span><span class="na">preAnalyze</span><span class="o">(</span><span class="n">hookCtx</span><span class="o">,</span> <span class="n">tree</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="n">sem</span><span class="o">.</span><span class="na">analyze</span><span class="o">(</span><span class="n">tree</span><span class="o">,</span> <span class="n">ctx</span><span class="o">);</span>
+    <span class="n">hookCtx</span><span class="o">.</span><span class="na">update</span><span class="o">(</span><span class="n">sem</span><span class="o">);</span>
+    <span class="k">for</span> <span class="o">(</span><span class="n">AbstractSemanticAnalyzerHook</span> <span class="n">hook</span> <span class="o">:</span> <span class="n">saHooks</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">hook</span><span class="o">.</span><span class="na">postAnalyze</span><span class="o">(</span><span class="n">hookCtx</span><span class="o">,</span> <span class="n">sem</span><span class="o">.</span><span class="na">getRootTasks</span><span class="o">());</span>
+    <span class="o">}</span>
+  <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+    <span class="n">sem</span><span class="o">.</span><span class="na">analyze</span><span class="o">(</span><span class="n">tree</span><span class="o">,</span> <span class="n">ctx</span><span class="o">);</span>
+  <span class="o">}</span>
+</code></pre></div>
+<p>5、校验执行计划：<code class="prettyprint">sem.validate()</code></p>
+
+<p>6、创建查询计划QueryPlan。</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">plan</span> <span class="o">=</span> <span class="k">new</span> <span class="n">QueryPlan</span><span class="o">(</span><span class="n">command</span><span class="o">,</span> <span class="n">sem</span><span class="o">,</span> <span class="n">perfLogger</span><span class="o">.</span><span class="na">getStartTime</span><span class="o">(</span><span class="n">PerfLogger</span><span class="o">.</span><span class="na">DRIVER_RUN</span><span class="o">),</span>
+           <span class="n">SessionState</span><span class="o">.</span><span class="na">get</span><span class="o">().</span><span class="na">getCommandType</span><span class="o">());</span>
+</code></pre></div>
+<p>7、初始化FetchTask。</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="k">if</span> <span class="o">(</span><span class="n">plan</span><span class="o">.</span><span class="na">getFetchTask</span><span class="o">()</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+   <span class="n">plan</span><span class="o">.</span><span class="na">getFetchTask</span><span class="o">().</span><span class="na">initialize</span><span class="o">(</span><span class="n">conf</span><span class="o">,</span> <span class="n">plan</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div>
+<p>8、得到schema</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">schema</span> <span class="o">=</span> <span class="n">getSchema</span><span class="o">(</span><span class="n">sem</span><span class="o">,</span> <span class="n">conf</span><span class="o">);</span>
+</code></pre></div>
+<p>9、授权校验工作。</p>
+
+<h2 id="hive中支持的hook">hive中支持的hook</h2>
+
+<p>上面分析中，提到了hive的hook机制，hive中一共存在以下几种hook。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">hive.semantic.analyzer.hook
+hive.exec.filter.hook
+hive.exec.driver.run.hooks
+hive.server2.session.hook
+hive.exec.pre.hooks
+hive.exec.post.hooks
+hive.exec.failure.hooks
+hive.client.stats.publishers
+hive.metastore.ds.connection.url.hook
+hive.metastore.init.hooks
+</code></pre></div>
+<p>通过hook机制，可以在运行前后做一些用户想做的事情。如：你可以在语法分析的hook中对hive的操作做一些超级管理员级别的权限判断；你可以对hive-server2做一些session级别的控制。</p>
+
+<p>cloudera的github仓库<a href="https://github.com/cloudera/access">access</a>中关于hive的访问控制就是使用了hive的hook机制。</p>
+
+<p>twitter的mapreduce可视化项目监控项目<a href="https://github.com/twitter/ambrose">ambrose</a>也利用了hive的hook机制，有兴趣的话，你可以去看看其是如何使用hive的hook并且你也可以扩增hook做些自己想做的事情。</p>
+
+<h1 id="总结">总结</h1>
+
+<p>本文主要介绍了hive运行过程，包括hive语法词法解析以及hook机制，任务的最后运行过程取决于具体的<code class="prettyprint">Task&lt;? extends Serializable&gt;</code>的实现类的逻辑。关于hive语法词法解析，这一部分没有做详细的解释。</p>
+
+<p>hive Driver类的执行过程如下（该图是根据hive-0.11版本画出来的）：</p>
+
+<p><img src="http://javachen-rs.qiniudn.com/images/2013/hive-driver.jpg" alt="hive-driver"></p>
+
+<h1 id="参考文章">参考文章</h1>
+
+<ol>
+<li><a href="http://www.cnblogs.com/end/archive/2012/12/19/2825320.html">hive 初始化运行流程</a></li>
+<li><a href="https://github.com/cloudera/access">Cloudera access</a></li>
+<li><a href="https://github.com/twitter/ambrose">twitter ambrose</a></li>
+</ol>
+</div>
+
+
+      <div id="pay" style="text-align:center;">
+        ----EOF-----
+        <br>
+        <section>
+  <h4>Sponsor</h4>
+	<img src="http://javachen-rs.qiniudn.com/images/alipay.png" width="150/">
+  <p class="small">觉得此博客对你有帮助，支付宝扫码赞助吧</p>
+</section>
+
+      </div>
+
+      <p class="meta">
+      	
+            Categories:
+      	    
+          	<a class="btn btn-default btn-xs" href="/categories.html#hive">hive</a>
+          
+      	
+
+      	
+            Tags:
+      	    
+          	<a class="btn btn-default btn-xs" href="/tags.html#hadoop">hadoop</a>
+          
+          	<a class="btn btn-default btn-xs" href="/tags.html#hive">hive</a>
+          
+      	
+      </p>
+	</article>
+
+	<ul class="pager">
+	  
+	  <li class="previous"><a class="btn btn-xs" href="/2013/08/21/hive-CliDriver" title="Hive源码分析：CLI入口类">&larr; Prev</a></li>
+	  
+	  
+	  <li class="next"><a class="btn btn-xs" href="/2013/08/23/publish-proerties-using-zookeeper" title="使用ZooKeeper实现配置同步">Next &rarr;</a></li>
+	  
+	</ul>
+
+  
+<div id="comments">
+  <div class="ds-thread" data-thread-key="/2013/08/22/hive-Driver"  data-title="Hive源码分析：Driver类运行过程 - 小天的个人博客"></div>
+</div>
+
+
+
+</div>
+
+        </div>
+      </div>
+
+      <footer class="footer text-center">
+  <p>&copy; 2009-2015 <a href="/" target="_blank" title="86后，工作在深圳；Java程序员、Hadoop工程师；主要关注Java、Hadoop、Kettle、关注大数据处理技术。">小天</a>. With Help from <a href="//jekyllrb.com/" target="_blank" title="Transform your plain text into static websites and blogs.">Jekyll</a> and <a href="//getbootstrap.com/" target="_blank" title="Bootstrap is the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web.">Bootstrap</a>, theme from <a href="http://havee.me/" target="_blank" title="http://havee.me/">Havee</a>.
+
+  <span style="float:right;"><a href="/about.html">About</a></span>
+
+	
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+  </p>
+  <div id="toTop" style="display: block;">
+    <a href="#">▲</a><a href="#footer">▼</a>
+  </div>
+</footer>
+
+    </div>
+
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/core.js"></script>
+
+    
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+    
+    <!-- duoshuo Begin -->
+    <script type="text/javascript">
+      var duoshuoQuery = {short_name:"xiaotian120"};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] ||
+        document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+    </script>
+    <!-- duoshuo End -->
+    
+  </body>
+</html>

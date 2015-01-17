@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>AngularJS PhoneCat代码分析 - 小天的个人博客</title>
+  <meta name="description" content="本文主要分析 AngularJS 官方网站提供的一个用于学习的示例项目 PhoneCat 的构建、测试过程以及代码的运行原理。希望能够对 PhoneCat 项目有一个更加深入全面的认识。">
+  <meta name="keywords" content="java, hadoop, hive, hbase, spark, linux, scala, python, mysql">
+  <meta name="author" content="小天">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="360-site-verification" content="9b7a87a1d52051c96644f0a9b8b79898" />
+  <meta name="sogou_site_verification" content="ofwXWFdthV"/>
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" >
+
+  <link rel="canonical" href="http://blog.xiaotian.com/2015/01/09/angular-phonecat-examples">
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css" media="all">
+  <link rel="stylesheet" href="/static/css/style.css" media="all">
+  <link rel="stylesheet" href="/static/css/pygments.css" media="all">
+  <link rel="stylesheet" href="/static/css/font-awesome.css" media="all">
+
+  <!-- atom & rss feed -->
+  <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="小天的个人博客 RSS Feed">
+  <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="小天的个人博客 ATOM Feed">
+</head>
+
+
+  <body>
+    <div class="container">
+      <!--[if lte IE 9]>
+<div class="alert alert-warning">
+  <p>Your Internet Explorer is not supported. Please upgrade your Internet Explorer to version 9+, or use latest <a href="http://www.google.com/chrome/" target="_blank" class="alert-link">Google chrome</a>、<a href="http://www.mozilla.org/firefox/" target="_blank" class="alert-link">Mozilla Firefox</a>.</p>
+  <p>If you are using IE 9 or later, make sure you <a href="http://windows.microsoft.com/en-us/internet-explorer/use-compatibility-view#ie=ie-8" target="_blank" class="alert-link">turn off "Compatibility view"</a>.</p>
+</div>
+<![endif]-->
+<header class="header">
+  <div class="title"><a title="小天的个人博客" href="/">小天的个人博客</a></div>
+  <ul class="nav navbar-nav navbar-right visible-lg visible-md">
+    <li>
+    <form id="search-form" class="form-group has-success visible-lg" role="form">
+      <input type="text" class="form-control input-sm" placeholder="Search" id="query" style="width: 160px;">
+    </form>
+    </li>
+    <li><a href="/archive.html" title="Archive"><span class='fa fa-archive fa-2x'></span></a></li>
+    <li><a href="/categories.html" title="Categories"><span class='fa fa-navicon fa-2x'></span></a></li>
+    <li><a href="/tags.html" title="Tags"><span class='fa fa-tags fa-2x'></span></a></li>
+    <li><a href="/about.html" title="About"><span class='fa fa-user fa-2x'></span></a></li>
+    
+    <li><a href="https://github.com/wuskyfantasy" target="_blank" title="Github"><span class='fa fa-github fa-2x'></span></a></li>
+    
+    
+    
+    
+    
+    <li><a href="http://weibo.com/xiaotian120" target="_blank" title="Weibo"><span class="fa fa-weibo fa-2x"></span></a></li>
+    
+
+    <li><a href="/rss.xml" target="_blank" title="RSS"><span class='fa fa-rss fa-2x'></span></a></li>
+  </ul>
+</header>
+
+
+      <div class="wrapper">
+        <div class="row">
+          <div id="search-loader" style="display:none;text-align:center">
+            <img src="http://javachen-rs.qiniudn.com/images/loading.gif">
+          </div>
+          <div class="col-md-12">
+  <article class="news-item">
+
+      <h2  class="news-item"> AngularJS PhoneCat代码分析  
+        <time class="small">2015.01.09</time>
+      </h2>
+
+      <div><p>AngularJS 官方网站提供了一个用于学习的示例项目：PhoneCat。这是一个Web应用，用户可以浏览一些Android手机，了解它们的详细信息，并进行搜索和排序操作。</p>
+
+<p>本文主要分析 AngularJS 官方网站提供的一个用于学习的示例项目 PhoneCat 的构建、测试过程以及代码的运行原理。希望能够对 PhoneCat 项目有一个更加深入全面的认识。这其中包括以下内容：</p>
+
+<ul>
+<li>该项目如何运行起来的</li>
+<li>该项目如何进行前端单元测试</li>
+<li>AngularJS 相关代码分析</li>
+</ul>
+
+<p><strong>以下内容如有理解不正确，欢迎指正！</strong></p>
+
+<h1 id="环境搭建">环境搭建</h1>
+
+<p>对于 PhoneCat 项目的开发环境和测试环境的搭建，官方网站上提供了详细的指导：<a href="http://docs.angularjs.org/tutorial">http://docs.angularjs.org/tutorial</a>，你可以找到一些中文的翻译。</p>
+
+<p>PhoneCat 项目的源代码托管在 GitHub 上，可以通过下面命令下载源代码：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git clone --depth<span class="o">=</span>20 https://github.com/angular/angular-phonecat.git
+</code></pre></div>
+<p><code class="prettyprint">--depth=20</code> 选项的意思为：仅下载最近20次的代码提交版本；这么做可以减少下载的文件大小，加快下载。</p>
+
+<blockquote>
+<p>PhoneCat 是一个 Web 应用程序，因此最好在 Web 服务器中运行，以期获得最佳结果。官方推荐安装 <a href="http://nodejs.org/download/">Node.js</a>。</p>
+</blockquote>
+
+<p>PhoneCat 项目的运行与测试依赖一些别的工具，可以在安装 <a href="http://www.oschina.net/p/nodejs">Node.js</a> 后通过 npm 命令来安装这些依赖包。以下命令需在 angular-phonecat 项目路径下运行：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>npm install
+</code></pre></div>
+<p>运行该命令后，会在 angular-phonecat 项目路径下安装以下依赖包：</p>
+
+<ul>
+<li><code class="prettyprint">Bower</code> 包管理器</li>
+<li><code class="prettyprint">Http-Server</code> 轻量级Web服务器</li>
+<li><code class="prettyprint">Karma</code>  用于运行单元测试</li>
+<li><code class="prettyprint">Protractor</code> 用于运行端到端测试</li>
+</ul>
+
+<p>几乎所有的 AngularJS 学习教程，都会写到用这个命令来启动服务： </p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>node scripts/web-server.js
+</code></pre></div>
+<p>但实际上 PhoneCat 项目已经放弃使用 web-server 了，git 上取下来的的项目里没有 scripts/web-server.js 文件了。</p>
+
+<p>我们可以用下面的方式来启动工程：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>npm start
+</code></pre></div>
+<p>然后通过 <a href="http://localhost:8000/app/index.html">http://localhost:8000/app/index.html</a> 访问。</p>
+
+<h1 id="依赖包介绍">依赖包介绍</h1>
+
+<p>在克隆项目之后，目录如下：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">➜  angular-phonecat git:<span class="o">(</span>master<span class="o">)</span> ✗ tree -L 2
+.
+├── LICENSE
+├── README.md
+├── app
+│   ├── bower_components
+│   ├── css
+│   ├── img
+│   ├── index.html
+│   ├── js
+│   ├── partials
+│   └── phones
+├── bower.json
+├── package.json
+├── scripts
+│   ├── private
+│   └── update-repo.sh
+└── <span class="nb">test</span>
+    ├── e2e
+    ├── karma.conf.js
+    ├── protractor-conf.js
+    └── unit
+
+20 directories, 8 files
+</code></pre></div>
+<p>这个目录下存在一个文件 package.json，该文件是做什么用的呢？</p>
+
+<blockquote>
+<p>在 NodeJS 项目中，用 package.json 文件来声明项目中使用的模块，这样在新的环境部署时，只要在 package.json 文件所在的目录执行 <code class="prettyprint">npm install</code> 命令即可安装所需要的模块。</p>
+</blockquote>
+
+<p>关于 package.json 中可配置的选项请参考 <a href="http://blog.csdn.net/woxueliuyun/article/details/39294375">package.json字段全解</a> 。</p>
+
+<p>从该文件可以看出 PhoneCat 的依赖：</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript">  <span class="s2">&quot;devDependencies&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;karma&quot;</span><span class="o">:</span> <span class="s2">&quot;^0.12.16&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;karma-chrome-launcher&quot;</span><span class="o">:</span> <span class="s2">&quot;^0.1.4&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;karma-jasmine&quot;</span><span class="o">:</span> <span class="s2">&quot;^0.1.5&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;protractor&quot;</span><span class="o">:</span> <span class="s2">&quot;~1.0.0&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;http-server&quot;</span><span class="o">:</span> <span class="s2">&quot;^0.6.1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;tmp&quot;</span><span class="o">:</span> <span class="s2">&quot;0.0.23&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;bower&quot;</span><span class="o">:</span> <span class="s2">&quot;^1.3.1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;shelljs&quot;</span><span class="o">:</span> <span class="s2">&quot;^0.2.6&quot;</span>
+  <span class="p">}</span>
+</code></pre></div>
+<p>以及一些脚本：</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="s2">&quot;scripts&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;postinstall&quot;</span><span class="o">:</span> <span class="s2">&quot;bower install&quot;</span><span class="p">,</span>
+
+    <span class="s2">&quot;prestart&quot;</span><span class="o">:</span> <span class="s2">&quot;npm install&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;start&quot;</span><span class="o">:</span> <span class="s2">&quot;http-server -a 0.0.0.0 -p 8000&quot;</span><span class="p">,</span>
+
+    <span class="s2">&quot;pretest&quot;</span><span class="o">:</span> <span class="s2">&quot;npm install&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;test&quot;</span><span class="o">:</span> <span class="s2">&quot;node node_modules/karma/bin/karma start test/karma.conf.js&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;test-single-run&quot;</span><span class="o">:</span> <span class="s2">&quot;node node_modules/karma/bin/karma start test/karma.conf.js  --single-run&quot;</span><span class="p">,</span>
+
+    <span class="s2">&quot;preupdate-webdriver&quot;</span><span class="o">:</span> <span class="s2">&quot;npm install&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;update-webdriver&quot;</span><span class="o">:</span> <span class="s2">&quot;webdriver-manager update&quot;</span><span class="p">,</span>
+
+    <span class="s2">&quot;preprotractor&quot;</span><span class="o">:</span> <span class="s2">&quot;npm run update-webdriver&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;protractor&quot;</span><span class="o">:</span> <span class="s2">&quot;protractor test/protractor-conf.js&quot;</span><span class="p">,</span>
+
+    <span class="s2">&quot;update-index-async&quot;</span><span class="o">:</span> <span class="s2">&quot;node -e \&quot;require(&#39;shelljs/global&#39;); sed(&#39;-i&#39;, /\\/\\/@@NG_LOADER_START@@[\\s\\S]*\\/\\/@@NG_LOADER_END@@/, &#39;//@@NG_LOADER_START@@\\n&#39; + cat(&#39;bower_components/angular-loader/angular-loader.min.js&#39;) + &#39;\\n//@@NG_LOADER_END@@&#39;, &#39;app/index-async.html&#39;);\&quot;&quot;</span>
+  <span class="p">}</span>
+</code></pre></div>
+<p>从上可以看出运行 <code class="prettyprint">npm start</code> 之前会运行 <code class="prettyprint">npm install</code>，然后运行 <code class="prettyprint">http-server -a 0.0.0.0 -p 8000</code> 启动一个 web 服务器，最后是运行 <code class="prettyprint">bower install</code> 安装 bower 管理的包。</p>
+
+<p>bower 管理的包由 bower.json 文件定义：</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="p">{</span>
+  <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;angular-phonecat&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;description&quot;</span><span class="o">:</span> <span class="s2">&quot;A starter project for AngularJS&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;version&quot;</span><span class="o">:</span> <span class="s2">&quot;0.0.0&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;homepage&quot;</span><span class="o">:</span> <span class="s2">&quot;https://github.com/angular/angular-phonecat&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;license&quot;</span><span class="o">:</span> <span class="s2">&quot;MIT&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;private&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="s2">&quot;dependencies&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;angular&quot;</span><span class="o">:</span> <span class="s2">&quot;1.3.x&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;angular-mocks&quot;</span><span class="o">:</span> <span class="s2">&quot;1.3.x&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;jquery&quot;</span><span class="o">:</span> <span class="s2">&quot;~2.1.1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;bootstrap&quot;</span><span class="o">:</span> <span class="s2">&quot;~3.1.1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;angular-route&quot;</span><span class="o">:</span> <span class="s2">&quot;1.3.x&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;angular-resource&quot;</span><span class="o">:</span> <span class="s2">&quot;1.3.x&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;angular-animate&quot;</span><span class="o">:</span> <span class="s2">&quot;1.3.x&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>当然，package.json 文件中还定义了一些测试相关的命令。</p>
+
+<h2 id="bower">bower</h2>
+
+<p>关于 <a href="http://bower.io/">bower</a> 的介绍，参考博客内文章：<a href="/2014/05/10/bower-intro/">bower介绍</a>。</p>
+
+<p>在本项目中，bower 下载的包保存在 angular-phonecat/app/bower_components 目录下，依赖如下： </p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">├── bower_components
+│   ├── angular
+│   ├── angular-animate
+│   ├── angular-mocks
+│   ├── angular-resource
+│   ├── angular-route
+│   ├── bootstrap
+│   └── jquery
+</code></pre></div>
+<h2 id="karma">karma</h2>
+
+<p><a href="http://karma-runner.github.io/0.12/index.html">Karma</a> 是一个 Javascript 测试运行工具，可以帮助你关闭反馈循环。Karma 可以在特定的文件被修改时运行测试，它也可以在不同的浏览器上并行测试。不同的设备可以指向 Karma 服务器来覆盖实际场景。</p>
+
+<p>关于 Karma 的使用，本文不做介绍。</p>
+
+<h2 id="http-server">http-server</h2>
+
+<p><a href="https://github.com/nodeapps/http-server">http-server</a> 是一个简单的零配置命令行 HTTP 服务器，基于 <a href="http://www.oschina.net/p/nodejs">Node.js</a>。</p>
+
+<p>在命令行中使用方式是：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>node http-server
+</code></pre></div>
+<p>在package.json 中定义方式是：</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"> <span class="s2">&quot;scripts&quot;</span><span class="o">:</span> <span class="p">{</span>
+     <span class="s2">&quot;start&quot;</span><span class="o">:</span> <span class="s2">&quot;http-server -a 0.0.0.0 -p 8000&quot;</span><span class="p">,</span>
+ <span class="p">}</span>
+</code></pre></div>
+<p>支持的参数：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"> -p 端口号 <span class="o">(</span>默认 8080<span class="o">)</span>
+
+-a IP 地址 <span class="o">(</span>默认 0.0.0.0<span class="o">)</span>
+
+-d 显示目录列表 <span class="o">(</span>默认 <span class="s1">&#39;True&#39;</span><span class="o">)</span>
+
+-i 显示 autoIndex <span class="o">(</span>默认 <span class="s1">&#39;True&#39;</span><span class="o">)</span>
+
+-e or --ext 如果没有提供默认的文件扩展名<span class="o">(</span>默认 <span class="s1">&#39;html&#39;</span><span class="o">)</span>
+
+-s or --silent 禁止日志信息输出
+
+--cors 启用 CORS 
+
+-o 在开始服务后打开浏览器
+
+-h or --help 打印列表并退出
+
+-c 为 cache-control max-age header 设置Cache <span class="nb">time</span><span class="o">(</span>秒<span class="o">)</span> ，禁用 caching, 则值设为 -1 .
+</code></pre></div>
+<h2 id="protractor">Protractor</h2>
+
+<p><a href="http://www.protractortest.org/">Protractor</a> 是一个端对端的测试运行工具，模拟用户交互，帮助你验证你的 Angular 应用的运行状况。</p>
+
+<p>Protractor 使用 <a href="http://jasmine.github.io/">Jasmine</a> 测试框架来定义测试。Protractor 为不同的页面交互提供一套健壮的 API。</p>
+
+<p>当然，也有其他的端对端工具，不过 Protractor 有着自己的优势，它知道怎么和 AngularJS 的代码一起运行，特别是面临 $digest 循环的时候。</p>
+
+<p>关于 Protractor 的使用，本文不做介绍。</p>
+
+<h2 id="shelljs">ShellJS</h2>
+
+<p><a href="http://shelljs.org/">ShellJS</a> 是 <a href="http://www.oschina.net/p/nodejs">Node.js</a> 扩展，用于实现 Unix shell 命令执行，支持 Windows。</p>
+
+<p>一个示例代码：</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;shelljs/global&#39;</span><span class="p">);</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">which</span><span class="p">(</span><span class="s1">&#39;git&#39;</span><span class="p">))</span> <span class="p">{</span>
+  <span class="nx">echo</span><span class="p">(</span><span class="s1">&#39;Sorry, this script requires git&#39;</span><span class="p">);</span>
+  <span class="nx">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// Copy files to release dir</span>
+<span class="nx">mkdir</span><span class="p">(</span><span class="s1">&#39;-p&#39;</span><span class="p">,</span> <span class="s1">&#39;out/Release&#39;</span><span class="p">);</span>
+<span class="nx">cp</span><span class="p">(</span><span class="s1">&#39;-R&#39;</span><span class="p">,</span> <span class="s1">&#39;stuff/*&#39;</span><span class="p">,</span> <span class="s1">&#39;out/Release&#39;</span><span class="p">);</span>
+
+<span class="c1">// Replace macros in each .js file</span>
+<span class="nx">cd</span><span class="p">(</span><span class="s1">&#39;lib&#39;</span><span class="p">);</span>
+<span class="nx">ls</span><span class="p">(</span><span class="s1">&#39;*.js&#39;</span><span class="p">).</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">file</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">sed</span><span class="p">(</span><span class="s1">&#39;-i&#39;</span><span class="p">,</span> <span class="s1">&#39;BUILD_VERSION&#39;</span><span class="p">,</span> <span class="s1">&#39;v0.1.2&#39;</span><span class="p">,</span> <span class="nx">file</span><span class="p">);</span>
+  <span class="nx">sed</span><span class="p">(</span><span class="s1">&#39;-i&#39;</span><span class="p">,</span> <span class="sr">/.*REMOVE_THIS_LINE.*\n/</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="nx">file</span><span class="p">);</span>
+  <span class="nx">sed</span><span class="p">(</span><span class="s1">&#39;-i&#39;</span><span class="p">,</span> <span class="sr">/.*REPLACE_LINE_WITH_MACRO.*\n/</span><span class="p">,</span> <span class="nx">cat</span><span class="p">(</span><span class="s1">&#39;macro.js&#39;</span><span class="p">),</span> <span class="nx">file</span><span class="p">);</span>
+<span class="p">});</span>
+<span class="nx">cd</span><span class="p">(</span><span class="s1">&#39;..&#39;</span><span class="p">);</span>
+
+<span class="c1">// Run external tool synchronously</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">exec</span><span class="p">(</span><span class="s1">&#39;git commit -am &quot;Auto-commit&quot;&#39;</span><span class="p">).</span><span class="nx">code</span> <span class="o">!==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">echo</span><span class="p">(</span><span class="s1">&#39;Error: Git commit failed&#39;</span><span class="p">);</span>
+  <span class="nx">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>在 PhoneCat 中，主要是用在下面：</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="s2">&quot;update-index-async&quot;</span><span class="o">:</span> <span class="s2">&quot;node -e \&quot;require(&#39;shelljs/global&#39;); sed(&#39;-i&#39;, /\\/\\/@@NG_LOADER_START@@[\\s\\S]*\\/\\/@@NG_LOADER_END@@/, &#39;//@@NG_LOADER_START@@\\n&#39; + cat(&#39;bower_components/angular-loader/angular-loader.min.js&#39;) + &#39;\\n//@@NG_LOADER_END@@&#39;, &#39;app/index-async.html&#39;);\&quot;&quot;</span>
+</code></pre></div>
+<h1 id="测试">测试</h1>
+
+<h2 id="运行单元测试">运行单元测试</h2>
+
+<p>PhoneCat 项目中的单元测试是使用 Karma 来完成的，所有的单元测试用例都存放在 test/unit 目录下。可以通过执行以下命令来运行单元测试：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>npm <span class="nb">test</span>
+</code></pre></div>
+<blockquote>
+<p>值得一提的是，在运行单元测试前，计算机上必须安装 Google Chrome 浏览器，<strong>因为这里用到了 karma-chrome-launcher</strong>。</p>
+</blockquote>
+
+<h2 id="运行端到端测试">运行端到端测试</h2>
+
+<p>PhoneCat 项目使用端到端测试来保证 Web 应用的可操作性，而这个端到端测试是通过使用 Protractor 来实现的，所有的端到端测试用例都存放在test/e2e 目录下。可以通过执行以下步骤来运行端到端测试：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">//更新webdriver，此命令只需运行一次
+<span class="nv">$ </span>npm run update-webdriver
+//运行PhoneCat
+<span class="nv">$ </span>npm start
+</code></pre></div>
+<p>打开另一个命令行窗口，在其中运行：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>npm run protractor
+</code></pre></div>
+<h1 id="代码分析">代码分析</h1>
+
+<p>在介绍了 PhoneCat 的运行和测试环境后，来看看 PhoneCat 的页面和 js 是怎么组织起来的。</p>
+
+<ul>
+<li>首先，从 index.html 内容可以看到 PhoneCat 页面使用 bootstrap 框架，并且引入了 jquery 以及 angular 的相关依赖，包括一些附加模块：<code class="prettyprint">路由</code>、<code class="prettyprint">动画</code>、<code class="prettyprint">资源</code>。</li>
+<li>angular 应用范围由 <code class="prettyprint">ng-app</code> 定义在 html 节点上，即作用于整个页面，其名称为 <code class="prettyprint">phonecatApp</code>。</li>
+<li>通过 <code class="prettyprint">ng-view</code> 指定加载子视图的位置，这里主要包括 <code class="prettyprint">partials/phone-list.html</code> 和 <code class="prettyprint">partials/phone-detail.html</code> 两个视图。</li>
+<li>app.js 是应用的入口，并且依赖 animations.js、controllers.js、filters.js、services.js 等文件。从这里可以看出，一个 angular 应用的 js 大概包括哪几个部分的内容。</li>
+</ul>
+
+<p>app.js 内容如下：</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">//JavaScript语法支持严格模式:如果在语法检测时发现语法问题，则整个代码块失效，并导致一个语法异常；如果在运行期出现了违反严格模式的代码，则抛出执行异常。</span>
+<span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+
+<span class="cm">/* App Module */</span>
+<span class="c1">//定义一个模块，模块名称和页面 ng-app 中内容一致</span>
+<span class="kd">var</span> <span class="nx">phonecatApp</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;phonecatApp&#39;</span><span class="p">,</span> <span class="p">[</span>
+  <span class="s1">&#39;ngRoute&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;phonecatAnimations&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;phonecatControllers&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;phonecatFilters&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;phonecatServices&#39;</span>
+<span class="p">]);</span>
+
+<span class="c1">//定义路由</span>
+<span class="nx">phonecatApp</span><span class="p">.</span><span class="nx">config</span><span class="p">([</span><span class="s1">&#39;$routeProvider&#39;</span><span class="p">,</span>
+  <span class="kd">function</span><span class="p">(</span><span class="nx">$routeProvider</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">$routeProvider</span><span class="p">.</span>
+      <span class="nx">when</span><span class="p">(</span><span class="s1">&#39;/phones&#39;</span><span class="p">,</span> <span class="p">{</span>
+        <span class="nx">templateUrl</span><span class="o">:</span> <span class="s1">&#39;partials/phone-list.html&#39;</span><span class="p">,</span>
+        <span class="nx">controller</span><span class="o">:</span> <span class="s1">&#39;PhoneListCtrl&#39;</span>
+      <span class="p">}).</span>
+      <span class="nx">when</span><span class="p">(</span><span class="s1">&#39;/phones/:phoneId&#39;</span><span class="p">,</span> <span class="p">{</span>
+        <span class="nx">templateUrl</span><span class="o">:</span> <span class="s1">&#39;partials/phone-detail.html&#39;</span><span class="p">,</span>
+        <span class="nx">controller</span><span class="o">:</span> <span class="s1">&#39;PhoneDetailCtrl&#39;</span>
+      <span class="p">}).</span>
+      <span class="nx">otherwise</span><span class="p">({</span>
+        <span class="nx">redirectTo</span><span class="o">:</span> <span class="s1">&#39;/phones&#39;</span>
+      <span class="p">});</span>
+  <span class="p">}]);</span>
+</code></pre></div>
+<p>phonecatApp 模块依赖其他几个模块：ngRoute、phonecatAnimations、phonecatControllers、phonecatFilters、phonecatServices。</p>
+
+<p>ngRoute 是内置的路由模块，定义路由规则：</p>
+
+<ul>
+<li>当访问 <code class="prettyprint">/phones</code>，由 <code class="prettyprint">PhoneListCtrl</code> 控制器处理，并且由 <code class="prettyprint">partials/phone-list.html</code> 模板渲染显示内容。</li>
+<li>当访问 <code class="prettyprint">/phones/:phoneId</code>，由 <code class="prettyprint">PhoneDetailCtrl</code> 控制器处理，并且由 <code class="prettyprint">partials/phone-detail.html</code> 模板渲染显示内容。</li>
+<li>如果不满足上面条件，则重定向到 <code class="prettyprint">/phones</code></li>
+</ul>
+
+<p>phonecatAnimations 模块是定义动画效果，没有真个模块不影响程序的主要功能的运行，故不分析这部分代码。</p>
+
+<p>phonecatControllers 模块定义在 controllers.js 文件中：</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+
+<span class="cm">/* Controllers */</span>
+<span class="kd">var</span> <span class="nx">phonecatControllers</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;phonecatControllers&#39;</span><span class="p">,</span> <span class="p">[]);</span>
+
+<span class="c1">// 定义 PhoneListCtrl，并注入 Phone 对象</span>
+<span class="nx">phonecatControllers</span><span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">&#39;PhoneListCtrl&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;$scope&#39;</span><span class="p">,</span> <span class="s1">&#39;Phone&#39;</span><span class="p">,</span>
+  <span class="kd">function</span><span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">Phone</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">$scope</span><span class="p">.</span><span class="nx">phones</span> <span class="o">=</span> <span class="nx">Phone</span><span class="p">.</span><span class="nx">query</span><span class="p">();</span>
+    <span class="nx">$scope</span><span class="p">.</span><span class="nx">orderProp</span> <span class="o">=</span> <span class="s1">&#39;age&#39;</span><span class="p">;</span>
+  <span class="p">}]);</span>
+
+<span class="c1">// 定义 PhoneDetailCtrl，并注入 Phone 对象和 $routeParams，$routeParams 封装了路由参数。</span>
+<span class="nx">phonecatControllers</span><span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">&#39;PhoneDetailCtrl&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;$scope&#39;</span><span class="p">,</span> <span class="s1">&#39;$routeParams&#39;</span><span class="p">,</span> <span class="s1">&#39;Phone&#39;</span><span class="p">,</span>
+  <span class="kd">function</span><span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">$routeParams</span><span class="p">,</span> <span class="nx">Phone</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">$scope</span><span class="p">.</span><span class="nx">phone</span> <span class="o">=</span> <span class="nx">Phone</span><span class="p">.</span><span class="nx">get</span><span class="p">({</span><span class="nx">phoneId</span><span class="o">:</span> <span class="nx">$routeParams</span><span class="p">.</span><span class="nx">phoneId</span><span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">phone</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">//回调方法</span>
+      <span class="nx">$scope</span><span class="p">.</span><span class="nx">mainImageUrl</span> <span class="o">=</span> <span class="nx">phone</span><span class="p">.</span><span class="nx">images</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+    <span class="p">});</span>
+
+    <span class="nx">$scope</span><span class="p">.</span><span class="nx">setImage</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">imageUrl</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">$scope</span><span class="p">.</span><span class="nx">mainImageUrl</span> <span class="o">=</span> <span class="nx">imageUrl</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}]);</span>
+</code></pre></div>
+<p>phonecatFilters 模块定义在 filter.js 文件中，主要是自定义了一个过滤器 <code class="prettyprint">checkmark</code>：根据输入是否有内容判断返回 <code class="prettyprint">✓</code> 还是 <code class="prettyprint">✘</code>。</p>
+
+<p>phonecatServices 模块定义在 services.js 文件中：</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+
+<span class="cm">/* Services */</span>
+<span class="kd">var</span> <span class="nx">phonecatServices</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;phonecatServices&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;ngResource&#39;</span><span class="p">]);</span>
+
+<span class="c1">// 定义 Phone 服务，并提供了一个 query 方法，还包括一个内置的 get 方法。调用 get 方法实际上就是调用 query 方法，并且可以传递一个参数 phoneId</span>
+<span class="nx">phonecatServices</span><span class="p">.</span><span class="nx">factory</span><span class="p">(</span><span class="s1">&#39;Phone&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;$resource&#39;</span><span class="p">,</span>
+  <span class="kd">function</span><span class="p">(</span><span class="nx">$resource</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">$resource</span><span class="p">(</span><span class="s1">&#39;phones/:phoneId.json&#39;</span><span class="p">,</span> <span class="p">{},</span> <span class="p">{</span>
+      <span class="nx">query</span><span class="o">:</span> <span class="p">{</span><span class="nx">method</span><span class="o">:</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="nx">params</span><span class="o">:</span><span class="p">{</span><span class="nx">phoneId</span><span class="o">:</span><span class="s1">&#39;phones&#39;</span><span class="p">},</span> <span class="nx">isArray</span><span class="o">:</span><span class="kc">true</span><span class="p">}</span>
+    <span class="p">});</span>
+  <span class="p">}]);</span>
+</code></pre></div>
+<h1 id="参考文章">参考文章</h1>
+
+<ul>
+<li><a href="http://www.lifelaf.com/blog/?p=1206">AngularJS初探：搭建PhoneCat项目的开发与测试环境</a></li>
+<li><a href="http://www.cnblogs.com/ElvinLong/p/3939938.html">Angular 实例项目 angular-phonecat 的一些问题</a></li>
+</ul>
+</div>
+
+
+      <div id="pay" style="text-align:center;">
+        ----EOF-----
+        <br>
+        <section>
+  <h4>Sponsor</h4>
+	<img src="http://javachen-rs.qiniudn.com/images/alipay.png" width="150/">
+  <p class="small">觉得此博客对你有帮助，支付宝扫码赞助吧</p>
+</section>
+
+      </div>
+
+      <p class="meta">
+      	
+            Categories:
+      	    
+          	<a class="btn btn-default btn-xs" href="/categories.html#web">web</a>
+          
+      	
+
+      	
+            Tags:
+      	    
+          	<a class="btn btn-default btn-xs" href="/tags.html#angularjs">angularjs</a>
+          
+          	<a class="btn btn-default btn-xs" href="/tags.html#nodejs">nodejs</a>
+          
+          	<a class="btn btn-default btn-xs" href="/tags.html#bower">bower</a>
+          
+      	
+      </p>
+	</article>
+
+	<ul class="pager">
+	  
+	  <li class="previous"><a class="btn btn-xs" href="/2015/01/08/basic-concepts-of-angularjs" title="AngularJS基本知识点">&larr; Prev</a></li>
+	  
+	  
+	  <li class="next"><a class="btn btn-xs" href="/2015/01/14/django-model" title="Django中的模型">Next &rarr;</a></li>
+	  
+	</ul>
+
+  
+<div id="comments">
+  <div class="ds-thread" data-thread-key="/2015/01/09/angular-phonecat-examples"  data-title="AngularJS PhoneCat代码分析 - 小天的个人博客"></div>
+</div>
+
+
+
+</div>
+
+        </div>
+      </div>
+
+      <footer class="footer text-center">
+  <p>&copy; 2009-2015 <a href="/" target="_blank" title="86后，工作在深圳；Java程序员、Hadoop工程师；主要关注Java、Hadoop、Kettle、关注大数据处理技术。">小天</a>. With Help from <a href="//jekyllrb.com/" target="_blank" title="Transform your plain text into static websites and blogs.">Jekyll</a> and <a href="//getbootstrap.com/" target="_blank" title="Bootstrap is the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web.">Bootstrap</a>, theme from <a href="http://havee.me/" target="_blank" title="http://havee.me/">Havee</a>.
+
+  <span style="float:right;"><a href="/about.html">About</a></span>
+
+	
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+  </p>
+  <div id="toTop" style="display: block;">
+    <a href="#">▲</a><a href="#footer">▼</a>
+  </div>
+</footer>
+
+    </div>
+
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/core.js"></script>
+
+    
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+    
+    <!-- duoshuo Begin -->
+    <script type="text/javascript">
+      var duoshuoQuery = {short_name:"xiaotian120"};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] ||
+        document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+    </script>
+    <!-- duoshuo End -->
+    
+  </body>
+</html>

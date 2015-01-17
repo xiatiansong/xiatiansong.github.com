@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>我的jekyll配置和修改 - 小天的个人博客</title>
+  <meta name="description" content="主要记录使用jekyll搭建博客时的一些配置和修改。">
+  <meta name="keywords" content="java, hadoop, hive, hbase, spark, linux, scala, python, mysql">
+  <meta name="author" content="小天">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="360-site-verification" content="9b7a87a1d52051c96644f0a9b8b79898" />
+  <meta name="sogou_site_verification" content="ofwXWFdthV"/>
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" >
+
+  <link rel="canonical" href="http://blog.xiaotian.com/2013/08/31/my-jekyll-config">
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css" media="all">
+  <link rel="stylesheet" href="/static/css/style.css" media="all">
+  <link rel="stylesheet" href="/static/css/pygments.css" media="all">
+  <link rel="stylesheet" href="/static/css/font-awesome.css" media="all">
+
+  <!-- atom & rss feed -->
+  <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="小天的个人博客 RSS Feed">
+  <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="小天的个人博客 ATOM Feed">
+</head>
+
+
+  <body>
+    <div class="container">
+      <!--[if lte IE 9]>
+<div class="alert alert-warning">
+  <p>Your Internet Explorer is not supported. Please upgrade your Internet Explorer to version 9+, or use latest <a href="http://www.google.com/chrome/" target="_blank" class="alert-link">Google chrome</a>、<a href="http://www.mozilla.org/firefox/" target="_blank" class="alert-link">Mozilla Firefox</a>.</p>
+  <p>If you are using IE 9 or later, make sure you <a href="http://windows.microsoft.com/en-us/internet-explorer/use-compatibility-view#ie=ie-8" target="_blank" class="alert-link">turn off "Compatibility view"</a>.</p>
+</div>
+<![endif]-->
+<header class="header">
+  <div class="title"><a title="小天的个人博客" href="/">小天的个人博客</a></div>
+  <ul class="nav navbar-nav navbar-right visible-lg visible-md">
+    <li>
+    <form id="search-form" class="form-group has-success visible-lg" role="form">
+      <input type="text" class="form-control input-sm" placeholder="Search" id="query" style="width: 160px;">
+    </form>
+    </li>
+    <li><a href="/archive.html" title="Archive"><span class='fa fa-archive fa-2x'></span></a></li>
+    <li><a href="/categories.html" title="Categories"><span class='fa fa-navicon fa-2x'></span></a></li>
+    <li><a href="/tags.html" title="Tags"><span class='fa fa-tags fa-2x'></span></a></li>
+    <li><a href="/about.html" title="About"><span class='fa fa-user fa-2x'></span></a></li>
+    
+    <li><a href="https://github.com/wuskyfantasy" target="_blank" title="Github"><span class='fa fa-github fa-2x'></span></a></li>
+    
+    
+    
+    
+    
+    <li><a href="http://weibo.com/xiaotian120" target="_blank" title="Weibo"><span class="fa fa-weibo fa-2x"></span></a></li>
+    
+
+    <li><a href="/rss.xml" target="_blank" title="RSS"><span class='fa fa-rss fa-2x'></span></a></li>
+  </ul>
+</header>
+
+
+      <div class="wrapper">
+        <div class="row">
+          <div id="search-loader" style="display:none;text-align:center">
+            <img src="http://javachen-rs.qiniudn.com/images/loading.gif">
+          </div>
+          <div class="col-md-12">
+  <article class="news-item">
+
+      <h2  class="news-item"> 我的jekyll配置和修改  
+        <time class="small">2013.08.31</time>
+      </h2>
+
+      <div><p>主要记录使用jekyll搭建博客时的一些配置和修改。</p>
+
+<p>注意：</p>
+
+<blockquote>
+<p>使用时请删除{和%以及{和{之间的空格。</p>
+</blockquote>
+
+<h1 id="预览文章">预览文章</h1>
+<div class="highlight"><pre><code class="language-text" data-lang="text">source ~/.bash_profile
+jekyll server
+</code></pre></div>
+<h1 id="添加about-me-边栏">添加about me 边栏</h1>
+
+<p>参考<a href="http://www.the5fire.com/">the5fire的技术博客</a>在index.html页面加入如下代码：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">&lt;section&gt;
+&lt;h4&gt;About me&lt;/h4&gt;
+&lt;div&gt;
+ 一个Java方案架构师，主要从事hadoop相关工作。&lt;a href=&quot;/about.html&quot;&gt;更多信息&lt;/a&gt; 
+&lt;br/&gt;
+&lt;br/&gt;
+&lt;strong&gt;&lt;font color=&quot;red&quot;&gt;&lt;a href=&quot;/atom.xml&quot; target=&quot;_blank&quot;&gt;订阅本站&lt;/a&gt;&lt;/font&gt;&lt;/strong&gt;
+&lt;br/&gt;&lt;br/&gt;
+联系博主：javachen.june[a]gmail.com
+&lt;/div&gt;
+&lt;/section&gt;
+</code></pre></div>
+<h1 id="添加about页面">添加about页面</h1>
+
+<p>在根目录创建about.md并修改，注意：文件开头几行内容如下</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">title: About
+layout: page
+group: navigation
+</code></pre></div>
+<h1 id="设置固定链接">设置固定链接</h1>
+
+<p>在 _config.yml 里，找到 permalink，设置如下：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">permalink: /:categories/:year/:month/:day/:title 
+</code></pre></div>
+<h1 id="修改，markdown实现为redcarpet">修改，markdown实现为redcarpet</h1>
+
+<p>首先通过gem安装redcarpet，然后修改_config.yml：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">redcarpet:
+  extensions: [&quot;no_intra_emphasis&quot;, &quot;fenced_code_blocks&quot;, &quot;autolink&quot;, &quot;tables&quot;, &quot;strikethrough&quot;, &quot;superscript&quot;, &quot;with_toc_data&quot;, &quot;highlight&quot;, &quot;prettify&quot;]
+</code></pre></div>
+<h1 id="首页添加最近文章">首页添加最近文章</h1>
+
+<p>在index.html页面</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">&lt;section&gt;
+&lt;h4&gt;Recent Posts&lt;/h4&gt;
+&lt;ul id=&quot;recent_posts&quot;&gt;{ % for rpost in site.posts limit: 15 %}
+&lt;li class=&quot;post&quot;&gt;
+&lt;a href=&quot;&quot;&gt;&lt;/a&gt;
+&lt;/li&gt;{ % endfor %}
+&lt;/ul&gt;
+&lt;/section&gt;
+</code></pre></div>
+<h1 id="首页为每篇文章添加分类、标签、发表日期以及评论连接">首页为每篇文章添加分类、标签、发表日期以及评论连接</h1>
+
+<p>在index.html页面找到<code class="prettyprint">&lt;h3&gt;&lt;a href=&quot;{ { BASE_PATH }}{ { post.url }}&quot;&gt;{ { post.title }}&lt;/a&gt;&lt;/h3&gt;</code>，在下面添加：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"> &lt;div class=&quot;c9&quot;&gt;
+    Categories：
+        { %for cg in post.categories % }
+        &lt;a href=&quot;/categories.html#-ref&quot;&gt;&lt;/a&gt;
+        { %if forloop.index &lt; forloop.length % }
+        ,
+        { %endif%}
+        { %endfor%}
+    |
+    Tags：
+        { %for cg in post.tags %}
+        &lt;a href=&quot;/tags.html#-ref&quot;&gt;&lt;/a&gt;
+        { %if forloop.index &lt; forloop.length %}
+        ,
+        { %endif%}
+        { %endfor%}
+    |
+    Time：&lt;time date=&quot;{ { post.date|date: &#39;%Y-%m-%d&#39; }}&quot;&gt;&lt;/time&gt;
+    &lt;a href=&#39;#comments&#39; title=&#39;分享文章、查看评论&#39; style=&quot;float:right;margin-right:.5em;&quot;&gt;Comments&lt;/a&gt;
+&lt;/div&gt;
+</code></pre></div>
+<h1 id="修改h1、h2等标题字体">修改h1、h2等标题字体</h1>
+
+<p>主要是参考<a href="http://www.ituring.com.cn/">图灵社区</a>的css，在<code class="prettyprint">assets/themes/twitter/css/style.css</code>中添加如下css代码：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">h1,h2,h3,h4,h5,h6{margin:18px 0 9px;font-family:inherit;font-weight:normal;color:inherit;text-rendering:optimizelegibility;}h1 small,h2 small,h3 small,h4 small,h5 small,h6 small{font-weight:normal;color:#999999;}
+h1{font-size:30px;line-height:36px;}h1 small{font-size:18px;}
+h2{font-size:24px;line-height:36px;}h2 small{font-size:18px;}
+h3{font-size:18px;line-height:27px;}h3 small{font-size:14px;}
+h4,h5,h6{line-height:18px;}
+h4{font-size:14px;}h4 small{font-size:12px;}
+h5{font-size:12px;}
+h6{font-size:11px;color:#999999;text-transform:uppercase;}
+</code></pre></div>
+<h1 id="添加返回顶部功能">添加返回顶部功能</h1>
+
+<p>同样是参考了<a href="http://www.ituring.com.cn/">图灵社区</a>的css和网上的一篇js实现。在<code class="prettyprint">assets/themes/twitter/css/style.css</code>：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">.backToTop {
+    display: block;
+    width: 40px;
+    height: 32px;
+    font-size: 26px;
+    line-height: 32px;
+    font-family: verdana, arial;
+    padding: 5px 0;
+    background-color: #000;
+    color: #fff;
+    text-align: center;
+    position: fixed;
+    _position: absolute;
+    right: 10px;
+    bottom: 100px;
+    _bottom: &quot;auto&quot;;
+    cursor: pointer;
+    opacity: .6;
+    filter: Alpha(opacity=60);
+}
+</code></pre></div>
+<p>在<code class="prettyprint">assets/themes/twitter/js</code>添加jquery和main.js，main.js内容如下：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">jQuery.noConflict();
+jQuery(document).ready(function(){
+    var backToTopTxt = &quot;▲&quot;, backToTopEle = jQuery(&#39;&lt;div class=&quot;backToTop&quot;&gt;&lt;/div&gt;&#39;).appendTo(jQuery(&quot;body&quot;)).text(backToTopTxt).attr(&quot;title&quot;,&quot;Back top top&quot;).click(function() {
+        jQuery(&quot;html, body&quot;).animate({ scrollTop: 0 }, 120);
+    }), backToTopFun = function() {
+        var st = jQuery(document).scrollTop(), winh = jQuery(window).height();
+        (st &gt; 200)? backToTopEle.show(): backToTopEle.hide();    
+        //IE6下的定位
+        if (!window.XMLHttpRequest) {
+            backToTopEle.css(&quot;top&quot;, st + winh - 166); 
+        }
+    };
+
+    backToTopEle.hide(); 
+        jQuery(window).bind(&quot;scroll&quot;, backToTopFun);
+    jQuery(&#39;div.main a,div.pic a&#39;).attr(&#39;target&#39;, &#39;_blank&#39;);
+});
+</code></pre></div>
+<h1 id="添加文章版权说明">添加文章版权说明</h1>
+
+<p>在<code class="prettyprint">_includes/themes/twitter/post.html</code>中文章主体下面添加如下代码：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">&lt;hr&gt;
+&lt;div class=&quot;copyright&quot;&gt;
+&lt;p&gt;&lt;strong&gt;本文固定链接：&lt;/strong&gt;&lt;a href=&#39;{ {page.url}}&#39;&gt;http://blog.javachen.com/2013/08/31/my-jekyll-config&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;原创文章,转载请注明出处：&lt;/strong&gt;&lt;a href=&#39;{ {page.url}}&#39;&gt;JavaChen Blog&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+</code></pre></div>
+<p>并在<code class="prettyprint">assets/themes/twitter/css/style.css</code>中添加如下css代码：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">.copyright {
+margin: 10px 0;
+padding: 10px 20px;
+line-height: 1;
+border-radius: 5px;
+background: #f5f5f5;
+}
+</code></pre></div>
+<h1 id="添加read-more功能">添加read more功能</h1>
+
+<p>参考<a href="http://truongtx.me/2013/05/01/jekyll-read-more-feature-without-any-plugin/">Jekyll - Read More without plugin</a>，在index.html找到 ，然后修改为：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">{ % if post.content contains &quot;&lt;!-- more --&gt;&quot; %}
+{ { post.content | split:&quot;&lt;!-- more --&gt;&quot; | first % }}
+&lt;h4&gt;&lt;a href=&#39;{ {post.url}}&#39; title=&#39;Read more...&#39;&gt;Read more...&lt;/a&gt;&lt;/h4&gt;
+{ % else %}
+{ { post.content}}
+{ % endif %}
+</code></pre></div>
+<p>然后，在文章中添加<code class="prettyprint">&lt;!-- more --&gt;</code>即可。</p>
+
+<h1 id="添加搜索栏">添加搜索栏</h1>
+
+<p>参考<a href="http://truongtx.me/2012/12/28/jekyll-create-simple-search-box/">Jekyll Bootstrap - Create Simple Search box</a>，在<code class="prettyprint">_includes/themes/twitter/default.html</code>导航菜单下面添加：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">&lt;form class=&quot;navbar-search pull-left&quot; id=&quot;search-form&quot;&gt;
+  &lt;input type=&quot;text&quot; id=&quot;google-search&quot; class=&quot;search-query&quot; placeholder=&quot;Search&quot;&gt;
+&lt;/form
+</code></pre></div>
+<p>添加js：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">jQuery(&quot;#search-form&quot;).submit(function(){
+    var query = document.getElementById(&quot;google-search&quot;).value;
+    window.open(&quot;http://google.com/search?q=&quot; + query+ &quot;%20site:&quot; + &quot;http://blog.javachen.com&quot;);
+});
+</code></pre></div>
+<h1 id="其他">其他</h1>
+
+<ul>
+<li>添加404页面</li>
+<li>使用多说评论</li>
+<li>修改博客主体为宽屏模式</li>
+</ul>
+
+<h1 id="todo">TODO</h1>
+
+<ul>
+<li>添加语法高亮，参考<a href="http://truongtx.me/2012/12/28/jekyll-bootstrap-syntax-highlighting/">Jekyll - Syntax highlighting</a></li>
+</ul>
+</div>
+
+
+      <div id="pay" style="text-align:center;">
+        ----EOF-----
+        <br>
+        <section>
+  <h4>Sponsor</h4>
+	<img src="http://javachen-rs.qiniudn.com/images/alipay.png" width="150/">
+  <p class="small">觉得此博客对你有帮助，支付宝扫码赞助吧</p>
+</section>
+
+      </div>
+
+      <p class="meta">
+      	
+            Categories:
+      	    
+          	<a class="btn btn-default btn-xs" href="/categories.html#others">others</a>
+          
+      	
+
+      	
+            Tags:
+      	    
+          	<a class="btn btn-default btn-xs" href="/tags.html#jekyll">jekyll</a>
+          
+      	
+      </p>
+	</article>
+
+	<ul class="pager">
+	  
+	  <li class="previous"><a class="btn btn-xs" href="/2013/08/23/publish-proerties-using-zookeeper" title="使用ZooKeeper实现配置同步">&larr; Prev</a></li>
+	  
+	  
+	  <li class="next"><a class="btn btn-xs" href="/2013/09/04/how-to-decide-map-number" title="hive中如何确定map数">Next &rarr;</a></li>
+	  
+	</ul>
+
+  
+<div id="comments">
+  <div class="ds-thread" data-thread-key="/2013/08/31/my-jekyll-config"  data-title="我的jekyll配置和修改 - 小天的个人博客"></div>
+</div>
+
+
+
+</div>
+
+        </div>
+      </div>
+
+      <footer class="footer text-center">
+  <p>&copy; 2009-2015 <a href="/" target="_blank" title="86后，工作在深圳；Java程序员、Hadoop工程师；主要关注Java、Hadoop、Kettle、关注大数据处理技术。">小天</a>. With Help from <a href="//jekyllrb.com/" target="_blank" title="Transform your plain text into static websites and blogs.">Jekyll</a> and <a href="//getbootstrap.com/" target="_blank" title="Bootstrap is the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web.">Bootstrap</a>, theme from <a href="http://havee.me/" target="_blank" title="http://havee.me/">Havee</a>.
+
+  <span style="float:right;"><a href="/about.html">About</a></span>
+
+	
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+  </p>
+  <div id="toTop" style="display: block;">
+    <a href="#">▲</a><a href="#footer">▼</a>
+  </div>
+</footer>
+
+    </div>
+
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/core.js"></script>
+
+    
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+    
+    <!-- duoshuo Begin -->
+    <script type="text/javascript">
+      var duoshuoQuery = {short_name:"xiaotian120"};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] ||
+        document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+    </script>
+    <!-- duoshuo End -->
+    
+  </body>
+</html>

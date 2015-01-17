@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>不用Cloudera Manager安装Cloudera Search - 小天的个人博客</title>
+  <meta name="description" content="Cloudera Search 用来在 hadoop 基础上建立索引和全文检索，Cloudera Search 有两种安装方法，本文是不使用 Cloudera Manager 来安装。">
+  <meta name="keywords" content="Cloudera Search 用来在 hadoop 基础上建立索引和全文检索">
+  <meta name="author" content="小天">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="360-site-verification" content="9b7a87a1d52051c96644f0a9b8b79898" />
+  <meta name="sogou_site_verification" content="ofwXWFdthV"/>
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" >
+
+  <link rel="canonical" href="http://blog.xiaotian.com/2014/06/03/install_cloudera_search_without_cm">
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css" media="all">
+  <link rel="stylesheet" href="/static/css/style.css" media="all">
+  <link rel="stylesheet" href="/static/css/pygments.css" media="all">
+  <link rel="stylesheet" href="/static/css/font-awesome.css" media="all">
+
+  <!-- atom & rss feed -->
+  <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="小天的个人博客 RSS Feed">
+  <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="小天的个人博客 ATOM Feed">
+</head>
+
+
+  <body>
+    <div class="container">
+      <!--[if lte IE 9]>
+<div class="alert alert-warning">
+  <p>Your Internet Explorer is not supported. Please upgrade your Internet Explorer to version 9+, or use latest <a href="http://www.google.com/chrome/" target="_blank" class="alert-link">Google chrome</a>、<a href="http://www.mozilla.org/firefox/" target="_blank" class="alert-link">Mozilla Firefox</a>.</p>
+  <p>If you are using IE 9 or later, make sure you <a href="http://windows.microsoft.com/en-us/internet-explorer/use-compatibility-view#ie=ie-8" target="_blank" class="alert-link">turn off "Compatibility view"</a>.</p>
+</div>
+<![endif]-->
+<header class="header">
+  <div class="title"><a title="小天的个人博客" href="/">小天的个人博客</a></div>
+  <ul class="nav navbar-nav navbar-right visible-lg visible-md">
+    <li>
+    <form id="search-form" class="form-group has-success visible-lg" role="form">
+      <input type="text" class="form-control input-sm" placeholder="Search" id="query" style="width: 160px;">
+    </form>
+    </li>
+    <li><a href="/archive.html" title="Archive"><span class='fa fa-archive fa-2x'></span></a></li>
+    <li><a href="/categories.html" title="Categories"><span class='fa fa-navicon fa-2x'></span></a></li>
+    <li><a href="/tags.html" title="Tags"><span class='fa fa-tags fa-2x'></span></a></li>
+    <li><a href="/about.html" title="About"><span class='fa fa-user fa-2x'></span></a></li>
+    
+    <li><a href="https://github.com/wuskyfantasy" target="_blank" title="Github"><span class='fa fa-github fa-2x'></span></a></li>
+    
+    
+    
+    
+    
+    <li><a href="http://weibo.com/xiaotian120" target="_blank" title="Weibo"><span class="fa fa-weibo fa-2x"></span></a></li>
+    
+
+    <li><a href="/rss.xml" target="_blank" title="RSS"><span class='fa fa-rss fa-2x'></span></a></li>
+  </ul>
+</header>
+
+
+      <div class="wrapper">
+        <div class="row">
+          <div id="search-loader" style="display:none;text-align:center">
+            <img src="http://javachen-rs.qiniudn.com/images/loading.gif">
+          </div>
+          <div class="col-md-12">
+  <article class="news-item">
+
+      <h2  class="news-item"> 不用Cloudera Manager安装Cloudera Search  
+        <time class="small">2014.06.03</time>
+      </h2>
+
+      <div><p>Cloudera Search 用来在 hadoop 基础上建立索引和全文检索，Cloudera Search 有两种安装方法，本文是不使用 Cloudera Manager 来安装。</p>
+
+<h1 id="cloudera-search介绍">Cloudera Search介绍</h1>
+
+<p>Cloudera Search 核心部件包括 Hadoop 和 Solr，后者建立在 Lucene 之上；而 Hadoop 也正是在06年正式成为 Lucene 的一个子项目而发展起来的。</p>
+
+<p>通过 Tika, Cloudera Search 支持大量的被广泛使用的文件格式；除此之外，Cloudera Search 还支持很多其他在Hadoop应用中常用的数据，譬如 Avro, SequenceFile, 日志文件等。</p>
+
+<p>用来建立索引和全文检索的数据可以是来自于 HDFS，譬如日志文件，Hive 或者 HBase 的表等等（通过集成 NGData 的 Lily 项目，对 HBasae 的支持工作也在进行中）。或者通过结合使用 Flume 采集于外部数据源，通过一个新支持的 Flume Sink 直接写到索引库里；同时还可以充分利用 Flume 来对要建立索引的数据进行各种预处理，譬如转换，提取创建元数据等。</p>
+
+<p>建立的索引存储于 HDFS。这给搜索带来了易于扩展，冗余和容错的好处。此外，我们还可以运行 MapReduce 来对我们所需要检索的数据进行索引，提供给 Solr。</p>
+
+<h1 id="环境">环境</h1>
+
+<ul>
+<li>CentOS 6.4 x86_64</li>
+<li>CDH 5.0.1</li>
+</ul>
+
+<h1 id="安装-hadoop集群">安装 Hadoop集群</h1>
+
+<p>这里使用参考 <a href="/2013/06/24/install-cdh-by-cloudera-manager/">通过Cloudera Manager安装CDH</a>一文搭建的集群，其中也包括了一个三节点的 ZooKeeper 集群。该集群包括三个节点：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">    192.168.56.121        cdh1     NameNode、Hive、ResourceManager、HBase
+    192.168.56.122        cdh2     DataNode、SSNameNode、NodeManager、HBase
+    192.168.56.123        cdh3     DataNode、HBase、NodeManager
+</code></pre></div>
+<h1 id="安装-zookeeper">安装 ZooKeeper</h1>
+
+<p>使用上节中的 ZooKeeper 集群。</p>
+
+<h1 id="安装-solr">安装 Solr</h1>
+
+<p>在三个节点上安装 solr-server：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ sudo yum install solr-server solr solr-doc -y
+</code></pre></div>
+<p>修改 solr 配置文件 <code class="prettyprint">/etc/default/solr</code> 中 ZooKeeper 连接地址：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">SOLR_ZK_ENSEMBLE=cdh1:2181,cdh2:2181,cdh3:2181/solr
+</code></pre></div>
+<p>修改 solr 配置文件 <code class="prettyprint">/etc/default/solr</code> 中 HDFS 连接地址：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">SOLR_HDFS_HOME=hdfs://cdh1:8020/solr
+</code></pre></div>
+<p>在 HDFS 中创建 <code class="prettyprint">/solr</code> 目录：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ sudo -u hdfs hadoop fs -mkdir /solr
+$ sudo -u hdfs hadoop fs -chown solr /solr
+</code></pre></div>
+<p>初始化 ZooKeeper Namespace：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ solrctl init
+</code></pre></div>
+<blockquote>
+<p>注意：你可以添加 <code class="prettyprint">--force</code> 参数强制清空 ZooKeeper 数据，清空之前，请先停止 ZooKeeper 集群。</p>
+</blockquote>
+
+<p>你可以参考 java 进程：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ jps -lm
+28053 org.apache.hadoop.mapreduce.v2.hs.JobHistoryServer
+31710 org.apache.zookeeper.server.quorum.QuorumPeerMain /etc/zookeeper/conf/zoo.cfg
+14479 org.apache.catalina.startup.Bootstrap start
+29994 org.apache.hadoop.hdfs.server.namenode.SecondaryNameNode
+29739 org.apache.hadoop.yarn.server.resourcemanager.ResourceManager
+27298 org.apache.catalina.startup.Bootstrap httpfs start
+30123 org.apache.hadoop.hdfs.server.namenode.NameNode
+21761 sun.tools.jps.Jps -lm
+</code></pre></div>
+<p>上面用到了 solrctl 命令，该命令用来管理 SolrCloud 的部署和配置，其语法如下：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">solrctl [options] command [command-arg] [command [command-arg]] ...
+</code></pre></div>
+<p>可选参数有：</p>
+
+<ul>
+<li><code class="prettyprint">--solr</code>：指定 SolrCloud 的 web API，如果在 SolrCloud 集群之外的节点运行命令，就需要指定该参数。</li>
+<li><code class="prettyprint">--zk</code>：指定 zk 集群地址。</li>
+<li><code class="prettyprint">--help</code>：打印帮助信息。</li>
+<li><code class="prettyprint">--quiet</code>：静默模式运行。</li>
+</ul>
+
+<p>command 命令有：</p>
+
+<ul>
+<li><code class="prettyprint">init [--force]</code>：初始化配置。</li>
+<li><code class="prettyprint">instancedir</code>：维护实体目录。可选的参数有：
+
+<ul>
+<li><code class="prettyprint">--generate path</code></li>
+<li><code class="prettyprint">--create name path</code></li>
+<li><code class="prettyprint">--update name path</code></li>
+<li><code class="prettyprint">--get name path</code></li>
+<li><code class="prettyprint">--delete name</code></li>
+<li><code class="prettyprint">--list</code></li>
+</ul></li>
+<li><code class="prettyprint">collection</code>：维护 collections。可选的参数有：
+
+<ul>
+<li><code class="prettyprint">--create name -s &lt;numShards&gt; [-c &lt;collection.configName&gt;] [-r &lt;replicationFactor&gt;] [-m &lt;maxShardsPerNode&gt;] [-n &lt;createNodeSet&gt;]]</code></li>
+<li><code class="prettyprint">--delete name</code>: Deletes a collection.</li>
+<li><code class="prettyprint">--reload name</code>: Reloads a collection.</li>
+<li><code class="prettyprint">--stat name</code>: Outputs SolrCloud specific run-time information for a collection.</li>
+<li>`<code class="prettyprint">--list</code>: Lists all collections registered in SolrCloud.</li>
+<li><code class="prettyprint">--deletedocs name</code>: Purges all indexed documents from a collection.</li>
+</ul></li>
+<li><code class="prettyprint">core</code>：维护 cores。可选的参数有：
+
+<ul>
+<li><code class="prettyprint">--create name [-p name=value]...]</code></li>
+<li><code class="prettyprint">--reload name</code>: Reloads a core.</li>
+<li><code class="prettyprint">--unload name</code>: Unloads a core.</li>
+<li><code class="prettyprint">--status name</code>: Prints status of a core.</li>
+</ul></li>
+<li><code class="prettyprint">cluster</code>：维护集群配置信息。可选的参数有：
+
+<ul>
+<li><code class="prettyprint">--get-solrxml file</code></li>
+<li><code class="prettyprint">--put-solrxml file</code></li>
+</ul></li>
+</ul>
+
+<h1 id="配置-solr">配置 Solr</h1>
+
+<p>在一个节点上（例如 cdh1）生成配置文件：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ solrctl instancedir --generate $HOME/solr_configs
+</code></pre></div>
+<blockquote>
+<p>注意：你可以在 <code class="prettyprint">/var/lib/solr</code> 创建目录，维护配置文件。</p>
+</blockquote>
+
+<p>执行完之后，你可以修改 $HOME/solr_configs/conf 目录下的配置文件，其目录下文件如下。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ ll ~/solr_configs/conf/
+total 348
+-rw-r--r-- 1 root root  1092 Jun  2 23:10 admin-extra.html
+-rw-r--r-- 1 root root   953 Jun  2 23:10 admin-extra.menu-bottom.html
+-rw-r--r-- 1 root root   951 Jun  2 23:10 admin-extra.menu-top.html
+-rw-r--r-- 1 root root  4041 Jun  2 23:10 currency.xml
+-rw-r--r-- 1 root root  1386 Jun  2 23:10 elevate.xml
+drwxr-xr-x 2 root root  4096 Jun  2 23:10 lang
+-rw-r--r-- 1 root root 82327 Jun  2 23:10 mapping-FoldToASCII.txt
+-rw-r--r-- 1 root root  3114 Jun  2 23:10 mapping-ISOLatin1Accent.txt
+-rw-r--r-- 1 root root   894 Jun  2 23:10 protwords.txt
+-rw-r--r-- 1 root root 59635 Jun  2 23:10 schema.xml
+-rw-r--r-- 1 root root   921 Jun  2 23:10 scripts.conf
+-rw-r--r-- 1 root root 72219 Jun  2 23:10 solrconfig.xml
+-rw-r--r-- 1 root root 73608 Jun  2 23:10 solrconfig.xml.secure
+-rw-r--r-- 1 root root    16 Jun  2 23:10 spellings.txt
+-rw-r--r-- 1 root root   795 Jun  2 23:10 stopwords.txt
+-rw-r--r-- 1 root root  1148 Jun  2 23:10 synonyms.txt
+-rw-r--r-- 1 root root  1469 Jun  2 23:10 update-script.js
+drwxr-xr-x 2 root root  4096 Jun  2 23:10 velocity
+drwxr-xr-x 2 root root  4096 Jun  2 23:10 xslt
+</code></pre></div>
+<p>创建 collection1 实例并将配置文件上传到 zookeeper：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ solrctl instancedir --create collection1 $HOME/solr_configs
+</code></pre></div>
+<p>你可以通过下面命令查看上传的 instance：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ solrctl instancedir --list
+</code></pre></div>
+<p>上传到 zookeeper 之后，其他节点就可以从上面下载配置文件。</p>
+
+<p>接下来，还是在 cdh1 节点上创建 collection，因为我的 SolrCloud 集群有三个节点，故这里分片数设为3，并设置副本为1，如果有更多节点，可以将副本设置为更大的一个数：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ solrctl collection --create collection1 -s 3 -r 1
+</code></pre></div>
+<p>运行成功之后，你可以通过 <a href="http://cdh1:8983/solr/#/%7Ecloud">http://cdh1:8983/solr/#/~cloud</a>、<a href="http://cdh2:8983/solr/#/%7Ecloud">http://cdh2:8983/solr/#/~cloud</a>、<a href="http://cdh3:8983/solr/#/%7Ecloud">http://cdh3:8983/solr/#/~cloud</a> 查看创建的分片。从网页上可以看到，已经自动创建了三个分片，并且三个分片分布在3个节点之上。</p>
+
+<h1 id="安装-solr-mapreduce">安装 solr-mapreduce</h1>
+
+<p>通过以下命令安装：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ sudo yum install solr-mapreduce
+</code></pre></div>
+<h1 id="安装-hbase-solr-indexer">安装 hbase-solr-indexer</h1>
+
+<p>如果你想通过 solr 查询存储在 hbase 中的数据，你必须安装 <a href="http://ngdata.github.io/hbase-indexer/">Lily HBase Indexer</a>。</p>
+
+<p>你可以将其安装在 hbase 节点上，也可以将其装到 solr 节点上，安装命令：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ sudo yum install hbase-solr-indexer hbase-solr-doc
+</code></pre></div>
+<blockquote>
+<p>注意：Lily HBase Indexer和 cdh5 工作的时候，你需要在运行 MapReduce 任务之前运行下面命令：<br>
+<code class="prettyprint">export HADOOP_CLASSPATH=&lt;Path to hbase-protocol-**.jar&gt;</code></p>
+</blockquote>
+
+<h1 id="配置-hbase-solr-indexer">配置 hbase-solr-indexer</h1>
+
+<p>1）开启 HBase replication</p>
+
+<p>Lily HBase Indexer 的实现依赖于 HBase的replication，故需要开启复制。将 <code class="prettyprint">/usr/share/doc/hbase-solr-doc*/demo/hbase-site.xml</code>文件的内容拷贝到 <code class="prettyprint">hbase-site.xml</code>，<strong>注意</strong>：删除掉 <code class="prettyprint">replication.replicationsource.implementation</code> 参数配置。</p>
+
+<p>2）将 hbase-solr-indexer 服务指向 hbase 集群</p>
+
+<p>修改 <code class="prettyprint">/etc/hbase-solr/conf/hbase-indexer-site.xml</code>，添加如下参数，其值和 <code class="prettyprint">hbase-site.xml</code> 中的 <code class="prettyprint">hbase.zookeeper.quorum</code> 属性值保持一致（注意添加上端口）：</p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;property&gt;</span>
+   <span class="nt">&lt;name&gt;</span>hbaseindexer.zookeeper.connectstring<span class="nt">&lt;/name&gt;</span>
+   <span class="nt">&lt;value&gt;</span>cdh1:2181,cdh2:2181,cdh3:2181<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span> 
+</code></pre></div>
+<p>最后再重启服务：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ sudo service hbase-solr-indexer restart
+</code></pre></div>
+<h1 id="总结">总结</h1>
+
+<p>本文内容主要介绍了如何不使用 Cloudera Manager 来安装 Cloudera Search，下篇文章将介绍如何使用 Cloudera Search。</p>
+
+<h1 id="参考资料">参考资料</h1>
+
+<ul>
+<li>[1] <a href="http://blog.sina.com.cn/s/blog_9bf980ad010182ph.html">Cloudera Search: 轻松实现Hadoop全文检索 </a></li>
+<li>[2] <a href="http://www.cloudera.com/content/cloudera-content/cloudera-docs/Search/latest/Cloudera-Search-User-Guide/Cloudera-Search-User-Guide.html">Cloudera-Search-User-Guide</a></li>
+</ul>
+</div>
+
+
+      <div id="pay" style="text-align:center;">
+        ----EOF-----
+        <br>
+        <section>
+  <h4>Sponsor</h4>
+	<img src="http://javachen-rs.qiniudn.com/images/alipay.png" width="150/">
+  <p class="small">觉得此博客对你有帮助，支付宝扫码赞助吧</p>
+</section>
+
+      </div>
+
+      <p class="meta">
+      	
+            Categories:
+      	    
+          	<a class="btn btn-default btn-xs" href="/categories.html#search-engine">search-engine</a>
+          
+      	
+
+      	
+            Tags:
+      	    
+          	<a class="btn btn-default btn-xs" href="/tags.html#hbase">hbase</a>
+          
+          	<a class="btn btn-default btn-xs" href="/tags.html#solr">solr</a>
+          
+          	<a class="btn btn-default btn-xs" href="/tags.html#hadoop">hadoop</a>
+          
+          	<a class="btn btn-default btn-xs" href="/tags.html#solrcloud">solrcloud</a>
+          
+      	
+      </p>
+	</article>
+
+	<ul class="pager">
+	  
+	  <li class="previous"><a class="btn btn-xs" href="/2014/05/30/note-about-brewers-cap-theorem" title="关于CAP理论的一些笔记">&larr; Prev</a></li>
+	  
+	  
+	  <li class="next"><a class="btn btn-xs" href="/2014/06/06/about-mongodb" title="MongoDB介绍">Next &rarr;</a></li>
+	  
+	</ul>
+
+  
+<div id="comments">
+  <div class="ds-thread" data-thread-key="/2014/06/03/install_cloudera_search_without_cm"  data-title="不用Cloudera Manager安装Cloudera Search - 小天的个人博客"></div>
+</div>
+
+
+
+</div>
+
+        </div>
+      </div>
+
+      <footer class="footer text-center">
+  <p>&copy; 2009-2015 <a href="/" target="_blank" title="86后，工作在深圳；Java程序员、Hadoop工程师；主要关注Java、Hadoop、Kettle、关注大数据处理技术。">小天</a>. With Help from <a href="//jekyllrb.com/" target="_blank" title="Transform your plain text into static websites and blogs.">Jekyll</a> and <a href="//getbootstrap.com/" target="_blank" title="Bootstrap is the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web.">Bootstrap</a>, theme from <a href="http://havee.me/" target="_blank" title="http://havee.me/">Havee</a>.
+
+  <span style="float:right;"><a href="/about.html">About</a></span>
+
+	
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+  </p>
+  <div id="toTop" style="display: block;">
+    <a href="#">▲</a><a href="#footer">▼</a>
+  </div>
+</footer>
+
+    </div>
+
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/core.js"></script>
+
+    
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+    
+    <!-- duoshuo Begin -->
+    <script type="text/javascript">
+      var duoshuoQuery = {short_name:"xiaotian120"};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] ||
+        document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+    </script>
+    <!-- duoshuo End -->
+    
+  </body>
+</html>

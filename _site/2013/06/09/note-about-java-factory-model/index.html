@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Java笔记：工厂模式 - 小天的个人博客</title>
+  <meta name="description" content="工厂模式主要是为创建对象提供接口，以便将创建对象的具体过程屏蔽隔离起来，达到提高灵活性的目的。">
+  <meta name="keywords" content="工厂模式主要是为创建对象提供接口，以便将创建对象的具体过程屏蔽隔离起来，达到提高灵活性的目的。">
+  <meta name="author" content="小天">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="360-site-verification" content="9b7a87a1d52051c96644f0a9b8b79898" />
+  <meta name="sogou_site_verification" content="ofwXWFdthV"/>
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" >
+
+  <link rel="canonical" href="http://blog.xiaotian.com/2013/06/09/note-about-java-factory-model">
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css" media="all">
+  <link rel="stylesheet" href="/static/css/style.css" media="all">
+  <link rel="stylesheet" href="/static/css/pygments.css" media="all">
+  <link rel="stylesheet" href="/static/css/font-awesome.css" media="all">
+
+  <!-- atom & rss feed -->
+  <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="小天的个人博客 RSS Feed">
+  <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="小天的个人博客 ATOM Feed">
+</head>
+
+
+  <body>
+    <div class="container">
+      <!--[if lte IE 9]>
+<div class="alert alert-warning">
+  <p>Your Internet Explorer is not supported. Please upgrade your Internet Explorer to version 9+, or use latest <a href="http://www.google.com/chrome/" target="_blank" class="alert-link">Google chrome</a>、<a href="http://www.mozilla.org/firefox/" target="_blank" class="alert-link">Mozilla Firefox</a>.</p>
+  <p>If you are using IE 9 or later, make sure you <a href="http://windows.microsoft.com/en-us/internet-explorer/use-compatibility-view#ie=ie-8" target="_blank" class="alert-link">turn off "Compatibility view"</a>.</p>
+</div>
+<![endif]-->
+<header class="header">
+  <div class="title"><a title="小天的个人博客" href="/">小天的个人博客</a></div>
+  <ul class="nav navbar-nav navbar-right visible-lg visible-md">
+    <li>
+    <form id="search-form" class="form-group has-success visible-lg" role="form">
+      <input type="text" class="form-control input-sm" placeholder="Search" id="query" style="width: 160px;">
+    </form>
+    </li>
+    <li><a href="/archive.html" title="Archive"><span class='fa fa-archive fa-2x'></span></a></li>
+    <li><a href="/categories.html" title="Categories"><span class='fa fa-navicon fa-2x'></span></a></li>
+    <li><a href="/tags.html" title="Tags"><span class='fa fa-tags fa-2x'></span></a></li>
+    <li><a href="/about.html" title="About"><span class='fa fa-user fa-2x'></span></a></li>
+    
+    <li><a href="https://github.com/wuskyfantasy" target="_blank" title="Github"><span class='fa fa-github fa-2x'></span></a></li>
+    
+    
+    
+    
+    
+    <li><a href="http://weibo.com/xiaotian120" target="_blank" title="Weibo"><span class="fa fa-weibo fa-2x"></span></a></li>
+    
+
+    <li><a href="/rss.xml" target="_blank" title="RSS"><span class='fa fa-rss fa-2x'></span></a></li>
+  </ul>
+</header>
+
+
+      <div class="wrapper">
+        <div class="row">
+          <div id="search-loader" style="display:none;text-align:center">
+            <img src="http://javachen-rs.qiniudn.com/images/loading.gif">
+          </div>
+          <div class="col-md-12">
+  <article class="news-item">
+
+      <h2  class="news-item"> Java笔记：工厂模式  
+        <time class="small">2013.06.09</time>
+      </h2>
+
+      <div><p>工厂模式主要是为创建对象提供接口，以便将创建对象的具体过程屏蔽隔离起来，达到提高灵活性的目的。</p>
+
+<p>工厂模式在《Java与模式》中分为三类：</p>
+
+<ul>
+<li>1)简单工厂模式(Simple Factory)：不利于产生系列产品。</li>
+<li>2)工厂方法模式(Factory Method)：又称为多形性工厂。</li>
+<li>3)抽象工厂模式(Abstract Factory)：又称为工具箱，产生产品族，但不利于产生新的产品。</li>
+</ul>
+
+<p>GOF在《设计模式》一书中将工厂模式分为两类：工厂方法模式(Factory Method)与抽象工厂模式(Abstract Factory)。将简单工厂模式(Simple Factory)看为工厂方法模式的一种特例，两者归为一类。</p>
+
+<h1 id="简单工厂模式">简单工厂模式</h1>
+
+<p>在简单工厂模式中，可以根据自变量的不同返回不同类的实例。简单工厂模式专门定义一个类来负责创建其他类的实例，被创建的实例通常都具有共同的父类。   </p>
+
+<p>简单工厂模式角色：</p>
+
+<ul>
+<li>工厂类</li>
+<li>抽象产品</li>
+<li>具体产品</li>
+</ul>
+
+<p>简单工厂模式的优点如下：</p>
+
+<ul>
+<li>工厂类含有必要的判断逻辑，可以决定在什么时候创建哪一个产品类的实例，客户端可以免除直接创建产品对象的责任，而仅仅“消费”产品；简单工厂模式通过这种做法实现了对责任的分割，它提供了专门的工厂类用于创建对象。</li>
+<li>客户端无需知道所创建的具体产品类的类名，只需要知道具体产品类所对应的参数即可，对于一些复杂的类名，通过简单工厂模式可以减少使用者的记忆量。<br></li>
+<li>通过引入配置文件，可以在不修改任何客户端代码的情况下更换和增加新的具体产品类，在一定程度上提高了系统的灵活性。</li>
+</ul>
+
+<p>简单工厂模式的缺点如下：</p>
+
+<ul>
+<li>工厂类中包括了创建产品类的业务逻辑，一旦工厂类不能正常工作，整个系统都要受到影响。<br></li>
+<li>系统扩展困难，一旦添加新产品就需要修改工厂逻辑，在产品类型较多时，有可能造成工厂逻辑过于复杂，不利于系统的扩展和维护。</li>
+<li>简单工厂模式由于使用了静态工厂方法，造成工厂角色无法形成基于继承的等级结构。<br></li>
+</ul>
+
+<p>举例：</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"> <span class="c1">//抽象产品角色</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Car</span><span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">drive</span><span class="o">();</span>
+<span class="o">}</span>
+<span class="c1">//具体产品角色</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Benz</span> <span class="kd">implements</span> <span class="n">Car</span><span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">drive</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Driving Benz &quot;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Bmw</span> <span class="kd">implements</span> <span class="n">Car</span><span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">drive</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Driving Bmw &quot;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="c1">//工厂类角色</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CarFactory</span><span class="o">{</span>
+    <span class="c1">//工厂方法.注意 返回类型为抽象产品角色</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Car</span> <span class="nf">create</span><span class="o">(</span><span class="n">String</span> <span class="n">s</span><span class="o">)</span><span class="kd">throws</span> <span class="n">Exception</span><span class="o">{</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">s</span><span class="o">.</span><span class="na">equalsIgnoreCase</span><span class="o">(</span><span class="s">&quot;Benz&quot;</span><span class="o">))</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="nf">Benz</span><span class="o">();</span>
+        <span class="k">else</span> <span class="nf">if</span><span class="o">(</span><span class="n">s</span><span class="o">.</span><span class="na">equalsIgnoreCase</span><span class="o">(</span><span class="s">&quot;Bmw&quot;</span><span class="o">))</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="nf">Bmw</span><span class="o">();</span>
+        <span class="k">else</span> <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<h1 id="工厂方法模式">工厂方法模式</h1>
+
+<p>在工厂方法模式中，核心的工厂类不再负责所有的产品的创建，而是将具体创建的工作交给子类去做。</p>
+
+<p>工厂方法模式角色:</p>
+
+<ul>
+<li>抽象工厂：是具体工厂角色必须实现的接口或者必须继承的父类。</li>
+<li>具体工厂：它含有和具体业务逻辑有关的代码。由应用程序调用以创建对应的具体产品的对象。</li>
+<li>抽象产品：它是具体产品继承的父类或者是实现的接口。</li>
+<li>具体产品：具体工厂角色所创建的对象就是此角色的实例。</li>
+</ul>
+
+<p>举例：</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"> <span class="c1">//抽象产品角色</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Car</span><span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">drive</span><span class="o">();</span>
+<span class="o">}</span>
+<span class="c1">//具体产品角色</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Benz</span> <span class="kd">implements</span> <span class="n">Car</span><span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">drive</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Driving Benz &quot;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Bmw</span> <span class="kd">implements</span> <span class="n">Car</span><span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">drive</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Driving Bmw &quot;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="c1">//抽象工厂类角色</span>
+<span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">CarFactory</span><span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">abstract</span> <span class="n">Car</span> <span class="nf">create</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">BenzCarFactory</span> <span class="kd">extends</span> <span class="n">CarFactory</span><span class="o">{</span>
+    <span class="kd">public</span> <span class="n">Car</span> <span class="nf">create</span><span class="o">(){</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">Benz</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">BmwCarFactory</span> <span class="kd">extends</span> <span class="n">CarFactory</span><span class="o">{</span>
+    <span class="kd">public</span> <span class="n">Car</span> <span class="nf">create</span><span class="o">(){</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">Bmw</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">//测试类</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">CarFactory</span> <span class="n">factory</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BenzCarFactory</span><span class="o">();</span>
+        <span class="n">Car</span> <span class="n">m</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="na">create</span><span class="o">();</span>
+        <span class="n">m</span><span class="o">.</span><span class="na">drive</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<h1 id="抽象工厂模式">抽象工厂模式</h1>
+
+<p>抽象工厂模式提供一个创建一系列或相互依赖的对象的接口，而无需指定它们具体的类。它针对的是有多个产品的等级结构。而工厂方法模式针对的是一个产品的等级结构。</p>
+
+<p>举例：</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//抽象工厂类</span>
+<span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">AbstractFactory</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">abstract</span> <span class="n">Vehicle</span> <span class="nf">createVehicle</span><span class="o">();</span>
+    <span class="kd">public</span> <span class="kd">abstract</span> <span class="n">Weapon</span> <span class="nf">createWeapon</span><span class="o">();</span>
+    <span class="kd">public</span> <span class="kd">abstract</span> <span class="n">Food</span> <span class="nf">createFood</span><span class="o">();</span>
+<span class="o">}</span>
+<span class="c1">//具体工厂类，其中Food,Vehicle，Weapon是抽象类</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DefaultFactory</span> <span class="kd">extends</span> <span class="n">AbstractFactory</span><span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">Food</span> <span class="nf">createFood</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">Apple</span><span class="o">();</span>
+    <span class="o">}</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">Vehicle</span> <span class="nf">createVehicle</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">Car</span><span class="o">();</span>
+    <span class="o">}</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">Weapon</span> <span class="nf">createWeapon</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">AK47</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="c1">//测试类</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">AbstractFactory</span> <span class="n">f</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DefaultFactory</span><span class="o">();</span>
+        <span class="n">Vehicle</span> <span class="n">v</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="na">createVehicle</span><span class="o">();</span>
+        <span class="n">Weapon</span> <span class="n">w</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="na">createWeapon</span><span class="o">();</span>
+        <span class="n">Food</span> <span class="n">a</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="na">createFood</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+
+      <div id="pay" style="text-align:center;">
+        ----EOF-----
+        <br>
+        <section>
+  <h4>Sponsor</h4>
+	<img src="http://javachen-rs.qiniudn.com/images/alipay.png" width="150/">
+  <p class="small">觉得此博客对你有帮助，支付宝扫码赞助吧</p>
+</section>
+
+      </div>
+
+      <p class="meta">
+      	
+            Categories:
+      	    
+          	<a class="btn btn-default btn-xs" href="/categories.html#java">java</a>
+          
+      	
+
+      	
+            Tags:
+      	    
+          	<a class="btn btn-default btn-xs" href="/tags.html#java">java</a>
+          
+      	
+      </p>
+	</article>
+
+	<ul class="pager">
+	  
+	  <li class="previous"><a class="btn btn-xs" href="/2013/06/08/note-about-java-thread" title="Java笔记：多线程">&larr; Prev</a></li>
+	  
+	  
+	  <li class="next"><a class="btn btn-xs" href="/2013/06/09/note-about-java-io" title="Java笔记：IO">Next &rarr;</a></li>
+	  
+	</ul>
+
+  
+<div id="comments">
+  <div class="ds-thread" data-thread-key="/2013/06/09/note-about-java-factory-model"  data-title="Java笔记：工厂模式 - 小天的个人博客"></div>
+</div>
+
+
+
+</div>
+
+        </div>
+      </div>
+
+      <footer class="footer text-center">
+  <p>&copy; 2009-2015 <a href="/" target="_blank" title="86后，工作在深圳；Java程序员、Hadoop工程师；主要关注Java、Hadoop、Kettle、关注大数据处理技术。">小天</a>. With Help from <a href="//jekyllrb.com/" target="_blank" title="Transform your plain text into static websites and blogs.">Jekyll</a> and <a href="//getbootstrap.com/" target="_blank" title="Bootstrap is the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web.">Bootstrap</a>, theme from <a href="http://havee.me/" target="_blank" title="http://havee.me/">Havee</a>.
+
+  <span style="float:right;"><a href="/about.html">About</a></span>
+
+	
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+  </p>
+  <div id="toTop" style="display: block;">
+    <a href="#">▲</a><a href="#footer">▼</a>
+  </div>
+</footer>
+
+    </div>
+
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/core.js"></script>
+
+    
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+    
+    <!-- duoshuo Begin -->
+    <script type="text/javascript">
+      var duoshuoQuery = {short_name:"xiaotian120"};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] ||
+        document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+    </script>
+    <!-- duoshuo End -->
+    
+  </body>
+</html>

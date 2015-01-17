@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>使用Scrapy爬取知乎网站 - 小天的个人博客</title>
+  <meta name="description" content="本文主要记录使用使用Scrapy登录并爬取知乎网站的思路。">
+  <meta name="keywords" content="scrapy,python">
+  <meta name="author" content="小天">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="360-site-verification" content="9b7a87a1d52051c96644f0a9b8b79898" />
+  <meta name="sogou_site_verification" content="ofwXWFdthV"/>
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" >
+
+  <link rel="canonical" href="http://blog.xiaotian.com/2014/06/08/using-scrapy-to-cralw-zhihu">
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css" media="all">
+  <link rel="stylesheet" href="/static/css/style.css" media="all">
+  <link rel="stylesheet" href="/static/css/pygments.css" media="all">
+  <link rel="stylesheet" href="/static/css/font-awesome.css" media="all">
+
+  <!-- atom & rss feed -->
+  <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="小天的个人博客 RSS Feed">
+  <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="小天的个人博客 ATOM Feed">
+</head>
+
+
+  <body>
+    <div class="container">
+      <!--[if lte IE 9]>
+<div class="alert alert-warning">
+  <p>Your Internet Explorer is not supported. Please upgrade your Internet Explorer to version 9+, or use latest <a href="http://www.google.com/chrome/" target="_blank" class="alert-link">Google chrome</a>、<a href="http://www.mozilla.org/firefox/" target="_blank" class="alert-link">Mozilla Firefox</a>.</p>
+  <p>If you are using IE 9 or later, make sure you <a href="http://windows.microsoft.com/en-us/internet-explorer/use-compatibility-view#ie=ie-8" target="_blank" class="alert-link">turn off "Compatibility view"</a>.</p>
+</div>
+<![endif]-->
+<header class="header">
+  <div class="title"><a title="小天的个人博客" href="/">小天的个人博客</a></div>
+  <ul class="nav navbar-nav navbar-right visible-lg visible-md">
+    <li>
+    <form id="search-form" class="form-group has-success visible-lg" role="form">
+      <input type="text" class="form-control input-sm" placeholder="Search" id="query" style="width: 160px;">
+    </form>
+    </li>
+    <li><a href="/archive.html" title="Archive"><span class='fa fa-archive fa-2x'></span></a></li>
+    <li><a href="/categories.html" title="Categories"><span class='fa fa-navicon fa-2x'></span></a></li>
+    <li><a href="/tags.html" title="Tags"><span class='fa fa-tags fa-2x'></span></a></li>
+    <li><a href="/about.html" title="About"><span class='fa fa-user fa-2x'></span></a></li>
+    
+    <li><a href="https://github.com/wuskyfantasy" target="_blank" title="Github"><span class='fa fa-github fa-2x'></span></a></li>
+    
+    
+    
+    
+    
+    <li><a href="http://weibo.com/xiaotian120" target="_blank" title="Weibo"><span class="fa fa-weibo fa-2x"></span></a></li>
+    
+
+    <li><a href="/rss.xml" target="_blank" title="RSS"><span class='fa fa-rss fa-2x'></span></a></li>
+  </ul>
+</header>
+
+
+      <div class="wrapper">
+        <div class="row">
+          <div id="search-loader" style="display:none;text-align:center">
+            <img src="http://javachen-rs.qiniudn.com/images/loading.gif">
+          </div>
+          <div class="col-md-12">
+  <article class="news-item">
+
+      <h2  class="news-item"> 使用Scrapy爬取知乎网站  
+        <time class="small">2014.06.08</time>
+      </h2>
+
+      <div><p>本文主要记录使用使用 Scrapy 登录并爬取知乎网站的思路。Scrapy的相关介绍请参考 <a href="/2014/05/24/using-scrapy-to-cralw-data/">使用Scrapy抓取数据</a>。</p>
+
+<p>相关代码，见 <a href="https://github.com/javachen/scrapy-zhihu-github">https://github.com/javachen/scrapy-zhihu-github</a> ，在阅读这部分代码之前，请先了解 Scrapy 的一些基本用法。</p>
+
+<h1 id="使用cookie模拟登陆">使用cookie模拟登陆</h1>
+
+<p>关于 cookie 的介绍和如何使用 python 实现模拟登陆，请参考<a href="http://blog.csdn.net/figo829/article/details/18728381">python爬虫实践之模拟登录</a>。</p>
+
+<p>从这篇文章你可以学习到如何获取一个网站的 cookie 信息。下面所讲述的方法就是使用 cookie 来模拟登陆知乎网站并爬取用户信息。</p>
+
+<p>一个模拟登陆知乎网站的示例代码如下：</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># -*- coding:utf-8 -*-</span>
+
+<span class="kn">from</span> <span class="nn">scrapy.selector</span> <span class="kn">import</span> <span class="n">Selector</span>
+<span class="kn">from</span> <span class="nn">scrapy.contrib.linkextractors.sgml</span> <span class="kn">import</span> <span class="n">SgmlLinkExtractor</span>
+<span class="kn">from</span> <span class="nn">scrapy.contrib.spiders</span> <span class="kn">import</span> <span class="n">CrawlSpider</span><span class="p">,</span> <span class="n">Rule</span>
+<span class="kn">from</span> <span class="nn">scrapy.http</span> <span class="kn">import</span> <span class="n">Request</span><span class="p">,</span><span class="n">FormRequest</span>
+
+<span class="kn">from</span> <span class="nn">zhihu.settings</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">class</span> <span class="nc">ZhihuLoginSpider</span><span class="p">(</span><span class="n">CrawlSpider</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s">&#39;zhihulogin1&#39;</span>
+    <span class="n">allowed_domains</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;zhihu.com&#39;</span><span class="p">]</span>
+    <span class="n">start_urls</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;http://www.zhihu.com/lookup/class/&#39;</span><span class="p">]</span>
+
+    <span class="n">rules</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">Rule</span><span class="p">(</span><span class="n">SgmlLinkExtractor</span><span class="p">(</span><span class="n">allow</span><span class="o">=</span><span class="s">r&#39;search/&#39;</span><span class="p">)),</span>
+        <span class="n">Rule</span><span class="p">(</span><span class="n">SgmlLinkExtractor</span><span class="p">(</span><span class="n">allow</span><span class="o">=</span><span class="s">r&#39;&#39;</span><span class="p">)),</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">headers</span> <span class="o">=</span><span class="n">HEADER</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cookies</span> <span class="o">=</span><span class="n">COOKIES</span>
+
+    <span class="k">def</span> <span class="nf">start_requests</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">url</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start_urls</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="n">FormRequest</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">meta</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;cookiejar&#39;</span><span class="p">:</span> <span class="n">i</span><span class="p">},</span> \
+                              <span class="n">headers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="p">,</span> \
+                              <span class="n">cookies</span> <span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cookies</span><span class="p">,</span>
+                              <span class="n">callback</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_item</span><span class="p">)</span><span class="c">#jump to login page</span>
+
+    <span class="k">def</span> <span class="nf">parse_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="n">selector</span> <span class="o">=</span> <span class="n">Selector</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+
+        <span class="n">urls</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">ele</span> <span class="ow">in</span> <span class="n">selector</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">&#39;//ul/li[@class=&quot;suggest-item&quot;]/div/a/@href&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">():</span>
+           <span class="n">urls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ele</span><span class="p">)</span>
+        <span class="k">print</span> <span class="n">urls</span>
+</code></pre></div>
+<p>上面是一个简单的示例，重写了 <code class="prettyprint">start_requests</code> 方法，针对 <code class="prettyprint">start_urls</code> 中的每一个url，这里为 <a href="http://www.zhihu.com/lookup/class/">http://www.zhihu.com/lookup/class/</a>，重新创建 FormRequest 请求该 url，并设置 headers 和 cookies 两个参数，这样可以通过 cookies 伪造登陆。</p>
+
+<p>FormRequest 请求中有一个回调函数 parse_item 用于解析页面内容。</p>
+
+<p>HEADER 和 COOKIES 在 settings.py 中定义如下：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">HEADER={
+    &quot;Host&quot;: &quot;www.zhihu.com&quot;,
+    &quot;Connection&quot;: &quot;keep-alive&quot;,
+    &quot;Cache-Control&quot;: &quot;max-age=0&quot;,
+    &quot;Accept&quot;: &quot;text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8&quot;,
+    &quot;User-Agent&quot;: &quot;Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.131 Safari/537.36&quot;,
+    &quot;Referer&quot;: &quot;http://www.zhihu.com/people/raymond-wang&quot;,
+    &quot;Accept-Encoding&quot;: &quot;gzip,deflate,sdch&quot;,
+    &quot;Accept-Language&quot;: &quot;zh-CN,zh;q=0.8,en-US;q=0.6,en;q=0.4,zh-TW;q=0.2&quot;,
+    }
+
+COOKIES={
+    &#39;checkcode&#39;:r&#39;&quot;$2a$10$9FVE.1nXJKq/F.nH62OhCevrCqs4skby2bC4IO6VPJITlc7Sh.NZa&quot;&#39;,
+    &#39;c_c&#39;:r&#39;a153f80493f411e3801452540a3121f7&#39;,
+    &#39;_ga&#39;:r&#39;GA1.2.1063404131.1384259893&#39;,
+    &#39;zata&#39;:r&#39;zhihu.com.021715f934634a988abbd3f1f7f31f37.470330&#39;,
+    &#39;q_c1&#39;:r&#39;59c45c60a48d4a5f9a12a52028a9aee7|1400081868000|1400081868000&#39;,
+    &#39;_xsrf&#39;:r&#39;2a7cf7208bf24dbda3f70d953e948135&#39;,
+    &#39;q_c0&#39;:r&#39;&quot;NmE0NzBjZTdmZGI4Yzg3ZWE0NjhkNjkwZGNiZTNiN2F8V2FhRTQ1QklrRjNjNGhMdQ==|1400082425|a801fc83ab07cb92236a75c87de58dcf3fa15cff&quot;&#39;,
+    &#39;__utma&#39;:r&#39;51854390.1063404131.1384259893.1400518549.1400522270.5&#39;,
+    &#39;__utmb&#39;:r&#39;51854390.4.10.1400522270&#39;,
+    &#39;__utmc&#39;:r&#39;51854390&#39;,
+    &#39;__utmz&#39;:r&#39;51854390.1400513283.3.3.utmcsr=zhihu.com|utmccn=(referral)|utmcmd=referral|utmcct=/people/hallson&#39;,
+    &#39;__utmv&#39;:r&#39;51854390.100-1|2=registration_date=20121016=1^3=entry_date=20121016=1&#39;
+}
+</code></pre></div>
+<p>这两个参数你都可以通过浏览器的一些开发工具查看到，特别是 COOKIES 中的信息。</p>
+
+<h1 id="通过账号登陆">通过账号登陆</h1>
+
+<p>使用账户和密码进行登陆代码如下：</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># -*- coding:utf-8 -*-</span>
+<span class="kn">from</span> <span class="nn">scrapy.selector</span> <span class="kn">import</span> <span class="n">Selector</span>
+<span class="kn">from</span> <span class="nn">scrapy.contrib.linkextractors.sgml</span> <span class="kn">import</span> <span class="n">SgmlLinkExtractor</span>
+<span class="kn">from</span> <span class="nn">scrapy.contrib.spiders</span> <span class="kn">import</span> <span class="n">CrawlSpider</span><span class="p">,</span> <span class="n">Rule</span>
+<span class="kn">from</span> <span class="nn">scrapy.http</span> <span class="kn">import</span> <span class="n">Request</span><span class="p">,</span><span class="n">FormRequest</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="nb">reload</span><span class="p">(</span><span class="n">sys</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">setdefaultencoding</span><span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">)</span>
+
+<span class="n">host</span><span class="o">=</span><span class="s">&#39;http://www.zhihu.com&#39;</span>
+
+<span class="k">class</span> <span class="nc">ZhihuUserSpider</span><span class="p">(</span><span class="n">CrawlSpider</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s">&#39;zhihu_user&#39;</span>
+    <span class="n">allowed_domains</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;zhihu.com&#39;</span><span class="p">]</span>
+    <span class="n">start_urls</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;http://www.zhihu.com/lookup/people&quot;</span><span class="p">,]</span>
+
+    <span class="c">#使用rule时候，不要定义parse方法</span>
+    <span class="n">rules</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">Rule</span><span class="p">(</span><span class="n">SgmlLinkExtractor</span><span class="p">(</span><span class="n">allow</span><span class="o">=</span><span class="p">(</span><span class="s">&quot;/lookup/class/[^/]+/?$&quot;</span><span class="p">,</span> <span class="p">)),</span> <span class="n">follow</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span><span class="n">callback</span><span class="o">=</span><span class="s">&#39;parse_item&#39;</span><span class="p">),</span>
+        <span class="n">Rule</span><span class="p">(</span><span class="n">SgmlLinkExtractor</span><span class="p">(</span><span class="n">allow</span><span class="o">=</span><span class="p">(</span><span class="s">&quot;/lookup/class/$&quot;</span><span class="p">,</span> <span class="p">)),</span> <span class="n">follow</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span><span class="n">callback</span><span class="o">=</span><span class="s">&#39;parse_item&#39;</span><span class="p">),</span>
+        <span class="n">Rule</span><span class="p">(</span><span class="n">SgmlLinkExtractor</span><span class="p">(</span><span class="n">allow</span><span class="o">=</span><span class="p">(</span><span class="s">&quot;/lookup/people&quot;</span><span class="p">,</span> <span class="p">)),</span>  <span class="n">callback</span><span class="o">=</span><span class="s">&#39;parse_item&#39;</span><span class="p">),</span>
+   <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>  <span class="o">*</span><span class="n">a</span><span class="p">,</span>  <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ZhihuLoginSpider</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">start_requests</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">FormRequest</span><span class="p">(</span>
+            <span class="s">&quot;http://www.zhihu.com/login&quot;</span><span class="p">,</span>
+            <span class="n">formdata</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;email&#39;</span><span class="p">:</span><span class="s">&#39;XXXXXX&#39;</span><span class="p">,</span>
+                        <span class="s">&#39;password&#39;</span><span class="p">:</span><span class="s">&#39;XXXXXX&#39;</span>
+            <span class="p">},</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">after_login</span>
+        <span class="p">)]</span>
+
+    <span class="k">def</span> <span class="nf">after_login</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_urls</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_requests_from_url</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">parse_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="n">selector</span> <span class="o">=</span> <span class="n">Selector</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">link</span> <span class="ow">in</span> <span class="n">selector</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">&#39;//div[@id=&quot;suggest-list-wrap&quot;]/ul/li/div/a/@href&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">():</span>
+            <span class="c">#link  ===&gt; /people/javachen</span>
+            <span class="k">yield</span> <span class="n">Request</span><span class="p">(</span><span class="n">host</span><span class="o">+</span><span class="n">link</span><span class="o">+</span><span class="s">&quot;/about&quot;</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">parse_user</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">parse_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="n">selector</span> <span class="o">=</span> <span class="n">Selector</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">ZhihuUserItem</span><span class="p">()</span>
+        <span class="n">user</span><span class="p">[</span><span class="s">&#39;_id&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">user</span><span class="p">[</span><span class="s">&#39;username&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">response</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">user</span><span class="p">[</span><span class="s">&#39;url&#39;</span><span class="p">]</span><span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">url</span>
+        <span class="n">user</span><span class="p">[</span><span class="s">&#39;nickname&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">selector</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">&quot;//div[@class=&#39;title-section ellipsis&#39;]/a[@class=&#39;name&#39;]/text()&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">())</span>
+        <span class="n">user</span><span class="p">[</span><span class="s">&#39;location&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">selector</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">&quot;//span[@class=&#39;location item&#39;]/@title&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">())</span>
+        <span class="n">user</span><span class="p">[</span><span class="s">&#39;industry&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">selector</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">&quot;//span[@class=&#39;business item&#39;]/@title&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">())</span>
+        <span class="n">user</span><span class="p">[</span><span class="s">&#39;sex&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">selector</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">&#39;//div[@class=&quot;item editable-group&quot;]/span/span[@class=&quot;item&quot;]/i/@class&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">())</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;zg-icon gender &quot;</span><span class="p">,</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+        <span class="n">user</span><span class="p">[</span><span class="s">&#39;description&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">selector</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">&quot;//span[@class=&#39;description unfold-item&#39;]/span/text()&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">())</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">user</span><span class="p">[</span><span class="s">&#39;view_num&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">selector</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">&quot;//span[@class=&#39;zg-gray-normal&#39;]/strong/text()&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">())</span>
+        <span class="n">user</span><span class="p">[</span><span class="s">&#39;update_time&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
+        <span class="c">#抓取用户信息，此处省略代码</span>
+</code></pre></div>
+<p>该代码逻辑如下：</p>
+
+<ul>
+<li>重写 <code class="prettyprint">start_requests</code> 方法，通过设置 FormRequest 的 formdata 参数，这里是 email 和 password，然后提交请求到 <code class="prettyprint">http://www.zhihu.com/login</code>进行登陆，如果登陆成功之后，调用 <code class="prettyprint">after_login</code> 回调方法。</li>
+<li>在 <code class="prettyprint">after_login</code> 方法中，一个个访问 <code class="prettyprint">start_urls</code> 中的 url</li>
+<li>rules 中定义了一些正则匹配的 url 所对应的回调函数</li>
+</ul>
+
+<p>在 <code class="prettyprint">parse_user</code> 方法里，你可以通过 xpath 获取到用户的相关信息，也可以去获取关注和粉丝列表的数据。</p>
+
+<p>例如，先获取到用户的关注数 <code class="prettyprint">followee_num</code>，就可以通过下面一段代码去获取该用户所有的关注列表。代码如下</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">_xsrf</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">selector</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">&#39;//input[@name=&quot;_xsrf&quot;]/@value&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">())</span>
+<span class="n">hash_id</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">selector</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">&#39;//div[@class=&quot;zm-profile-header-op-btns clearfix&quot;]/button/@data-id&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">())</span>
+
+<span class="n">num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">followee_num</span><span class="p">)</span> <span class="k">if</span> <span class="n">followee_num</span> <span class="k">else</span> <span class="mi">0</span>
+<span class="n">page_num</span> <span class="o">=</span> <span class="n">num</span><span class="o">/</span><span class="mi">20</span>
+<span class="n">page_num</span> <span class="o">+=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">num</span><span class="o">%</span><span class="mi">20</span> <span class="k">else</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">page_num</span><span class="p">):</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s">&quot;hash_id&quot;</span><span class="p">:</span><span class="n">hash_id</span><span class="p">,</span><span class="s">&quot;order_by&quot;</span><span class="p">:</span><span class="s">&quot;created&quot;</span><span class="p">,</span><span class="s">&quot;offset&quot;</span><span class="p">:</span><span class="n">i</span><span class="o">*</span><span class="mi">20</span><span class="p">})</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;method&quot;</span><span class="p">:</span><span class="s">&quot;next&quot;</span><span class="p">,</span> <span class="s">&quot;params&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="s">&quot;_xsrf&quot;</span><span class="p">:</span><span class="n">_xsrf</span><span class="p">}</span>
+    <span class="k">yield</span> <span class="n">Request</span><span class="p">(</span><span class="s">&quot;http://www.zhihu.com/node/ProfileFolloweesListV2?&quot;</span><span class="o">+</span><span class="n">urlencode</span><span class="p">(</span><span class="n">payload</span><span class="p">),</span> <span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">parse_follow_url</span><span class="p">)</span>
+</code></pre></div>
+<p>然后，你需要增加一个处理关注列表的回调方法 <code class="prettyprint">parse_follow_url</code>，这部分代码如下：</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">parse_follow_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="n">selector</span> <span class="o">=</span> <span class="n">Selector</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">link</span> <span class="ow">in</span> <span class="n">selector</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">&#39;//div[@class=&quot;zm-list-content-medium&quot;]/h2/a/@href&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">():</span>
+            <span class="c">#link  ===&gt; http://www.zhihu.com/people/peng-leslie-97</span>
+            <span class="n">username_tmp</span> <span class="o">=</span> <span class="n">link</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">username_tmp</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_names</span><span class="p">:</span>
+                <span class="k">print</span> <span class="s">&#39;GET:&#39;</span> <span class="o">+</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">username_tmp</span>
+                <span class="k">continue</span>
+
+            <span class="k">yield</span> <span class="n">Request</span><span class="p">(</span><span class="n">link</span><span class="o">+</span><span class="s">&quot;/about&quot;</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">parse_user</span><span class="p">)</span>
+</code></pre></div>
+<p>获取粉丝列表的代码和上面代码类似。</p>
+
+<p>有了用户数据之后，你可以再编写一个爬虫根据用户去爬取问题和答案了，这部分代码略去，详细内容请参考 <a href="https://github.com/javachen/scrapy-zhihu-github">https://github.com/javachen/scrapy-zhihu-github</a>。其中，还有抓取 github 用户等的相关代码。</p>
+
+<h1 id="其他一些技巧">其他一些技巧</h1>
+
+<p>在使用 xpath 过程中，你可以下载浏览器插件 <a href="https://chrome.google.com/webstore/detail/hgimnogjllphhhkhlmebbmlgjoejdpjl">XPath Helper</a>来快速定位元素并获取到 xpath 表达式，关于该插件用法，请自行 google 之。</p>
+
+<p>由于隐私设置的缘故，有些用户可能没有显示一些数据，故针对某些用户 xpath 表达式可能会抛出一些异常，如下面代码获取用户的名称：</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">user</span><span class="p">[</span><span class="s">&#39;nickname&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">selector</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">&quot;//div[@class=&#39;title-section ellipsis&#39;]/a[@class=&#39;name&#39;]/text()&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+</code></pre></div>
+<p>你可以将上面代码修改如下，以避免出现一个异常：</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">user</span><span class="p">[</span><span class="s">&#39;nickname&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">selector</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">&quot;//div[@class=&#39;title-section ellipsis&#39;]/a[@class=&#39;name&#39;]/text()&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">())</span>
+</code></pre></div></div>
+
+
+      <div id="pay" style="text-align:center;">
+        ----EOF-----
+        <br>
+        <section>
+  <h4>Sponsor</h4>
+	<img src="http://javachen-rs.qiniudn.com/images/alipay.png" width="150/">
+  <p class="small">觉得此博客对你有帮助，支付宝扫码赞助吧</p>
+</section>
+
+      </div>
+
+      <p class="meta">
+      	
+            Categories:
+      	    
+          	<a class="btn btn-default btn-xs" href="/categories.html#python">python</a>
+          
+      	
+
+      	
+            Tags:
+      	    
+          	<a class="btn btn-default btn-xs" href="/tags.html#scrapy">scrapy</a>
+          
+          	<a class="btn btn-default btn-xs" href="/tags.html#python">python</a>
+          
+      	
+      </p>
+	</article>
+
+	<ul class="pager">
+	  
+	  <li class="previous"><a class="btn btn-xs" href="/2014/06/06/about-mongodb" title="MongoDB介绍">&larr; Prev</a></li>
+	  
+	  
+	  <li class="next"><a class="btn btn-xs" href="/2014/06/09/fetchtask-in-hive" title="Hive中的FetchTask任务">Next &rarr;</a></li>
+	  
+	</ul>
+
+  
+<div id="comments">
+  <div class="ds-thread" data-thread-key="/2014/06/08/using-scrapy-to-cralw-zhihu"  data-title="使用Scrapy爬取知乎网站 - 小天的个人博客"></div>
+</div>
+
+
+
+</div>
+
+        </div>
+      </div>
+
+      <footer class="footer text-center">
+  <p>&copy; 2009-2015 <a href="/" target="_blank" title="86后，工作在深圳；Java程序员、Hadoop工程师；主要关注Java、Hadoop、Kettle、关注大数据处理技术。">小天</a>. With Help from <a href="//jekyllrb.com/" target="_blank" title="Transform your plain text into static websites and blogs.">Jekyll</a> and <a href="//getbootstrap.com/" target="_blank" title="Bootstrap is the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web.">Bootstrap</a>, theme from <a href="http://havee.me/" target="_blank" title="http://havee.me/">Havee</a>.
+
+  <span style="float:right;"><a href="/about.html">About</a></span>
+
+	
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+  </p>
+  <div id="toTop" style="display: block;">
+    <a href="#">▲</a><a href="#footer">▼</a>
+  </div>
+</footer>
+
+    </div>
+
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/core.js"></script>
+
+    
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+    
+    <!-- duoshuo Begin -->
+    <script type="text/javascript">
+      var duoshuoQuery = {short_name:"xiaotian120"};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] ||
+        document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+    </script>
+    <!-- duoshuo End -->
+    
+  </body>
+</html>

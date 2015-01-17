@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>在Eclipse中调试运行HBase - 小天的个人博客</title>
+  <meta name="description" content="这篇文章记录一下如何在eclipse中调试运行hbase。">
+  <meta name="keywords" content="java, hadoop, hive, hbase, spark, linux, scala, python, mysql">
+  <meta name="author" content="小天">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="360-site-verification" content="9b7a87a1d52051c96644f0a9b8b79898" />
+  <meta name="sogou_site_verification" content="ofwXWFdthV"/>
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" >
+
+  <link rel="canonical" href="http://blog.xiaotian.com/2013/11/01/debug-hbase-in-eclipse">
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css" media="all">
+  <link rel="stylesheet" href="/static/css/style.css" media="all">
+  <link rel="stylesheet" href="/static/css/pygments.css" media="all">
+  <link rel="stylesheet" href="/static/css/font-awesome.css" media="all">
+
+  <!-- atom & rss feed -->
+  <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="小天的个人博客 RSS Feed">
+  <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="小天的个人博客 ATOM Feed">
+</head>
+
+
+  <body>
+    <div class="container">
+      <!--[if lte IE 9]>
+<div class="alert alert-warning">
+  <p>Your Internet Explorer is not supported. Please upgrade your Internet Explorer to version 9+, or use latest <a href="http://www.google.com/chrome/" target="_blank" class="alert-link">Google chrome</a>、<a href="http://www.mozilla.org/firefox/" target="_blank" class="alert-link">Mozilla Firefox</a>.</p>
+  <p>If you are using IE 9 or later, make sure you <a href="http://windows.microsoft.com/en-us/internet-explorer/use-compatibility-view#ie=ie-8" target="_blank" class="alert-link">turn off "Compatibility view"</a>.</p>
+</div>
+<![endif]-->
+<header class="header">
+  <div class="title"><a title="小天的个人博客" href="/">小天的个人博客</a></div>
+  <ul class="nav navbar-nav navbar-right visible-lg visible-md">
+    <li>
+    <form id="search-form" class="form-group has-success visible-lg" role="form">
+      <input type="text" class="form-control input-sm" placeholder="Search" id="query" style="width: 160px;">
+    </form>
+    </li>
+    <li><a href="/archive.html" title="Archive"><span class='fa fa-archive fa-2x'></span></a></li>
+    <li><a href="/categories.html" title="Categories"><span class='fa fa-navicon fa-2x'></span></a></li>
+    <li><a href="/tags.html" title="Tags"><span class='fa fa-tags fa-2x'></span></a></li>
+    <li><a href="/about.html" title="About"><span class='fa fa-user fa-2x'></span></a></li>
+    
+    <li><a href="https://github.com/wuskyfantasy" target="_blank" title="Github"><span class='fa fa-github fa-2x'></span></a></li>
+    
+    
+    
+    
+    
+    <li><a href="http://weibo.com/xiaotian120" target="_blank" title="Weibo"><span class="fa fa-weibo fa-2x"></span></a></li>
+    
+
+    <li><a href="/rss.xml" target="_blank" title="RSS"><span class='fa fa-rss fa-2x'></span></a></li>
+  </ul>
+</header>
+
+
+      <div class="wrapper">
+        <div class="row">
+          <div id="search-loader" style="display:none;text-align:center">
+            <img src="http://javachen-rs.qiniudn.com/images/loading.gif">
+          </div>
+          <div class="col-md-12">
+  <article class="news-item">
+
+      <h2  class="news-item"> 在Eclipse中调试运行HBase  
+        <time class="small">2013.11.01</time>
+      </h2>
+
+      <div><p>这篇文章记录一下如何在eclipse中调试运行hbase。</p>
+
+<h1 id="下载并编译源代码">下载并编译源代码</h1>
+
+<p>请参考<a href="http://blog.javachen.com/hbase/2013/10/28/compile-hbase-source-code-and-apply-patches/">编译hbase源代码并打补丁</a></p>
+
+<h1 id="修改配置文件">修改配置文件</h1>
+
+<p>修改 <code class="prettyprint">conf/hbase-site.xml</code>文件：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">&lt;property&gt;
+&lt;name&gt;hbase.defaults.for.version&lt;/name&gt;
+&lt;value&gt;0.94.6-cdh4.4.0&lt;/value&gt;
+&lt;/property&gt;
+
+&lt;property&gt;
+&lt;name&gt;hbase.rootdir&lt;/name&gt;
+&lt;value&gt;file:///home/june/tmp/data&lt;/value&gt;
+&lt;/property&gt;
+</code></pre></div>
+<p>把conf文件夹加到Classpath中</p>
+
+<h1 id="运行hmaster">运行HMaster</h1>
+
+<p>新建一个<code class="prettyprint">Debug Configuration</code>,  main class 是<code class="prettyprint">org.apache.hadoop.hbase.master.HMaster</code>,  参数填start</p>
+
+<!-- more -->
+
+<p>调试运行该类，运行成功之后日志如下：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">13/10/29 14:38:29 WARN zookeeper.RecoverableZooKeeper: Node /hbase/table/.META. already deleted, and this is not a retry
+13/10/29 14:38:29 INFO regionserver.HRegionServer: Received request to open region: .META.,,1.1028785192
+13/10/29 14:38:29 INFO regionserver.HRegion: Setting up tabledescriptor config now ...
+13/10/29 14:38:29 INFO regionserver.Store: time to purge deletes set to 0ms in store info
+13/10/29 14:38:29 INFO regionserver.HRegion: Onlined .META.,,1.1028785192; next sequenceid=1
+13/10/29 14:38:29 INFO regionserver.HRegionServer: Post open deploy tasks for region=.META.,,1.1028785192, daughter=false
+13/10/29 14:38:29 INFO catalog.MetaEditor: Updated row .META.,,1.1028785192 with server=june-mint,47477,1383028701871
+13/10/29 14:38:29 INFO regionserver.HRegionServer: Done with post open deploy task for region=.META.,,1.1028785192, daughter=false
+13/10/29 14:38:29 INFO handler.OpenedRegionHandler: Handling OPENED event for .META.,,1.1028785192 from june-mint,47477,1383028701871; deleting unassigned node
+13/10/29 14:38:29 INFO master.AssignmentManager: The master has opened the region .META.,,1.1028785192 that was online on june-mint,47477,1383028701871
+13/10/29 14:38:29 INFO master.HMaster: .META. assigned=2, rit=false, location=june-mint,47477,1383028701871
+13/10/29 14:38:29 INFO catalog.MetaMigrationRemovingHTD: Meta version=0; migrated=true
+13/10/29 14:38:29 INFO catalog.MetaMigrationRemovingHTD: ROOT/Meta already up-to date with new HRI.
+13/10/29 14:38:29 INFO master.AssignmentManager: Clean cluster startup. Assigning userregions
+13/10/29 14:38:29 INFO master.HMaster: Registered HMaster MXBean
+13/10/29 14:38:29 INFO master.HMaster: Master has completed initialization
+</code></pre></div>
+<p>如果想修改日志级别，请修改<code class="prettyprint">conf/log4j.properties</code>中级别为INFO:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">#Logging Threshold
+log4j.threshold=INFO
+</code></pre></div>
+<h1 id="运行hregionserver">运行HRegionServer</h1>
+
+<p>参考上面的方法，运行HRegionServer，这时候会出现如下日志：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">13/11/04 11:50:47 INFO util.VersionInfo: HBase 0.94.6-cdh4.4.0
+13/11/04 11:50:47 INFO util.VersionInfo: Subversion git://june-mint/chan/workspace/hadoop/hbase -r 979969e1d0d95ce3b8c1d14593f55148da8bc98f
+13/11/04 11:50:47 INFO util.VersionInfo: Compiled by june on Tue Oct 29 15:11:51 CST 2013
+13/11/04 11:50:47 WARN regionserver.HRegionServerCommandLine: Not starting a distinct region server because hbase.cluster.distributed is false
+</code></pre></div>
+<p>这是因为当<code class="prettyprint">hbase.cluster.distributed=false</code>时，hbase为本地模式，master和regionserver在同一个jvm启动，并且会启动一个最小化的zookeeper集群。请参看：<code class="prettyprint">HMasterCommandLine.java</code>的startMaster()方法。</p>
+
+<p>如果你把该值设为true，则hbase集群为分布式模式，这时候默认会连接<code class="prettyprint">127.0.0.1：2181</code>对应的zookeeper集群（该集群需要在master启动之前启动）。当然，你可以修改参数让hbase自己维护一个zookeeper集群。</p>
+
+<h1 id="调试hbase-shell">调试hbase shell</h1>
+
+<p>新建一个<code class="prettyprint">Debug Configuration</code>,  main class 是<code class="prettyprint">org.jruby.Main</code>，在程序参数中添加<code class="prettyprint">bin/hirb.rb</code>,然后运行即可。</p>
+
+<h1 id="一些技巧">一些技巧</h1>
+
+<ul>
+<li>调试java代码的时候, byte[]的变量总是显示成数字,如果要显示对应的字符</li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">Window-&gt;Preference-&gt;Java-&gt;Debug-&gt;Primitive Display Options-&gt;Check some of them
+</code></pre></div>
+<ul>
+<li>hbase源码中默认依赖的是hadoop 1.0.x版本，所以mavne依赖中会引入hadoop-core-1.0.4.jar，你可以修改pom.xml文件，将默认的profile修改为你需要的hadoop版本，如2.0版本的hadoop。这样做之后，当你看HMaster的源代码时，你会很方便的关联并浏览ToolRunner类中的源代码。</li>
+</ul>
+
+<p>默认的profile是hadoop-1.0，配置文件如下：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">  &lt;!-- profile for building against Hadoop 1.0.x: This is the default. --&gt;
+    &lt;profile&gt;
+      &lt;id&gt;hadoop-1.0&lt;/id&gt;
+      &lt;activation&gt;
+        &lt;property&gt;
+          &lt;name&gt;!hadoop.profile&lt;/name&gt;
+        &lt;/property&gt;
+
+   &lt;profile&gt;
+      &lt;id&gt;hadoop-2.0&lt;/id&gt;
+      &lt;activation&gt;
+        &lt;property&gt;
+          &lt;name&gt;hadoop.profile&lt;/name&gt;
+          &lt;value&gt;2.0&lt;/value&gt;
+        &lt;/property&gt;
+</code></pre></div>
+<p>你可以将默认的profile改为hadoop-2.0,修改之后的配置文件如下：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">    &lt;profile&gt;
+      &lt;id&gt;hadoop-1.0&lt;/id&gt;
+      &lt;activation&gt;
+        &lt;property&gt;
+          &lt;name&gt;hadoop.profile&lt;/name&gt;
+      &lt;value&gt;1.0&lt;/value&gt;
+        &lt;/property&gt;
+
+   &lt;profile&gt;
+      &lt;id&gt;hadoop-2.0&lt;/id&gt;
+      &lt;activation&gt;
+        &lt;property&gt;
+          &lt;name&gt;!hadoop.profile&lt;/name&gt;
+        &lt;/property&gt;
+</code></pre></div></div>
+
+
+      <div id="pay" style="text-align:center;">
+        ----EOF-----
+        <br>
+        <section>
+  <h4>Sponsor</h4>
+	<img src="http://javachen-rs.qiniudn.com/images/alipay.png" width="150/">
+  <p class="small">觉得此博客对你有帮助，支付宝扫码赞助吧</p>
+</section>
+
+      </div>
+
+      <p class="meta">
+      	
+            Categories:
+      	    
+          	<a class="btn btn-default btn-xs" href="/categories.html#hbase">hbase</a>
+          
+      	
+
+      	
+            Tags:
+      	    
+          	<a class="btn btn-default btn-xs" href="/tags.html#hbase">hbase</a>
+          
+      	
+      </p>
+	</article>
+
+	<ul class="pager">
+	  
+	  <li class="previous"><a class="btn btn-xs" href="/2013/10/28/compile-hbase-source-code-and-apply-patches" title="编译CDH HBase源代码并打补丁">&larr; Prev</a></li>
+	  
+	  
+	  <li class="next"><a class="btn btn-xs" href="/2013/11/11/install-saltstack-and-halite" title="安装SaltStack和Halite">Next &rarr;</a></li>
+	  
+	</ul>
+
+  
+<div id="comments">
+  <div class="ds-thread" data-thread-key="/2013/11/01/debug-hbase-in-eclipse"  data-title="在Eclipse中调试运行HBase - 小天的个人博客"></div>
+</div>
+
+
+
+</div>
+
+        </div>
+      </div>
+
+      <footer class="footer text-center">
+  <p>&copy; 2009-2015 <a href="/" target="_blank" title="86后，工作在深圳；Java程序员、Hadoop工程师；主要关注Java、Hadoop、Kettle、关注大数据处理技术。">小天</a>. With Help from <a href="//jekyllrb.com/" target="_blank" title="Transform your plain text into static websites and blogs.">Jekyll</a> and <a href="//getbootstrap.com/" target="_blank" title="Bootstrap is the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web.">Bootstrap</a>, theme from <a href="http://havee.me/" target="_blank" title="http://havee.me/">Havee</a>.
+
+  <span style="float:right;"><a href="/about.html">About</a></span>
+
+	
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+  </p>
+  <div id="toTop" style="display: block;">
+    <a href="#">▲</a><a href="#footer">▼</a>
+  </div>
+</footer>
+
+    </div>
+
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/core.js"></script>
+
+    
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+    
+    <!-- duoshuo Begin -->
+    <script type="text/javascript">
+      var duoshuoQuery = {short_name:"xiaotian120"};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] ||
+        document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+    </script>
+    <!-- duoshuo End -->
+    
+  </body>
+</html>

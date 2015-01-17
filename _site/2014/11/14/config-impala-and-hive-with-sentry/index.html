@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Impala和Hive集成Sentry - 小天的个人博客</title>
+  <meta name="description" content="本文主要记录 CDH 5.2 Hadoop 集群中配置 Impala 和 Hive 集成 Sentry 的过程，包括 Sentry 的安装、配置以及和 Impala、Hive 集成后的测试。">
+  <meta name="keywords" content="java, hadoop, hive, hbase, spark, linux, scala, python, mysql">
+  <meta name="author" content="小天">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="360-site-verification" content="9b7a87a1d52051c96644f0a9b8b79898" />
+  <meta name="sogou_site_verification" content="ofwXWFdthV"/>
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" >
+
+  <link rel="canonical" href="http://blog.xiaotian.com/2014/11/14/config-impala-and-hive-with-sentry">
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css" media="all">
+  <link rel="stylesheet" href="/static/css/style.css" media="all">
+  <link rel="stylesheet" href="/static/css/pygments.css" media="all">
+  <link rel="stylesheet" href="/static/css/font-awesome.css" media="all">
+
+  <!-- atom & rss feed -->
+  <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="小天的个人博客 RSS Feed">
+  <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="小天的个人博客 ATOM Feed">
+</head>
+
+
+  <body>
+    <div class="container">
+      <!--[if lte IE 9]>
+<div class="alert alert-warning">
+  <p>Your Internet Explorer is not supported. Please upgrade your Internet Explorer to version 9+, or use latest <a href="http://www.google.com/chrome/" target="_blank" class="alert-link">Google chrome</a>、<a href="http://www.mozilla.org/firefox/" target="_blank" class="alert-link">Mozilla Firefox</a>.</p>
+  <p>If you are using IE 9 or later, make sure you <a href="http://windows.microsoft.com/en-us/internet-explorer/use-compatibility-view#ie=ie-8" target="_blank" class="alert-link">turn off "Compatibility view"</a>.</p>
+</div>
+<![endif]-->
+<header class="header">
+  <div class="title"><a title="小天的个人博客" href="/">小天的个人博客</a></div>
+  <ul class="nav navbar-nav navbar-right visible-lg visible-md">
+    <li>
+    <form id="search-form" class="form-group has-success visible-lg" role="form">
+      <input type="text" class="form-control input-sm" placeholder="Search" id="query" style="width: 160px;">
+    </form>
+    </li>
+    <li><a href="/archive.html" title="Archive"><span class='fa fa-archive fa-2x'></span></a></li>
+    <li><a href="/categories.html" title="Categories"><span class='fa fa-navicon fa-2x'></span></a></li>
+    <li><a href="/tags.html" title="Tags"><span class='fa fa-tags fa-2x'></span></a></li>
+    <li><a href="/about.html" title="About"><span class='fa fa-user fa-2x'></span></a></li>
+    
+    <li><a href="https://github.com/wuskyfantasy" target="_blank" title="Github"><span class='fa fa-github fa-2x'></span></a></li>
+    
+    
+    
+    
+    
+    <li><a href="http://weibo.com/xiaotian120" target="_blank" title="Weibo"><span class="fa fa-weibo fa-2x"></span></a></li>
+    
+
+    <li><a href="/rss.xml" target="_blank" title="RSS"><span class='fa fa-rss fa-2x'></span></a></li>
+  </ul>
+</header>
+
+
+      <div class="wrapper">
+        <div class="row">
+          <div id="search-loader" style="display:none;text-align:center">
+            <img src="http://javachen-rs.qiniudn.com/images/loading.gif">
+          </div>
+          <div class="col-md-12">
+  <article class="news-item">
+
+      <h2  class="news-item"> Impala和Hive集成Sentry  
+        <time class="small">2014.11.14</time>
+      </h2>
+
+      <div><p>本文主要记录 CDH 5.2 Hadoop 集群中配置 Impala 和 Hive 集成 Sentry 的过程，包括 Sentry 的安装、配置以及和 Impala、Hive 集成后的测试。</p>
+
+<p>使用 Sentry 来管理集群的权限，需要先在集群上配置好 Kerberos。</p>
+
+<p>关于 Hadoop 集群上配置 kerberos 以及 ldap 的过程请参考本博客以下文章：</p>
+
+<ul>
+<li><a href="/2014/11/04/config-kerberos-in-cdh-hdfs">HDFS配置Kerberos认证</a></li>
+<li><a href="/2014/11/04/config-kerberos-in-cdh-yarn">YARN配置Kerberos认证</a></li>
+<li><a href="/2014/11/04/config-kerberos-in-cdh-hive">Hive配置Kerberos认证</a></li>
+<li><a href="/2014/11/04/config-kerberos-in-cdh-impala">Impala配置Kerberos认证</a></li>
+<li><a href="/2014/11/12/config-ldap-with-kerberos-in-cdh-hadoop">Hadoop配置LDAP集成Kerberos</a></li>
+</ul>
+
+<p>Sentry 会安装在三个节点的 hadoop 集群上，每个节点的ip、主机名和部署的组件分配如下：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">192.168.56.121        cdh1     NameNode、Hive、ResourceManager、HBase、impala-state-store、impala-catalog、Kerberos Server、sentry-store
+192.168.56.122        cdh2     DataNode、SSNameNode、NodeManager、HBase、impala-server
+192.168.56.123        cdh3     DataNode、HBase、NodeManager、impala-server
+</code></pre></div>
+<p>Sentry 的使用有两种方式，一是基于文件的存储方式（SimpleFileProviderBackend），一是基于数据库的存储方式（SimpleDbProviderBackend），如果使用基于文件的存储则只需要安装 <code class="prettyprint">sentry</code>，否则还需要安装 <code class="prettyprint">sentry-store</code>。</p>
+
+<h1 id="1.-基于数据库的存储方式">1. 基于数据库的存储方式</h1>
+
+<h2 id="1.1-安装服务">1.1 安装服务</h2>
+
+<p>在 cdh1 节点上安装 sentry-store 服务：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">yum install sentry sentry-store -y
+</code></pre></div>
+<p>修改 Sentry 的配置文件 <code class="prettyprint">/etc/sentry/conf/sentry-store-site.xml</code>，下面的配置参考了 <a href="https://github.com/cloudera/sentry/tree/cdh5-1.4.0_5.2.0/conf">Sentry源码中的配置例子</a>：</p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="nt">&lt;configuration&gt;</span>
+    <span class="nt">&lt;property&gt;</span>
+        <span class="nt">&lt;name&gt;</span>sentry.service.admin.group<span class="nt">&lt;/name&gt;</span>
+        <span class="nt">&lt;value&gt;</span>impala,hive,hue<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/property&gt;</span>
+    <span class="nt">&lt;property&gt;</span>
+        <span class="nt">&lt;name&gt;</span>sentry.service.allow.connect<span class="nt">&lt;/name&gt;</span>
+        <span class="nt">&lt;value&gt;</span>impala,hive,hue<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/property&gt;</span>
+    <span class="nt">&lt;property&gt;</span>
+        <span class="nt">&lt;name&gt;</span>sentry.verify.schema.version<span class="nt">&lt;/name&gt;</span>
+        <span class="nt">&lt;value&gt;</span>true<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/property&gt;</span>
+    <span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>sentry.service.server.rpc-address<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>cdh1<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/property&gt;</span>
+    <span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>sentry.service.server.rpc-port<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>8038<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/property&gt;</span>
+    <span class="nt">&lt;property&gt;</span>
+        <span class="nt">&lt;name&gt;</span>sentry.store.jdbc.url<span class="nt">&lt;/name&gt;</span>
+        <span class="nt">&lt;value&gt;</span>jdbc:postgresql://cdh1/sentry<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/property&gt;</span>
+    <span class="nt">&lt;property&gt;</span>
+        <span class="nt">&lt;name&gt;</span>sentry.store.jdbc.driver<span class="nt">&lt;/name&gt;</span>
+        <span class="nt">&lt;value&gt;</span>org.postgresql.Driver<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/property&gt;</span>
+    <span class="nt">&lt;property&gt;</span>
+        <span class="nt">&lt;name&gt;</span>sentry.store.jdbc.user<span class="nt">&lt;/name&gt;</span>
+        <span class="nt">&lt;value&gt;</span>sentry<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/property&gt;</span>
+    <span class="nt">&lt;property&gt;</span>
+        <span class="nt">&lt;name&gt;</span>sentry.store.jdbc.password<span class="nt">&lt;/name&gt;</span>
+        <span class="nt">&lt;value&gt;</span>redhat<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/property&gt;</span>
+    <span class="nt">&lt;property&gt;</span>
+        <span class="nt">&lt;name&gt;</span>sentry.hive.server<span class="nt">&lt;/name&gt;</span>
+        <span class="nt">&lt;value&gt;</span>server1<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/property&gt;</span>
+    <span class="nt">&lt;property&gt;</span>
+        <span class="nt">&lt;name&gt;</span>sentry.store.group.mapping<span class="nt">&lt;/name&gt;</span>
+        <span class="nt">&lt;value&gt;</span>org.apache.sentry.provider.common.HadoopGroupMappingService<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;/configuration&gt;</span>
+</code></pre></div>
+<p>创建数据库，请参考 <a href="/2013/08/02/hadoop-install-script/">Hadoop自动化安装shell脚本</a>：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">yum install postgresql-server postgresql-jdbc -y
+
+ln -s /usr/share/java/postgresql-jdbc.jar /usr/lib/hive/lib/postgresql-jdbc.jar
+ln -s /usr/share/java/postgresql-jdbc.jar /usr/lib/sentry/lib/postgresql-jdbc.jar
+
+su -c <span class="s2">&quot;cd ; /usr/bin/pg_ctl start -w -m fast -D /var/lib/pgsql/data&quot;</span> postgres
+su -c <span class="s2">&quot;cd ; /usr/bin/psql --command \&quot;create user sentry with password &#39;redhat&#39;; \&quot; &quot;</span> postgres
+su -c <span class="s2">&quot;cd ; /usr/bin/psql --command \&quot;CREATE DATABASE sentry owner=sentry;\&quot; &quot;</span> postgres
+su -c <span class="s2">&quot;cd ; /usr/bin/psql --command \&quot;GRANT ALL privileges ON DATABASE sentry TO sentry;\&quot; &quot;</span> postgres
+su -c <span class="s2">&quot;cd ; /usr/bin/psql -U sentry -d sentry -f /usr/lib/sentry/scripts/sentrystore/upgrade/sentry-postgres-1.4.0-cdh5.sql&quot;</span> postgres
+su -c <span class="s2">&quot;cd ; /usr/bin/pg_ctl restart -w -m fast -D /var/lib/pgsql/data&quot;</span> postgres
+</code></pre></div>
+<p>/var/lib/pgsql/data/pg_hba.conf 内容如下：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"># TYPE  DATABASE    USER        CIDR-ADDRESS          METHOD
+
+# &quot;local&quot; is for Unix domain socket connections only
+local   all         all                               md5
+# IPv4 local connections:
+#host    all         all         0.0.0.0/0             trust
+host    all         all         127.0.0.1/32          md5
+
+# IPv6 local connections:
+#host    all         all         ::1/128               nd5
+</code></pre></div>
+<p>如果集群开启了 Kerberos 验证，则需要在该节点上生成 Sentry 服务的 principal 并导出为 ticket：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd</span> /etc/sentry/conf
+
+kadmin.local -q <span class="s2">&quot;addprinc -randkey sentry/cdh1@JAVACHEN.COM &quot;</span>
+kadmin.local -q <span class="s2">&quot;xst -k sentry.keytab sentry/cdh1@JAVACHEN.COM &quot;</span>
+
+chown sentry:hadoop sentry.keytab <span class="p">;</span> chmod 400 *.keytab
+</code></pre></div>
+<p>然后，在/etc/sentry/conf/sentry-store-site.xml 中添加如下内容：</p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>sentry.service.security.mode<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>kerberos<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+   <span class="nt">&lt;name&gt;</span>sentry.service.server.principal<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>sentry/cdh1@JAVACHEN.COM<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>sentry.service.server.keytab<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>/etc/sentry/conf/sentry.keytab<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+</code></pre></div>
+<h2 id="1.2.-准备测试数据">1.2. 准备测试数据</h2>
+
+<p>参考 <a href="http://blog.evernote.com/tech/2014/06/09/securing-impala-for-analysts/">Securing Impala for analysts</a>，准备测试数据：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>cat /tmp/events.csv
+10.1.2.3,US,android,createNote
+10.200.88.99,FR,windows,updateNote
+10.1.2.3,US,android,updateNote
+10.200.88.77,FR,ios,createNote
+10.1.4.5,US,windows,updateTag
+
+<span class="nv">$ </span>hive -S
+hive&gt; create database sensitive<span class="p">;</span>
+hive&gt; create table sensitive.events <span class="o">(</span>
+    ip STRING, country STRING, client STRING, action STRING
+  <span class="o">)</span> ROW FORMAT DELIMITED FIELDS TERMINATED BY <span class="s1">&#39;,&#39;</span><span class="p">;</span>
+
+hive&gt; load data <span class="nb">local </span>inpath <span class="s1">&#39;/tmp/events.csv&#39;</span> overwrite into table sensitive.events<span class="p">;</span>
+hive&gt; create database filtered<span class="p">;</span>
+hive&gt; create view filtered.events as <span class="k">select </span>country, client, action from sensitive.events<span class="p">;</span>
+hive&gt; create view filtered.events_usonly as
+  <span class="k">select</span> * from filtered.events where <span class="nv">country</span> <span class="o">=</span> <span class="s1">&#39;US&#39;</span><span class="p">;</span>
+</code></pre></div>
+<h2 id="1.3-hive-server2-集成-sentry">1.3 Hive-server2 集成 sentry</h2>
+
+<h3 id="要求">要求</h3>
+
+<p>在使用 Sentry 时，有如下要求：</p>
+
+<p>1、需要修改 <code class="prettyprint">/user/hive/warehouse</code> 权限：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">hdfs dfs -chmod -R 770 /user/hive/warehouse
+hdfs dfs -chown -R hive:hive /user/hive/warehouse
+</code></pre></div>
+<p>2、修改 hive-site.xml 文件，关掉 <code class="prettyprint">HiveServer2 impersonation</code></p>
+
+<p>3、taskcontroller.cfg 文件中确保 <code class="prettyprint">min.user.id=0</code>。</p>
+
+<h3 id="修改配置文件">修改配置文件</h3>
+
+<p>修改 hive-site.xml，添加如下：</p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>hive.security.authorization.task.factory<span class="nt">&lt;/name&gt;</span>
+        <span class="nt">&lt;value&gt;</span>org.apache.sentry.binding.hive.SentryHiveAuthorizationTaskFactoryImpl<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>hive.server2.session.hook<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>org.apache.sentry.binding.hive.HiveAuthzBindingSessionHook<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>hive.sentry.conf.url<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>file:///etc/hive/conf/sentry-site.xml<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+</code></pre></div>
+<p>在 /etc/hive/conf/ 目录创建 sentry-site.xml：</p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="nt">&lt;configuration&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+   <span class="nt">&lt;name&gt;</span>sentry.service.client.server.rpc-port<span class="nt">&lt;/name&gt;</span>
+   <span class="nt">&lt;value&gt;</span>8038<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+   <span class="nt">&lt;name&gt;</span>sentry.service.client.server.rpc-address<span class="nt">&lt;/name&gt;</span>
+   <span class="nt">&lt;value&gt;</span>cdh1<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+   <span class="nt">&lt;name&gt;</span>sentry.service.client.server.rpc-connection-timeout<span class="nt">&lt;/name&gt;</span>
+   <span class="nt">&lt;value&gt;</span>200000<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>sentry.service.security.mode<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>kerberos<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+   <span class="nt">&lt;name&gt;</span>sentry.service.server.principal<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>sentry/_HOST@JAVACHEN.COM<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>sentry.service.server.keytab<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>/etc/sentry/conf/sentry.keytab<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>sentry.hive.provider<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>org.apache.sentry.provider.file.HadoopGroupResourceAuthorizationProvider<span class="nt">&lt;/value&gt;</span>
+  <span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>sentry.hive.provider.backend<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>org.apache.sentry.provider.db.SimpleDBProviderBackend<span class="nt">&lt;/value&gt;</span>
+  <span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>sentry.hive.server<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>server1<span class="nt">&lt;/value&gt;</span>
+  <span class="nt">&lt;/property&gt;</span>
+  <span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>sentry.metastore.service.users<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>hive<span class="nt">&lt;/value&gt;</span>
+  <span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>sentry.hive.testing.mode<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>false<span class="nt">&lt;/value&gt;</span>
+  <span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;/configuration&gt;</span>
+</code></pre></div>
+<h3 id="sentry-store-中创建角色和组">sentry-store 中创建角色和组</h3>
+
+<p>在 beeline 中通过 hive（注意，在 sentry 中 hive 为管理员用户）的 ticket 连接 hive-server2，创建 role、group 等等，执行下面语句：</p>
+<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">create</span> <span class="k">role</span> <span class="n">admin_role</span><span class="p">;</span>
+<span class="k">GRANT</span> <span class="k">ALL</span> <span class="k">ON</span> <span class="n">SERVER</span> <span class="n">server1</span> <span class="k">TO</span> <span class="k">ROLE</span> <span class="n">admin_role</span><span class="p">;</span>
+<span class="k">GRANT</span> <span class="k">ROLE</span> <span class="n">admin_role</span> <span class="k">TO</span> <span class="k">GROUP</span> <span class="k">admin</span><span class="p">;</span>
+<span class="k">GRANT</span> <span class="k">ROLE</span> <span class="n">admin_role</span> <span class="k">TO</span> <span class="k">GROUP</span> <span class="n">hive</span><span class="p">;</span>
+
+<span class="k">create</span> <span class="k">role</span> <span class="n">test_role</span><span class="p">;</span>
+<span class="k">GRANT</span> <span class="k">ALL</span> <span class="k">ON</span> <span class="k">DATABASE</span> <span class="n">filtered</span> <span class="k">TO</span> <span class="k">ROLE</span> <span class="n">test_role</span><span class="p">;</span>
+<span class="k">GRANT</span> <span class="k">ALL</span> <span class="k">ON</span> <span class="k">DATABASE</span> <span class="k">sensitive</span> <span class="k">TO</span> <span class="k">ROLE</span> <span class="n">test_role</span><span class="p">;</span>
+<span class="k">GRANT</span> <span class="k">ROLE</span> <span class="n">test_role</span> <span class="k">TO</span> <span class="k">GROUP</span> <span class="n">test</span><span class="p">;</span>
+</code></pre></div>
+<p>上面创建了两个角色，一个是 admin_role，具有管理员权限，可以读写所有数据库，并授权给 admin 和 hive 组（对应操作系统上的组）；一个是 test_role，只能读写 filtered 和 sensitive 数据库，并授权给 test 组</p>
+
+<h3 id="在-ldap-创建测试用户">在 ldap 创建测试用户</h3>
+
+<p>在 ldap 服务器上创建系统用户 yy_test，并使用 migrationtools 工具将该用户导入 ldap，最后设置 ldap 中该用户密码。</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># 创建 yy_test用户</span>
+useradd yy_test
+
+grep -E <span class="s2">&quot;yy_test&quot;</span> /etc/passwd  &gt;/opt/passwd.txt
+/usr/share/migrationtools/migrate_passwd.pl /opt/passwd.txt /opt/passwd.ldif
+ldapadd -x -D <span class="s2">&quot;uid=ldapadmin,ou=people,dc=lashou,dc=com&quot;</span> -w secret -f /opt/passwd.ldif
+
+<span class="c">#使用下面语句修改密码，填入上面生成的密码，输入两次：</span>
+
+ldappasswd -x -D <span class="s1">&#39;uid=ldapadmin,ou=people,dc=lashou,dc=com&#39;</span> -w secret <span class="s2">&quot;uid=yy_test,ou=people,dc=lashou,dc=com&quot;</span> -S
+</code></pre></div>
+<p>在每台 datanode 机器上创建 test 分组，并将 yy_test 用户加入到 test 分组：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">groupadd <span class="nb">test</span> <span class="p">;</span> useradd yy_test<span class="p">;</span> usermod -G <span class="nb">test</span>,yy_test yy_test
+</code></pre></div>
+<h3 id="测试">测试</h3>
+
+<p>通过 beeline 连接 hive-server2，进行测试：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># 切换到 test 用户进行测试</span>
+<span class="nv">$ </span>su <span class="nb">test</span>
+
+<span class="nv">$ </span>kinit -k -t test.keytab <span class="nb">test</span>/cdh1@JAVACHEN.COM
+
+<span class="nv">$ </span>beeline -u <span class="s2">&quot;jdbc:hive2://cdh1:10000/default;principal=test/cdh1@JAVACHEN.COM&quot;</span>
+</code></pre></div>
+<h2 id="1.4-impala-集成-sentry">1.4 Impala 集成 Sentry</h2>
+
+<h3 id="修改配置">修改配置</h3>
+
+<p>修改 /etc/default/impala 文件中的 <code class="prettyprint">IMPALA_SERVER_ARGS</code> 参数，添加：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">-server_name<span class="o">=</span>server1
+-sentry_config<span class="o">=</span>/etc/impala/conf/sentry-site.xml
+</code></pre></div>
+<p>在 <code class="prettyprint">IMPALA_CATALOG_ARGS</code> 中添加：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">-sentry_config<span class="o">=</span>/etc/impala/conf/sentry-site.xml
+</code></pre></div>
+<p>注意：server1 必须和 sentry-provider.ini 文件中的保持一致。</p>
+
+<p><code class="prettyprint">IMPALA_SERVER_ARGS</code> 参数最后如下：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">hostname</span><span class="o">=</span><span class="sb">`</span>hostname -f <span class="p">|</span>tr <span class="s2">&quot;[:upper:]&quot;</span> <span class="s2">&quot;[:lower:]&quot;</span><span class="sb">`</span>
+
+<span class="nv">IMPALA_SERVER_ARGS</span><span class="o">=</span><span class="s2">&quot; \</span>
+<span class="s2">    -log_dir=${IMPALA_LOG_DIR} \</span>
+<span class="s2">    -catalog_service_host=${IMPALA_CATALOG_SERVICE_HOST} \</span>
+<span class="s2">    -state_store_port=${IMPALA_STATE_STORE_PORT} \</span>
+<span class="s2">    -use_statestore \</span>
+<span class="s2">    -state_store_host=${IMPALA_STATE_STORE_HOST} \</span>
+<span class="s2">    -kerberos_reinit_interval=60 \</span>
+<span class="s2">    -principal=impala/${hostname}@JAVACHEN.COM \</span>
+<span class="s2">    -keytab_file=/etc/impala/conf/impala.keytab \</span>
+<span class="s2">    -enable_ldap_auth=true -ldap_uri=ldaps://cdh1 -ldap_baseDN=ou=people,dc=javachen,dc=com \</span>
+<span class="s2">    -server_name=server1 \</span>
+<span class="s2">    -sentry_config=/etc/impala/conf/sentry-site.xml \</span>
+<span class="s2">    -be_port=${IMPALA_BACKEND_PORT} -default_pool_max_requests=-1 -mem_limit=60%&quot;</span>
+</code></pre></div>
+<p>创建 /etc/impala/conf/sentry-site.xml 内容如下：</p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="nt">&lt;configuration&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+   <span class="nt">&lt;name&gt;</span>sentry.service.client.server.rpc-port<span class="nt">&lt;/name&gt;</span>
+   <span class="nt">&lt;value&gt;</span>8038<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+   <span class="nt">&lt;name&gt;</span>sentry.service.client.server.rpc-address<span class="nt">&lt;/name&gt;</span>
+   <span class="nt">&lt;value&gt;</span>cdh1<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+   <span class="nt">&lt;name&gt;</span>sentry.service.client.server.rpc-connection-timeout<span class="nt">&lt;/name&gt;</span>
+   <span class="nt">&lt;value&gt;</span>200000<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>sentry.service.security.mode<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>kerberos<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+   <span class="nt">&lt;name&gt;</span>sentry.service.server.principal<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>sentry/_HOST@JAVACHEN.COM<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>sentry.service.server.keytab<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>/etc/sentry/conf/sentry.keytab<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;/configuration&gt;</span>
+</code></pre></div>
+<h3 id="测试">测试</h3>
+
+<p>请参考下午基于文件存储方式中 impala 的测试。</p>
+
+<h1 id="2.-基于文件存储方式">2. 基于文件存储方式</h1>
+
+<h2 id="2.1-hive-集成-sentry">2.1 hive 集成 sentry</h2>
+
+<h3 id="修改配置文件">修改配置文件</h3>
+
+<p>在 hive 的 /etc/hive/conf 目录下创建 sentry-site.xml 文件，内容如下：</p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="nt">&lt;configuration&gt;</span>
+  <span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>hive.sentry.server<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>server1<span class="nt">&lt;/value&gt;</span>
+  <span class="nt">&lt;/property&gt;</span>
+  <span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>sentry.hive.provider.backend<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>org.apache.sentry.provider.file.SimpleFileProviderBackend<span class="nt">&lt;/value&gt;</span>
+  <span class="nt">&lt;/property&gt;</span>
+  <span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>hive.sentry.provider<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>org.apache.sentry.provider.file.HadoopGroupResourceAuthorizationProvider<span class="nt">&lt;/value&gt;</span>
+  <span class="nt">&lt;/property&gt;</span>
+  <span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>hive.sentry.provider.resource<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>/user/hive/sentry/sentry-provider.ini<span class="nt">&lt;/value&gt;</span>
+  <span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;/configuration&gt;</span>
+</code></pre></div>
+<p>创建 sentry-provider.ini 文件并将其上传到 hdfs 的 <code class="prettyprint">/user/hive/sentry/</code> 目录：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>cat /tmp/sentry-provider.ini
+<span class="o">[</span>databases<span class="o">]</span>
+<span class="c"># Defines the location of the per DB policy file for the customers DB/schema</span>
+<span class="c">#db1 = hdfs://cdh1:8020/user/hive/sentry/db1.ini</span>
+
+<span class="o">[</span>groups<span class="o">]</span>
+<span class="nv">admin</span> <span class="o">=</span> any_operation
+<span class="nv">hive</span> <span class="o">=</span> any_operation
+<span class="nb">test</span> <span class="o">=</span> select_filtered
+
+<span class="o">[</span>roles<span class="o">]</span>
+<span class="nv">any_operation</span> <span class="o">=</span> <span class="nv">server</span><span class="o">=</span>server1-&gt;db<span class="o">=</span>*-&gt;table<span class="o">=</span>*-&gt;action<span class="o">=</span>*
+<span class="nv">select_filtered</span> <span class="o">=</span> <span class="nv">server</span><span class="o">=</span>server1-&gt;db<span class="o">=</span>filtered-&gt;table<span class="o">=</span>*-&gt;action<span class="o">=</span>SELECT
+<span class="nv">select_us</span> <span class="o">=</span> <span class="nv">server</span><span class="o">=</span>server1-&gt;db<span class="o">=</span>filtered-&gt;table<span class="o">=</span>events_usonly-&gt;action<span class="o">=</span>SELECT
+
+<span class="o">[</span>users<span class="o">]</span>
+<span class="nb">test</span> <span class="o">=</span> <span class="nb">test</span>
+<span class="nv">hive</span><span class="o">=</span> hive
+
+<span class="nv">$ </span>hdfs dfs -rm -r /user/hive/sentry/sentry-provider.ini
+<span class="nv">$ </span>hdfs dfs -put /tmp/sentry-provider.ini /user/hive/sentry/
+<span class="nv">$ </span>hdfs dfs -chown hive:hive /user/hive/sentry/sentry-provider.ini
+<span class="nv">$ </span>hdfs dfs -chmod 640 /user/hive/sentry/sentry-provider.ini
+</code></pre></div>
+<p>关于 sentry-provider.ini 文件的语法说明，请参考官方文档。这里我指定了 Hive 组有全部权限，并指定 Hive 用户属于 Hive 分组，而其他两个分组只有部分权限。</p>
+
+<p>然后在 hive-site.xml 中添加如下配置：</p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>hive.security.authorization.task.factory<span class="nt">&lt;/name&gt;</span>
+        <span class="nt">&lt;value&gt;</span>org.apache.sentry.binding.hive.SentryHiveAuthorizationTaskFactoryImpl<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>hive.server2.session.hook<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>org.apache.sentry.binding.hive.HiveAuthzBindingSessionHook<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>hive.sentry.conf.url<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>file:///etc/hive/conf/sentry-site.xml<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+</code></pre></div>
+<p>将配置文件同步到其他节点，并重启 hive-server2 服务。</p>
+
+<h3 id="测试">测试</h3>
+
+<p>这里，我集群中 hive-server2 开启了 kerberos 认证，故通过 hive 用户来连接 hive-server2。</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>kinit -k -t /etc/hive/conf/hive.keytab hive/cdh1@JAVACHEN.COM
+
+<span class="nv">$ </span>beeline -u <span class="s2">&quot;jdbc:hive2://cdh1:10000/default;principal=hive/cdh1@JAVACHEN.COM&quot;</span>
+    scan <span class="nb">complete </span>in 10ms
+    Connecting to jdbc:hive2://cdh1:10000/default<span class="p">;</span><span class="nv">principal</span><span class="o">=</span>hive/cdh1@JAVACHEN.COM
+    Connected to: Apache Hive <span class="o">(</span>version 0.13.1-cdh5.2.0<span class="o">)</span>
+    Driver: Hive JDBC <span class="o">(</span>version 0.13.1-cdh5.2.0<span class="o">)</span>
+    Transaction isolation: TRANSACTION_REPEATABLE_READ
+    Beeline version 0.13.1-cdh5.2.0 by Apache Hive
+    5 rows selected <span class="o">(</span>0.339 seconds<span class="o">)</span>
+
+    0: jdbc:hive2://cdh1:10000/default&gt; show databases<span class="p">;</span>
+    +----------------+--+
+    <span class="p">|</span> database_name  <span class="p">|</span>
+    +----------------+--+
+    <span class="p">|</span> default        <span class="p">|</span>
+    <span class="p">|</span> filtered       <span class="p">|</span>
+    <span class="p">|</span> sensitive      <span class="p">|</span>
+    +----------------+--+
+    10 rows selected <span class="o">(</span>0.145 seconds<span class="o">)</span>
+
+    0: jdbc:hive2://cdh1:10000/default&gt; use filtered
+    No rows affected <span class="o">(</span>0.132 seconds<span class="o">)</span>
+
+    0: jdbc:hive2://cdh1:10000/default&gt; show tables<span class="p">;</span>
+    +----------------+--+
+    <span class="p">|</span>    tab_name    <span class="p">|</span>
+    +----------------+--+
+    <span class="p">|</span> events         <span class="p">|</span>
+    <span class="p">|</span> events_usonly  <span class="p">|</span>
+    +----------------+--+
+    2 rows selected <span class="o">(</span>0.158 seconds<span class="o">)</span>
+    0: jdbc:hive2://cdh1:10000/default&gt; use sensitive<span class="p">;</span>
+    No rows affected <span class="o">(</span>0.115 seconds<span class="o">)</span>
+
+    0: jdbc:hive2://cdh1:10000/default&gt; show tables<span class="p">;</span>
+    +-----------+--+
+    <span class="p">|</span> tab_name  <span class="p">|</span>
+    +-----------+--+
+    <span class="p">|</span> events    <span class="p">|</span>
+    +-----------+--+
+    1 row selected <span class="o">(</span>0.148 seconds<span class="o">)</span>
+</code></pre></div>
+<h2 id="2.3-impala-集成-sentry">2.3  impala 集成 sentry</h2>
+
+<h3 id="修改配置文件">修改配置文件</h3>
+
+<p>修改 /etc/default/impala 文件中的 <code class="prettyprint">IMPALA_SERVER_ARGS</code> 参数，添加：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">-server_name<span class="o">=</span>server1
+-authorization_policy_file<span class="o">=</span>/user/hive/sentry/sentry-provider.ini
+-authorization_policy_provider_class<span class="o">=</span>org.apache.sentry.provider.file.LocalGroupResourceAuthorizationProvider
+</code></pre></div>
+<p>注意：server1 必须和 sentry-provider.ini 文件中的保持一致。</p>
+
+<p><code class="prettyprint">IMPALA_SERVER_ARGS</code> 参数最后如下：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">hostname</span><span class="o">=</span><span class="sb">`</span>hostname -f <span class="p">|</span>tr <span class="s2">&quot;[:upper:]&quot;</span> <span class="s2">&quot;[:lower:]&quot;</span><span class="sb">`</span>
+
+<span class="nv">IMPALA_SERVER_ARGS</span><span class="o">=</span><span class="s2">&quot; \</span>
+<span class="s2">    -log_dir=${IMPALA_LOG_DIR} \</span>
+<span class="s2">    -catalog_service_host=${IMPALA_CATALOG_SERVICE_HOST} \</span>
+<span class="s2">    -state_store_port=${IMPALA_STATE_STORE_PORT} \</span>
+<span class="s2">    -use_statestore \</span>
+<span class="s2">    -state_store_host=${IMPALA_STATE_STORE_HOST} \</span>
+<span class="s2">    -be_port=${IMPALA_BACKEND_PORT} \</span>
+<span class="s2">    -server_name=server1 \</span>
+<span class="s2">    -authorization_policy_file=/user/hive/sentry/sentry-provider.ini \</span>
+<span class="s2">    -authorization_policy_provider_class=org.apache.sentry.provider.file.LocalGroupResourceAuthorizationProvider \</span>
+<span class="s2">    -enable_ldap_auth=true -ldap_uri=ldaps://cdh1 -ldap_baseDN=ou=people,dc=javachen,dc=com \</span>
+<span class="s2">    -kerberos_reinit_interval=60 \</span>
+<span class="s2">    -principal=impala/${hostname}@JAVACHEN.COM \</span>
+<span class="s2">    -keytab_file=/etc/impala/conf/impala.keytab \</span>
+<span class="s2">&quot;</span>
+</code></pre></div>
+<h3 id="测试">测试</h3>
+
+<p>重启 impala-server 服务，然后进行测试。因为我这里 impala-server 集成了 kerberos 和 ldap，现在通过 ldap 来进行测试。</p>
+
+<p>先通过 ldap 的 test 用户来测试：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">impala-shell -l -u <span class="nb">test</span>
+<span class="nb">    </span>Starting Impala Shell using LDAP-based authentication
+    LDAP password <span class="k">for </span><span class="nb">test</span>:
+    Connected to cdh1:21000
+    Server version: impalad version 2.0.0-cdh5 RELEASE <span class="o">(</span>build ecf30af0b4d6e56ea80297df2189367ada6b7da7<span class="o">)</span>
+    Welcome to the Impala shell. Press TAB twice to see a list of available commands.
+
+    Copyright <span class="o">(</span>c<span class="o">)</span> 2012 Cloudera, Inc. All rights reserved.
+
+    <span class="o">(</span>Shell build version: Impala Shell v2.0.0-cdh5 <span class="o">(</span>ecf30af<span class="o">)</span> built on Sat Oct 11 13:56:06 PDT 2014<span class="o">)</span>
+
+<span class="o">[</span>cdh1:21000<span class="o">]</span> &gt; show databases<span class="p">;</span>
+    Query: show databases
+    +---------+
+    <span class="p">|</span> name    <span class="p">|</span>
+    +---------+
+    <span class="p">|</span> default <span class="p">|</span>
+    +---------+
+    Fetched 1 row<span class="o">(</span>s<span class="o">)</span> in 0.11s
+
+<span class="o">[</span>cdh1:21000<span class="o">]</span> &gt; show tables<span class="p">;</span>
+
+    Query: show tables
+    ERROR: AuthorizationException: User <span class="s1">&#39;test&#39;</span> does not have privileges to access: default.*
+
+<span class="o">[</span>cdh1:21000<span class="o">]</span> &gt;
+</code></pre></div>
+<p>可以看到 test 用户没有权限查看和数据库，这是因为 sentry-provider.ini 文件中并没有给 test 用户分配任何权限。</p>
+
+<p>下面使用 hive 用户来测试。使用下面命令在 ldap 中创建 hive 用户和组并给 hive 用户设置密码。</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>grep hive /etc/passwd  &gt;/opt/passwd.txt
+<span class="nv">$ </span>/usr/share/migrationtools/migrate_passwd.pl /opt/passwd.txt /opt/passwd.ldif
+
+<span class="nv">$ </span>ldapadd -x -D <span class="s2">&quot;uid=ldapadmin,ou=people,dc=javachen,dc=com&quot;</span> -w secret -f /opt/passwd.ldif
+
+<span class="nv">$ </span>grep hive /etc/group  &gt;/opt/group.txt
+<span class="nv">$ </span>/usr/share/migrationtools/migrate_group.pl /opt/group.txt /opt/group.ldif
+
+<span class="nv">$ </span>ldapadd -x -D <span class="s2">&quot;uid=ldapadmin,ou=people,dc=javachen,dc=com&quot;</span> -w secret -f /opt/group.ldif
+
+<span class="c"># 修改 ldap 中 hive 用户密码</span>
+<span class="nv">$ </span>ldappasswd -x -D <span class="s1">&#39;uid=ldapadmin,ou=people,dc=javachen,dc=com&#39;</span> -w secret <span class="s2">&quot;uid=hive,ou=people,dc=javachen,dc=com&quot;</span> -S
+</code></pre></div>
+<p>然后，使用 hive 用户测试：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ impala-shell -l -u hive
+    Starting Impala Shell using LDAP-based authentication
+    LDAP password for hive:
+    Connected to cdh1:21000
+    Server version: impalad version 2.0.0-cdh5 RELEASE (build ecf30af0b4d6e56ea80297df2189367ada6b7da7)
+    Welcome to the Impala shell. Press TAB twice to see a list of available commands.
+
+    Copyright (c) 2012 Cloudera, Inc. All rights reserved.
+
+    (Shell build version: Impala Shell v2.0.0-cdh5 (ecf30af) built on Sat Oct 11 13:56:06 PDT 2014)
+
+[cdh1:21000] &gt; show databases;
+    Query: show databases
+    +------------------+
+    | name             |
+    +------------------+
+    | _impala_builtins |
+    | default          |
+    | filtered         |
+    | sensitive        |
+    +------------------+
+    Fetched 11 row(s) in 0.11s
+
+[cdh1:21000] &gt; use sensitive;
+    Query: use sensitive
+
+[cdh1:21000] &gt; show tables;
+    Query: show tables
+    +--------+
+    | name   |
+    +--------+
+    | events |
+    +--------+
+    Fetched 1 row(s) in 0.11s
+
+[cdh1:21000] &gt; select * from events;
+    Query: select * from events
+    +--------------+---------+---------+------------+
+    | ip           | country | client  | action     |
+    +--------------+---------+---------+------------+
+    | 10.1.2.3     | US      | android | createNote |
+    | 10.200.88.99 | FR      | windows | updateNote |
+    | 10.1.2.3     | US      | android | updateNote |
+    | 10.200.88.77 | FR      | ios     | createNote |
+    | 10.1.4.5     | US      | windows | updateTag  |
+    +--------------+---------+---------+------------+
+    Fetched 5 row(s) in 0.76s
+</code></pre></div>
+<p>同样，你还可以使用其他用户来测试。</p>
+
+<p>也可以使用 beeline 来连接 impala-server 来进行测试：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>beeline -u <span class="s2">&quot;jdbc:hive2://cdh1:21050/default;&quot;</span> -n <span class="nb">test</span> -p <span class="nb">test</span>
+<span class="nb">  </span>scan <span class="nb">complete </span>in 2ms
+  Connecting to jdbc:hive2://cdh1:21050/default<span class="p">;</span>
+  Connected to: Impala <span class="o">(</span>version 2.0.0-cdh5<span class="o">)</span>
+  Driver: Hive JDBC <span class="o">(</span>version 0.13.1-cdh5.2.0<span class="o">)</span>
+  Transaction isolation: TRANSACTION_REPEATABLE_READ
+  Beeline version 0.13.1-cdh5.2.0 by Apache Hive
+  0: jdbc:hive2://cdh1:21050/default&gt;
+</code></pre></div>
+<h1 id="3.-参考文章">3. 参考文章</h1>
+
+<ul>
+<li><a href="http://blog.evernote.com/tech/2014/06/09/securing-impala-for-analysts/">Securing Impala for analysts</a><br></li>
+<li><a href="http://www.cloudera.com/content/cloudera/en/documentation/cloudera-manager/v4-8-0/Cloudera-Manager-Managing-Clusters/cmmc_sentry_config.html">Setting Up Hive Authorization with Sentry</a></li>
+<li><a href="https://github.com/cloudera/sentry/tree/cdh5-1.4.0_5.2.0/conf">Sentry源码中的配置例子</a></li>
+</ul>
+</div>
+
+
+      <div id="pay" style="text-align:center;">
+        ----EOF-----
+        <br>
+        <section>
+  <h4>Sponsor</h4>
+	<img src="http://javachen-rs.qiniudn.com/images/alipay.png" width="150/">
+  <p class="small">觉得此博客对你有帮助，支付宝扫码赞助吧</p>
+</section>
+
+      </div>
+
+      <p class="meta">
+      	
+            Categories:
+      	    
+          	<a class="btn btn-default btn-xs" href="/categories.html#hadoop">hadoop</a>
+          
+      	
+
+      	
+            Tags:
+      	    
+          	<a class="btn btn-default btn-xs" href="/tags.html#hadoop">hadoop</a>
+          
+          	<a class="btn btn-default btn-xs" href="/tags.html#sentry">sentry</a>
+          
+          	<a class="btn btn-default btn-xs" href="/tags.html#cdh">cdh</a>
+          
+          	<a class="btn btn-default btn-xs" href="/tags.html#impala">impala</a>
+          
+      	
+      </p>
+	</article>
+
+	<ul class="pager">
+	  
+	  <li class="previous"><a class="btn btn-xs" href="/2014/11/12/config-ldap-with-kerberos-in-cdh-hadoop" title="Hadoop配置LDAP集成Kerberos">&larr; Prev</a></li>
+	  
+	  
+	  <li class="next"><a class="btn btn-xs" href="/2014/11/18/config-kerberos-in-cdh-zookeeper" title="Zookeeper配置Kerberos认证">Next &rarr;</a></li>
+	  
+	</ul>
+
+  
+<div id="comments">
+  <div class="ds-thread" data-thread-key="/2014/11/14/config-impala-and-hive-with-sentry"  data-title="Impala和Hive集成Sentry - 小天的个人博客"></div>
+</div>
+
+
+
+</div>
+
+        </div>
+      </div>
+
+      <footer class="footer text-center">
+  <p>&copy; 2009-2015 <a href="/" target="_blank" title="86后，工作在深圳；Java程序员、Hadoop工程师；主要关注Java、Hadoop、Kettle、关注大数据处理技术。">小天</a>. With Help from <a href="//jekyllrb.com/" target="_blank" title="Transform your plain text into static websites and blogs.">Jekyll</a> and <a href="//getbootstrap.com/" target="_blank" title="Bootstrap is the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web.">Bootstrap</a>, theme from <a href="http://havee.me/" target="_blank" title="http://havee.me/">Havee</a>.
+
+  <span style="float:right;"><a href="/about.html">About</a></span>
+
+	
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+  </p>
+  <div id="toTop" style="display: block;">
+    <a href="#">▲</a><a href="#footer">▼</a>
+  </div>
+</footer>
+
+    </div>
+
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/core.js"></script>
+
+    
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+    
+    <!-- duoshuo Begin -->
+    <script type="text/javascript">
+      var duoshuoQuery = {short_name:"xiaotian120"};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] ||
+        document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+    </script>
+    <!-- duoshuo End -->
+    
+  </body>
+</html>

@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>CDH 5.2.0 的改变 - 小天的个人博客</title>
+  <meta name="description" content="最近 CDH 5.2.0 发布了，想看看其做了哪些改进、带来哪些不兼容以及是否有必要升级现有的 hadoop 集群。通过翻译 cloudera 官网相关文档，最后整理出了本篇博客。">
+  <meta name="keywords" content="hadoop">
+  <meta name="author" content="小天">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="360-site-verification" content="9b7a87a1d52051c96644f0a9b8b79898" />
+  <meta name="sogou_site_verification" content="ofwXWFdthV"/>
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" >
+
+  <link rel="canonical" href="http://blog.xiaotian.com/2014/10/20/cdh5.2-release">
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css" media="all">
+  <link rel="stylesheet" href="/static/css/style.css" media="all">
+  <link rel="stylesheet" href="/static/css/pygments.css" media="all">
+  <link rel="stylesheet" href="/static/css/font-awesome.css" media="all">
+
+  <!-- atom & rss feed -->
+  <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="小天的个人博客 RSS Feed">
+  <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="小天的个人博客 ATOM Feed">
+</head>
+
+
+  <body>
+    <div class="container">
+      <!--[if lte IE 9]>
+<div class="alert alert-warning">
+  <p>Your Internet Explorer is not supported. Please upgrade your Internet Explorer to version 9+, or use latest <a href="http://www.google.com/chrome/" target="_blank" class="alert-link">Google chrome</a>、<a href="http://www.mozilla.org/firefox/" target="_blank" class="alert-link">Mozilla Firefox</a>.</p>
+  <p>If you are using IE 9 or later, make sure you <a href="http://windows.microsoft.com/en-us/internet-explorer/use-compatibility-view#ie=ie-8" target="_blank" class="alert-link">turn off "Compatibility view"</a>.</p>
+</div>
+<![endif]-->
+<header class="header">
+  <div class="title"><a title="小天的个人博客" href="/">小天的个人博客</a></div>
+  <ul class="nav navbar-nav navbar-right visible-lg visible-md">
+    <li>
+    <form id="search-form" class="form-group has-success visible-lg" role="form">
+      <input type="text" class="form-control input-sm" placeholder="Search" id="query" style="width: 160px;">
+    </form>
+    </li>
+    <li><a href="/archive.html" title="Archive"><span class='fa fa-archive fa-2x'></span></a></li>
+    <li><a href="/categories.html" title="Categories"><span class='fa fa-navicon fa-2x'></span></a></li>
+    <li><a href="/tags.html" title="Tags"><span class='fa fa-tags fa-2x'></span></a></li>
+    <li><a href="/about.html" title="About"><span class='fa fa-user fa-2x'></span></a></li>
+    
+    <li><a href="https://github.com/wuskyfantasy" target="_blank" title="Github"><span class='fa fa-github fa-2x'></span></a></li>
+    
+    
+    
+    
+    
+    <li><a href="http://weibo.com/xiaotian120" target="_blank" title="Weibo"><span class="fa fa-weibo fa-2x"></span></a></li>
+    
+
+    <li><a href="/rss.xml" target="_blank" title="RSS"><span class='fa fa-rss fa-2x'></span></a></li>
+  </ul>
+</header>
+
+
+      <div class="wrapper">
+        <div class="row">
+          <div id="search-loader" style="display:none;text-align:center">
+            <img src="http://javachen-rs.qiniudn.com/images/loading.gif">
+          </div>
+          <div class="col-md-12">
+  <article class="news-item">
+
+      <h2  class="news-item"> CDH 5.2.0 的改变  
+        <time class="small">2014.10.20</time>
+      </h2>
+
+      <div><p>最近 CDH 5.2.0 发布了，想看看其做了哪些改进、带来哪些不兼容以及是否有必要升级现有的 hadoop 集群。</p>
+
+<h1 id="1.-cdh-5.2.0-新特性">1. CDH 5.2.0 新特性</h1>
+
+<h2 id="1.1.-apache-avro">1.1. Apache Avro</h2>
+
+<p>Avro 版本使用1.7.6，重要的一些改变：</p>
+
+<ul>
+<li><a href="https://issues.apache.org/jira/browse/AVRO-1398">AVRO-1398</a>。增加同步间隔，从16k 调整到64k，该参数可以在 mapreduce 的配置参数中通过 <code class="prettyprint">avro.mapred.sync.interval</code> 参数来设置</li>
+<li><a href="https://issues.apache.org/jira/browse/AVRO-1355">AVRO-1355</a>。schema 中不能包括相同的 field 名称。</li>
+</ul>
+
+<h2 id="1.2.-apache-hadoop">1.2. Apache Hadoop</h2>
+
+<h3 id="hdfs">HDFS</h3>
+
+<p>提供新的功能：</p>
+
+<ul>
+<li>HDFS Data at Rest Encryption。hdfs 数据的加密，该功能在5.2.0中还有一些限制，尚不能用于生产环境。</li>
+<li>每一个 HDFS 文件上添加了一个新的属性：XAttrs，详见：<a href="https://issues.apache.org/jira/browse/HDFS-2006">https://issues.apache.org/jira/browse/HDFS-2006</a></li>
+<li>使用 HTTP proxy server时的Authentication改进</li>
+<li>增加了一个新的 Metrics sink，允许直接将监控数据写到 Graphite</li>
+<li>Specification for Hadoop Compatible Filesystem effort</li>
+<li>增加 OfflineImageViewer 通过 WebHDFS API 浏览 fsimage</li>
+<li>对 NFS 支持的改进</li>
+<li>hdfs daemons 的 web ui 改进</li>
+</ul>
+
+<h3 id="mapreduce">MapReduce</h3>
+
+<p>CDH 5.2 提供了一个 mapper 端 shuffle 的优化实现，使用该实现需要修改原来的实现类，默认未开启该实现。</p>
+
+<p>可以修改 ­<code class="prettyprint">mapreduce.job.map.output.collector.class</code> 参数为 <code class="prettyprint">org.apache.hadoop.mapred.nativetask.NativeMapOutputCollectorDelegator</code>来开启该特性。</p>
+
+<p>使用了自定义的可写的类型或者比较器时，无法使用该特性。</p>
+
+<h3 id="yarn">YARN</h3>
+
+<ul>
+<li><p>Fair Scheduler 新特性：</p>
+
+<ul>
+<li>允许为每个队列设置 <code class="prettyprint">fairsharePreemptionThreshold</code> 属性，该值在 fair-scheduler.xml 中设置，默认值为0.5</li>
+<li>允许为每个队列设置 <code class="prettyprint">fairsharePreemptionTimeout</code> 属性，该值在 fair-scheduler.xml 中设置</li>
+<li>在 web ui 中可以显示 Steady Fair Share</li>
+</ul></li>
+<li><p>Fair Scheduler 改进：</p>
+
+<ul>
+<li>Fair Scheduler uses Instantaneous Fair Share (fairshare that considers only active queues) for scheduling decisions to improve the time to achieve steady state (fairshare).</li>
+<li>maxAMShare 默认值设为0.5，意思是只有一半的集群资源可以被  Application Master 使用。该参数可以在 fair-scheduler.xml 中设置。</li>
+</ul></li>
+<li><p>YARN 的 rest api 支持提交和杀掉 application 。</p></li>
+<li><p>YARN 的 timeline store 和 Kerberos 集成</p></li>
+</ul>
+
+<h2 id="1.3-apache-crunch">1.3 Apache Crunch</h2>
+
+<p><a href="http://crunch.apache.org/scrunch.html">Scrunch</a> 改进：</p>
+
+<ul>
+<li>新的 join API</li>
+<li>新的 aggregation API，支持  <a href="https://github.com/twitter/algebird">Algebird</a>-based aggregation</li>
+<li>增加新的模块 crunch-hive，用于使用 Crunch 读写 ORC 文件。</li>
+</ul>
+
+<h2 id="1.4-apache-flume">1.4 Apache Flume</h2>
+
+<ul>
+<li>集成 <a href="http://www.cloudera.com/content/cloudera/en/documentation/cloudera-kafka/latest/PDF/cloudera-kafka.pdf">Kafka</a>，添加 KafkaSource 和 KafkaSink。</li>
+<li>Kite Sink 可以写数据到 hive 和 hbase。</li>
+<li>Flume agent 可以通过 zookeeper 配置（试验中）。</li>
+<li>嵌入式的 agent 支持拦截器。</li>
+<li>syslog source 支持配置那个字段可以保留。</li>
+<li>File Channel replay 速度变快</li>
+<li>添加新的正则表达式查询替换拦截器</li>
+<li>Backup checkpoint 可以可选的被压缩。</li>
+</ul>
+
+<h2 id="1.5-hue">1.5 Hue</h2>
+
+<ul>
+<li>添加新的应用修改数据和表上的 Sentry 的角色和权限</li>
+<li>arch App</li>
+<li>添加 Heatmap, Tree, Leaflet 组件</li>
+<li>Micro-analysis of fields</li>
+<li>Exclusion facets</li>
+<li>Oozie Dashboard: bulk actions, faster display</li>
+<li>File Browser: drag-and-drop upload, history, ACLs edition</li>
+<li>Hive and Impala: LDAP pass-through, query expiration, SSL (Hive), new graphs</li>
+<li>Job Browser: YARN kill application button</li>
+</ul>
+
+<h2 id="1.6-apache-hbase">1.6 Apache HBase</h2>
+
+<p>HBase 版本升级到 0.98.6</p>
+
+<h2 id="1.7-apache-hive">1.7 Apache Hive</h2>
+
+<ul>
+<li>hive 版本升级到 0.13，增加如下特性：
+
+<ul>
+<li>where 语句支持子查询</li>
+<li>Common table expressions</li>
+<li>Parquet 支持 timestamp</li>
+<li>HiveServer2 可以配置 hiverc 文件，当连接的时候，自动执行该文件内容</li>
+<li>Permanent UDFs</li>
+<li>HiveServer2 添加 session 和操作超时</li>
+<li>Beeline 接受一个 <code class="prettyprint">-i</code> 参数执行初始化的 sql 文件</li>
+<li>新的 join 语法(implicit joins)</li>
+</ul></li>
+<li>建表语句支持 AVRO 存储格式</li>
+<li>Hive 支持额外的数据类型：
+
+<ul>
+<li>hive 可以读 hive 和 impala 创建的 char 和 varchar 数据类型</li>
+<li>Impala 可以读 hive 和 impala 创建的 char 和 varchar 数据类型</li>
+</ul></li>
+<li>DESCRIBE DATABASE  命令添加两个新属性：owner_name 和 owner_type。</li>
+</ul>
+
+<h2 id="1.7-impala">1.7 Impala</h2>
+
+<p>impala 版本升级到 2.0，改进包括：</p>
+
+<ul>
+<li>添加 <a href="http://www.cloudera.com/content/cloudera/en/documentation/core/latest/topics/impala_scalability.html#spill_to_disk_unique_1">spill to disk</a> 支持，当内存不够时自动转换到磁盘上进行处理。</li>
+<li>子查询改进：
+
+<ul>
+<li><code class="prettyprint">WHERE</code> 语句中支持子查询，可以用于 <code class="prettyprint">in</code> 查询</li>
+<li>支持 <code class="prettyprint">EXISTS</code> 和  <code class="prettyprint">NOT EXISTS</code> 操作</li>
+<li>子查询中可以使用 <code class="prettyprint">IN</code> 和 <code class="prettyprint">NOT IN</code></li>
+<li>where 语句可以使用如下语句： <code class="prettyprint">WHERE column = (SELECT MAX(some_other_column FROM table)</code> 或者 <code class="prettyprint">WHERE column IN (SELECT some_other_column FROM table WHERE conditions)</code></li>
+<li>Correlated subqueries let you cross-reference values from the outer query block and the subquery.</li>
+<li>Scalar subqueries let you substitute the result of single-value aggregate functions such as MAX(), MIN(), COUNT(), or AVG(), where you would normally use a numeric value in a WHERE clause.</li>
+</ul></li>
+<li>添加几个聚合函数： <code class="prettyprint">RANK()</code>, <code class="prettyprint">LAG()</code>, <code class="prettyprint">LEAD(</code>), <code class="prettyprint">FIRST_VALUE()</code></li>
+<li>添加新的数据类型：
+
+<ul>
+<li>VARCHAR </li>
+<li>char</li>
+</ul></li>
+<li>Security方面的改进：
+
+<ul>
+<li><a href="http://www.cloudera.com/content/cloudera/en/documentation/core/latest/topics/impala_mixed_security.html#mixed_security">Using Multiple Authentication Methods with Impala</a></li>
+<li>GRANT</li>
+<li>REVOKE</li>
+<li>CREATE ROLE </li>
+<li>DROP ROLE</li>
+<li>SHOW ROLES</li>
+<li>--disk_spill_encryption</li>
+</ul></li>
+<li>Impala 可以读取 gzip, bzip, 或 Snappy 的压缩数据</li>
+<li>Query hints can now use comment notation, /* +hint_name */ or -- +hint_name，更详细说明见：<a href="http://www.cloudera.com/content/cloudera/en/documentation/core/latest/topics/impala_hints.html#hints">Hints</a></li>
+<li><code class="prettyprint">QUERY_TIMEOUT_S</code> 用于设置查询超时时间。</li>
+<li>添加 <code class="prettyprint">VAR_SAMP()</code> 和 <code class="prettyprint">VAR_POP()</code>，分别为 <code class="prettyprint">VARIANCE_SAMP()</code> 和 <code class="prettyprint">VARIANCE_POP()</code> 别名</li>
+<li>添加新的日期和时间类型函数：DATE_PART()</li>
+<li><a href="http://www.cloudera.com/content/cloudera/en/documentation/core/latest/topics/impala_appx_count_distinct.html#appx_count_distinct">APPX_COUNT_DISTINCT</a>，如果设置该参数，impala 会用 <code class="prettyprint">NDV()</code> 函数代替 <code class="prettyprint">COUNT(DISTINCT)</code>，加快查询速度并支持多个 <code class="prettyprint">COUNT(DISTINCT)</code> 操作</li>
+<li>添加 <code class="prettyprint">DECODE()</code> 函数，是 <code class="prettyprint">CASE()</code> 函数的一种简写方式，详细参考 <a href="http://www.cloudera.com/content/cloudera/en/documentation/core/latest/topics/impala_conditional_functions.html#conditional_functions">Impala Conditional Functions</a></li>
+<li>STDDEV(), STDDEV_POP(), STDDEV_SAMP(), VARIANCE(), VARIANCE_POP(), VARIANCE_SAMP(), NDV() 返回 double 类型</li>
+<li>Parquet 块大小默认值由 1G 改为256M，也可以通过 <code class="prettyprint">PARQUET_FILE_SIZE</code> 参数设置</li>
+<li>支持 Anti-joins，可以使用 <code class="prettyprint">LEFT ANTI JOIN</code> 和 <code class="prettyprint">RIGHT ANTI JOIN</code> 语句</li>
+<li>impala-shell 中可以执行 set 语句，可以设置 <code class="prettyprint">PARQUET_FILE_SIZE</code>、<code class="prettyprint">MEM_LIMIT</code>和 <code class="prettyprint">SYNC_DDL</code> 等参数，详细说明见：<a href="http://www.cloudera.com/content/cloudera/en/documentation/core/latest/topics/impala_set.html#set">SET Statement</a></li>
+<li>impala-shell 可以读取 <code class="prettyprint">$HOME/.impalarc</code> 中的配置，详细说明见：<a href="http://www.cloudera.com/content/cloudera/en/documentation/core/latest/topics/impala_shell_options.html#shell_options">impala-shell Configuration Options</a></li>
+</ul>
+
+<h2 id="1.8-kite">1.8 Kite</h2>
+
+<p><a href="http://kitesdk.org/docs/current/guide/">Kite</a> is an open source set of libraries, references, tutorials, and code samples for building data-oriented systems and applications.</p>
+
+<h2 id="1.9-apache-parquet-(incubating)">1.9 Apache Parquet (incubating)</h2>
+
+<p>版本更新： 5.2 Parquet is rebased on Parquet 1.5 and Parquet-format 2.1.0.</p>
+
+<h2 id="1.10-apache-spark">1.10 Apache Spark</h2>
+
+<p>Apache Spark/Streaming 版本使用 1.1</p>
+
+<ul>
+<li>稳定性和性能改进</li>
+<li>新的 sort-based shuffle 实现，默认未开启。</li>
+<li>Spark UI 更好的监控性能改进</li>
+<li>PySpark 支持 Hadoop InputFormats</li>
+<li>改进 Yarn 的支持，并修复一些 bug</li>
+</ul>
+
+<h2 id="1.11-apache-sqoop">1.11 Apache Sqoop</h2>
+
+<p>CDH 5.2 Sqoop 1 is rebased on Sqoop 1.4.5 </p>
+
+<ul>
+<li>Mainframe connector added.</li>
+<li>Parquet support added.</li>
+</ul>
+
+<h1 id="2.0-不兼容改变">2.0 不兼容改变</h1>
+
+<h2 id="2.1-hdfs">2.1 HDFS</h2>
+
+<ul>
+<li>当没有快照目录时，getSnapshottableDirListing() 方法返回 null</li>
+<li>NameNode <code class="prettyprint">-finalize</code> 启动参数被删除，为了完成集群的升级，应该使用 <code class="prettyprint">hdfs dfsadmin -finalizeUpgrade</code> 命令</li>
+<li>libhdfs 函数返回正确的错误码</li>
+<li>HDFS balancer 命令运行错误时候返回0，运行成功返回1</li>
+<li>Disable symlinks temporarily</li>
+<li>Files named <code class="prettyprint">.snapshot</code> or <code class="prettyprint">.reserved</code> must not exist within HDFS.</li>
+</ul>
+
+<p><em>Change in High-Availability Support</em>：</p>
+
+<p>CDH5 中唯一的 HA 实现是基于 Quorum-based storage，使用 NFS 的共享存储不再支持。</p>
+
+<h2 id="2.2-mapreduce">2.2 MapReduce</h2>
+
+<ul>
+<li>CATALINA_BASE 变量不再用于决定一个组件是否配置为 YARN 或者 MRv1</li>
+<li>YARN Fair Scheduler ACL change. Root queue defaults to everybody, and other queues default to nobody.</li>
+<li>YARN 高可用配置参数修改了 key 名称</li>
+<li><code class="prettyprint">YARN_HOME</code> 改为 <code class="prettyprint">HADOOP_YARN_HOME</code></li>
+<li>yarn-site.xml 中的以下参数改名：
+
+<ul>
+<li><code class="prettyprint">mapreduce.shuffle</code> 改为 <code class="prettyprint">mapreduce_shuffle</code></li>
+<li><code class="prettyprint">yarn.nodemanager.aux-services.mapreduce.shuffle.class</code> 改为 <code class="prettyprint">yarn.nodemanager.aux-services.mapreduce_shuffle.class</code></li>
+<li><code class="prettyprint">yarn.resourcemanager.resourcemanager.connect.max.wait.secs</code> 改为 <code class="prettyprint">yarn.resourcemanager.connect.max-wait.secs</code></li>
+<li><code class="prettyprint">yarn.resourcemanager.resourcemanager.connect.retry_interval.secs</code> 改名为 <code class="prettyprint">yarn.resourcemanager.connect.retry-interval.secs</code></li>
+<li><code class="prettyprint">yarn.resourcemanager.am.max-retries</code> 改名为 <code class="prettyprint">yarn.resourcemanager.am.max-attempts</code></li>
+</ul></li>
+</ul>
+
+<h2 id="2.3-hbase">2.3 HBase</h2>
+
+<p>HBase 版本变化太大，这里不做说明。</p>
+
+<h2 id="2.4-hive">2.4 Hive</h2>
+
+<p>CDH 5 提供一个新的离线命令用于升级元数据：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">schemaTool -d &lt;dbType&gt; -upgradeSchema
+</code></pre></div>
+<p>CDH 4.x 和 CDH 5 中不兼容的地方：</p>
+
+<ul>
+<li>CDH 4 JDBC 客户端和 CDH5 HiveServer2 不兼容</li>
+<li>连接 HiveServer2 需要 CDH5 的 jar 包</li>
+<li>因为权限和并发问题，hive 命令行和 hiveserver1 将删除不再使用，建议使用 HiveServer2 和 Beeline</li>
+<li>CDH 5 Hue 不能用于 CDH 4 的HiveServer2</li>
+<li>删除 npath 函数</li>
+<li>Cloudera recommends that custom ObjectInspectors created for use with custom SerDes have a no-argument constructor in addition to their normal constructors, for serialization purposes. See HIVE-5380 for more details.</li>
+<li>The SerDe interface has been changed which requires the custom SerDe modules to be reworked.</li>
+<li>The decimal data type format has changed as of CDH 5 Beta 2 and is not compatible with CDH 4.</li>
+</ul>
+
+<p>CDH 5 和 CDH 5.2.x 中不兼容的地方：</p>
+
+<ul>
+<li>The CDH 5.2 Hive JDBC driver is not wire-compatible with the CDH 5.1</li>
+</ul>
+
+<h2 id="2.4-apache-spark">2.4 Apache Spark</h2>
+
+<h1 id="3.-性能改进">3. 性能改进</h1>
+
+<p>1、Disabling Transparent Hugepage Compaction</p>
+
+<p>查看是否开启</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">cat /sys/kernel/mm/redhat_transparent_hugepage/defrag
+</code></pre></div>
+<p>关闭该特性，并将其加入到 /etc/rc.local</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">echo never &gt; /sys/kernel/mm/redhat_transparent_hugepage/defrag
+</code></pre></div>
+<p>2、设置 swap 交换</p>
+
+<p>查看是否开启：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">cat /proc/sys/vm/swappiness
+</code></pre></div>
+<p>On most systems, it is set to 60 by default. This is not suitable for Hadoop clusters nodes, because it can cause processes to get swapped out even when there is free memory available. This can affect stability and performance, and may cause problems such as lengthy garbage collection pauses for important system daemons.</p>
+
+<p>建议修改为0：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">sysctl -w vm.swappiness=0 
+</code></pre></div>
+<p>3、Improving Performance in Shuffle Handler and IFile Reader</p>
+
+<p>Shuffle Handler，开启预先读取数据：</p>
+
+<ul>
+<li>对于 YARN，设置 <code class="prettyprint">mapreduce.shuffle.readahead.bytes</code>，默认值为4MB</li>
+<li>对于 MRv1，设置 <code class="prettyprint">mapred.tasktracker.shuffle.readahead.bytes</code>，默认值为4MB</li>
+</ul>
+
+<p>IFile Reader，开启预先读取IFile文件可以改进合并文件性能，开启该特性，请设置 <code class="prettyprint">mapreduce.ifile.readahead property</code> 为 true，默认值为 true，更进一步，可以设置 <code class="prettyprint">mapreduce.ifile.readahead.bytes</code> 参数值，该值默认为4MB</p>
+
+<p>4、MapReduce配置最佳实践</p>
+
+<p>设置 <code class="prettyprint">mapreduce.tasktracker.outofband.heartbeat</code> 为 true，该值默认为 false</p>
+
+<p>在一个小集群中，设置 JobTracker heartbeat 间隔到一个更小的值，参数为 <code class="prettyprint">apreduce.jobtracker.heartbeat.interval.min</code> ，默认值为10</p>
+
+<p>5、立即启动 MapReduce 的 JVM</p>
+
+<p>对于小任务，设置 <code class="prettyprint">mapred.reduce.slowstart.completed.maps</code> 值为0，对于比较大的任务，最大设置为 50%</p>
+
+<p>6、调整 MRv1 日志级别</p>
+
+<ul>
+<li><code class="prettyprint">mapreduce.map.log.level</code></li>
+<li><code class="prettyprint">mapreduce.reduce.log.level</code></li>
+</ul>
+
+<h1 id="4.-存在的问题">4. 存在的问题</h1>
+
+<h2 id="4.1-apache-flume">4.1 Apache Flume</h2>
+
+<ul>
+<li>Flume does not provide a native sink that stores the data that can be directly consumed by Hive.</li>
+<li>Fast Replay does not work with encrypted File Channel</li>
+</ul>
+
+<h2 id="4.2-apache-hadoop">4.2 Apache Hadoop</h2>
+
+<ul>
+<li>DistCp between unencrypted and encrypted locations fails</li>
+<li>NameNode - KMS communication fails after long periods of inactivity</li>
+<li>Spark fails when the KMS is configured to use SSL</li>
+<li>Files inside encryption zones cannot be read in Hue</li>
+<li>Cannot move encrypted files to trash</li>
+<li>No error when changing permission to 777 on .snapshot directory</li>
+<li>Snapshots do not retain directories&#39; quotas settings</li>
+<li>NameNode cannot use wildcard address in a secure cluster</li>
+<li>Permissions for dfs.namenode.name.dir incorrectly set.</li>
+<li>hadoop fsck -move does not work in a cluster with host-based Kerberos</li>
+<li>HttpFS cannot get delegation token without prior authenticated request.</li>
+<li>DistCp does not work between a secure cluster and an insecure cluster in some cases</li>
+<li>Using DistCp with Hftp on a secure cluster using SPNEGO requires that the dfs.https.port property be configured</li>
+<li>Offline Image Viewer (OIV) tool regression: missing Delimited outputs.</li>
+<li>Snapshot operations are not supported by ViewFileSystem</li>
+</ul>
+
+<h2 id="4.3-mapreduce">4.3 MapReduce</h2>
+
+<ul>
+<li>Starting an unmanaged ApplicationMaster may fail</li>
+<li>No JobTracker becomes active if both JobTrackers are migrated to other hosts</li>
+<li>Hadoop Pipes may not be usable in an MRv1 Hadoop installation done through tarballs</li>
+<li>Task-completed percentage may be reported as slightly under 100% in the web UI, even when all of a job&#39;s tasks have successfully completed.</li>
+<li>Encrypted shuffle in MRv2 does not work if used with LinuxContainerExecutor and encrypted web UIs.</li>
+<li>Link from ResourceManager to Application Master does not work when the Web UI over HTTPS feature is enabled.</li>
+<li>Hadoop client JARs don&#39;t provide all the classes needed for clean compilation of client code</li>
+<li>The ulimits setting in /etc/security/limits.conf is applied to the wrong user if security is enabled.</li>
+</ul>
+
+<h2 id="4.4-apache-hive">4.4 Apache Hive</h2>
+
+<ul>
+<li>Hive&#39;s Timestamp type cannot be stored in Parquet</li>
+<li>Hive&#39;s Decimal type cannot be stored in Parquet and Avro</li>
+<li>Hive creates an invalid table if you specify more than one partition with alter table</li>
+<li>PostgreSQL 9.0+ requires additional configuration，需要设置 <code class="prettyprint">standard_conforming_strings</code> 为 off</li>
+<li>Setting hive.optimize.skewjoin to true causes long running queries to fail</li>
+<li>JDBC - executeUpdate does not returns the number of rows modified</li>
+<li>Hive Auth (Grant/Revoke/Show Grant) statements do not support fully qualified table names (default.tab1)</li>
+</ul>
+
+<h2 id="4.5-apache-parquet-(incubating)">4.5 Apache Parquet (incubating)</h2>
+
+<ul>
+<li>Parquet file writes run out of memory if (number of partitions) times (block size) exceeds available memory</li>
+<li>Hive cannot read arrays in Parquet written by parquet-avro or parquet-thrift</li>
+</ul>
+
+<h1 id="5.-总结">5. 总结</h1>
+
+<p>本篇文章主要是翻译了 cloudera 官网上关于 CDH5.2 的新特性、不兼容变化、性能改进以及可能存在的问题等相关文档，以便清楚的了解 hadoop 各组件的特性并为是否升级 hadoop 版本做出决策支持。</p>
+</div>
+
+
+      <div id="pay" style="text-align:center;">
+        ----EOF-----
+        <br>
+        <section>
+  <h4>Sponsor</h4>
+	<img src="http://javachen-rs.qiniudn.com/images/alipay.png" width="150/">
+  <p class="small">觉得此博客对你有帮助，支付宝扫码赞助吧</p>
+</section>
+
+      </div>
+
+      <p class="meta">
+      	
+            Categories:
+      	    
+          	<a class="btn btn-default btn-xs" href="/categories.html#hadoop">hadoop</a>
+          
+      	
+
+      	
+            Tags:
+      	    
+          	<a class="btn btn-default btn-xs" href="/tags.html#hadoop">hadoop</a>
+          
+          	<a class="btn btn-default btn-xs" href="/tags.html#cdh">cdh</a>
+          
+      	
+      </p>
+	</article>
+
+	<ul class="pager">
+	  
+	  <li class="previous"><a class="btn btn-xs" href="/2014/09/29/spring-source-codes" title="Spring源码整体架构">&larr; Prev</a></li>
+	  
+	  
+	  <li class="next"><a class="btn btn-xs" href="/2014/10/23/hive-warehouse-in-2014" title="当前数据仓库建设过程">Next &rarr;</a></li>
+	  
+	</ul>
+
+  
+<div id="comments">
+  <div class="ds-thread" data-thread-key="/2014/10/20/cdh5.2-release"  data-title="CDH 5.2.0 的改变 - 小天的个人博客"></div>
+</div>
+
+
+
+</div>
+
+        </div>
+      </div>
+
+      <footer class="footer text-center">
+  <p>&copy; 2009-2015 <a href="/" target="_blank" title="86后，工作在深圳；Java程序员、Hadoop工程师；主要关注Java、Hadoop、Kettle、关注大数据处理技术。">小天</a>. With Help from <a href="//jekyllrb.com/" target="_blank" title="Transform your plain text into static websites and blogs.">Jekyll</a> and <a href="//getbootstrap.com/" target="_blank" title="Bootstrap is the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web.">Bootstrap</a>, theme from <a href="http://havee.me/" target="_blank" title="http://havee.me/">Havee</a>.
+
+  <span style="float:right;"><a href="/about.html">About</a></span>
+
+	
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+  </p>
+  <div id="toTop" style="display: block;">
+    <a href="#">▲</a><a href="#footer">▼</a>
+  </div>
+</footer>
+
+    </div>
+
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/core.js"></script>
+
+    
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+    
+    <!-- duoshuo Begin -->
+    <script type="text/javascript">
+      var duoshuoQuery = {short_name:"xiaotian120"};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] ||
+        document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+    </script>
+    <!-- duoshuo End -->
+    
+  </body>
+</html>

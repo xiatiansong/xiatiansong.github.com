@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Hive中数据的加载和导出 - 小天的个人博客</title>
+  <meta name="description" content="记录 hive 的DML语法，并以实际的例子演示如何加载和导出数据">
+  <meta name="keywords" content="Hive中数据的导入和导出">
+  <meta name="author" content="小天">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="360-site-verification" content="9b7a87a1d52051c96644f0a9b8b79898" />
+  <meta name="sogou_site_verification" content="ofwXWFdthV"/>
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" >
+
+  <link rel="canonical" href="http://blog.xiaotian.com/2014/06/09/hive-data-manipulation-language">
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css" media="all">
+  <link rel="stylesheet" href="/static/css/style.css" media="all">
+  <link rel="stylesheet" href="/static/css/pygments.css" media="all">
+  <link rel="stylesheet" href="/static/css/font-awesome.css" media="all">
+
+  <!-- atom & rss feed -->
+  <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="小天的个人博客 RSS Feed">
+  <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="小天的个人博客 ATOM Feed">
+</head>
+
+
+  <body>
+    <div class="container">
+      <!--[if lte IE 9]>
+<div class="alert alert-warning">
+  <p>Your Internet Explorer is not supported. Please upgrade your Internet Explorer to version 9+, or use latest <a href="http://www.google.com/chrome/" target="_blank" class="alert-link">Google chrome</a>、<a href="http://www.mozilla.org/firefox/" target="_blank" class="alert-link">Mozilla Firefox</a>.</p>
+  <p>If you are using IE 9 or later, make sure you <a href="http://windows.microsoft.com/en-us/internet-explorer/use-compatibility-view#ie=ie-8" target="_blank" class="alert-link">turn off "Compatibility view"</a>.</p>
+</div>
+<![endif]-->
+<header class="header">
+  <div class="title"><a title="小天的个人博客" href="/">小天的个人博客</a></div>
+  <ul class="nav navbar-nav navbar-right visible-lg visible-md">
+    <li>
+    <form id="search-form" class="form-group has-success visible-lg" role="form">
+      <input type="text" class="form-control input-sm" placeholder="Search" id="query" style="width: 160px;">
+    </form>
+    </li>
+    <li><a href="/archive.html" title="Archive"><span class='fa fa-archive fa-2x'></span></a></li>
+    <li><a href="/categories.html" title="Categories"><span class='fa fa-navicon fa-2x'></span></a></li>
+    <li><a href="/tags.html" title="Tags"><span class='fa fa-tags fa-2x'></span></a></li>
+    <li><a href="/about.html" title="About"><span class='fa fa-user fa-2x'></span></a></li>
+    
+    <li><a href="https://github.com/wuskyfantasy" target="_blank" title="Github"><span class='fa fa-github fa-2x'></span></a></li>
+    
+    
+    
+    
+    
+    <li><a href="http://weibo.com/xiaotian120" target="_blank" title="Weibo"><span class="fa fa-weibo fa-2x"></span></a></li>
+    
+
+    <li><a href="/rss.xml" target="_blank" title="RSS"><span class='fa fa-rss fa-2x'></span></a></li>
+  </ul>
+</header>
+
+
+      <div class="wrapper">
+        <div class="row">
+          <div id="search-loader" style="display:none;text-align:center">
+            <img src="http://javachen-rs.qiniudn.com/images/loading.gif">
+          </div>
+          <div class="col-md-12">
+  <article class="news-item">
+
+      <h2  class="news-item"> Hive中数据的加载和导出  
+        <time class="small">2014.06.09</time>
+      </h2>
+
+      <div><p>关于 Hive DML 语法，你可以参考 apache 官方文档的说明:<a href="https://cwiki.apache.org/confluence/display/Hive/LanguageManual+DML">Hive Data Manipulation Language</a>。</p>
+
+<p>apache的hive版本现在应该是 0.13.0，而我使用的 hadoop 版本是 CDH5.0.1，其对应的 hive 版本是 0.12.0。故只能参考apache官方文档来看 cdh5.0.1 实现了哪些特性。</p>
+
+<p>因为 hive 版本会持续升级，故本篇文章不一定会和最新版本保持一致。</p>
+
+<h1 id="1.-准备测试数据">1. 准备测试数据</h1>
+
+<p>首先创建普通表：</p>
+<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">create</span> <span class="k">table</span> <span class="n">test</span><span class="p">(</span><span class="n">id</span> <span class="nb">int</span><span class="p">,</span> <span class="n">name</span> <span class="n">string</span><span class="p">)</span> <span class="k">ROW</span> <span class="n">FORMAT</span> <span class="n">DELIMITED</span> <span class="n">FIELDS</span> <span class="n">TERMINATED</span> <span class="k">BY</span> <span class="s1">&#39;,&#39;</span> <span class="n">STORED</span> <span class="k">AS</span> <span class="n">TEXTFILE</span><span class="p">;</span>
+</code></pre></div>
+<p>创建分区表：</p>
+<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">EXTERNAL</span> <span class="k">TABLE</span> <span class="n">test_p</span><span class="p">(</span>
+<span class="n">id</span> <span class="nb">int</span><span class="p">,</span>
+<span class="n">name</span> <span class="n">string</span> 
+<span class="p">)</span>
+<span class="n">partitioned</span> <span class="k">by</span> <span class="p">(</span><span class="nb">date</span> <span class="n">STRING</span><span class="p">)</span>
+<span class="k">ROW</span> <span class="n">FORMAT</span> <span class="n">DELIMITED</span> <span class="n">FIELDS</span> <span class="n">TERMINATED</span> <span class="k">BY</span> <span class="s1">&#39;\,&#39;</span> <span class="n">LINES</span> <span class="n">TERMINATED</span> <span class="k">BY</span> <span class="s1">&#39;\n&#39;</span> 
+<span class="n">STORED</span> <span class="k">AS</span> <span class="n">TEXTFILE</span><span class="p">;</span>
+</code></pre></div>
+<p>准备数据文件：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>/tmp<span class="o">]</span><span class="c"># cat test.txt </span>
+1,a
+2,b
+3,c
+4,d
+</code></pre></div>
+<h1 id="2.加载数据">2.加载数据</h1>
+
+<p>语法如下：</p>
+<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">LOAD</span> <span class="k">DATA</span> <span class="p">[</span><span class="k">LOCAL</span><span class="p">]</span> <span class="n">INPATH</span> <span class="s1">&#39;filepath&#39;</span> <span class="p">[</span><span class="n">OVERWRITE</span><span class="p">]</span> <span class="k">INTO</span> <span class="k">TABLE</span> <span class="n">tablename</span> <span class="p">[</span><span class="n">PARTITION</span> <span class="p">(</span><span class="n">partcol1</span><span class="o">=</span><span class="n">val1</span><span class="p">,</span> <span class="n">partcol2</span><span class="o">=</span><span class="n">val2</span> <span class="p">...)]</span>
+</code></pre></div>
+<p>说明：</p>
+
+<ul>
+<li>filepath 可能是：
+
+<ul>
+<li>一个相对路径</li>
+<li>一个绝对路径，例如：<code class="prettyprint">/root/project/data1</code></li>
+<li>一个url地址，可选的可以带上授权信息，例如：<code class="prettyprint">hdfs://namenode:9000/user/hive/project/data1</code> </li>
+</ul></li>
+<li>目标可能是一个表或者分区，如果该表是分区，则必须制定分区列。</li>
+<li>filepath 可以是一个文件也可以是目录</li>
+<li>如果指定了 <code class="prettyprint">LOCAL</code>，则：
+
+<ul>
+<li><code class="prettyprint">load</code> 命令会在本地查找 filepath。如果 filepath 是相对路径，则相对于当前路径，也可以指定一个 url 或者本地文件，例如：<code class="prettyprint">file:///user/hive/project/data1</code></li>
+</ul></li>
+<li>如果没有指定 <code class="prettyprint">LOCAL</code> ，则hive会使用全路径的url，url 中如果没有制定 schema，则默认使用 <code class="prettyprint">fs.default.name</code>的值；如果该路径不是绝对路径，则会相对于 <code class="prettyprint">/user/&lt;username&gt;</code></li>
+<li>如果使用 <code class="prettyprint">OVERWRITE</code> ，则会删除原来的数据，然后导入新的数据，否则，就是追加数据。</li>
+</ul>
+
+<p>需要注意的：</p>
+
+<ul>
+<li><code class="prettyprint">filepath</code> 中不能包括子目录</li>
+<li>如果没有指定 <code class="prettyprint">LOCAL</code>，则 <code class="prettyprint">filepath</code> 指向目标表或者分区所在的文件系统。</li>
+<li>如果需要压缩，则参考 <a href="https://cwiki.apache.org/confluence/display/Hive/CompressedStorage"> CompressedStorage</a></li>
+</ul>
+
+<h2 id="2.1-测试">2.1 测试</h2>
+
+<h3 id="2.1.1-加载本地文件">2.1.1 加载本地文件</h3>
+
+<p>a) 加载到普通表中</p>
+<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="n">hive</span><span class="o">&gt;</span> <span class="k">load</span> <span class="k">data</span> <span class="k">local</span> <span class="n">inpath</span> <span class="s1">&#39;/tmp/test.txt&#39;</span> <span class="k">into</span> <span class="k">table</span> <span class="n">test</span><span class="p">;</span>                              
+<span class="n">Copying</span> <span class="k">data</span> <span class="k">from</span> <span class="n">file</span><span class="p">:</span><span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">test</span><span class="p">.</span><span class="n">txt</span>
+<span class="n">Copying</span> <span class="n">file</span><span class="p">:</span> <span class="n">file</span><span class="p">:</span><span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">test</span><span class="p">.</span><span class="n">txt</span>
+<span class="n">Loading</span> <span class="k">data</span> <span class="k">to</span> <span class="k">table</span> <span class="k">default</span><span class="p">.</span><span class="n">test</span>
+<span class="k">Table</span> <span class="k">default</span><span class="p">.</span><span class="n">test</span> <span class="n">stats</span><span class="p">:</span> <span class="p">[</span><span class="n">num_partitions</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="n">num_files</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="n">num_rows</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="n">total_size</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span> <span class="n">raw_data_size</span><span class="p">:</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">OK</span>
+<span class="n">Time</span> <span class="n">taken</span><span class="p">:</span> <span class="mi">0</span><span class="p">.</span><span class="mi">572</span> <span class="n">seconds</span>
+</code></pre></div>
+<p>查看hdfs上的数据：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ hadoop fs -ls /user/hive/warehouse/test
+Found 1 items
+-rwxrwxrwt   3 hive hadoop         16 2014-06-09 18:36 /user/hive/warehouse/test/test.txt
+</code></pre></div>
+<p>查看表中数据：</p>
+<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="n">hive</span><span class="o">&gt;</span> <span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">test</span><span class="p">;</span>
+<span class="n">OK</span>
+<span class="mi">1</span>   <span class="n">a</span>
+<span class="mi">2</span>   <span class="n">b</span>
+<span class="mi">3</span>   <span class="k">c</span>
+<span class="mi">4</span>   <span class="n">d</span>
+<span class="n">Time</span> <span class="n">taken</span><span class="p">:</span> <span class="mi">0</span><span class="p">.</span><span class="mi">562</span> <span class="n">seconds</span><span class="p">,</span> <span class="n">Fetched</span><span class="p">:</span> <span class="mi">4</span> <span class="k">row</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</code></pre></div>
+<p>b) 加载文件到分区表</p>
+
+<p>通常是直接使用 load 命令加载：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">LOAD DATA LOCAL INPATH &quot;/tmp/test.txt&quot; INTO TABLE test_p PARTITION (date=20140722)
+</code></pre></div>
+<blockquote>
+<p>注意：如果没有加上 <code class="prettyprint">overwrite</code> 关键字，则加载相同文件最后会存在多个文件</p>
+</blockquote>
+
+<p>还有一种方法是：创建分区目录，手动上传文件，最后再添加新的分区，代码如下：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">hadoop fs -mkdir  /user/hive/warehouse/test/date=20140320
+ALTER TABLE test_p ADD IF NOT EXISTS PARTITION (date=20140320);
+
+hive hadoop fs -rm /user/hive/warehouse/test/date=20140320/test.txt
+hadoop fs -put /tmp/test.txt  /user/hive/warehouse/test/date=20140320
+</code></pre></div>
+<p>同样，你也可以查看 hdfs 和表中的数据。</p>
+
+<h3 id="2.1.2-加载hdfs上的文件">2.1.2 加载hdfs上的文件</h3>
+
+<p>拷贝 test.txt 为test_1.txt 并将其上传到 <code class="prettyprint">/user/hive/warehouse</code>:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ cp test.txt test_1.txt
+$ sudo -u hive hadoop fs -put test_1.txt /user/hive/warehouse
+</code></pre></div>
+<p>然后将 <code class="prettyprint">/user/hive/warehouse/test_1.txt</code> 导入到test表中：</p>
+<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="n">hive</span><span class="o">&gt;</span> <span class="k">load</span> <span class="k">data</span> <span class="n">inpath</span> <span class="s1">&#39;/user/hive/warehouse/test_1.txt&#39;</span> <span class="k">into</span> <span class="k">table</span> <span class="n">test</span><span class="p">;</span> 
+<span class="n">Loading</span> <span class="k">data</span> <span class="k">to</span> <span class="k">table</span> <span class="k">default</span><span class="p">.</span><span class="n">test</span>
+<span class="k">Table</span> <span class="k">default</span><span class="p">.</span><span class="n">test</span> <span class="n">stats</span><span class="p">:</span> <span class="p">[</span><span class="n">num_partitions</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="n">num_files</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="n">num_rows</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="n">total_size</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span> <span class="n">raw_data_size</span><span class="p">:</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">OK</span>
+<span class="n">Time</span> <span class="n">taken</span><span class="p">:</span> <span class="mi">2</span><span class="p">.</span><span class="mi">941</span> <span class="n">seconds</span>
+</code></pre></div>
+<p>查看hdfs上的数据：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ hadoop fs -ls /user/hive/warehouse/test
+Found 2 items
+-rwxr-xr-x   3 hive hadoop         16 2014-06-09 18:48 /user/hive/warehouse/test/test.txt
+-rwxr-xr-x   3 hive hadoop         16 2014-06-09 18:45 /user/hive/warehouse/test/test_1.txt
+</code></pre></div>
+<p>查看表中数据：</p>
+<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="n">hive</span><span class="o">&gt;</span> <span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">test</span><span class="p">;</span>                                                 
+<span class="n">OK</span>
+<span class="mi">1</span>   <span class="n">a</span>
+<span class="mi">2</span>   <span class="n">b</span>
+<span class="mi">3</span>   <span class="k">c</span>
+<span class="mi">4</span>   <span class="n">d</span>
+<span class="mi">1</span>   <span class="n">a</span>
+<span class="mi">2</span>   <span class="n">b</span>
+<span class="mi">3</span>   <span class="k">c</span>
+<span class="mi">4</span>   <span class="n">d</span>
+<span class="n">Time</span> <span class="n">taken</span><span class="p">:</span> <span class="mi">0</span><span class="p">.</span><span class="mi">302</span> <span class="n">seconds</span><span class="p">,</span> <span class="n">Fetched</span><span class="p">:</span> <span class="mi">8</span> <span class="k">row</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</code></pre></div>
+<h1 id="3.-插入数据">3. 插入数据</h1>
+
+<p>标准语法：</p>
+<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">INSERT</span> <span class="n">OVERWRITE</span> <span class="k">TABLE</span> <span class="n">tablename1</span> <span class="p">[</span><span class="n">PARTITION</span> <span class="p">(</span><span class="n">partcol1</span><span class="o">=</span><span class="n">val1</span><span class="p">,</span> <span class="n">partcol2</span><span class="o">=</span><span class="n">val2</span> <span class="p">...)</span> <span class="p">[</span><span class="n">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span><span class="p">]]</span> <span class="n">select_statement1</span> <span class="k">FROM</span> <span class="n">from_statement</span><span class="p">;</span>
+
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="k">TABLE</span> <span class="n">tablename1</span> <span class="p">[</span><span class="n">PARTITION</span> <span class="p">(</span><span class="n">partcol1</span><span class="o">=</span><span class="n">val1</span><span class="p">,</span> <span class="n">partcol2</span><span class="o">=</span><span class="n">val2</span> <span class="p">...)]</span> <span class="n">select_statement1</span> <span class="k">FROM</span> <span class="n">from_statement</span><span class="p">;</span>
+</code></pre></div>
+<p>扩展语法（多个insert）：</p>
+<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">FROM</span> <span class="n">from_statement</span>
+<span class="k">INSERT</span> <span class="n">OVERWRITE</span> <span class="k">TABLE</span> <span class="n">tablename1</span> <span class="p">[</span><span class="n">PARTITION</span> <span class="p">(</span><span class="n">partcol1</span><span class="o">=</span><span class="n">val1</span><span class="p">,</span> <span class="n">partcol2</span><span class="o">=</span><span class="n">val2</span> <span class="p">...)</span> <span class="p">[</span><span class="n">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span><span class="p">]]</span> <span class="n">select_statement1</span>
+<span class="p">[</span><span class="k">INSERT</span> <span class="n">OVERWRITE</span> <span class="k">TABLE</span> <span class="n">tablename2</span> <span class="p">[</span><span class="n">PARTITION</span> <span class="p">...</span> <span class="p">[</span><span class="n">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span><span class="p">]]</span> <span class="n">select_statement2</span><span class="p">]</span>
+<span class="p">[</span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="k">TABLE</span> <span class="n">tablename2</span> <span class="p">[</span><span class="n">PARTITION</span> <span class="p">...]</span> <span class="n">select_statement2</span><span class="p">]</span> <span class="p">...;</span>
+
+<span class="k">FROM</span> <span class="n">from_statement</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="k">TABLE</span> <span class="n">tablename1</span> <span class="p">[</span><span class="n">PARTITION</span> <span class="p">(</span><span class="n">partcol1</span><span class="o">=</span><span class="n">val1</span><span class="p">,</span> <span class="n">partcol2</span><span class="o">=</span><span class="n">val2</span> <span class="p">...)]</span> <span class="n">select_statement1</span>
+<span class="p">[</span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="k">TABLE</span> <span class="n">tablename2</span> <span class="p">[</span><span class="n">PARTITION</span> <span class="p">...]</span> <span class="n">select_statement2</span><span class="p">]</span>
+<span class="p">[</span><span class="k">INSERT</span> <span class="n">OVERWRITE</span> <span class="k">TABLE</span> <span class="n">tablename2</span> <span class="p">[</span><span class="n">PARTITION</span> <span class="p">...</span> <span class="p">[</span><span class="n">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span><span class="p">]]</span> <span class="n">select_statement2</span><span class="p">]</span> <span class="p">...;</span>
+</code></pre></div>
+<p>扩展语法（动态分区insert）：</p>
+<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">INSERT</span> <span class="n">OVERWRITE</span> <span class="k">TABLE</span> <span class="n">tablename</span> <span class="n">PARTITION</span> <span class="p">(</span><span class="n">partcol1</span><span class="p">[</span><span class="o">=</span><span class="n">val1</span><span class="p">],</span> <span class="n">partcol2</span><span class="p">[</span><span class="o">=</span><span class="n">val2</span><span class="p">]</span> <span class="p">...)</span> <span class="n">select_statement</span> <span class="k">FROM</span> <span class="n">from_statement</span><span class="p">;</span>
+
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="k">TABLE</span> <span class="n">tablename</span> <span class="n">PARTITION</span> <span class="p">(</span><span class="n">partcol1</span><span class="p">[</span><span class="o">=</span><span class="n">val1</span><span class="p">],</span> <span class="n">partcol2</span><span class="p">[</span><span class="o">=</span><span class="n">val2</span><span class="p">]</span> <span class="p">...)</span> <span class="n">select_statement</span> <span class="k">FROM</span> <span class="n">from_statement</span><span class="p">;</span>
+</code></pre></div>
+<p>说明：</p>
+
+<ul>
+<li>INSERT OVERWRITE 会覆盖存在的数据</li>
+<li>输出的格式和序列化类取决于表的元数据</li>
+<li><a href="https://issues.apache.org/jira/browse/HIVE-1180">hive 0.13.0</a>之后，select语句可以使用 CTEs 表达式，语法请参考 <a href="https://cwiki.apache.org/confluence/display/Hive/LanguageManual+Select#LanguageManualSelect-SelectSyntax"> SELECT syntax</a>，示例见 <a href="https://cwiki.apache.org/confluence/display/Hive/Common+Table+Expression#CommonTableExpression-CTEinViews,CTAS,andInsertStatements">Common Table Expression</a></li>
+</ul>
+
+<p><strong>Dynamic Partition Inserts</strong></p>
+
+<p>dynamic partition inserts在hive 0.6.0中引入。相关的配置参数有：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">hive.exec.dynamic.partition
+hive.exec.dynamic.partition.mode
+hive.exec.max.dynamic.partitions.pernode
+hive.exec.max.dynamic.partitions
+hive.exec.max.created.files
+hive.error.on.empty.partition
+</code></pre></div>
+<p>一个示例：</p>
+<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">FROM</span> <span class="n">page_view_stg</span> <span class="n">pvs</span>
+<span class="k">INSERT</span> <span class="n">OVERWRITE</span> <span class="k">TABLE</span> <span class="n">page_view</span> <span class="n">PARTITION</span><span class="p">(</span><span class="n">dt</span><span class="o">=</span><span class="s1">&#39;2008-06-08&#39;</span><span class="p">,</span> <span class="n">country</span><span class="p">)</span>
+       <span class="k">SELECT</span> <span class="n">pvs</span><span class="p">.</span><span class="n">viewTime</span><span class="p">,</span> <span class="n">pvs</span><span class="p">.</span><span class="n">userid</span><span class="p">,</span> <span class="n">pvs</span><span class="p">.</span><span class="n">page_url</span><span class="p">,</span> <span class="n">pvs</span><span class="p">.</span><span class="n">referrer_url</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="n">pvs</span><span class="p">.</span><span class="n">ip</span><span class="p">,</span> <span class="n">pvs</span><span class="p">.</span><span class="n">cnt</span>
+</code></pre></div>
+<h1 id="4.-导出数据">4. 导出数据</h1>
+
+<p>标准语法：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">INSERT OVERWRITE [LOCAL] DIRECTORY directory1
+  [ROW FORMAT row_format] [STORED AS file_format] (Note: Only available starting with Hive 0.11.0)
+  SELECT ... FROM ...
+</code></pre></div>
+<p>扩展语法（多个insert）：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">FROM from_statement
+INSERT OVERWRITE [LOCAL] DIRECTORY directory1 select_statement1
+[INSERT OVERWRITE [LOCAL] DIRECTORY directory2 select_statement2] ...
+</code></pre></div>
+<p>row_format相关语法：</p>
+<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="n">DELIMITED</span> <span class="p">[</span><span class="n">FIELDS</span> <span class="n">TERMINATED</span> <span class="k">BY</span> <span class="nb">char</span> <span class="p">[</span><span class="n">ESCAPED</span> <span class="k">BY</span> <span class="nb">char</span><span class="p">]]</span> <span class="p">[</span><span class="n">COLLECTION</span> <span class="n">ITEMS</span> <span class="n">TERMINATED</span> <span class="k">BY</span> <span class="nb">char</span><span class="p">]</span>
+        <span class="p">[</span><span class="k">MAP</span> <span class="n">KEYS</span> <span class="n">TERMINATED</span> <span class="k">BY</span> <span class="nb">char</span><span class="p">]</span> <span class="p">[</span><span class="n">LINES</span> <span class="n">TERMINATED</span> <span class="k">BY</span> <span class="nb">char</span><span class="p">]</span>
+        <span class="p">[</span><span class="k">NULL</span> <span class="k">DEFINED</span> <span class="k">AS</span> <span class="nb">char</span><span class="p">](</span><span class="n">Note</span><span class="p">:</span> <span class="k">Only</span> <span class="n">available</span> <span class="n">starting</span> <span class="k">with</span> <span class="n">Hive</span> <span class="mi">0</span><span class="p">.</span><span class="mi">13</span><span class="p">)</span>
+</code></pre></div>
+<p>说明：</p>
+
+<ul>
+<li>Directory 可以是一个全路径的 url。</li>
+<li>如果指定 <code class="prettyprint">LOCAL</code>，则会将数据写到本地文件系统。</li>
+<li>输出的数据序列化为 text 格式，分隔符为 <code class="prettyprint">^A</code>，行于行之间通过换行符连接。如果存在不是基本类型的列，则这些列将被序列化为 JSON 格式。</li>
+<li>在 Hive 0.11.0 可以输出字段的分隔符，之前版本的默认为 <code class="prettyprint">^A</code>。</li>
+</ul>
+
+<h2 id="4.1-测试;">4.1 测试;</h2>
+
+<h3 id="4.1.1-导出到本地文件系统">4.1.1 导出到本地文件系统</h3>
+<div class="highlight"><pre><code class="language-text" data-lang="text">hive&gt; insert overwrite local directory &#39;/tmp/test&#39; select * from test;
+Total MapReduce jobs = 1
+Launching Job 1 out of 1
+Number of reduce tasks is set to 0 since there&#39;s no reduce operator
+Starting Job = job_1402248601715_0016, Tracking URL = http://cdh1:8088/proxy/application_1402248601715_0016/
+Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1402248601715_0016
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 0
+2014-06-09 19:25:12,896 Stage-1 map = 0%,  reduce = 0%
+2014-06-09 19:25:20,380 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 0.99 sec
+2014-06-09 19:25:21,433 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 0.99 sec
+MapReduce Total cumulative CPU time: 990 msec
+Ended Job = job_1402248601715_0016
+Copying data to local directory /tmp/test
+Copying data to local directory /tmp/test
+MapReduce Jobs Launched: 
+Job 0: Map: 1   Cumulative CPU: 0.99 sec   HDFS Read: 305 HDFS Write: 32 SUCCESS
+Total MapReduce CPU Time Spent: 990 msec
+OK
+Time taken: 18.438 seconds
+</code></pre></div>
+<p>导出后的数据预览如下：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">[/tmp]# vim test/000000_0 
+1^Aa
+2^Ab
+3^Ac
+4^Ad
+1^Aa
+2^Ab
+3^Ac
+4^Ad
+</code></pre></div>
+<p>可以看到数据中的列与列之间的分隔符是<code class="prettyprint">^A</code>(ascii码是<code class="prettyprint">\00001</code>)，如果想修改分隔符，可以做如下修改：</p>
+<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="n">hive</span><span class="o">&gt;</span> <span class="k">insert</span> <span class="n">overwrite</span> <span class="k">local</span> <span class="n">directory</span> <span class="s1">&#39;/tmp/test&#39;</span> <span class="k">row</span> <span class="n">format</span> <span class="n">delimited</span> <span class="n">fields</span> <span class="n">terminated</span> <span class="k">by</span> <span class="s1">&#39;,&#39;</span> <span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">test</span><span class="p">;</span>
+</code></pre></div>
+<p>再来查看数据：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">vim test/000000_3 
+1,a
+2,b
+3,c
+4,d
+1,a
+2,b
+3,c
+4,d
+</code></pre></div>
+<h3 id="4.1.2-导出到-hdfs-中">4.1.2 导出到 HDFS 中</h3>
+<div class="highlight"><pre><code class="language-text" data-lang="text">hive&gt; insert overwrite  directory &#39;/user/hive/tmp&#39; select * from test;
+</code></pre></div>
+<p>注意：</p>
+
+<p>和导出文件到本地文件系统的HQL少一个local，数据的存放路径不一样了。</p>
+
+<h3 id="4.1.3-导出到hive的另一个表中">4.1.3 导出到Hive的另一个表中</h3>
+
+<p>在实际情况中，表的输出结果可能太多，不适于显示在控制台上，这时候，将Hive的查询输出结果直接存在一个新的表中是非常方便的，我们称这种情况为CTAS（ <code class="prettyprint">create table .. as select</code>）如下：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">hive&gt; create table test2 as select * from test;
+</code></pre></div></div>
+
+
+      <div id="pay" style="text-align:center;">
+        ----EOF-----
+        <br>
+        <section>
+  <h4>Sponsor</h4>
+	<img src="http://javachen-rs.qiniudn.com/images/alipay.png" width="150/">
+  <p class="small">觉得此博客对你有帮助，支付宝扫码赞助吧</p>
+</section>
+
+      </div>
+
+      <p class="meta">
+      	
+            Categories:
+      	    
+          	<a class="btn btn-default btn-xs" href="/categories.html#hive">hive</a>
+          
+      	
+
+      	
+            Tags:
+      	    
+          	<a class="btn btn-default btn-xs" href="/tags.html#hive">hive</a>
+          
+          	<a class="btn btn-default btn-xs" href="/tags.html#mapreduce">mapreduce</a>
+          
+      	
+      </p>
+	</article>
+
+	<ul class="pager">
+	  
+	  <li class="previous"><a class="btn btn-xs" href="/2014/06/09/fetchtask-in-hive" title="Hive中的FetchTask任务">&larr; Prev</a></li>
+	  
+	  
+	  <li class="next"><a class="btn btn-xs" href="/2014/06/12/hbase-aggregate-client" title="HBase实现简单聚合计算">Next &rarr;</a></li>
+	  
+	</ul>
+
+  
+<div id="comments">
+  <div class="ds-thread" data-thread-key="/2014/06/09/hive-data-manipulation-language"  data-title="Hive中数据的加载和导出 - 小天的个人博客"></div>
+</div>
+
+
+
+</div>
+
+        </div>
+      </div>
+
+      <footer class="footer text-center">
+  <p>&copy; 2009-2015 <a href="/" target="_blank" title="86后，工作在深圳；Java程序员、Hadoop工程师；主要关注Java、Hadoop、Kettle、关注大数据处理技术。">小天</a>. With Help from <a href="//jekyllrb.com/" target="_blank" title="Transform your plain text into static websites and blogs.">Jekyll</a> and <a href="//getbootstrap.com/" target="_blank" title="Bootstrap is the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web.">Bootstrap</a>, theme from <a href="http://havee.me/" target="_blank" title="http://havee.me/">Havee</a>.
+
+  <span style="float:right;"><a href="/about.html">About</a></span>
+
+	
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+  </p>
+  <div id="toTop" style="display: block;">
+    <a href="#">▲</a><a href="#footer">▼</a>
+  </div>
+</footer>
+
+    </div>
+
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/core.js"></script>
+
+    
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+    
+    <!-- duoshuo Begin -->
+    <script type="text/javascript">
+      var duoshuoQuery = {short_name:"xiaotian120"};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] ||
+        document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+    </script>
+    <!-- duoshuo End -->
+    
+  </body>
+</html>

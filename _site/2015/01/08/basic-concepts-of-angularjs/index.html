@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>AngularJS基本知识点 - 小天的个人博客</title>
+  <meta name="description" content="整理 AngularJS 相关的一些知识点，方便快速理解和入门 AngularJS。文中涉及的内容有：AngularJS 指令、控制器、模型和服务定义方法、路由定义等内容，不包括 AngularJS 的介绍、历史以及依赖注入等原理。">
+  <meta name="keywords" content="java, hadoop, hive, hbase, spark, linux, scala, python, mysql">
+  <meta name="author" content="小天">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="360-site-verification" content="9b7a87a1d52051c96644f0a9b8b79898" />
+  <meta name="sogou_site_verification" content="ofwXWFdthV"/>
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" >
+
+  <link rel="canonical" href="http://blog.xiaotian.com/2015/01/08/basic-concepts-of-angularjs">
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css" media="all">
+  <link rel="stylesheet" href="/static/css/style.css" media="all">
+  <link rel="stylesheet" href="/static/css/pygments.css" media="all">
+  <link rel="stylesheet" href="/static/css/font-awesome.css" media="all">
+
+  <!-- atom & rss feed -->
+  <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="小天的个人博客 RSS Feed">
+  <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="小天的个人博客 ATOM Feed">
+</head>
+
+
+  <body>
+    <div class="container">
+      <!--[if lte IE 9]>
+<div class="alert alert-warning">
+  <p>Your Internet Explorer is not supported. Please upgrade your Internet Explorer to version 9+, or use latest <a href="http://www.google.com/chrome/" target="_blank" class="alert-link">Google chrome</a>、<a href="http://www.mozilla.org/firefox/" target="_blank" class="alert-link">Mozilla Firefox</a>.</p>
+  <p>If you are using IE 9 or later, make sure you <a href="http://windows.microsoft.com/en-us/internet-explorer/use-compatibility-view#ie=ie-8" target="_blank" class="alert-link">turn off "Compatibility view"</a>.</p>
+</div>
+<![endif]-->
+<header class="header">
+  <div class="title"><a title="小天的个人博客" href="/">小天的个人博客</a></div>
+  <ul class="nav navbar-nav navbar-right visible-lg visible-md">
+    <li>
+    <form id="search-form" class="form-group has-success visible-lg" role="form">
+      <input type="text" class="form-control input-sm" placeholder="Search" id="query" style="width: 160px;">
+    </form>
+    </li>
+    <li><a href="/archive.html" title="Archive"><span class='fa fa-archive fa-2x'></span></a></li>
+    <li><a href="/categories.html" title="Categories"><span class='fa fa-navicon fa-2x'></span></a></li>
+    <li><a href="/tags.html" title="Tags"><span class='fa fa-tags fa-2x'></span></a></li>
+    <li><a href="/about.html" title="About"><span class='fa fa-user fa-2x'></span></a></li>
+    
+    <li><a href="https://github.com/wuskyfantasy" target="_blank" title="Github"><span class='fa fa-github fa-2x'></span></a></li>
+    
+    
+    
+    
+    
+    <li><a href="http://weibo.com/xiaotian120" target="_blank" title="Weibo"><span class="fa fa-weibo fa-2x"></span></a></li>
+    
+
+    <li><a href="/rss.xml" target="_blank" title="RSS"><span class='fa fa-rss fa-2x'></span></a></li>
+  </ul>
+</header>
+
+
+      <div class="wrapper">
+        <div class="row">
+          <div id="search-loader" style="display:none;text-align:center">
+            <img src="http://javachen-rs.qiniudn.com/images/loading.gif">
+          </div>
+          <div class="col-md-12">
+  <article class="news-item">
+
+      <h2  class="news-item"> AngularJS基本知识点  
+        <time class="small">2015.01.08</time>
+      </h2>
+
+      <div><p>AngularJS 是一个 MV* 框架，最适于开发客户端的单页面应用。它不是个功能库，而是用来开发动态网页的框架。它专注于扩展 HTML 的功能，提供动态数据绑定（data binding），而且它能跟其它框架（如 JQuery 等）合作融洽。</p>
+
+<h1 id="1.-一个简单示例">1. 一个简单示例</h1>
+
+<p>通过下面的示例代码，可以运行一个简单的 AngularJS 应用：</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+
+<span class="nt">&lt;div</span> <span class="na">ng-app=</span><span class="s">&quot;&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;p&gt;</span>在输入框中尝试输入：<span class="nt">&lt;/p&gt;</span>
+  <span class="nt">&lt;p&gt;</span>姓名：<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;name&quot;</span><span class="nt">&gt;&lt;/p&gt;</span>
+  <span class="nt">&lt;p</span> <span class="na">ng-bind=</span><span class="s">&quot;name&quot;</span><span class="nt">&gt;&lt;/p&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.8/angular.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div>
+<p>通过浏览器访问该页面，在输入框中输入的内容会立即显示在输入框下面。</p>
+
+<p><strong>说明：</strong></p>
+
+<ul>
+<li>当网页加载完毕，AngularJS 自动运行。</li>
+<li><code class="prettyprint">ng-app</code> 指令告诉 AngularJS ，div 元素是 AngularJS 应用程序的&quot;所有者&quot;，相当于是个作用域的概率。</li>
+<li><code class="prettyprint">ng-model</code> 指令把输入域的值绑定到应用程序变量 name。</li>
+<li><code class="prettyprint">ng-bind</code> 指令把应用程序变量 name 绑定到某个段落的 innerHTML。</li>
+</ul>
+
+<h1 id="2.-angularjs-指令">2. AngularJS 指令</h1>
+
+<p>AngularJS 指令是扩展的 HTML 属性，带有前缀 <code class="prettyprint">ng-</code>。</p>
+
+<p>HTML5 允许扩展的（自制的）属性，以 <code class="prettyprint">data-</code> 开头。AngularJS 属性以 <code class="prettyprint">ng-</code>开头，但是您可以使用 <code class="prettyprint">data-ng-</code> 来让网页对 HTML5 有效。</p>
+
+<h2 id="常见的指令">常见的指令</h2>
+
+<h3 id="ng-app-指令">ng-app 指令</h3>
+
+<p>ng-app 指令初始化一个 AngularJS 应用程序。</p>
+
+<h3 id="ng-init-指令">ng-init 指令</h3>
+
+<p>ng-init 指令初始化应用程序数据，这个不常使用。通常情况下，不使用 ng-init。您将使用一个控制器或模块来代替它。</p>
+
+<h3 id="ng-model-指令">ng-model 指令</h3>
+
+<p>ng-model 指令把元素值（比如输入域的值）绑定到应用程序。</p>
+
+<h3 id="ng-bind-指令">ng-bind 指令</h3>
+
+<p>ng-bind 指令把应用程序数据绑定到 HTML 视图。</p>
+
+<p>示例：</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;div</span> <span class="na">ng-app=</span><span class="s">&quot;&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;p&gt;</span>在输入框中尝试输入：<span class="nt">&lt;/p&gt;</span>
+  <span class="nt">&lt;p&gt;</span>姓名：<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;name&quot;</span><span class="nt">&gt;&lt;/p&gt;</span>
+  <span class="nt">&lt;p</span> <span class="na">ng-bind=</span><span class="s">&quot;name&quot;</span><span class="nt">&gt;&lt;/p&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</code></pre></div>
+<h3 id="ng-repeat-指令">ng-repeat 指令</h3>
+
+<p>ng-repeat 指令会重复一个 HTML 元素：</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;div</span> <span class="na">ng-app=</span><span class="s">&quot;&quot;</span> <span class="na">ng-init=</span><span class="s">&quot;names=[</span>
+<span class="s">{name:&#39;Jani&#39;,country:&#39;Norway&#39;},</span>
+<span class="s">{name:&#39;Hege&#39;,country:&#39;Sweden&#39;},</span>
+<span class="s">{name:&#39;Kai&#39;,country:&#39;Denmark&#39;}]&quot;</span><span class="nt">&gt;</span>
+
+<span class="nt">&lt;p&gt;</span>循环对象：<span class="nt">&lt;/p&gt;</span>
+  <span class="nt">&lt;ul&gt;</span>
+    <span class="nt">&lt;li</span> <span class="na">ng-repeat=</span><span class="s">&quot;x in names&quot;</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;/ul&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</code></pre></div>
+<p>除此之外，它还提供了几个变量可供使用：</p>
+
+<ul>
+<li><code class="prettyprint">$index</code> 当前索引</li>
+<li><code class="prettyprint">$first</code> 是否为头元素</li>
+<li><code class="prettyprint">$middle</code> 是否为非头非尾元素</li>
+<li><code class="prettyprint">$last</code> 是否为尾元素</li>
+</ul>
+
+<h2 id="样式相关的指令">样式相关的指令</h2>
+
+<h3 id="ng-class">ng-class</h3>
+
+<p>ng-class用来给元素绑定类名，其表达式的返回值可以是以下三种：</p>
+
+<ul>
+<li>类名字符串，可以用空格分割多个类名，如 ‘class1 class2’；</li>
+<li>类名数组，数组中的每一项都会层叠起来生效；</li>
+<li>一个名值对应的map，其键值为类名，值为boolean类型，当值为true时，该类会被加在元素上。</li>
+</ul>
+
+<p>与 ng-class 相近的，ng 还提供了ng-class-odd、ng-class-even 两个指令，用来配合 ng-repeat 分别在奇数列和偶数列使用对应的类。这个用来在表格中实现隔行换色再方便不过了。</p>
+
+<h3 id="ng-style">ng-style</h3>
+
+<p>ng-style 用来绑定元素的 css 样式，其表达式的返回值为一个 js 对象，键为 css 样式名，值为该样式对应的合法取值。用法比较简单：</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html">$scope.style = {color:&#39;red&#39;};　
+
+<span class="nt">&lt;div</span> <span class="na">ng-style=</span><span class="s">&quot;{color:&#39;red&#39;}&quot;</span><span class="nt">&gt;</span>ng-style测试<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">ng-style=</span><span class="s">&quot;style&quot;</span><span class="nt">&gt;</span>ng-style测试<span class="nt">&lt;/div&gt;</span>
+</code></pre></div>
+<h3 id="ng-show、ng-hide、ng-switch">ng-show、ng-hide、ng-switch</h3>
+
+<p>对于比较常用的元素显隐控制，ng 也做了封装，ng-show 和 ng-hide 的值为 boolean 类型的表达式，当值为 true 时，对应的 show 或 hide 生效。框架会用 <code class="prettyprint">display:block</code> 和 <code class="prettyprint">display:none</code> 来控制元素的显隐。</p>
+
+<p>示例：</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;div</span> <span class="na">ng-app=</span><span class="s">&quot;&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">ng-show=</span><span class="s">&quot;true&quot;</span><span class="nt">&gt;</span>1<span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">ng-show=</span><span class="s">&quot;false&quot;</span><span class="nt">&gt;</span>2<span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">ng-hide=</span><span class="s">&quot;true&quot;</span><span class="nt">&gt;</span>3<span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">ng-hide=</span><span class="s">&quot;false&quot;</span><span class="nt">&gt;</span>4<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</code></pre></div>
+<p>后一个 ng-switch 是根据一个值来决定哪个节点显示，其它节点移除：</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;div</span> <span class="na">ng-init=</span><span class="s">&quot;a=2&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;ul</span> <span class="na">ng-switch</span> <span class="na">on=</span><span class="s">&quot;a&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;li</span> <span class="na">ng-switch-when=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>1<span class="nt">&lt;/li&gt;</span>
+          <span class="nt">&lt;li</span> <span class="na">ng-switch-when=</span><span class="s">&quot;2&quot;</span><span class="nt">&gt;</span>2<span class="nt">&lt;/li&gt;</span>
+          <span class="nt">&lt;li</span> <span class="na">ng-switch-default</span><span class="nt">&gt;</span>other<span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;/ul&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</code></pre></div>
+<h2 id="事件指令">事件指令</h2>
+
+<p>事件相关的指令有：</p>
+
+<ul>
+<li>ng-change</li>
+<li>ng-click</li>
+<li>ng-dblclick</li>
+<li>ng-mousedown</li>
+<li>ng-mouseenter</li>
+<li>ng-mouseleave</li>
+<li>ng-mousemove</li>
+<li>ng-mouseover</li>
+<li>ng-mouseup</li>
+<li>ng-submit</li>
+</ul>
+
+<p>对于事件对象本身，在函数调用时可以直接使用 $event 进行传递：</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;p</span> <span class="na">ng-click=</span><span class="s">&quot;click($event)&quot;</span><span class="nt">&gt;</span>点击<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;p</span> <span class="na">ng-click=</span><span class="s">&quot;click($event.target)&quot;</span><span class="nt">&gt;</span>点击<span class="nt">&lt;/p&gt;</span>
+
+$scope.click = function($event){
+         alert($event.target);
+         //……………………
+}　　
+</code></pre></div>
+<h2 id="表单指令">表单指令</h2>
+
+<p>表单控件类的模板指令，最大的作用是它预定义了需要绑定的数据的格式。这样，就可以对于既定的数据进行既定的处理。</p>
+
+<h3 id="form">form</h3>
+
+<p>ng 对 form 这个标签作了包装，对应的指令是 ng-form。</p>
+
+<p>从 ng 的角度来说， form 标签，是一个模板指令，也创建了一个 <code class="prettyprint">FormController</code> 的实例。这个实例就提供了相应的属性和方法。同时，它里面的控件也是一个 <code class="prettyprint">NgModelController</code> 实例。</p>
+
+<p>很重要的一点， form 的相关方法要生效，必须为 form 标签指定 name 和 ng-controller ，并且每个控件都要绑定一个变量。 form 和控件的名字，即是 $scope 中的相关实例的引用变量名。</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;form</span> <span class="na">name=</span><span class="s">&quot;test_form&quot;</span> <span class="na">ng-controller=</span><span class="s">&quot;TestCtrl&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;a&quot;</span> <span class="na">required</span> <span class="na">ng-model=</span><span class="s">&quot;a&quot;</span>  <span class="nt">/&gt;</span>
+  <span class="nt">&lt;span</span> <span class="na">ng-click=</span><span class="s">&quot;see()&quot;</span><span class="nt">&gt;&lt;/span&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+
+var TestCtrl = function($scope){
+  $scope.see = function(){
+    console.log($scope.test_form);
+    console.log($scope.test_form.a);
+  }
+}
+</code></pre></div>
+<p>除去对象的方法与属性， form 这个标签本身有一些动态类可以使用：</p>
+
+<ul>
+<li><code class="prettyprint">ng-valid</code> 当表单验证通过时的设置</li>
+<li><code class="prettyprint">ng-invalid</code> 当表单验证失败时的设置</li>
+<li><code class="prettyprint">ng-pristine</code> 表单的未被动之前拥有</li>
+<li><code class="prettyprint">ng-dirty</code> 表单被动过之后拥有</li>
+</ul>
+
+<p>form 对象的属性有：</p>
+
+<ul>
+<li><code class="prettyprint">$pristine</code> 表单是否未被动过</li>
+<li><code class="prettyprint">$dirty</code> 表单是否被动过</li>
+<li><code class="prettyprint">$valid</code> 表单是否验证通过</li>
+<li><code class="prettyprint">$invalid</code> 表单是否验证失败</li>
+<li><code class="prettyprint">$error</code> 表单的验证错误</li>
+</ul>
+
+<p>其中的 $error 对象包含有所有字段的验证信息，及对相关字段的 NgModelController 实例的引用。它的结构是一个对象， key 是失败信息， required ， minlength 之类的， value 是对应的字段实例列表。</p>
+
+<h3 id="input">input</h3>
+
+<p>input 控件的相关可用属性为：</p>
+
+<ul>
+<li><code class="prettyprint">name</code> 名字</li>
+<li><code class="prettyprint">ng-model</code> 绑定的数据</li>
+<li><code class="prettyprint">required</code> 是否必填</li>
+<li><code class="prettyprint">ng-required</code> 是否必填</li>
+<li><code class="prettyprint">ng-minlength</code> 最小长度</li>
+<li><code class="prettyprint">ng-maxlength</code> 最大长度</li>
+<li><code class="prettyprint">ng-pattern</code> 匹配模式</li>
+<li><code class="prettyprint">ng-change</code> 值变化时的回调</li>
+</ul>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;form</span> <span class="na">name=</span><span class="s">&quot;test_form&quot;</span> <span class="na">ng-controller=</span><span class="s">&quot;TestCtrl&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;a&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;a&quot;</span> <span class="na">required</span> <span class="na">ng-pattern=</span><span class="s">&quot;/abc/&quot;</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;span</span> <span class="na">ng-click=</span><span class="s">&quot;see()&quot;</span><span class="nt">&gt;&lt;/span&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+</code></pre></div>
+<p>input 控件，它还有一些扩展，这些扩展有些有自己的属性：</p>
+
+<ul>
+<li><code class="prettyprint">input type=&quot;number&quot;</code>多了 number 错误类型，多了 max ， min 属性。</li>
+<li><code class="prettyprint">input type=&quot;url&quot;</code>多了 url 错误类型。</li>
+<li><code class="prettyprint">input type=&quot;email&quot;</code>多了 email 错误类型。</li>
+</ul>
+
+<h3 id="checkbox">checkbox</h3>
+
+<p>是 input 的扩展，不过，它没有验证相关的东西，只有选中与不选中两个值：ng-true-value、ng-false-value:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;form</span> <span class="na">name=</span><span class="s">&quot;test_form&quot;</span> <span class="na">ng-controller=</span><span class="s">&quot;TestCtrl&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;checkbox&quot;</span> <span class="na">name=</span><span class="s">&quot;a&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;a&quot;</span> <span class="na">ng-true-value=</span><span class="s">&quot;AA&quot;</span> <span class="na">ng-false-value=</span><span class="s">&quot;BB&quot;</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;span&gt;&lt;/span&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+</code></pre></div>
+<h3 id="radio">radio</h3>
+
+<p>也是 input 的扩展。和 checkbox 一样，但它只有一个值：</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;form</span> <span class="na">name=</span><span class="s">&quot;test_form&quot;</span> <span class="na">ng-controller=</span><span class="s">&quot;TestCtrl&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;radio&quot;</span> <span class="na">name=</span><span class="s">&quot;a&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;a&quot;</span> <span class="na">value=</span><span class="s">&quot;AA&quot;</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;radio&quot;</span> <span class="na">name=</span><span class="s">&quot;a&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;a&quot;</span> <span class="na">value=</span><span class="s">&quot;BB&quot;</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;span&gt;&lt;/span&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+</code></pre></div>
+<h3 id="textarea">textarea</h3>
+
+<p>同 input</p>
+
+<h3 id="select">select</h3>
+
+<p>它里面的一个叫做 <code class="prettyprint">ng-options</code> 的属性用于数据呈现。</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;form</span> <span class="na">name=</span><span class="s">&quot;test_form&quot;</span> <span class="na">ng-controller=</span><span class="s">&quot;TestCtrl&quot;</span> <span class="na">ng-init=</span><span class="s">&quot;o=[0,1,2,3]; a=o[1];&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;select</span> <span class="na">ng-model=</span><span class="s">&quot;a&quot;</span> <span class="na">ng-options=</span><span class="s">&quot;x for x in o&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">&quot;&quot;</span><span class="nt">&gt;</span>可以加这个空值<span class="nt">&lt;/option&gt;</span>
+    <span class="nt">&lt;/select&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+</code></pre></div>
+<p>在 $scope 中， select 绑定的变量，其值和普通的 value 无关，可以是一个对象：</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;form</span> <span class="na">name=</span><span class="s">&quot;test_form&quot;</span> <span class="na">ng-controller=</span><span class="s">&quot;TestCtrl&quot;</span>
+    <span class="na">ng-init=</span><span class="s">&quot;o=[{name: &#39;AA&#39;}, {name: &#39;BB&#39;}]; a=o[1];&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;select</span> <span class="na">ng-model=</span><span class="s">&quot;a&quot;</span> <span class="na">ng-options=</span><span class="s">&quot;x.name for x in o&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+</code></pre></div>
+<p>显示与值分别指定， <code class="prettyprint">x.v as x.name for x in o</code> ：</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;form</span> <span class="na">name=</span><span class="s">&quot;test_form&quot;</span> <span class="na">ng-controller=</span><span class="s">&quot;TestCtrl&quot;</span>
+    <span class="na">ng-init=</span><span class="s">&quot;o=[{name: &#39;AA&#39;, v: &#39;00&#39;}, {name: &#39;BB&#39;, v: &#39;11&#39;}]; a=o[1].v;&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;select</span> <span class="na">ng-model=</span><span class="s">&quot;a&quot;</span> <span class="na">ng-options=</span><span class="s">&quot;x.v as x.name for x in o&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+</code></pre></div>
+<p>加入分组的， <code class="prettyprint">x.name group by x.g for x in o</code> ：</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;form</span> <span class="na">name=</span><span class="s">&quot;test_form&quot;</span> <span class="na">ng-controller=</span><span class="s">&quot;TestCtrl&quot;</span>
+    <span class="na">ng-init=</span><span class="s">&quot;o=[{name: &#39;AA&#39;, g: &#39;00&#39;}, {name: &#39;BB&#39;, g: &#39;11&#39;}, {name: &#39;CC&#39;, g: &#39;00&#39;}]; a=o[1];&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;select</span> <span class="na">ng-model=</span><span class="s">&quot;a&quot;</span> <span class="na">ng-options=</span><span class="s">&quot;x.name group by x.g for x in o&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+</code></pre></div>
+<p>分组了还分别指定显示与值的， x.v as x.name group by x.g for x in o ：</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;form</span> <span class="na">name=</span><span class="s">&quot;test_form&quot;</span> <span class="na">ng-controller=</span><span class="s">&quot;TestCtrl&quot;</span> <span class="na">ng-init=</span><span class="s">&quot;o=[{name: &#39;AA&#39;, g: &#39;00&#39;, v: &#39;=&#39;}, {name: &#39;BB&#39;, g: &#39;11&#39;, v: &#39;+&#39;}, {name: &#39;CC&#39;, g: &#39;00&#39;, v: &#39;!&#39;}]; a=o[1].v;&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;select</span> <span class="na">ng-model=</span><span class="s">&quot;a&quot;</span> <span class="na">ng-options=</span><span class="s">&quot;x.v as x.name group by x.g for x in o&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+</code></pre></div>
+<p>如果参数是对象的话，基本也是一样的，只是把遍历的对象改成 (key, value) ：</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;form</span> <span class="na">name=</span><span class="s">&quot;test_form&quot;</span> <span class="na">ng-controller=</span><span class="s">&quot;TestCtrl&quot;</span> <span class="na">ng-init=</span><span class="s">&quot;o={a: 0, b: 1}; a=o.a;&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;select</span> <span class="na">ng-model=</span><span class="s">&quot;a&quot;</span> <span class="na">ng-options=</span><span class="s">&quot;k for (k, v) in o&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+
+<span class="nt">&lt;form</span> <span class="na">name=</span><span class="s">&quot;test_form&quot;</span> <span class="na">ng-controller=</span><span class="s">&quot;TestCtrl&quot;</span>
+    <span class="na">ng-init=</span><span class="s">&quot;o={a: {name: &#39;AA&#39;, v: &#39;00&#39;}, b: {name: &#39;BB&#39;, v: &#39;11&#39;}}; a=o.a.v;&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;select</span> <span class="na">ng-model=</span><span class="s">&quot;a&quot;</span> <span class="na">ng-options=</span><span class="s">&quot;v.v as v.name for (k, v) in o&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+
+<span class="nt">&lt;form</span> <span class="na">name=</span><span class="s">&quot;test_form&quot;</span> <span class="na">ng-controller=</span><span class="s">&quot;TestCtrl&quot;</span>
+    <span class="na">ng-init=</span><span class="s">&quot;o={a: {name: &#39;AA&#39;, v: &#39;00&#39;, g: &#39;==&#39;}, b: {name: &#39;BB&#39;, v: &#39;11&#39;, g: &#39;==&#39;}}; a=o.a;&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;select</span> <span class="na">ng-model=</span><span class="s">&quot;a&quot;</span> <span class="na">ng-options=</span><span class="s">&quot;v.name group by v.g for (k, v) in o&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+
+<span class="nt">&lt;form</span> <span class="na">name=</span><span class="s">&quot;test_form&quot;</span> <span class="na">ng-controller=</span><span class="s">&quot;TestCtrl&quot;</span>
+    <span class="na">ng-init=</span><span class="s">&quot;o={a: {name: &#39;AA&#39;, v: &#39;00&#39;, g: &#39;==&#39;}, b: {name: &#39;BB&#39;, v: &#39;11&#39;, g: &#39;==&#39;}}; a=o.a.v;&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;select</span> <span class="na">ng-model=</span><span class="s">&quot;a&quot;</span> <span class="na">ng-options=</span><span class="s">&quot;v.v as v.name group by v.g for (k, v) in o&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+</code></pre></div>
+<p>还有一些表单控件功能相关的指令：</p>
+
+<ul>
+<li><code class="prettyprint">ng-src</code>  src 属性</li>
+<li><code class="prettyprint">ng-href</code>  href 属性</li>
+<li><code class="prettyprint">ng-checked</code> 控制 radio 和 checkbox 的选中状态</li>
+<li><code class="prettyprint">ng-selected</code> 控制下拉框的选中状态</li>
+<li><code class="prettyprint">ng-disabled</code> 控制失效状态</li>
+<li><code class="prettyprint">ng-multiple</code> 控制多选</li>
+<li><code class="prettyprint">ng-readonly</code> 控制只读状态</li>
+</ul>
+
+<p>以上指令的取值均为 boolean 类型，当值为 true 时相关状态生效，道理比较简单就不多做解释。</p>
+
+<p><strong>注意：</strong> 上面的这些只是单向绑定，即只是从数据到模板，不能反作用于数据。要双向绑定，还是要使用 ng-model 。</p>
+
+<h1 id="3.-angularjs-过滤器">3. AngularJS 过滤器</h1>
+
+<p>过滤器（filter）正如其名，作用就是接收一个输入，通过某个规则进行处理，然后返回处理后的结果。主要用在数据的格式化上，例如获取一个数组中的子集，对数组中的元素进行排序等。过滤器通常是伴随标记来使用的，将你 model 中的数据格式化为需要的格式。表单的控制功能主要涉及到数据验证以及表单控件的增强。</p>
+
+<h2 id="内置过滤器">内置过滤器</h2>
+
+<p>ng 内置了一些过滤器，它们是：<br>
+currency(货币)、date(日期)、filter(子串匹配)、json(格式化json对象)、limitTo(限制个数)、lowercase(小写)、uppercase(大写)、number(数字)、orderBy(排序)。</p>
+
+<p>过滤器使用示例：</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="c1">// 使用currency可以将数字格式化为货币，默认是美元符号，你可以自己传入所需的符号</span>
+<span class="p">{{</span><span class="nx">num</span> <span class="o">|</span> <span class="nx">currency</span> <span class="o">:</span> <span class="s1">&#39;￥&#39;</span><span class="p">}}</span>
+
+<span class="c1">// 参数用来指定所要的格式，y M d h m s E 分别表示 年 月 日 时 分 秒 星期，你可以自由组合它们。也可以使用不同的个数来限制格式化的位数。另外参数也可以使用特定的描述性字符串，例如“shortTime”将会把时间格式为12:05 pm这样的。</span>
+<span class="p">{{</span><span class="nx">date</span> <span class="o">|</span> <span class="nx">date</span> <span class="o">:</span> <span class="s1">&#39;yyyy-MM-dd hh:mm:ss EEEE&#39;</span><span class="p">}}</span>
+
+<span class="nx">$scope</span><span class="p">.</span><span class="nx">func</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span><span class="k">return</span> <span class="nx">e</span><span class="p">.</span><span class="nx">age</span><span class="o">&gt;</span><span class="mi">4</span><span class="p">;}{{</span> <span class="nx">childrenArray</span> <span class="o">|</span> <span class="nx">filter</span> <span class="o">:</span> <span class="s1">&#39;a&#39;</span> <span class="p">}}</span>
+
+<span class="c1">// filter 过滤器从数组中选择一个子集：</span>
+<span class="p">{{</span> <span class="nx">childrenArray</span> <span class="o">|</span> <span class="nx">filter</span> <span class="o">:</span> <span class="s1">&#39;a&#39;</span> <span class="p">}}</span> <span class="c1">//匹配属性值中含有a的</span>
+<span class="p">{{</span> <span class="nx">childrenArray</span> <span class="o">|</span> <span class="nx">filter</span> <span class="o">:</span> <span class="mi">4</span> <span class="p">}}</span>  <span class="c1">//匹配属性值中含有4的</span>
+<span class="p">{{</span> <span class="nx">childrenArray</span> <span class="o">|</span> <span class="nx">filter</span> <span class="o">:</span> <span class="p">{</span><span class="nx">name</span> <span class="o">:</span> <span class="s1">&#39;i&#39;</span><span class="p">}</span> <span class="p">}}</span> <span class="c1">//参数是对象，匹配name属性中含有i的</span>
+<span class="p">{{</span><span class="nx">childrenArray</span> <span class="o">|</span> <span class="nx">filter</span> <span class="o">:</span> <span class="nx">func</span> <span class="p">}}</span>  <span class="c1">//参数是函数　</span>
+
+<span class="c1">// json过滤器可以把一个js对象格式化为json字符串</span>
+<span class="p">{{</span> <span class="nx">jsonTest</span> <span class="o">|</span> <span class="nx">json</span><span class="p">}}</span>
+
+<span class="c1">// 列表截取 limitTo ，支持正负数</span>
+<span class="p">{{</span> <span class="nx">childrenArray</span> <span class="o">|</span> <span class="nx">limitTo</span> <span class="o">:</span> <span class="mi">2</span> <span class="p">}}</span> 
+
+<span class="c1">// number过滤器可以为一个数字加上千位分割，像这样，123,456,789。同时接收一个参数，可以指定float类型保留几位小数：</span>
+<span class="p">{{</span> <span class="nx">num</span> <span class="o">|</span> <span class="nx">number</span> <span class="o">:</span> <span class="mi">2</span> <span class="p">}}</span>
+
+<span class="c1">// 大小写 lowercase ， uppercase ：</span>
+<span class="p">{{</span> <span class="s1">&#39;abc&#39;</span> <span class="o">|</span> <span class="nx">uppercase</span> <span class="p">}}</span>
+<span class="p">{{</span> <span class="s1">&#39;Abc&#39;</span> <span class="o">|</span> <span class="nx">lowercase</span> <span class="p">}}</span>
+
+
+<span class="p">{{</span> <span class="nx">childrenArray</span> <span class="o">|</span> <span class="nx">orderBy</span> <span class="o">:</span> <span class="s1">&#39;age&#39;</span> <span class="p">}}</span>       <span class="c1">//按age属性值进行排序，若是-age，则倒序</span>
+<span class="p">{{</span> <span class="nx">childrenArray</span> <span class="o">|</span> <span class="nx">orderBy</span> <span class="o">:</span> <span class="nx">orderFunc</span> <span class="p">}}</span>   <span class="c1">//按照函数的返回值进行排序</span>
+<span class="p">{{</span> <span class="nx">childrenArray</span> <span class="o">|</span> <span class="nx">orderBy</span> <span class="o">:</span> <span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">,</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="p">}}</span>  <span class="c1">//如果age相同，按照name进行排序</span></code></pre></div>
+
+<h2 id="过滤器使用方式">过滤器使用方式</h2>
+
+<p>在模块中定义过滤器：</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;Demo&#39;</span><span class="p">,</span> <span class="p">[],</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">noop</span><span class="p">);</span>
+  <span class="nx">app</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="s1">&#39;map&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
+    <span class="kd">var</span> <span class="nx">filter</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">input</span><span class="p">){</span>
+      <span class="k">return</span> <span class="nx">input</span> <span class="o">+</span> <span class="s1">&#39;...&#39;</span><span class="p">;</span>
+    <span class="p">};</span>
+    <span class="k">return</span> <span class="nx">filter</span><span class="p">;</span>
+  <span class="p">});</span>
+</code></pre></div>
+<p>然后，在模板中使用：</p>
+
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;p&gt;</span>示例数据: {{ a | map }}<span class="nt">&lt;/p&gt;</span></code></pre></div>
+
+<h1 id="4.-angularjs-ajax">4. AngularJS Ajax</h1>
+
+<p>$http 服务是 AngularJS 的核心服务之一，它帮助我们通过 XMLHttpRequest 对象或 JSONP 与远程 HTTP 服务进行交流。</p>
+
+<p>$http 服务是这样一个函数：它接受一个设置对象，其中指定了如何创建 HTTP 请求；它将返回一个 promise 对象，其中提供两个方法： success 方法和 error方法。</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$http</span><span class="p">.</span><span class="nx">get</span><span class="p">({</span><span class="nx">url</span><span class="o">:</span><span class="s2">&quot;/xxx.action&quot;</span><span class="p">}).</span><span class="nx">success</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">}).</span><span class="nx">error</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;error&quot;</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div>
+<p>$http 接受的配置项有：</p>
+
+<ul>
+<li><code class="prettyprint">method</code> 方法</li>
+<li><code class="prettyprint">url</code> 路径</li>
+<li><code class="prettyprint">params</code> GET请求的参数</li>
+<li><code class="prettyprint">data</code> post请求的参数</li>
+<li><code class="prettyprint">headers</code> 头</li>
+<li><code class="prettyprint">transformRequest</code> 请求预处理函数</li>
+<li><code class="prettyprint">transformResponse</code> 响应预处理函数</li>
+<li><code class="prettyprint">cache</code> 缓存</li>
+<li><code class="prettyprint">timeout</code> 超时毫秒，超时的请求会被取消</li>
+<li><code class="prettyprint">withCredentials</code> 跨域安全策略的一个东西</li>
+</ul>
+
+<p>其中的 transformRequest 和 transformResponse 及 headers 已经有定义的，如果自定义则会覆盖默认定义</p>
+
+<p>对于几个标准的 HTTP 方法，有对应的 shortcut ：</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$http</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">config</span><span class="p">)</span>
+<span class="nx">$http</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">config</span><span class="p">)</span>
+<span class="nx">$http</span><span class="p">.</span><span class="nx">head</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">config</span><span class="p">)</span>
+<span class="nx">$http</span><span class="p">.</span><span class="nx">jsonp</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">config</span><span class="p">)</span>
+<span class="nx">$http</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">data</span><span class="p">,</span> <span class="nx">config</span><span class="p">)</span>
+<span class="nx">$http</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">data</span><span class="p">,</span> <span class="nx">config</span><span class="p">)</span>
+</code></pre></div>
+<p>注意其中的 JSONP 方法，在实现上会在页面中添加一个 script 标签，然后放出一个 GET 请求。你自己定义的，匿名回调函数，会被 ng 自已给一个全局变量。在定义请求，作为 GET 参数，你可以使用 <code class="prettyprint">JSON_CALLBACK</code> 这个字符串来暂时代替回调函数名，之后 ng 会为你替换成真正的函数名：</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">p</span> <span class="o">=</span> <span class="nx">$http</span><span class="p">({</span>
+    <span class="nx">method</span><span class="o">:</span> <span class="s1">&#39;JSONP&#39;</span><span class="p">,</span>
+    <span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;/json&#39;</span><span class="p">,</span>
+    <span class="nx">params</span><span class="o">:</span> <span class="p">{</span><span class="nx">callback</span><span class="o">:</span> <span class="s1">&#39;JSON_CALLBACK&#39;</span><span class="p">}</span>
+<span class="p">});</span>
+<span class="nx">p</span><span class="p">.</span><span class="nx">success</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">,</span> <span class="nx">status</span><span class="p">,</span> <span class="nx">headers</span><span class="p">,</span> <span class="nx">config</span><span class="p">){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+    <span class="nx">$scope</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">response</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+<span class="p">});</span>
+</code></pre></div>
+<p>$http 有两个属性：</p>
+
+<ul>
+<li><code class="prettyprint">defaults</code> 请求的全局配置</li>
+<li><code class="prettyprint">pendingRequests</code> 当前的请求队列状态</li>
+</ul>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$http</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">transformRequest</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;here&#39;</span><span class="p">);</span> <span class="k">return</span> <span class="nx">data</span><span class="p">;}</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">$http</span><span class="p">.</span><span class="nx">pendingRequests</span><span class="p">);</span>
+</code></pre></div>
+<h1 id="5.-angularjs-控制器">5. AngularJS 控制器</h1>
+
+<p>AngularJS 应用程序被控制器控制，控制器是 JavaScript 对象，由标准的 JavaScript 对象的构造函数 创建。</p>
+
+<p>ng-controller 指令定义了应用程序控制器，给所在的 DOM 元素创建了一个新的 $scope 对象，并将这个 $scope 对象包含进外层 DOM 元素的 $scope 对象里。</p>
+
+<p>示例如下：</p>
+
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;div</span> <span class="na">ng-app=</span><span class="s">&quot;&quot;</span> <span class="na">ng-controller=</span><span class="s">&quot;personController&quot;</span><span class="nt">&gt;</span>
+
+名： <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;person.firstName&quot;</span><span class="nt">&gt;&lt;br&gt;</span>
+姓： <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;person.lastName&quot;</span><span class="nt">&gt;&lt;br&gt;</span>
+<span class="nt">&lt;br&gt;</span>
+姓名： {{fullName()}}
+
+<span class="nt">&lt;/div&gt;</span>
+
+<span class="nt">&lt;script&gt;</span>
+<span class="kd">function</span> <span class="nx">personController</span><span class="p">(</span><span class="nx">$scope</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">$scope</span><span class="p">.</span><span class="nx">person</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="nx">firstName</span><span class="o">:</span> <span class="s2">&quot;John&quot;</span><span class="p">,</span>
+        <span class="nx">lastName</span><span class="o">:</span> <span class="s2">&quot;Doe&quot;</span><span class="p">,</span>
+     <span class="p">};</span>
+     <span class="nx">$scope</span><span class="p">.</span><span class="nx">fullName</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+         <span class="kd">var</span> <span class="nx">x</span><span class="p">;</span>
+         <span class="nx">x</span> <span class="o">=</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">person</span><span class="p">;</span> 
+         <span class="k">return</span> <span class="nx">x</span><span class="p">.</span><span class="nx">firstName</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="nx">x</span><span class="p">.</span><span class="nx">lastName</span><span class="p">;</span>
+     <span class="p">};</span>
+<span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span></code></pre></div>
+
+<p>$scope 是一个把 view（一个DOM元素）连结到 controller 上的对象。在我们的 MVC 结构里，这个 $scope 将成为 model，它提供一个绑定到DOM元素（以及其子元素）上的excecution context。</p>
+
+<p>尽管听起来有点复杂，但 $scope 实际上就是一个JavaScript 对象，controller 和 view 都可以访问它，所以我们可以利用它在两者间传递信息。在这个 $scope 对象里，我们既存储数据，又存储将要运行在view上的函数。</p>
+
+<p>每一个 Angular 应用都会有一个 $rootScope。这个 $rootScope 是最顶级的 scope，它对应着含有 ng-app 指令属性的那个 DOM 元素</p>
+
+<p>所有scope都遵循原型继承（prototypal inheritance），这意味着它们都能访问父scope们。</p>
+
+<h1 id="6.-angularjs-模块">6. AngularJS 模块</h1>
+
+<p>AngularJS 本身的一个默认模块叫做 ng ，它提供了 $http ， $q 等等服务。</p>
+
+<p>服务只是模块提供的多种机制中的一种，其它的还有命令（ directive ），过滤器（ filter ），及其它配置信息。</p>
+
+<p>然后在额外的 js 文件中有一个附加的模块叫做 ngResource ， 它提供了一个 $resource 服务。</p>
+
+<h2 id="定义模块">定义模块</h2>
+
+<p>定义模块的方法是使用 angular.module 。调用时声明了对其它模块的依赖，并定义了“初始化”函数。</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript">  <span class="kd">var</span> <span class="nx">my_module</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;MyModule&#39;</span><span class="p">,</span> <span class="p">[],</span> <span class="kd">function</span><span class="p">(){</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;here&#39;</span><span class="p">);</span>
+  <span class="p">});</span>
+</code></pre></div>
+<p>这段代码定义了一个叫做 MyModule 的模块， my_module 这个引用可以在接下来做其它的一些事，比如定义服务。</p>
+
+<h2 id="定义服务">定义服务</h2>
+
+<p>ng的服务是这样定义的：</p>
+
+<blockquote>
+<p>Angular services are singletons objects or functions that carry out specific tasks common to web apps.</p>
+</blockquote>
+
+<ul>
+<li>它是一个单例对象或函数，对外提供特定的功能。</li>
+<li>首先是一个单例，即无论这个服务被注入到任何地方，对象始终只有一个实例。</li>
+<li>其次这与我们自己定义一个function然后在其他地方调用不同，因为服务被定义在一个模块中，所以其使用范围是可以被我们管理的。ng的避免全局变量污染意识非常强。</li>
+</ul>
+
+<p>ng提供了很多内置的服务，可以到API中查看 <a href="http://docs.angularjs.org/api/">http://docs.angularjs.org/api/</a>。如同指令一样，系统内置的服务以$开头，我们也可以自己定义一个服务。</p>
+
+<p>在这里呢，就要先介绍一下叫 provider 的东西。简单来说， provider 是被 <code class="prettyprint">注入控制器</code> 使用的一个对象，注入机制通过调用一个 provider 的 $get() 方法，把得到的东西作为参数进行相关调用（比如把得到的服务作为一个 Controller 的参数）。</p>
+
+<p>在这里 <code class="prettyprint">服务</code> 的概念就比较不明确，对使用而言，服务仅指 $get() 方法返回的东西，但是在整体机制上，服务又要指提供了 $get() 方法的整个对象。</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript">  <span class="c1">//这是一个provider</span>
+  <span class="kd">var</span> <span class="nx">pp</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">$get</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+      <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;haha&#39;</span><span class="o">:</span> <span class="s1">&#39;123&#39;</span><span class="p">};</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="c1">//我在模块的初始化过程当中, 定义了一个叫 PP 的服务</span>
+  <span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;Demo&#39;</span><span class="p">,</span> <span class="p">[],</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$provide</span><span class="p">){</span>
+    <span class="nx">$provide</span><span class="p">.</span><span class="nx">provider</span><span class="p">(</span><span class="s1">&#39;PP&#39;</span><span class="p">,</span> <span class="nx">pp</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="c1">//PP服务实际上就是 pp 这个 provider 的 $get() 方法返回的东西</span>
+  <span class="nx">app</span><span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">&#39;TestCtrl&#39;</span><span class="p">,</span>
+    <span class="kd">function</span><span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">PP</span><span class="p">){</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">PP</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">);</span>
+</code></pre></div>
+<p>ng 还有相关的 shortcut，<strong>第一个是 factory 方法</strong>，由 $provide 提供， module 的 factory 是一个引用，作用一样。这个方法直接把一个函数当成是一个对象的 $get() 方法，这样你就不用显式地定义一个 provider 了：</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;Demo&#39;</span><span class="p">,</span> <span class="p">[],</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$provide</span><span class="p">){</span>
+    <span class="nx">$provide</span><span class="p">.</span><span class="nx">factory</span><span class="p">(</span><span class="s1">&#39;PP&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;hello&#39;</span><span class="o">:</span> <span class="s1">&#39;123&#39;</span><span class="p">};</span>
+    <span class="p">});</span>
+<span class="p">});</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">&#39;TestCtrl&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">PP</span><span class="p">){</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">PP</span><span class="p">)</span> <span class="p">});</span>
+</code></pre></div>
+<p>在 module 中使用：</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;Demo&#39;</span><span class="p">,</span> <span class="p">[],</span> <span class="kd">function</span><span class="p">(){</span> <span class="p">});</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">factory</span><span class="p">(</span><span class="s1">&#39;PP&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span><span class="k">return</span> <span class="p">{</span><span class="s1">&#39;abc&#39;</span><span class="o">:</span> <span class="s1">&#39;123&#39;</span><span class="p">}});</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">&#39;TestCtrl&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">PP</span><span class="p">){</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">PP</span><span class="p">)</span> <span class="p">});</span>
+</code></pre></div>
+<p><strong>第二个是 service 方法</strong>，也是由 $provide 提供， module 中有对它的同名引用。 service 和 factory 的区别在于，前者是要求提供一个“构造方法”，后者是要求提供 $get() 方法。意思就是，前者一定是得到一个 object ，后者可以是一个数字或字符串。它们的关系大概是：</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;Demo&#39;</span><span class="p">,</span> <span class="p">[],</span> <span class="kd">function</span><span class="p">(){</span> <span class="p">});</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">service</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">constructor</span><span class="p">){</span>
+    <span class="nx">app</span><span class="p">.</span><span class="nx">factory</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
+      <span class="k">return</span> <span class="p">(</span><span class="k">new</span> <span class="nx">constructor</span><span class="p">());</span>
+    <span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>service 方法的使用就很简单了：</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;Demo&#39;</span><span class="p">,</span> <span class="p">[],</span> <span class="kd">function</span><span class="p">(){</span> <span class="p">});</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">service</span><span class="p">(</span><span class="s1">&#39;PP&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">abc</span> <span class="o">=</span> <span class="s1">&#39;123&#39;</span><span class="p">;</span>
+<span class="p">});</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">&#39;TestCtrl&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">PP</span><span class="p">){</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">PP</span><span class="p">)</span> <span class="p">});</span>
+</code></pre></div>
+<h2 id="引入模块并使用服务">引入模块并使用服务</h2>
+
+<p>结合上面的 <code class="prettyprint">定义模块</code> 和 <code class="prettyprint">定义服务</code>，我们可以方便地组织自己的额外代码：</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// 定义服务</span>
+<span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;MyModule&#39;</span><span class="p">,</span> <span class="p">[],</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$provide</span><span class="p">){</span>
+    <span class="nx">$provide</span><span class="p">.</span><span class="nx">factory</span><span class="p">(</span><span class="s1">&#39;S1&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
+      <span class="k">return</span> <span class="s1">&#39;I am S1&#39;</span><span class="p">;</span>
+    <span class="p">});</span>
+    <span class="nx">$provide</span><span class="p">.</span><span class="nx">factory</span><span class="p">(</span><span class="s1">&#39;S2&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
+      <span class="k">return</span> <span class="p">{</span><span class="nx">see</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span><span class="k">return</span> <span class="s1">&#39;I am S2&#39;</span><span class="p">}}</span>
+    <span class="p">});</span>
+<span class="p">});</span>
+
+<span class="c1">// 调用服务</span>
+<span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;Demo&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;MyModule&#39;</span><span class="p">],</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">noop</span><span class="p">);</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">&#39;TestCtrl&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">S1</span><span class="p">,</span> <span class="nx">S2</span><span class="p">){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">S1</span><span class="p">)</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">S2</span><span class="p">.</span><span class="nx">see</span><span class="p">())</span>
+<span class="p">});</span>
+</code></pre></div>
+<h1 id="7.-附加模块-ngresource">7. 附加模块 ngResource</h1>
+
+<p>ngResource 这个是 ng 官方提供的一个附加模块。<code class="prettyprint">附加</code> 的意思就是，如果你打算用它，那么你需要引入一人单独的 js 文件，然后在声明“根模块”时注明依赖的 ngResource 模块，接着就可以使用它提供的 $resource 服务了。</p>
+
+<p>$resource 服务主要是包装了 AJAX  的调用，使用 $resource 需要先定义“资源”，也就是先定义一些 HTTP 请求。</p>
+
+<p>TODO</p>
+
+<h1 id="8.-angularjs-路由">8. AngularJS 路由</h1>
+
+<p>ng的路由(ngRoute)是一个单独的模块，包含以下内容：</p>
+
+<ul>
+<li>服务 <code class="prettyprint">$routeProvider</code> 用来定义一个路由表，即地址栏与视图模板的映射</li>
+<li>服务 <code class="prettyprint">$routeParams</code> 保存了地址栏中的参数，例如 <code class="prettyprint">{id : 1, name : &#39;tom&#39;}</code></li>
+<li>服务 <code class="prettyprint">$route</code> 完成路由匹配，并且提供路由相关的属性访问及事件，如访问当前路由对应的 controller</li>
+<li>指令 <code class="prettyprint">ngView</code> 用来在主视图中指定加载子视图的区域</li>
+</ul>
+
+<h2 id="定义路由">定义路由</h2>
+
+<p>第一步：引入文件和依赖</p>
+
+<p>ngRoute 也是一个附件模块，故需要在页面上引入 <code class="prettyprint">angular-route.min.js</code> 并在模块中注入对 ngRoute 的依赖，如下：</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;MyApp&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;ngRoute&#39;</span><span class="p">]);</span>
+</code></pre></div>
+<p>第二步：定义路由表</p>
+
+<p>$routeProvider 提供了定义路由表的服务，它有两个核心方法：<code class="prettyprint">when(path,route)</code> 和 <code class="prettyprint">otherwise(params)</code>，先看一下核心中的核心 when(path,route)方法。</p>
+
+<p><code class="prettyprint">when(path,route)</code> 方法接收两个参数:</p>
+
+<ul>
+<li>path 是一个 string 类型，表示该条路由规则所匹配的路径，它将与地址栏的内容($location.path)值进行匹配。如果需要匹配参数，可以在 path 中使用冒号加名称的方式，如：path为 <code class="prettyprint">/show/:name</code>，如果地址栏是 <code class="prettyprint">/show/tom</code> ，那么参数 name 和所对应的值 tom 便会被保存在 $routeParams 中，像这样：<code class="prettyprint">{name : tom}</code>。我们也可以用 <code class="prettyprint">*</code> 进行模糊匹配，如：<code class="prettyprint">/show*/:name</code> 将匹配<code class="prettyprint">/showInfo/tom</code>。</li>
+<li>route 参数是一个 object，用来指定当 path 匹配后所需的一系列配置项，包括以下内容：
+
+<ul>
+<li><code class="prettyprint">controller</code> function 或 string 类型。在当前模板上执行的 controller 函数，生成新的 scope；</li>
+<li><code class="prettyprint">controllerAs</code> string 类型，为 controller 指定别名；</li>
+<li><code class="prettyprint">template</code> string 或 function 类型，视图所用的模板，这部分内容将被 ngView 引用；</li>
+<li><code class="prettyprint">templateUrl</code> string 或 function 类型，当视图模板为单独的 html 文件或是使用了 <code class="prettyprint">&lt;script type=&quot;text/ng-template&quot;&gt;</code>定义模板时使用；</li>
+<li><code class="prettyprint">resolve</code> 指定当前 controller 所依赖的其他模块；</li>
+<li><code class="prettyprint">redirectTo</code> 重定向的地址。</li>
+</ul></li>
+</ul>
+
+<p>第三步：在主视图模板中指定加载子视图的位置</p>
+
+<p>只需在模板中简单的使用此 ngView 指令:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;div</span> <span class="na">ng-view</span><span class="nt">&gt;&lt;/div&gt;</span>
+</code></pre></div>
+<h1 id="9.-参考文章">9. 参考文章</h1>
+
+<ul>
+<li><a href="http://www.w3cschool.cc/angularjs/angularjs-tutorial.html">AngularJS 教程</a></li>
+<li><a href="http://blog.csdn.net/yy374864125/article/details/41349417">angularjs学习总结 详细教程</a></li>
+<li><a href="http://www.zouyesheng.com/angular.html#toc34">AngularJS学习笔记</a></li>
+</ul>
+</div>
+
+
+      <div id="pay" style="text-align:center;">
+        ----EOF-----
+        <br>
+        <section>
+  <h4>Sponsor</h4>
+	<img src="http://javachen-rs.qiniudn.com/images/alipay.png" width="150/">
+  <p class="small">觉得此博客对你有帮助，支付宝扫码赞助吧</p>
+</section>
+
+      </div>
+
+      <p class="meta">
+      	
+            Categories:
+      	    
+          	<a class="btn btn-default btn-xs" href="/categories.html#web">web</a>
+          
+      	
+
+      	
+            Tags:
+      	    
+          	<a class="btn btn-default btn-xs" href="/tags.html#angularjs">angularjs</a>
+          
+      	
+      </p>
+	</article>
+
+	<ul class="pager">
+	  
+	  <li class="previous"><a class="btn btn-xs" href="/2015/01/07/build-multi-module-project-with-gradle" title="Gradle构建多模块项目">&larr; Prev</a></li>
+	  
+	  
+	  <li class="next"><a class="btn btn-xs" href="/2015/01/09/angular-phonecat-examples" title="AngularJS PhoneCat代码分析">Next &rarr;</a></li>
+	  
+	</ul>
+
+  
+<div id="comments">
+  <div class="ds-thread" data-thread-key="/2015/01/08/basic-concepts-of-angularjs"  data-title="AngularJS基本知识点 - 小天的个人博客"></div>
+</div>
+
+
+
+</div>
+
+        </div>
+      </div>
+
+      <footer class="footer text-center">
+  <p>&copy; 2009-2015 <a href="/" target="_blank" title="86后，工作在深圳；Java程序员、Hadoop工程师；主要关注Java、Hadoop、Kettle、关注大数据处理技术。">小天</a>. With Help from <a href="//jekyllrb.com/" target="_blank" title="Transform your plain text into static websites and blogs.">Jekyll</a> and <a href="//getbootstrap.com/" target="_blank" title="Bootstrap is the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web.">Bootstrap</a>, theme from <a href="http://havee.me/" target="_blank" title="http://havee.me/">Havee</a>.
+
+  <span style="float:right;"><a href="/about.html">About</a></span>
+
+	
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+  </p>
+  <div id="toTop" style="display: block;">
+    <a href="#">▲</a><a href="#footer">▼</a>
+  </div>
+</footer>
+
+    </div>
+
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/core.js"></script>
+
+    
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+    
+    <!-- duoshuo Begin -->
+    <script type="text/javascript">
+      var duoshuoQuery = {short_name:"xiaotian120"};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] ||
+        document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+    </script>
+    <!-- duoshuo End -->
+    
+  </body>
+</html>

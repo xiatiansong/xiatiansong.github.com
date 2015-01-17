@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Apache SolrCloud安装 - 小天的个人博客</title>
+  <meta name="description" content="本文基于Solr最新的4.4.0版本进行安装配置SolrCloud集群。SolrCloud通过ZooKeeper集群来进行协调，使一个索引进行分片，各个分片可以分布在不同的物理节点上，多个物理分片组成一个完成的索引Collection。SolrCloud自动支持Solr Replication，可以同时对分片进行复制，冗余存储。">
+  <meta name="keywords" content="java, hadoop, hive, hbase, spark, linux, scala, python, mysql">
+  <meta name="author" content="小天">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="360-site-verification" content="9b7a87a1d52051c96644f0a9b8b79898" />
+  <meta name="sogou_site_verification" content="ofwXWFdthV"/>
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" >
+
+  <link rel="canonical" href="http://blog.xiaotian.com/2014/03/10/how-to-install-solrcloud">
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css" media="all">
+  <link rel="stylesheet" href="/static/css/style.css" media="all">
+  <link rel="stylesheet" href="/static/css/pygments.css" media="all">
+  <link rel="stylesheet" href="/static/css/font-awesome.css" media="all">
+
+  <!-- atom & rss feed -->
+  <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="小天的个人博客 RSS Feed">
+  <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="小天的个人博客 ATOM Feed">
+</head>
+
+
+  <body>
+    <div class="container">
+      <!--[if lte IE 9]>
+<div class="alert alert-warning">
+  <p>Your Internet Explorer is not supported. Please upgrade your Internet Explorer to version 9+, or use latest <a href="http://www.google.com/chrome/" target="_blank" class="alert-link">Google chrome</a>、<a href="http://www.mozilla.org/firefox/" target="_blank" class="alert-link">Mozilla Firefox</a>.</p>
+  <p>If you are using IE 9 or later, make sure you <a href="http://windows.microsoft.com/en-us/internet-explorer/use-compatibility-view#ie=ie-8" target="_blank" class="alert-link">turn off "Compatibility view"</a>.</p>
+</div>
+<![endif]-->
+<header class="header">
+  <div class="title"><a title="小天的个人博客" href="/">小天的个人博客</a></div>
+  <ul class="nav navbar-nav navbar-right visible-lg visible-md">
+    <li>
+    <form id="search-form" class="form-group has-success visible-lg" role="form">
+      <input type="text" class="form-control input-sm" placeholder="Search" id="query" style="width: 160px;">
+    </form>
+    </li>
+    <li><a href="/archive.html" title="Archive"><span class='fa fa-archive fa-2x'></span></a></li>
+    <li><a href="/categories.html" title="Categories"><span class='fa fa-navicon fa-2x'></span></a></li>
+    <li><a href="/tags.html" title="Tags"><span class='fa fa-tags fa-2x'></span></a></li>
+    <li><a href="/about.html" title="About"><span class='fa fa-user fa-2x'></span></a></li>
+    
+    <li><a href="https://github.com/wuskyfantasy" target="_blank" title="Github"><span class='fa fa-github fa-2x'></span></a></li>
+    
+    
+    
+    
+    
+    <li><a href="http://weibo.com/xiaotian120" target="_blank" title="Weibo"><span class="fa fa-weibo fa-2x"></span></a></li>
+    
+
+    <li><a href="/rss.xml" target="_blank" title="RSS"><span class='fa fa-rss fa-2x'></span></a></li>
+  </ul>
+</header>
+
+
+      <div class="wrapper">
+        <div class="row">
+          <div id="search-loader" style="display:none;text-align:center">
+            <img src="http://javachen-rs.qiniudn.com/images/loading.gif">
+          </div>
+          <div class="col-md-12">
+  <article class="news-item">
+
+      <h2  class="news-item"> Apache SolrCloud安装  
+        <time class="small">2014.03.10</time>
+      </h2>
+
+      <div><p>SolrCloud 通过 ZooKeeper 集群来进行协调，使一个索引进行分片，各个分片可以分布在不同的物理节点上，多个物理分片组成一个完成的索引 Collection。SolrCloud 自动支持 Solr Replication，可以同时对分片进行复制，冗余存储。下面，我们基于 Solr 最新的 4.4.0 版本进行安装配置 SolrCloud 集群。</p>
+
+<h1 id="1.-安装环境">1. 安装环境</h1>
+
+<p>我使用的安装程序各版本如下：</p>
+
+<ul>
+<li>Solr： <a href="http://archive.apache.org/dist/lucene/solr/4.4.0/">Apache Solr-4.4.0</a></li>
+<li>Tomcat： <a href="http://archive.apache.org/dist/tomcat/tomcat-6/v6.0.36/">Apache Tomcat 6.0.36</a></li>
+<li>ZooKeeper： <a href="http://www.apache.org/dyn/closer.cgi/zookeeper/">Apache ZooKeeper 3.4.5</a></li>
+</ul>
+
+<p>各个目录说明：</p>
+
+<ul>
+<li>所有的程序安装在 <code class="prettyprint">/opt</code> 目录下，你可以依照你的实际情况下修改安装目录。</li>
+<li>ZooKeeper的数据目录在： <code class="prettyprint">/data/zookeeper/data</code></li>
+<li>solrhome设置在： <code class="prettyprint">/usr/local/solrhome</code></li>
+</ul>
+
+<h1 id="2.-规划solrcloud">2. 规划SolrCloud</h1>
+
+<ul>
+<li>单一SolrCloud数据集合： primary</li>
+<li>ZooKeeper集群： 3台</li>
+<li>SolrCloud实例： 3节点</li>
+<li>索引分片： 3</li>
+<li>复制因子： 2</li>
+</ul>
+
+<p>手动将3个索引分片(Shard)的复本(Replica)分布在3个 SolrCloud 节点上</p>
+
+<p>三个节点：</p>
+
+<ul>
+<li>192.168.56.121</li>
+<li>192.168.56.122</li>
+<li>192.168.56.123</li>
+</ul>
+
+<h1 id="3.-安装zookeeper集群">3. 安装ZooKeeper集群</h1>
+
+<p>由于需要用到 ZooKeeper，故我们先安装好 ZooKeeper 集群。</p>
+
+<p>安装 ZooKeeper 集群之前，请确保每台机器上配置 <code class="prettyprint">/etc/hosts</code>文件，使每个节点都能通过机器名访问。</p>
+
+<p>首先，在第一个节点上将 zookeeper-3.4.5.tar.gz 解压到 <code class="prettyprint">/opt</code> 目录：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ tar zxvf zookeeper-3.4.5.tar.gz -C /opt/
+</code></pre></div>
+<p>创建 ZooKeeper 配置文件 zookeeper-3.4.5/conf/zoo.cfg，内容如下：</p>
+<div class="highlight"><pre><code class="language-properties" data-lang="properties"><span class="na">tickTime</span><span class="o">=</span><span class="s">2000</span>
+<span class="na">initLimit</span><span class="o">=</span><span class="s">10</span>
+<span class="na">syncLimit</span><span class="o">=</span><span class="s">5</span>
+<span class="na">dataDir</span><span class="o">=</span><span class="s">/data/zookeeper/data</span>
+<span class="na">clientPort</span><span class="o">=</span><span class="s">2181</span>
+<span class="na">server.1</span><span class="o">=</span><span class="s">192.168.56.121:2888:3888</span>
+<span class="na">server.2</span><span class="o">=</span><span class="s">192.168.56.122:2888:3888</span>
+<span class="na">server.3</span><span class="o">=</span><span class="s">192.168.56.123:2888:3888</span>
+</code></pre></div>
+<p>ZooKeeper 的数据目录指定在 <code class="prettyprint">/data/zookeeper/data</code> ，你也可以使用其他目录，通过下面命令进行创建该目录：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>mkdir /data/zookeeper/data -p
+</code></pre></div>
+<p>然后，初始化 myid ，三个节点编号依次为 <code class="prettyprint">1，2，3</code> ，在其余节点上分别执行命令（注意修改编号）。</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">echo</span> <span class="s2">&quot;1&quot;</span> &gt;/data/zookeeper/data/myid
+</code></pre></div>
+<p>然后，在第二个和第三个节点上依次重复上面的操作。这样第一个节点中 myid 内容为1，第二个节点为2，第三个节点为3。</p>
+
+<p>最后，启动 ZooKeeper 集群，在每个节点上分别启动 ZooKeeper 服务：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd</span> /opt
+<span class="nv">$ </span>sh zookeeper-3.4.5/bin/zkServer.sh start
+</code></pre></div>
+<p>可以查看 ZooKeeper 集群的状态，保证集群启动没有问题：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@192.168.56.121 opt<span class="o">]</span><span class="c"># sh zookeeper-3.4.5/bin/zkServer.sh status</span>
+JMX enabled by default
+Using config: /opt/zookeeper-3.4.5/bin/../conf/zoo.cfg
+Mode: follower
+</code></pre></div>
+<h1 id="4.-安装solr">4. 安装Solr</h1>
+
+<p>你可以参考<a href="/2014/02/26/how-to-install-solr/">《Apache Solr介绍及安装》</a></p>
+
+<p>简单来说，执行以下命令：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>unzip apache-tomcat-6.0.36.zip  -d /opt
+<span class="nv">$ </span>unzip solr-4.4.0.zip  -d /opt
+
+<span class="nv">$ </span><span class="nb">cd</span> /opt
+<span class="nv">$ </span>chmod +x apache-tomcat-6.0.36/bin/*.sh
+
+<span class="nv">$ </span>cp solr-4.4.0/example/webapps/solr.war apache-tomcat-6.0.36/webapps/
+<span class="nv">$ </span>cp solr-4.4.0/example/lib/ext/* apache-tomcat-6.0.36/webapps/solr/WEB-INF/lib/
+<span class="nv">$ </span>cp solr-4.4.0/example/resources/log4j.properties apache-tomcat-6.0.36/lib/
+</code></pre></div>
+<p>在其他节点上重复以上操作完成所有节点的 solr 的安装。</p>
+
+<h1 id="5.-设置-solrcloud-配置文件">5. 设置 SolrCloud 配置文件</h1>
+
+<p>1、 创建一个 SolrCloud 目录，并将 solr 的 lib 文件拷贝到这个目录：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>mkdir -p /usr/local/solrcloud/solr-lib/
+<span class="nv">$ </span>cp apache-tomcat-6.0.36/webapps/solr/WEB-INF/lib/* /usr/local/solrcloud/solr-lib/
+</code></pre></div>
+<p>2、 通过 bootstrap 设置 solrhome ：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>java -classpath .:/usr/local/solrcloud/solr-lib/* org.apache.solr.cloud.ZkCLI -zkhost 192.168.56.121:2181,192.168.56.122:2181,192.168.56.123:2181 -cmd bootstrap -solrhome /usr/local/solrhome 
+</code></pre></div>
+<p>SolrCloud 集群的所有的配置存储在 ZooKeeper。 一旦 SolrCloud 节点启动时配置了 <code class="prettyprint">-Dbootstrap_confdir</code> 参数， 该节点的配置信息将发送到 ZooKeeper 上存储。基它节点启动时会应用 ZooKeeper 上的配置信息，这样当我们改动配置时就不用一个个机子去更改了。</p>
+
+<p>3、SolrCloud 是通过 ZooKeeper 集群来保证配置文件的变更及时同步到各个节点上，所以，需要将配置文件上传到 ZooKeeper 集群中：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>java -classpath .:/usr/local/solrcloud/solr-lib/* org.apache.solr.cloud.ZkCLI -zkhost 192.168.56.121:2181,192.168.56.122:2181,192.168.56.123:2181 -cmd upconfig -confdir /usr/local/solrcloud/conf/primary/conf -confname primaryconf
+</code></pre></div>
+<p>说明：</p>
+
+<ul>
+<li><code class="prettyprint">zkhost</code> 指定 ZooKeeper 地址，逗号分割</li>
+<li><code class="prettyprint">/usr/local/solrhome/primary/conf</code> 目录下存在 schema.xml 和 solrconfig 两个配置文件，你可以修改为你自己的目录。</li>
+<li><code class="prettyprint">primaryconf</code> 为在 ZooKeeper 上的配置文件名称。</li>
+</ul>
+
+<p>4、把配置文件和目标 collection 联系起来：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>java -classpath .:/usr/local/solrcloud/solr-lib/* org.apache.solr.cloud.ZkCLI -zkhost 192.168.56.121:2181,192.168.56.122:2181,192.168.56.123:2181 -cmd linkconfig -collection primary -confname primaryconf
+</code></pre></div>
+<p>说明：</p>
+
+<ul>
+<li>创建的 collection 叫做 primary，并指定和 primaryconf 连接</li>
+</ul>
+
+<p>5、查看 ZooKeeper 上状态</p>
+
+<p>在任意一个节点的 /opt 目录下执行如下命令：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span> zookeeper-3.4.5/bin/zkCli.sh 
+
+<span class="o">[</span>zk: localhost:2181<span class="o">(</span>CONNECTED<span class="o">)</span> 0<span class="o">]</span> ls /
+<span class="o">[</span>configs,zookeeper,clusterstate.json,aliases.json,live_nodes,overseer,collections,overseer_elect<span class="o">]</span>
+
+<span class="o">[</span>zk: localhost:2181<span class="o">(</span>CONNECTED<span class="o">)</span> 1<span class="o">]</span> ls /configs
+<span class="o">[</span>primaryconf<span class="o">]</span>
+
+<span class="o">[</span>zk: localhost:2181<span class="o">(</span>CONNECTED<span class="o">)</span> 1<span class="o">]</span> ls /collections
+<span class="o">[</span>primary<span class="o">]</span>
+</code></pre></div>
+<p>查看 <code class="prettyprint">/configs</code> 和 <code class="prettyprint">/collections</code> 目录均有值，说明配置文件已经上传到 ZooKeeper 上了，接下来启动 solr。</p>
+
+<h1 id="6.-tomcat-配置与启动">6. Tomcat 配置与启动</h1>
+
+<p>1、修改每个节点上的 tomcat 配置文件，在环境变量中添加 <code class="prettyprint">zkHost</code> 变量</p>
+
+<p>编辑 <code class="prettyprint">apache-tomcat-6.0.36/bin/catalina.sh</code> ，添加如下代码：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">JAVA_OPTS</span><span class="o">=</span><span class="s1">&#39;-Djetty.port=8080 -Dsolr.solr.home=/usr/local/solrhome -DzkHost=192.168.56.122:2181,192.168.56.122:2181,192.168.56.123:2181&#39;</span>
+</code></pre></div>
+<p>在 <code class="prettyprint">/usr/local/solrhome/</code> 目录创建 solr.xml ：</p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
+<span class="nt">&lt;solr</span> <span class="na">persistent=</span><span class="s">&quot;true&quot;</span> <span class="na">sharedLib=</span><span class="s">&quot;lib&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;cores</span> <span class="na">adminPath=</span><span class="s">&quot;/admin/cores&quot;</span> <span class="na">zkClientTimeout=</span><span class="s">&quot;${zkClientTimeout:15000}&quot;</span> <span class="na">hostPort=</span><span class="s">&quot;${jetty.port:8080}&quot;</span> <span class="na">hostContext=</span><span class="s">&quot;${hostContext:solr}&quot;</span><span class="nt">&gt;&lt;/cores&gt;</span>
+<span class="nt">&lt;/solr&gt;</span>
+</code></pre></div>
+<p>说明：</p>
+
+<ul>
+<li><code class="prettyprint">-Djetty.port</code>：配置 solr 使用的端口，默认为 8983，这里我们使用的是 tomcat，端口为 8080</li>
+<li><code class="prettyprint">-Dsolr.solr.home</code>：配置 solr/home</li>
+<li><code class="prettyprint">-zkHost</code>: 配置 zookeeper 集群地址，多个地址逗号分隔</li>
+</ul>
+
+<p>最后，在 /opt 目录下启动 tomcat：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sh apache-tomcat-6.0.36/bin/startup.sh
+</code></pre></div>
+<p>通过 <a href="http://192.168.56.121:8080/solr/">http://192.168.56.121:8080/solr/</a> 进行访问，界面如图提示 <code class="prettyprint">There are no SolrCores running.</code>，这是因为配置文件尚未配置 solrcore。</p>
+
+<p><img src="http://javachen-rs.qiniudn.com/images/2014/solr-no-solrcores.png" alt="There are no SolrCores running"></p>
+
+<h1 id="7.-创建-collection、shard-和-replication">7. 创建 Collection、Shard 和 Replication</h1>
+
+<h2 id="手动创建-collection-及初始-shard">手动创建 Collection 及初始 Shard</h2>
+
+<p>直接通过 REST 接口来创建 Collection，你也可以通过浏览器访问下面地址，如下所示：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>curl <span class="s1">&#39;http://192.168.56.121:8080/solr/admin/collections?action=CREATE&amp;name=primary&amp;numShards=3&amp;replicationFactor=1&#39;</span>
+</code></pre></div>
+<p>如果成功，会输出如下响应内容：</p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;response&gt;</span>
+<span class="nt">&lt;lst</span> <span class="na">name=</span><span class="s">&quot;responseHeader&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;int</span> <span class="na">name=</span><span class="s">&quot;status&quot;</span><span class="nt">&gt;</span>0<span class="nt">&lt;/int&gt;</span>
+    <span class="nt">&lt;int</span> <span class="na">name=</span><span class="s">&quot;QTime&quot;</span><span class="nt">&gt;</span>2649<span class="nt">&lt;/int&gt;</span>
+<span class="nt">&lt;/lst&gt;</span>
+<span class="nt">&lt;lst</span> <span class="na">name=</span><span class="s">&quot;success&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;lst&gt;</span>
+        <span class="nt">&lt;lst</span> <span class="na">name=</span><span class="s">&quot;responseHeader&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;int</span> <span class="na">name=</span><span class="s">&quot;status&quot;</span><span class="nt">&gt;</span>0<span class="nt">&lt;/int&gt;</span>
+            <span class="nt">&lt;int</span> <span class="na">name=</span><span class="s">&quot;QTime&quot;</span><span class="nt">&gt;</span>2521<span class="nt">&lt;/int&gt;</span>
+        <span class="nt">&lt;/lst&gt;</span>
+        <span class="nt">&lt;str</span> <span class="na">name=</span><span class="s">&quot;core&quot;</span><span class="nt">&gt;</span>primary_shard2_replica1<span class="nt">&lt;/str&gt;</span>
+        <span class="nt">&lt;str</span> <span class="na">name=</span><span class="s">&quot;saved&quot;</span><span class="nt">&gt;</span>/usr/local/solrhome/solr.xml<span class="nt">&lt;/str&gt;</span>
+    <span class="nt">&lt;/lst&gt;</span>
+    <span class="nt">&lt;lst&gt;</span>
+        <span class="nt">&lt;lst</span> <span class="na">name=</span><span class="s">&quot;responseHeader&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;int</span> <span class="na">name=</span><span class="s">&quot;status&quot;</span><span class="nt">&gt;</span>0<span class="nt">&lt;/int&gt;</span>
+            <span class="nt">&lt;int</span> <span class="na">name=</span><span class="s">&quot;QTime&quot;</span><span class="nt">&gt;</span>2561<span class="nt">&lt;/int&gt;</span>
+        <span class="nt">&lt;/lst&gt;</span>
+        <span class="nt">&lt;str</span> <span class="na">name=</span><span class="s">&quot;core&quot;</span><span class="nt">&gt;</span>primary_shard3_replica1<span class="nt">&lt;/str&gt;</span>
+        <span class="nt">&lt;str</span> <span class="na">name=</span><span class="s">&quot;saved&quot;</span><span class="nt">&gt;</span>/usr/local/solrhome/solr.xml<span class="nt">&lt;/str&gt;</span>
+    <span class="nt">&lt;/lst&gt;</span>
+    <span class="nt">&lt;lst&gt;</span>
+        <span class="nt">&lt;lst</span> <span class="na">name=</span><span class="s">&quot;responseHeader&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;int</span> <span class="na">name=</span><span class="s">&quot;status&quot;</span><span class="nt">&gt;</span>0<span class="nt">&lt;/int&gt;</span>
+        <span class="nt">&lt;int</span> <span class="na">name=</span><span class="s">&quot;QTime&quot;</span><span class="nt">&gt;</span>2607<span class="nt">&lt;/int&gt;</span>
+        <span class="nt">&lt;/lst&gt;</span>
+        <span class="nt">&lt;str</span> <span class="na">name=</span><span class="s">&quot;core&quot;</span><span class="nt">&gt;</span>primary_shard1_replica1<span class="nt">&lt;/str&gt;</span>
+        <span class="nt">&lt;str</span> <span class="na">name=</span><span class="s">&quot;saved&quot;</span><span class="nt">&gt;</span>/usr/local/solrhome/solr.xml<span class="nt">&lt;/str&gt;</span>
+    <span class="nt">&lt;/lst&gt;</span>
+<span class="nt">&lt;/lst&gt;</span>
+<span class="nt">&lt;/response&gt;</span>
+</code></pre></div>
+<p>上面链接中的几个参数的含义，说明如下：</p>
+
+<ul>
+<li><code class="prettyprint">name</code>：               待创建Collection的名称</li>
+<li><code class="prettyprint">numShards</code>：          分片的数量</li>
+<li><code class="prettyprint">replicationFactor</code>：   复制副本的数量</li>
+</ul>
+
+<p>可以通过 Web 管理页面，访问 <code class="prettyprint">http://192.168.56.121:8888/solr/#/~cloud</code>，查看 SolrCloud 集群的分片信息，如图所示:</p>
+
+<p><img src="http://javachen-rs.qiniudn.com/images/2014/solrcloud-collection-shard.png" alt="SolrCloud-collection-shard"></p>
+
+<p>实际上，我们从192.168.56.121节点可以看到，SOLR 的配置文件内容，已经发生了变化，如下所示：</p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
+<span class="nt">&lt;solr</span> <span class="na">persistent=</span><span class="s">&quot;true&quot;</span> <span class="na">sharedLib=</span><span class="s">&quot;lib&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;cores</span> <span class="na">adminPath=</span><span class="s">&quot;/admin/cores&quot;</span> <span class="na">zkClientTimeout=</span><span class="s">&quot;20000&quot;</span> <span class="na">hostPort=</span><span class="s">&quot;${jetty.port:8080}&quot;</span> <span class="na">hostContext=</span><span class="s">&quot;${hostContext:solr}&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;core</span> <span class="na">shard=</span><span class="s">&quot;shard2&quot;</span> <span class="na">instanceDir=</span><span class="s">&quot;primary_shard2_replica1/&quot;</span> <span class="na">name=</span><span class="s">&quot;primary_shard2_replica1&quot;</span> <span class="na">collection=</span><span class="s">&quot;primary&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/cores&gt;</span>
+<span class="nt">&lt;/solr&gt;</span>
+</code></pre></div>
+<p>同时，你还可以看另外两个节点上的 solr.xml 文件的变化。</p>
+
+<h2 id="手动创建-replication">手动创建 Replication</h2>
+
+<p>下面对已经创建的初始分片进行复制。 shard1 已经在 192.168.56.123 上，我们复制分片到 192.168.56.121 和 192.168.56.122 上，执行如下命令：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>curl <span class="s1">&#39;http://192.168.56.121:8080/solr/admin/cores?action=CREATE&amp;collection=primary&amp;name=primary_shard1_replica_2&amp;shard=shard1&#39;</span>
+
+<span class="nv">$ </span>curl <span class="s1">&#39;http://192.168.56.122:8080/solr/admin/cores?action=CREATE&amp;collection=primary&amp;name=primary_shard1_replica_3&amp;shard=shard1&#39;</span>
+</code></pre></div>
+<p>最后的结果是，192.168.56.123 上的 shard1，在 192.168.56.121 节点上有1个副本，名称为 <code class="prettyprint">primary_shard1_replica_2</code> ，在 192.168.56.122 节点上有一个副本，名称为 <code class="prettyprint">primary_shard1_replica_3</code> 。也可以通过查看 192.168.56.121 和 192.168.56.122 上的目录变化，如下所示：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span> ll /usr/local/solrhome/
+total 16
+drwxr-xr-x 3 root root 4096 Mar 10 17:11 primary_shard1_replica2
+drwxr-xr-x 3 root root 4096 Mar 10 17:02 primary_shard2_replica1
+-rw-r--r-- 1 root root  444 Mar 10 17:16 solr.xml
+</code></pre></div>
+<p>你还可以对 shard2 和 shard3 添加副本。</p>
+
+<p>我们再次从 192.168.56.121 节点可以看到，SOLR 的配置文件内容，又发生了变化，如下所示：</p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
+<span class="nt">&lt;solr</span> <span class="na">persistent=</span><span class="s">&quot;true&quot;</span> <span class="na">sharedLib=</span><span class="s">&quot;lib&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;cores</span> <span class="na">adminPath=</span><span class="s">&quot;/admin/cores&quot;</span> <span class="na">zkClientTimeout=</span><span class="s">&quot;20000&quot;</span> <span class="na">hostPort=</span><span class="s">&quot;${jetty.port:8080}&quot;</span> <span class="na">hostContext=</span><span class="s">&quot;${hostContext:solr}&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;core</span> <span class="na">shard=</span><span class="s">&quot;shard2&quot;</span> <span class="na">instanceDir=</span><span class="s">&quot;primary_shard2_replica1/&quot;</span> <span class="na">name=</span><span class="s">&quot;primary_shard2_replica1&quot;</span> <span class="na">collection=</span><span class="s">&quot;primary&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;core</span> <span class="na">shard=</span><span class="s">&quot;shard1&quot;</span> <span class="na">instanceDir=</span><span class="s">&quot;primary_shard1_replica2/&quot;</span> <span class="na">name=</span><span class="s">&quot;primary_shard1_replica_2&quot;</span> <span class="na">collection=</span><span class="s">&quot;primary&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/cores&gt;</span>
+<span class="nt">&lt;/solr&gt;</span>
+</code></pre></div>
+<p>到此为止，我们已经基于3个节点，配置完成了 SolrCloud 集群。最后效果如下：</p>
+
+<p><img src="http://javachen-rs.qiniudn.com/images/2014/solrcloud-collection-shard-replica.png" alt="solrcloud-collection-shard-replica"></p>
+
+<h1 id="8.-其他说明">8. 其他说明</h1>
+
+<h2 id="8.1-solrcloud-的一些必要配置">8.1 SolrCloud 的一些必要配置</h2>
+
+<h3 id="schema.xml">schema.xml</h3>
+
+<p>必须定义 <code class="prettyprint">_version_</code> 字段：</p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;_version_&quot;</span> <span class="na">type=</span><span class="s">&quot;long&quot;</span> <span class="na">indexed=</span><span class="s">&quot;true&quot;</span> <span class="na">stored=</span><span class="s">&quot;true&quot;</span> <span class="na">multiValued=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+</code></pre></div>
+<h3 id="solrconfig.xml">solrconfig.xml</h3>
+
+<p>updateHandler 节点下需要定义 updateLog：</p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml">    <span class="c">&lt;!-- Enables a transaction log， currently used for real-time get.</span>
+<span class="c">         &quot;dir&quot; - the target directory for transaction logs， defaults to the</span>
+<span class="c">         solr data directory.  --&gt;</span>
+    <span class="nt">&lt;updateLog&gt;</span>
+      <span class="nt">&lt;str</span> <span class="na">name=</span><span class="s">&quot;dir&quot;</span><span class="nt">&gt;</span>${solr.data.dir:}<span class="nt">&lt;/str&gt;</span>
+      <span class="c">&lt;!-- if you want to take control of the synchronization you may specify the syncLevel as one of the</span>
+<span class="c">           following where &#39;&#39;flush&#39;&#39; is the default. fsync will reduce throughput.</span>
+<span class="c">      &lt;str name=&quot;syncLevel&quot;&gt;flush|fsync|none&lt;/str&gt;</span>
+<span class="c">      --&gt;</span>
+    <span class="nt">&lt;/updateLog&gt;</span>
+</code></pre></div>
+<p>需要定义一个 <code class="prettyprint">replication handler</code>，名称为 <code class="prettyprint">/replication</code> ：</p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;requestHandler</span> <span class="na">name=</span><span class="s">&quot;/replication&quot;</span> <span class="na">class=</span><span class="s">&quot;solr.ReplicationHandler&quot;</span> <span class="na">startup=</span><span class="s">&quot;lazy&quot;</span> <span class="nt">/&gt;</span>
+</code></pre></div>
+<p>需要定义一个 <code class="prettyprint">realtime get handler</code>，名称为<code class="prettyprint">/get</code>:</p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml">    <span class="nt">&lt;requestHandler</span> <span class="na">name=</span><span class="s">&quot;/get&quot;</span> <span class="na">class=</span><span class="s">&quot;solr.RealTimeGetHandler&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;lst</span> <span class="na">name=</span><span class="s">&quot;defaults&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;str</span> <span class="na">name=</span><span class="s">&quot;omitHeader&quot;</span><span class="nt">&gt;</span>true<span class="nt">&lt;/str&gt;</span>
+     <span class="nt">&lt;/lst&gt;</span>
+    <span class="nt">&lt;/requestHandler&gt;</span>
+</code></pre></div>
+<p>需要定义 <code class="prettyprint">admin handlers</code>：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">&lt;requestHandler name=&quot;/admin/&quot; class=&quot;solr.admin.AdminHandlers&quot; /&gt;
+</code></pre></div>
+<p>需要定义 <code class="prettyprint">updateRequestProcessorChain</code>：</p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"> <span class="nt">&lt;updateRequestProcessorChain</span> <span class="na">name=</span><span class="s">&quot;sample&quot;</span><span class="nt">&gt;</span>
+     <span class="nt">&lt;processor</span> <span class="na">class=</span><span class="s">&quot;solr.LogUpdateProcessorFactory&quot;</span> <span class="nt">/&gt;</span>
+     <span class="nt">&lt;processor</span> <span class="na">class=</span><span class="s">&quot;solr.DistributedUpdateProcessorFactory&quot;</span><span class="nt">/&gt;</span>
+     <span class="nt">&lt;processor</span> <span class="na">class=</span><span class="s">&quot;solr.RunUpdateProcessorFactory&quot;</span> <span class="nt">/&gt;</span>
+   <span class="nt">&lt;/updateRequestProcessorChain&gt;</span>
+</code></pre></div>
+<h3 id="solr.xml">solr.xml</h3>
+
+<p>cores 节点需要定义 <code class="prettyprint">adminPath</code> 属性：</p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;cores</span> <span class="na">adminPath=</span><span class="s">&quot;/admin/cores&quot;</span> <span class="nt">&gt;</span>
+</code></pre></div>
+<h2 id="8.2-solrcloud-分布式检索时忽略宕机的-shard">8.2 SolrCloud 分布式检索时忽略宕机的 Shard</h2>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;lst</span> <span class="na">name=</span><span class="s">”error”</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;str</span> <span class="na">name=</span><span class="s">”msg”</span><span class="nt">&gt;</span>no servers hosting shard:<span class="nt">&lt;/str&gt;</span>
+    <span class="nt">&lt;int</span> <span class="na">name=</span><span class="s">”code”</span><span class="nt">&gt;</span>503<span class="nt">&lt;/int&gt;</span>
+<span class="nt">&lt;/lst&gt;</span>
+</code></pre></div>
+<p>加入下面参数，只从存活的 shards 获取数据：</p>
+<div class="highlight"><pre><code class="language-properties" data-lang="properties"><span class="na">shards.tolerant</span><span class="o">=</span><span class="s">true </span>
+</code></pre></div>
+<p>如：<code class="prettyprint">http://192.168.56.121:8080/solr/primary_shard2_replica1/select?q=*%3A*&amp;wt=xml&amp;indent=true&amp;shards.tolerant=true</code></p>
+
+<p>没有打此参数，如果集群内有挂掉的 shard，将显示：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">no servers hosting shard
+</code></pre></div>
+<h2 id="8.3-自动创建-collection-及初始-shard">8.3 自动创建 Collection 及初始 Shard</h2>
+
+<p>自动创建 Collection 及初始 Shard，不需要通过 zookeeper 手动上传配置文件并关联 collection。</p>
+
+<p>1、在第一个节点修改 tomcat 启动参数</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">JAVA_OPTS=&#39;-Djetty.port=8080 -Dsolr.solr.home=/usr/local/solrhome -DzkHost=192.168.56.122:2181,192.168.56.122:2181,192.168.56.123:2181 -DnumShards=3 -Dbootstrap_confdir=/usr/local/solrhome/primary/conf -Dcollection.configName=primaryconf &#39;
+</code></pre></div>
+<p>然后启动 tomcat。这个步骤上传了集群的相关配置信息(<code class="prettyprint">/usr/local/solrhome/primary/conf</code>)到 ZooKeeper 中去，所以启动下一个节点时不用再指定配置文件了。</p>
+
+<p>2、在第二个和第三个节点修改 tomcat 启动参数</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">JAVA_OPTS=&#39;-Djetty.port=8080 -Dsolr.solr.home=/usr/local/solrhome -DzkHost=192.168.56.122:2181,192.168.56.122:2181,192.168.56.123:2181 -DnumShards=3&#39;
+</code></pre></div>
+<p>然后启动 tomcat。</p>
+
+<p>这样就会创建3个 shard 分别分布在三个节点上，如果你在增加一个节点，这节点会附加到一个 shard 上成为一个 replica，而不会创建新的 shard。</p>
+
+<h1 id="9.-总结">9. 总结</h1>
+
+<p>本文记录了如何 zookeeper、SolrCloud 的安装和配置过程，solrcore 是通过 restapi 进行手动创建，然后又对自动创建 Collection 及初始 Shard 进行了说明。</p>
+
+<h1 id="10.-参考文章">10. 参考文章</h1>
+
+<ul>
+<li>[1] <a href="http://shiyanjun.cn/archives/100.html">SolrCloud 4.3.1+Tomcat 7安装配置实践</a></li>
+<li>[2] <a href="http://wiki.apache.org/solr/SolrCloud">SolrCloud Wiki</a></li>
+<li>[3] <a href="http://www.wxdl.cn/index/solrcloud.html">SolrCloud使用教程、原理介绍</a></li>
+</ul>
+</div>
+
+
+      <div id="pay" style="text-align:center;">
+        ----EOF-----
+        <br>
+        <section>
+  <h4>Sponsor</h4>
+	<img src="http://javachen-rs.qiniudn.com/images/alipay.png" width="150/">
+  <p class="small">觉得此博客对你有帮助，支付宝扫码赞助吧</p>
+</section>
+
+      </div>
+
+      <p class="meta">
+      	
+            Categories:
+      	    
+          	<a class="btn btn-default btn-xs" href="/categories.html#search-engine">search-engine</a>
+          
+      	
+
+      	
+            Tags:
+      	    
+          	<a class="btn btn-default btn-xs" href="/tags.html#solr">solr</a>
+          
+          	<a class="btn btn-default btn-xs" href="/tags.html#solrcloud">solrcloud</a>
+          
+      	
+      </p>
+	</article>
+
+	<ul class="pager">
+	  
+	  <li class="previous"><a class="btn btn-xs" href="/2014/03/09/hbase-note-about-hregionserver-startup" title="HBase源码：HRegionServer启动过程">&larr; Prev</a></li>
+	  
+	  
+	  <li class="next"><a class="btn btn-xs" href="/2014/03/13/improve-the-search-function-in-broadleaf-project" title="BroadLeaf项目搜索功能改进">Next &rarr;</a></li>
+	  
+	</ul>
+
+  
+<div id="comments">
+  <div class="ds-thread" data-thread-key="/2014/03/10/how-to-install-solrcloud"  data-title="Apache SolrCloud安装 - 小天的个人博客"></div>
+</div>
+
+
+
+</div>
+
+        </div>
+      </div>
+
+      <footer class="footer text-center">
+  <p>&copy; 2009-2015 <a href="/" target="_blank" title="86后，工作在深圳；Java程序员、Hadoop工程师；主要关注Java、Hadoop、Kettle、关注大数据处理技术。">小天</a>. With Help from <a href="//jekyllrb.com/" target="_blank" title="Transform your plain text into static websites and blogs.">Jekyll</a> and <a href="//getbootstrap.com/" target="_blank" title="Bootstrap is the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web.">Bootstrap</a>, theme from <a href="http://havee.me/" target="_blank" title="http://havee.me/">Havee</a>.
+
+  <span style="float:right;"><a href="/about.html">About</a></span>
+
+	
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+  </p>
+  <div id="toTop" style="display: block;">
+    <a href="#">▲</a><a href="#footer">▼</a>
+  </div>
+</footer>
+
+    </div>
+
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/core.js"></script>
+
+    
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+    
+    <!-- duoshuo Begin -->
+    <script type="text/javascript">
+      var duoshuoQuery = {short_name:"xiaotian120"};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] ||
+        document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+    </script>
+    <!-- duoshuo End -->
+    
+  </body>
+</html>

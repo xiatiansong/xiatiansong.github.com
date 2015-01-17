@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>编译Dubbo源码并测试 - 小天的个人博客</title>
+  <meta name="description" content="Dubbo 是阿里巴巴内部的 SOA 服务化治理方案的核心框架，本文主要记录编译 Dubbo 源码和测试的过程。">
+  <meta name="keywords" content="dubbo">
+  <meta name="author" content="小天">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="360-site-verification" content="9b7a87a1d52051c96644f0a9b8b79898" />
+  <meta name="sogou_site_verification" content="ofwXWFdthV"/>
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" >
+
+  <link rel="canonical" href="http://blog.xiaotian.com/2014/09/24/compile-and-test-dubbo">
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css" media="all">
+  <link rel="stylesheet" href="/static/css/style.css" media="all">
+  <link rel="stylesheet" href="/static/css/pygments.css" media="all">
+  <link rel="stylesheet" href="/static/css/font-awesome.css" media="all">
+
+  <!-- atom & rss feed -->
+  <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="小天的个人博客 RSS Feed">
+  <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="小天的个人博客 ATOM Feed">
+</head>
+
+
+  <body>
+    <div class="container">
+      <!--[if lte IE 9]>
+<div class="alert alert-warning">
+  <p>Your Internet Explorer is not supported. Please upgrade your Internet Explorer to version 9+, or use latest <a href="http://www.google.com/chrome/" target="_blank" class="alert-link">Google chrome</a>、<a href="http://www.mozilla.org/firefox/" target="_blank" class="alert-link">Mozilla Firefox</a>.</p>
+  <p>If you are using IE 9 or later, make sure you <a href="http://windows.microsoft.com/en-us/internet-explorer/use-compatibility-view#ie=ie-8" target="_blank" class="alert-link">turn off "Compatibility view"</a>.</p>
+</div>
+<![endif]-->
+<header class="header">
+  <div class="title"><a title="小天的个人博客" href="/">小天的个人博客</a></div>
+  <ul class="nav navbar-nav navbar-right visible-lg visible-md">
+    <li>
+    <form id="search-form" class="form-group has-success visible-lg" role="form">
+      <input type="text" class="form-control input-sm" placeholder="Search" id="query" style="width: 160px;">
+    </form>
+    </li>
+    <li><a href="/archive.html" title="Archive"><span class='fa fa-archive fa-2x'></span></a></li>
+    <li><a href="/categories.html" title="Categories"><span class='fa fa-navicon fa-2x'></span></a></li>
+    <li><a href="/tags.html" title="Tags"><span class='fa fa-tags fa-2x'></span></a></li>
+    <li><a href="/about.html" title="About"><span class='fa fa-user fa-2x'></span></a></li>
+    
+    <li><a href="https://github.com/wuskyfantasy" target="_blank" title="Github"><span class='fa fa-github fa-2x'></span></a></li>
+    
+    
+    
+    
+    
+    <li><a href="http://weibo.com/xiaotian120" target="_blank" title="Weibo"><span class="fa fa-weibo fa-2x"></span></a></li>
+    
+
+    <li><a href="/rss.xml" target="_blank" title="RSS"><span class='fa fa-rss fa-2x'></span></a></li>
+  </ul>
+</header>
+
+
+      <div class="wrapper">
+        <div class="row">
+          <div id="search-loader" style="display:none;text-align:center">
+            <img src="http://javachen-rs.qiniudn.com/images/loading.gif">
+          </div>
+          <div class="col-md-12">
+  <article class="news-item">
+
+      <h2  class="news-item"> 编译Dubbo源码并测试  
+        <time class="small">2014.09.24</time>
+      </h2>
+
+      <div><p>Dubbo是阿里巴巴内部的SOA服务化治理方案的核心框架，每天为2000+ 个服务提供3,000,000,000+ 次访问量支持，并被广泛应用于阿里巴巴集团的各成员站点。Dubbo自2011年开源后，已被许多非阿里系公司使用。 </p>
+
+<ul>
+<li>项目主页：<a href="http://alibaba.github.io/dubbo-doc-static/Home-zh.htm">http://alibaba.github.io/dubbo-doc-static/Home-zh.htm</a> </li>
+<li>项目源码：<a href="https://github.com/alibaba/dubbo">https://github.com/alibaba/dubbo</a></li>
+</ul>
+
+<h1 id="1.-安装">1. 安装</h1>
+
+<p>首先从 github 下载源代码并阅读 readme.md ，参考该文档，首先下载 <a href="https://github.com/alibaba/opensesame">opensesame</a>，并编译：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ git clone git@github.com:alibaba/opensesame.git
+$ cd opensesame
+$ mvn install
+</code></pre></div>
+<p>然后，下载 dubbo 并编译：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git clone git@github.com:alibaba/dubbo.git
+<span class="nv">$ </span><span class="nb">cd </span>dubbo
+<span class="nv">$ </span>mvn clean install -Dmaven.test.skip
+</code></pre></div>
+<p>编译成功之后，生成 idea 相关配置文件：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>mvn idea:idea
+</code></pre></div>
+<p>接下来，将代码通过 maven 的方式导入到 idea ide 中。</p>
+
+<h1 id="2.-测试">2. 测试</h1>
+
+<p>安装之后，现在来搭一个测试环境。搭建一个测试环境，需要下面三个角色：</p>
+
+<ul>
+<li><strong>消息提供者</strong>，示例工程见：dubbo-demo-provider</li>
+<li><strong>消息注册中心</strong>，有四种类型：multicast、zookeeper、redis、dubbo</li>
+<li><strong>消息消费者</strong>，示例工程见：dubbo-demo-consumer</li>
+</ul>
+
+<p>作为测试，这里消息注册中心使用 Multicast 注册中心，以下操作是在 idea 中运行。</p>
+
+<p>首先，修改 Dubbo/dubbo-demo/dubbo-demo-provider/src/test/resources/dubbo.properties 文件如下：</p>
+<div class="highlight"><pre><code class="language-properties" data-lang="properties"><span class="na">dubbo.container</span><span class="o">=</span><span class="s">log4j,spring</span>
+<span class="na">dubbo.application.name</span><span class="o">=</span><span class="s">demo-provider</span>
+<span class="na">dubbo.application.owner</span><span class="o">=</span>
+<span class="na">dubbo.registry.address</span><span class="o">=</span><span class="s">multicast://224.5.6.7:1234?unicast=false</span>
+<span class="c">#dubbo.registry.address=zookeeper://127.0.0.1:2181</span>
+<span class="c">#dubbo.registry.address=redis://127.0.0.1:6379</span>
+<span class="c">#dubbo.registry.address=dubbo://10.1.19.41:20880</span>
+<span class="c">#dubbo.monitor.protocol=registry</span>
+<span class="na">dubbo.protocol.name</span><span class="o">=</span><span class="s">dubbo</span>
+<span class="na">dubbo.protocol.port</span><span class="o">=</span><span class="s">20880</span>
+<span class="na">dubbo.service.loadbalance</span><span class="o">=</span><span class="s">roundrobin</span>
+<span class="c">#dubbo.log4j.file=logs/dubbo-demo-consumer.log</span>
+<span class="c">#dubbo.log4j.level=WARN</span>
+</code></pre></div>
+<blockquote>
+<p>注意：</p>
+
+<p><strong>消息提供者和消息消费者建议在不同机器上运行</strong>，如果在同一机器上，需设置 unicast=false：即：<code class="prettyprint">multicast://224.5.6.7:1234?unicast=false</code>，否则发给消费者的单播消息可能被提供者抢占，两个消费者在同一台机器也一样，只有 multicast 注册中心有此问题。</p>
+</blockquote>
+
+<p>然后，修改 Dubbo/dubbo-demo/dubbo-demo-consumer/src/test/resources/dubbo.properties 文件如下：</p>
+<div class="highlight"><pre><code class="language-properties" data-lang="properties"><span class="na">dubbo.container</span><span class="o">=</span><span class="s">log4j,spring</span>
+<span class="na">dubbo.application.name</span><span class="o">=</span><span class="s">demo-consumer</span>
+<span class="na">dubbo.application.owner</span><span class="o">=</span>
+<span class="na">dubbo.registry.address</span><span class="o">=</span><span class="s">multicast://224.5.6.7:1234?unicast=false</span>
+<span class="c">#dubbo.registry.address=zookeeper://127.0.0.1:2181</span>
+<span class="c">#dubbo.registry.address=redis://127.0.0.1:6379</span>
+<span class="c">#dubbo.registry.address=dubbo://10.1.19.41:20880</span>
+<span class="na">dubbo.monitor.protocol</span><span class="o">=</span><span class="s">registry</span>
+<span class="c">#dubbo.log4j.file=logs/dubbo-demo-consumer.log</span>
+<span class="c">#dubbo.log4j.level=WARN</span>
+</code></pre></div>
+<p>接下来，就可以运行 dubbo-demo-provider 和 dubbo-demo-consumer 了。</p>
+
+<p>在 idea 中右键运行 Dubbo/dubbo-demo/dubbo-demo-provider/src/test/java/com/alibaba/dubbo/demo/provider/DemoProvider.java 类，以启动 dubbo-demo-provider 。</p>
+
+<p>在 idea 中右键运行 Dubbo/dubbo-demo/dubbo-demo-consumer/src/test/java/com/alibaba/dubbo/demo/consumer/DemoConsumer.java 类，以启动 dubbo-demo-consumer 。</p>
+
+<p>最后，观察终端输出的日志，dubbo-demo-provider 中输出如下内容：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">[17:13:19] Hello world458, request from consumer: /10.1.19.41:57319, cookie:iamsorry
+[17:13:21] Hello world459, request from consumer: /10.1.19.41:57319, cookie:iamsorry
+[17:13:23] Hello world460, request from consumer: /10.1.19.41:57319, cookie:iamsorry
+[17:13:25] Hello world461, request from consumer: /10.1.19.41:57319, cookie:iamsorry
+</code></pre></div>
+<p>而 dubbo-demo-consumer 中输出如下内容</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">[17:13:17] Hello world458, response form provider: 10.1.19.41:20880
+cookie-&gt;iamsorry
+abc-&gt;17:13:19
+Key 1-&gt;1
+Key 2-&gt;2
+codec-&gt;neg
+output-&gt;135
+[17:13:20] Hello world459, response form provider: 10.1.19.41:20880
+cookie-&gt;iamsorry
+abc-&gt;17:13:21
+Key 1-&gt;1
+Key 2-&gt;2
+codec-&gt;neg
+output-&gt;135
+</code></pre></div>
+<p>接下来，你可以试试使用其他的消息注册方式。</p>
+
+<p>使用类似的方式，你也可以启动 dubbo-admin 和 dubbo-monitor-simple，需要注意的是，<strong>如果你是在一台机器上启动这两个服务，则需要修改 dubbo.properties 中的端口以避免端口冲突</strong>。</p>
+
+<h1 id="3.-其他">3. 其他</h1>
+
+<p>简单谈谈个人对 dubbo 项目的看法：</p>
+
+<ul>
+<li>1. 项目导入到 IDE 之后，使用的是 jdk 1.5 进行编译，需要手动一个一个地修改为 1.6。</li>
+<li>2. 项目没有使用统一的 code-template ，代码风格不统一。</li>
+<li>3. 文档不够规范，缺少一些能够快速上手的用户文档。</li>
+<li>4. dubbo 是获取第一个网卡的 ip 地址，当有多个网卡或者使用 VPN 时候会存在问题。</li>
+<li>5. dubbo 依赖的 Spring 和 Netty 版本都较低</li>
+<li>6. 有些类和注解中的属性过多，显得比较臃肿，当然，这是强迫性症了。</li>
+</ul>
+
+<p>以上仅仅代表个人意见。</p>
+</div>
+
+
+      <div id="pay" style="text-align:center;">
+        ----EOF-----
+        <br>
+        <section>
+  <h4>Sponsor</h4>
+	<img src="http://javachen-rs.qiniudn.com/images/alipay.png" width="150/">
+  <p class="small">觉得此博客对你有帮助，支付宝扫码赞助吧</p>
+</section>
+
+      </div>
+
+      <p class="meta">
+      	
+            Categories:
+      	    
+          	<a class="btn btn-default btn-xs" href="/categories.html#java">java</a>
+          
+      	
+
+      	
+            Tags:
+      	    
+          	<a class="btn btn-default btn-xs" href="/tags.html#dubbo">dubbo</a>
+          
+      	
+      </p>
+	</article>
+
+	<ul class="pager">
+	  
+	  <li class="previous"><a class="btn btn-xs" href="/2014/09/22/mahout-recommend-engine" title="Mahout推荐引擎介绍">&larr; Prev</a></li>
+	  
+	  
+	  <li class="next"><a class="btn btn-xs" href="/2014/09/29/spring-source-codes" title="Spring源码整体架构">Next &rarr;</a></li>
+	  
+	</ul>
+
+  
+<div id="comments">
+  <div class="ds-thread" data-thread-key="/2014/09/24/compile-and-test-dubbo"  data-title="编译Dubbo源码并测试 - 小天的个人博客"></div>
+</div>
+
+
+
+</div>
+
+        </div>
+      </div>
+
+      <footer class="footer text-center">
+  <p>&copy; 2009-2015 <a href="/" target="_blank" title="86后，工作在深圳；Java程序员、Hadoop工程师；主要关注Java、Hadoop、Kettle、关注大数据处理技术。">小天</a>. With Help from <a href="//jekyllrb.com/" target="_blank" title="Transform your plain text into static websites and blogs.">Jekyll</a> and <a href="//getbootstrap.com/" target="_blank" title="Bootstrap is the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web.">Bootstrap</a>, theme from <a href="http://havee.me/" target="_blank" title="http://havee.me/">Havee</a>.
+
+  <span style="float:right;"><a href="/about.html">About</a></span>
+
+	
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+  </p>
+  <div id="toTop" style="display: block;">
+    <a href="#">▲</a><a href="#footer">▼</a>
+  </div>
+</footer>
+
+    </div>
+
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/core.js"></script>
+
+    
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+    
+    <!-- duoshuo Begin -->
+    <script type="text/javascript">
+      var duoshuoQuery = {short_name:"xiaotian120"};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] ||
+        document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+    </script>
+    <!-- duoshuo End -->
+    
+  </body>
+</html>

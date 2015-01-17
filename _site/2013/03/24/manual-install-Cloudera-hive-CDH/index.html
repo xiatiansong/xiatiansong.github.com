@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>手动安装Cloudera Hive CDH - 小天的个人博客</title>
+  <meta name="description" content="本文主要记录手动安装CDH Hive过程，环境设置及Hadoop、HBase安装过程见上篇文章。">
+  <meta name="keywords" content="java, hadoop, hive, hbase, spark, linux, scala, python, mysql">
+  <meta name="author" content="小天">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="360-site-verification" content="9b7a87a1d52051c96644f0a9b8b79898" />
+  <meta name="sogou_site_verification" content="ofwXWFdthV"/>
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" >
+
+  <link rel="canonical" href="http://blog.xiaotian.com/2013/03/24/manual-install-Cloudera-hive-CDH">
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css" media="all">
+  <link rel="stylesheet" href="/static/css/style.css" media="all">
+  <link rel="stylesheet" href="/static/css/pygments.css" media="all">
+  <link rel="stylesheet" href="/static/css/font-awesome.css" media="all">
+
+  <!-- atom & rss feed -->
+  <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="小天的个人博客 RSS Feed">
+  <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="小天的个人博客 ATOM Feed">
+</head>
+
+
+  <body>
+    <div class="container">
+      <!--[if lte IE 9]>
+<div class="alert alert-warning">
+  <p>Your Internet Explorer is not supported. Please upgrade your Internet Explorer to version 9+, or use latest <a href="http://www.google.com/chrome/" target="_blank" class="alert-link">Google chrome</a>、<a href="http://www.mozilla.org/firefox/" target="_blank" class="alert-link">Mozilla Firefox</a>.</p>
+  <p>If you are using IE 9 or later, make sure you <a href="http://windows.microsoft.com/en-us/internet-explorer/use-compatibility-view#ie=ie-8" target="_blank" class="alert-link">turn off "Compatibility view"</a>.</p>
+</div>
+<![endif]-->
+<header class="header">
+  <div class="title"><a title="小天的个人博客" href="/">小天的个人博客</a></div>
+  <ul class="nav navbar-nav navbar-right visible-lg visible-md">
+    <li>
+    <form id="search-form" class="form-group has-success visible-lg" role="form">
+      <input type="text" class="form-control input-sm" placeholder="Search" id="query" style="width: 160px;">
+    </form>
+    </li>
+    <li><a href="/archive.html" title="Archive"><span class='fa fa-archive fa-2x'></span></a></li>
+    <li><a href="/categories.html" title="Categories"><span class='fa fa-navicon fa-2x'></span></a></li>
+    <li><a href="/tags.html" title="Tags"><span class='fa fa-tags fa-2x'></span></a></li>
+    <li><a href="/about.html" title="About"><span class='fa fa-user fa-2x'></span></a></li>
+    
+    <li><a href="https://github.com/wuskyfantasy" target="_blank" title="Github"><span class='fa fa-github fa-2x'></span></a></li>
+    
+    
+    
+    
+    
+    <li><a href="http://weibo.com/xiaotian120" target="_blank" title="Weibo"><span class="fa fa-weibo fa-2x"></span></a></li>
+    
+
+    <li><a href="/rss.xml" target="_blank" title="RSS"><span class='fa fa-rss fa-2x'></span></a></li>
+  </ul>
+</header>
+
+
+      <div class="wrapper">
+        <div class="row">
+          <div id="search-loader" style="display:none;text-align:center">
+            <img src="http://javachen-rs.qiniudn.com/images/loading.gif">
+          </div>
+          <div class="col-md-12">
+  <article class="news-item">
+
+      <h2  class="news-item"> 手动安装Cloudera Hive CDH  
+        <time class="small">2013.03.24</time>
+      </h2>
+
+      <div><p>本文主要记录手动安装Cloudera Hive集群过程，环境设置及Hadoop安装过程见<a href="/2013/03/24/manual-install-Cloudera-Hadoop-CDH">手动安装Cloudera Hadoop CDH</a>,参考这篇文章，hadoop各个组件和jdk版本如下：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">    hadoop-2.0.0-cdh4.6.0
+    hbase-0.94.15-cdh4.6.0
+    hive-0.10.0-cdh4.6.0
+    jdk1.6.0_38
+</code></pre></div>
+<p>hadoop各组件可以在<a href="http://archive.cloudera.com/cdh4/cdh/4/">这里</a>下载。</p>
+
+<p>集群规划为7个节点，每个节点的ip、主机名和部署的组件分配如下：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">    192.168.0.1        desktop1     NameNode、Hive、ResourceManager、impala
+    192.168.0.2        desktop2     SSNameNode
+    192.168.0.3        desktop3     DataNode、HBase、NodeManager、impala
+    192.168.0.4        desktop4     DataNode、HBase、NodeManager、impala
+    192.168.0.5        desktop5     DataNode、HBase、NodeManager、impala
+    192.168.0.6        desktop6     DataNode、HBase、NodeManager、impala
+    192.168.0.7        desktop7     DataNode、HBase、NodeManager、impala
+</code></pre></div>
+<h1 id="安装hive">安装hive</h1>
+
+<p>hive安装在desktop1上，<strong>注意</strong>：hive默认是使用derby数据库保存元数据，这里替换为postgresql，下面会提到postgresql的安装说明，并且需要拷贝postgres的jdbc jar文件导hive的lib目录下。</p>
+
+<p>上传<code class="prettyprint">hive-0.10.0-cdh4.6.0.tar</code>到desktop1的<code class="prettyprint">/opt</code>，并解压缩。</p>
+
+<h1 id="安装postgres">安装postgres</h1>
+
+<h2 id="创建数据库">创建数据库</h2>
+
+<p>这里创建数据库metastore并创建hiveuser用户，其密码为redhat。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">    bash# sudo -u postgres psql
+    bash$ psql
+    postgres=# CREATE USER hiveuser WITH PASSWORD &#39;redhat&#39;;
+    postgres=# CREATE DATABASE metastore owner=hiveuser;
+    postgres=# GRANT ALL privileges ON DATABASE metastore TO hiveuser;
+    postgres=# \q;
+</code></pre></div>
+<h2 id="初始化数据库">初始化数据库</h2>
+<div class="highlight"><pre><code class="language-text" data-lang="text">psql  -U hiveuser -d metastore
+ \i /opt/hive-0.10.0-cdh4.6.0/scripts/metastore/upgrade/postgres/hive-schema-0.10.0.postgres.sql 
+</code></pre></div>
+<p>编辑postgresql配置文件(<code class="prettyprint">/opt/PostgreSQL/9.1/data/pg_hba.conf</code>)，修改访问权限</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">host    all             all             0.0.0.0/0            md5
+</code></pre></div>
+<p>修改postgresql.conf</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">    standard_conforming_strings = of
+</code></pre></div>
+<h2 id="重起postgres">重起postgres</h2>
+
+<p>拷贝postgres的jdbc驱动到<code class="prettyprint">/opt/hive-0.10.0-cdh4.6.0/lib</code>目录。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">su -c &#39;/opt/PostgreSQL/9.1/bin/pg_ctl -D /opt/PostgreSQL/9.1/data restart&#39; postgres
+</code></pre></div>
+<h1 id="修改配置文件">修改配置文件</h1>
+
+<h2 id="hive-site.xml">hive-site.xml</h2>
+
+<p>注意修改下面配置文件中postgres数据库的密码，注意配置<code class="prettyprint">hive.aux.jars.path</code>，在hive集成hbase时候需要从该路径家在hbase的一些jar文件。</p>
+
+<p>hive-site.xml文件内容如下：</p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;configuration&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+  <span class="nt">&lt;name&gt;</span>javax.jdo.option.ConnectionURL<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;value&gt;</span>jdbc:postgresql://127.0.0.1/metastore<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+  <span class="nt">&lt;name&gt;</span>javax.jdo.option.ConnectionDriverName<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;value&gt;</span>org.postgresql.Driver<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+  <span class="nt">&lt;name&gt;</span>javax.jdo.option.ConnectionUserName<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;value&gt;</span>hiveuser<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+  <span class="nt">&lt;name&gt;</span>javax.jdo.option.ConnectionPassword<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;value&gt;</span>redhat<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+ <span class="nt">&lt;name&gt;</span>mapred.job.tracker<span class="nt">&lt;/name&gt;</span>
+ <span class="nt">&lt;value&gt;</span>desktop1:8031<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+ <span class="nt">&lt;name&gt;</span>mapreduce.framework.name<span class="nt">&lt;/name&gt;</span>
+ <span class="nt">&lt;value&gt;</span>yarn<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+  <span class="nt">&lt;name&gt;</span>hive.aux.jars.path<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;value&gt;</span>file:///opt/hive-0.10.0-cdh4.6.0/lib/zookeeper-3.4.5-cdh4.6.0.jar,
+    file:///opt/hive-0.10.0-cdh4.6.0/lib/hive-hbase-handler-0.10.0-cdh4.6.0.jar,
+    file:///opt/hive-0.10.0-cdh4.6.0/lib/hbase-0.94.15-cdh4.6.0.jar,
+    file:///opt/hive-0.10.0-cdh4.6.0/lib/guava-11.0.2.jar<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+  <span class="nt">&lt;name&gt;</span>hive.metastore.warehouse.dir<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;value&gt;</span>/opt/data/warehouse-${user.name}<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+  <span class="nt">&lt;name&gt;</span>hive.exec.scratchdir<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;value&gt;</span>/opt/data/hive-${user.name}<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+  <span class="nt">&lt;name&gt;</span>hive.querylog.location<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;value&gt;</span>/opt/data/querylog-${user.name}<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+  <span class="nt">&lt;name&gt;</span>hive.support.concurrency<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;value&gt;</span>true<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+  <span class="nt">&lt;name&gt;</span>hive.zookeeper.quorum<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;value&gt;</span>desktop3,desktop4,desktop5,desktop6,desktop7<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+  <span class="nt">&lt;name&gt;</span>hive.hwi.listen.host<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;value&gt;</span>desktop1<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+  <span class="nt">&lt;name&gt;</span>hive.hwi.listen.port<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;value&gt;</span>9999<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+  <span class="nt">&lt;name&gt;</span>hive.hwi.war.file<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;value&gt;</span>lib/hive-hwi-0.10.0-cdh4.6.0.war<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;/configuration&gt;</span>
+</code></pre></div>
+<h2 id="环境变量">环境变量</h2>
+
+<p>参考<a href="/hadoop/2013/03/24/manual-install-Cloudera-Hadoop-CDH">手动安装Cloudera Hadoop CDH</a>中环境变量的设置。</p>
+
+<h2 id="启动hive">启动hive</h2>
+
+<p>在启动完之后，执行一些sql语句可能会提示错误，如何解决错误可以参考<a href="http://kicklinux.com/hive-deploy/">Hive安装与配置</a>。</p>
+
+<h2 id="hive与hbase集成">hive与hbase集成</h2>
+
+<p>在<code class="prettyprint">hive-site.xml</code>中配置<code class="prettyprint">hive.aux.jars.path</code>,在环境变量中配置hadoop、mapreduce的环境变量</p>
+
+<h1 id="异常说明">异常说明</h1>
+
+<h2 id="异常1：">异常1：</h2>
+<div class="highlight"><pre><code class="language-text" data-lang="text">FAILED: Error in metadata: MetaException(message:org.apache.hadoop.hbase.ZooKeeperConnectionException: An error is preventing HBase from connecting to ZooKeeper
+</code></pre></div>
+<p>原因：hadoop配置文件没有zk</p>
+
+<h2 id="异常2">异常2</h2>
+<div class="highlight"><pre><code class="language-text" data-lang="text">FAILED: Error in metadata: MetaException(message:Got exception: org.apache.hadoop.hive.metastore.api.MetaException javax.jdo.JDODataStoreException: Error executing JDOQL query &quot;SELECT &quot;THIS&quot;.&quot;TBL_NAME&quot; AS NUCORDER0 FROM &quot;TBLS&quot; &quot;THIS&quot; LEFT OUTER JOIN &quot;DBS&quot; &quot;THIS_DATABASE_NAME&quot; ON &quot;THIS&quot;.&quot;DB_ID&quot; = &quot;THIS_DATABASE_NAME&quot;.&quot;DB_ID&quot; WHERE &quot;THIS_DATABASE_NAME&quot;.&quot;NAME&quot; = ? AND (LOWER(&quot;THIS&quot;.&quot;TBL_NAME&quot;) LIKE ? ESCAPE &#39;\\&#39; ) ORDER BY NUCORDER0 &quot; : ERROR: invalid escape string 建议：Escape string must be empty or one character..
+</code></pre></div>
+<p>参考：<a href="https://issues.apache.org/jira/browse/HIVE-3994">https://issues.apache.org/jira/browse/HIVE-3994</a></p>
+
+<h2 id="异常3，以下语句没反应">异常3，以下语句没反应</h2>
+<div class="highlight"><pre><code class="language-text" data-lang="text">select count(*) from hive_userinfo
+</code></pre></div>
+<h2 id="异常4">异常4</h2>
+<div class="highlight"><pre><code class="language-text" data-lang="text">zookeeper.ClientCnxn (ClientCnxn.java:logStartConnect(966)) - Opening socket connection to server localhost/127.0.0.1:2181. Will not attempt to authenticate using SASL (无法定位登录配置)
+</code></pre></div>
+<p>原因：hive中没有设置zk</p>
+
+<h2 id="异常5">异常5</h2>
+<div class="highlight"><pre><code class="language-text" data-lang="text">hbase 中提示：WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+</code></pre></div>
+<p>原因：cloudera hadoop lib中没有hadoop的native jar</p>
+
+<h2 id="异常6">异常6</h2>
+<div class="highlight"><pre><code class="language-text" data-lang="text">Exception in thread &quot;main&quot; java.lang.NoClassDefFoundError: org/apache/hadoop/mapreduce/v2/app/MRAppMaster
+</code></pre></div>
+<p>原因：classpath没有配置正确，检查环境变量以及yarn的classpath</p>
+
+<h1 id="参考文章">参考文章</h1>
+
+<ul>
+<li><a href="http://kicklinux.com/hive-deploy/">Hive安装与配置</a></li>
+<li><a href="https://ccp.cloudera.com/display/CDH4DOC/Hive+Installation">Hive Installation</a></li>
+</ul>
+</div>
+
+
+      <div id="pay" style="text-align:center;">
+        ----EOF-----
+        <br>
+        <section>
+  <h4>Sponsor</h4>
+	<img src="http://javachen-rs.qiniudn.com/images/alipay.png" width="150/">
+  <p class="small">觉得此博客对你有帮助，支付宝扫码赞助吧</p>
+</section>
+
+      </div>
+
+      <p class="meta">
+      	
+            Categories:
+      	    
+          	<a class="btn btn-default btn-xs" href="/categories.html#hive">hive</a>
+          
+      	
+
+      	
+            Tags:
+      	    
+          	<a class="btn btn-default btn-xs" href="/tags.html#hadoop">hadoop</a>
+          
+          	<a class="btn btn-default btn-xs" href="/tags.html#hive">hive</a>
+          
+      	
+      </p>
+	</article>
+
+	<ul class="pager">
+	  
+	  <li class="previous"><a class="btn btn-xs" href="/2013/03/24/manual-install-Cloudera-hbase-CDH" title="手动安装Cloudera HBase CDH">&larr; Prev</a></li>
+	  
+	  
+	  <li class="next"><a class="btn btn-xs" href="/2013/03/29/install-impala" title="安装Impala过程">Next &rarr;</a></li>
+	  
+	</ul>
+
+  
+<div id="comments">
+  <div class="ds-thread" data-thread-key="/2013/03/24/manual-install-Cloudera-hive-CDH"  data-title="手动安装Cloudera Hive CDH - 小天的个人博客"></div>
+</div>
+
+
+
+</div>
+
+        </div>
+      </div>
+
+      <footer class="footer text-center">
+  <p>&copy; 2009-2015 <a href="/" target="_blank" title="86后，工作在深圳；Java程序员、Hadoop工程师；主要关注Java、Hadoop、Kettle、关注大数据处理技术。">小天</a>. With Help from <a href="//jekyllrb.com/" target="_blank" title="Transform your plain text into static websites and blogs.">Jekyll</a> and <a href="//getbootstrap.com/" target="_blank" title="Bootstrap is the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web.">Bootstrap</a>, theme from <a href="http://havee.me/" target="_blank" title="http://havee.me/">Havee</a>.
+
+  <span style="float:right;"><a href="/about.html">About</a></span>
+
+	
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+  </p>
+  <div id="toTop" style="display: block;">
+    <a href="#">▲</a><a href="#footer">▼</a>
+  </div>
+</footer>
+
+    </div>
+
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/core.js"></script>
+
+    
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+    
+    <!-- duoshuo Begin -->
+    <script type="text/javascript">
+      var duoshuoQuery = {short_name:"xiaotian120"};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] ||
+        document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+    </script>
+    <!-- duoshuo End -->
+    
+  </body>
+</html>

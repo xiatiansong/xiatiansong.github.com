@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Spring集成JPA2.0 - 小天的个人博客</title>
+  <meta name="description" content="JPA 全称 Java Persistence API，是Java EE 5标准之一，是一个 ORM 规范，由厂商来实现该规范。本文主要记录 Spring 框架中集成 JPA 的过程">
+  <meta name="keywords" content="java, hadoop, hive, hbase, spark, linux, scala, python, mysql">
+  <meta name="author" content="小天">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="360-site-verification" content="9b7a87a1d52051c96644f0a9b8b79898" />
+  <meta name="sogou_site_verification" content="ofwXWFdthV"/>
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" >
+
+  <link rel="canonical" href="http://blog.xiaotian.com/2014/11/24/spring-with-jpa2">
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css" media="all">
+  <link rel="stylesheet" href="/static/css/style.css" media="all">
+  <link rel="stylesheet" href="/static/css/pygments.css" media="all">
+  <link rel="stylesheet" href="/static/css/font-awesome.css" media="all">
+
+  <!-- atom & rss feed -->
+  <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="小天的个人博客 RSS Feed">
+  <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="小天的个人博客 ATOM Feed">
+</head>
+
+
+  <body>
+    <div class="container">
+      <!--[if lte IE 9]>
+<div class="alert alert-warning">
+  <p>Your Internet Explorer is not supported. Please upgrade your Internet Explorer to version 9+, or use latest <a href="http://www.google.com/chrome/" target="_blank" class="alert-link">Google chrome</a>、<a href="http://www.mozilla.org/firefox/" target="_blank" class="alert-link">Mozilla Firefox</a>.</p>
+  <p>If you are using IE 9 or later, make sure you <a href="http://windows.microsoft.com/en-us/internet-explorer/use-compatibility-view#ie=ie-8" target="_blank" class="alert-link">turn off "Compatibility view"</a>.</p>
+</div>
+<![endif]-->
+<header class="header">
+  <div class="title"><a title="小天的个人博客" href="/">小天的个人博客</a></div>
+  <ul class="nav navbar-nav navbar-right visible-lg visible-md">
+    <li>
+    <form id="search-form" class="form-group has-success visible-lg" role="form">
+      <input type="text" class="form-control input-sm" placeholder="Search" id="query" style="width: 160px;">
+    </form>
+    </li>
+    <li><a href="/archive.html" title="Archive"><span class='fa fa-archive fa-2x'></span></a></li>
+    <li><a href="/categories.html" title="Categories"><span class='fa fa-navicon fa-2x'></span></a></li>
+    <li><a href="/tags.html" title="Tags"><span class='fa fa-tags fa-2x'></span></a></li>
+    <li><a href="/about.html" title="About"><span class='fa fa-user fa-2x'></span></a></li>
+    
+    <li><a href="https://github.com/wuskyfantasy" target="_blank" title="Github"><span class='fa fa-github fa-2x'></span></a></li>
+    
+    
+    
+    
+    
+    <li><a href="http://weibo.com/xiaotian120" target="_blank" title="Weibo"><span class="fa fa-weibo fa-2x"></span></a></li>
+    
+
+    <li><a href="/rss.xml" target="_blank" title="RSS"><span class='fa fa-rss fa-2x'></span></a></li>
+  </ul>
+</header>
+
+
+      <div class="wrapper">
+        <div class="row">
+          <div id="search-loader" style="display:none;text-align:center">
+            <img src="http://javachen-rs.qiniudn.com/images/loading.gif">
+          </div>
+          <div class="col-md-12">
+  <article class="news-item">
+
+      <h2  class="news-item"> Spring集成JPA2.0  
+        <time class="small">2014.11.24</time>
+      </h2>
+
+      <div><p>JPA 全称 Java Persistence API，是Java EE 5标准之一，是一个 ORM 规范，由厂商来实现该规范，目前有 Hibernate、OpenJPA、TopLink、EclipseJPA 等实现。Spring目前提供集成Hibernate、OpenJPA、TopLink、EclipseJPA四个JPA标准实现。</p>
+
+<h1 id="1.-集成方式">1. 集成方式</h1>
+
+<p>Spring提供三种方法集成JPA：</p>
+
+<ul>
+<li>1. LocalEntityManagerFactoryBean：适用于那些仅使用JPA进行数据访问的项目。</li>
+<li>2. 从JNDI中获取：用于从Java EE服务器中获取指定的EntityManagerFactory，这种方式在Spring事务管理时一般要使用JTA事务管理。</li>
+<li>3. LocalContainerEntityManagerFactoryBean：适用于所有环境的FactoryBean，能全面控制EntityManagerFactory配置，非常适合那种需要细粒度定制的环境。</li>
+</ul>
+
+<h2 id="1.1-localentitymanagerfactorybean">1.1 LocalEntityManagerFactoryBean</h2>
+
+<p>仅在简单部署环境中只使用这种方式，比如独立的应用程序和集成测试。该 FactoryBean 根据 JPA PersistenceProvider自动检测配置文件进行工作，一般从 <code class="prettyprint">META-INF/persistence.xml</code> 读取配置信息。这种方式最简单，但是不能设置 Spring 中定义的 DataSource，且不支持 Spring 管理的全局事务，甚至，持久化类的织入（字节码转换）也是特定于提供者的，经常需要在启动时指定一个特定的JVM代理。<strong>这种方法实际上只适用于独立的应用程序和测试环境，不建议使用此方式。</strong></p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;entityManagerFactory&quot;</span> <span class="na">class=</span><span class="s">&quot;org.springframework.orm.jpa.LocalEntityManagerFactoryBean&quot;</span><span class="nt">&gt;</span>
+       <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;persistenceUnitName&quot;</span> <span class="na">value=</span><span class="s">&quot;persistenceUnit&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+</code></pre></div>
+<p>persistenceUnit 对应 META-INF/persistence.xml 中 persistence-unit 节点的 name 属性值。</p>
+
+<h2 id="1.2-jndi中获取">1.2 JNDI中获取</h2>
+
+<p>Spring 中的配置：</p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;beans</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.springframework.org/schema/beans&quot;</span>
+    <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+    <span class="na">xmlns:jee=</span><span class="s">&quot;http://www.springframework.org/schema/jee&quot;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;</span>
+<span class="s">       http://www.springframework.org/schema/beans</span>
+<span class="s">       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd</span>
+<span class="s">       http://www.springframework.org/schema/jee</span>
+<span class="s">       http://www.springframework.org/schema/jee/spring-jee-3.0.xsd&quot;</span><span class="nt">&gt;</span>
+
+  <span class="nt">&lt;jee:jndi-lookup</span> <span class="na">id=</span><span class="s">&quot;entityManagerFactory&quot;</span>  <span class="na">jndi-name=</span><span class="s">&quot;persistence/persistenceUnit&quot;</span><span class="nt">/&gt;</span>
+
+<span class="nt">&lt;/beans&gt;</span>
+</code></pre></div>
+<p>此处需要使用 <code class="prettyprint">jee</code> 命名标签，且使用 <code class="prettyprint">&lt;jee:jndi-lookup&gt;</code> 标签进行 JNDI 查找，<code class="prettyprint">jndi-name</code> 属性用于指定 JNDI 名字。</p>
+
+<p>在标准的 Java EE 5启动过程中，Java EE服务器自动检测持久化单元（例如应用程序文件包中的 <code class="prettyprint">META-INF/persistence.xml</code>） ，以及J ava EE 部署描述符中定义给那些持久化单元命名上下文位置的环境的 <code class="prettyprint">persistence-unit-ref</code> 项（例如 web.xml）。</p>
+
+<p>在这种情况下，整个持久化单元部署，包括持久化类的织入（字码码转换）都取决于 Java EE 服务器。 JDBC DataSource 通过在 <code class="prettyprint">META-INF/persistence.xml</code> 文件中的 JNDI 位置进行定义；EntityManager 事务与服务器的 JTA 子系统整合。Spring 仅仅用获得的  EntityManagerFactory ，通过依赖注入将它传递给应用程序对象，并为它管理事务（一般通过 JtaTransactionManager）。</p>
+
+<p>注意，如果在同一个应用程序中使用了多个持久化单元，JNDI 获取的这种持久化单元的 bean 名称 应该与应用程序用来引用它们的持久化单元名称相符（例如 <code class="prettyprint">@PersistenceUnit</code> 和 <code class="prettyprint">@PersistenceContext</code> 注解）。</p>
+
+<p>在部署到 Java EE 5 服务器时使用该方法。关于如何将自定义 JPA 提供者部署到服务器，以及允许使用服务器提供的缺省提供者之外的 JPA 提供者，请查看服务器文档的相关说明。</p>
+
+<h2 id="1.3-localcontainerentitymanagerfactorybean">1.3 LocalContainerEntityManagerFactoryBean</h2>
+
+<p>LocalContainerEntityManagerFactoryBean 提供了对JPA EntityManagerFactory 的全面控制，非常适合那种需要细粒度定制的环境。LocalContainerEntityManagerFactoryBean 将基于 persistence.xml 文件创建 PersistenceUnitInfo 类，并提供 dataSourceLookup 策略和 loadTimeWeaver。 因此它可以在JNDI之外的用户定义的数据源之上工作，并控制织入流程。</p>
+
+<p>Spring 中的配置：</p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;entityManagerFactory&quot;</span> <span class="na">class=</span><span class="s">&quot;org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;persistenceUnitName&quot;</span> <span class="na">value=</span><span class="s">&quot;persistenceUnit&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;dataSource&quot;</span> <span class="na">ref=</span><span class="s">&quot;dataSource&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;jpaVendorAdapter&quot;</span> <span class="na">ref=</span><span class="s">&quot;jpaVendorAdapter&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+</code></pre></div>
+<p>这是最为强大的JPA配置方式，允许在应用程序中灵活进行本地配置。它支持连接现有JDBC DataSource ， 支持本地事务和全局事务等等。然而，它也将需求强加到了运行时环境中，例如，如果持久化提供者需要字节码转换，则必须有织入ClassLoader的能力。</p>
+
+<p>注意，这个选项可能与 Java EE 5 服务器内建的 JPA 功能相冲突。因此，当运行在完全 Java EE 5 环境中时， 要考虑从 JNDI 获取 EntityManagerFactory。另一种可以替代的方法是，在 LocalContainerEntityManagerFactoryBean 定义中通过 <code class="prettyprint">persistenceXmlLocation</code> 指定相关位置， 例如 <code class="prettyprint">META-INF/my-persistence.xml</code>，并且只将包含该名称的描述符放在应用程序包文件中。因为 Java EE 5 服务器将只 查找默认的 <code class="prettyprint">META-INF/persistence.xml</code> 文件，它会忽略这种定制的持久化单元，因而避免与前面 Spring 驱动的 JPA 配置冲突。</p>
+
+<p>一个配置实例：</p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;entityManagerFactory&quot;</span> <span class="na">class=</span><span class="s">&quot;org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;dataSource&quot;</span> <span class="na">ref=</span><span class="s">&quot;dataSource&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;persistenceXmlLocation&quot;</span> <span class="na">value=</span><span class="s">&quot;test/persistence.xml&quot;</span><span class="nt">/&gt;</span>
+    <span class="c">&lt;!-- gDickens: BOTH Persistence Unit and Packages to Scan are NOT compatible, persistenceUnit will win --&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;persistenceUnitName&quot;</span> <span class="na">value=</span><span class="s">&quot;persistenceUnit&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;packagesToScan&quot;</span> <span class="na">value=</span><span class="s">&quot;com.javachen.example.springmvc&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;persistenceProvider&quot;</span> <span class="na">ref=</span><span class="s">&quot;persistenceProvider&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;jpaVendorAdapter&quot;</span> <span class="na">ref=</span><span class="s">&quot;jpaVendorAdapter&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;jpaDialect&quot;</span> <span class="na">ref=</span><span class="s">&quot;jpaDialect&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;jpaPropertyMap&quot;</span> <span class="na">ref=</span><span class="s">&quot;jpaPropertyMap&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+
+<span class="nt">&lt;util:map</span> <span class="na">id=</span><span class="s">&quot;jpaPropertyMap&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;entry</span> <span class="na">key=</span><span class="s">&quot;dialect&quot;</span> <span class="na">value=</span><span class="s">&quot;${hibernate.dialect}&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;entry</span> <span class="na">key=</span><span class="s">&quot;hibernate.ejb.naming_strategy&quot;</span> <span class="na">value=</span><span class="s">&quot;${hibernate.ejb.naming_strategy}&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;entry</span> <span class="na">key=</span><span class="s">&quot;hibernate.hbm2ddl.auto&quot;</span> <span class="na">value=</span><span class="s">&quot;${hibernate.hbm2ddl.auto}&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;entry</span> <span class="na">key=</span><span class="s">&quot;hibernate.cache.use_second_level_cache&quot;</span> <span class="na">value=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;entry</span> <span class="na">key=</span><span class="s">&quot;hibernate.cache.use_query_cache&quot;</span> <span class="na">value=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;entry</span> <span class="na">key=</span><span class="s">&quot;hibernate.generate_statistics&quot;</span> <span class="na">value=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;entry</span> <span class="na">key=</span><span class="s">&quot;show_sql&quot;</span> <span class="na">value=</span><span class="s">&quot;${hibernate.show_sql}&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;entry</span> <span class="na">key=</span><span class="s">&quot;format_sql&quot;</span> <span class="na">value=</span><span class="s">&quot;${hibernate.format_sql}&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/util:map&gt;</span>
+
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;persistenceProvider&quot;</span> <span class="na">class=</span><span class="s">&quot;org.hibernate.ejb.HibernatePersistence&quot;</span><span class="nt">/&gt;</span>
+
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;jpaVendorAdapter&quot;</span> <span class="na">class=</span><span class="s">&quot;org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;generateDdl&quot;</span> <span class="na">value=</span><span class="s">&quot;false&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;showSql&quot;</span> <span class="na">value=</span><span class="s">&quot;false&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;database&quot;</span> <span class="na">value=</span><span class="s">&quot;HSQL&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;jpaDialect&quot;</span> <span class="na">class=</span><span class="s">&quot;org.springframework.orm.jpa.vendor.HibernateJpaDialect&quot;</span><span class="nt">/&gt;</span>
+</code></pre></div>
+<p>说明：</p>
+
+<ul>
+<li>`LocalContainerEntityManagerFactoryBean：指定使用本地容器管理 EntityManagerFactory，从而进行细粒度控制；</li>
+<li><code class="prettyprint">dataSource</code>：属性指定使用 Spring 定义的数据源；</li>
+<li><code class="prettyprint">persistenceXmlLocation</code>：指定 JPA 配置文件为 test/persistence.xml，且该配置文件非常简单，具体配置完全在Spring中进行；</li>
+<li><code class="prettyprint">persistenceUnitName</code>：指定持久化单元名字，即 JPA 配置文件中指定的;</li>
+<li><code class="prettyprint">packagesToScan</code>：指定扫描哪个包下的类，当 persistenceUnitName 和 packagesToScan 属性同时存在时，会使用 persistenceUnitName 属性</li>
+<li><code class="prettyprint">persistenceProvider</code>：指定 JPA 持久化提供商，此处使用 Hibernate 实现 HibernatePersistence类；</li>
+<li><code class="prettyprint">jpaVendorAdapter</code>：指定实现厂商专用特性，即 <code class="prettyprint">generateDdl= false</code> 表示不自动生成 DDL，<code class="prettyprint">database= HSQL</code> 表示使用 hsqld b数据库；</li>
+<li><code class="prettyprint">jpaDialect</code>：如果指定 jpaVendorAdapter 此属性可选，此处为 HibernateJpaDialect；</li>
+<li><code class="prettyprint">jpaPropertyMap</code>：此处指定一些属性。</li>
+</ul>
+
+<h3 id="处理多持久化单元">处理多持久化单元</h3>
+
+<p>对于那些依靠多个持久化单元位置(例如存放在 classpath 中的多个 jar 中)的应用程序， Spring 提供了作为中央仓库的 PersistenceUnitManager， 避免了持久化单元查找过程。缺省实现允许指定多个位置 (默认情况下 classpath 会搜索 META-INF/persistence.xml 文件)，它们会被解析然后通过持久化单元名称被获取：</p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;persistenceUnitManager&quot;</span> <span class="na">class=</span><span class="s">&quot;org.springframework.orm.jpa.persistenceunit.DefaultPersistenceUnitManager&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;persistenceXmlLocation&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;list&gt;</span>
+         <span class="nt">&lt;value&gt;</span>org/springframework/orm/jpa/domain/persistence-multi.xml<span class="nt">&lt;/value&gt;</span>
+         <span class="nt">&lt;value&gt;</span>classpath:/my/package/**/custom-persistence.xml<span class="nt">&lt;/value&gt;</span>
+         <span class="nt">&lt;value&gt;</span>classpath*:META-INF/persistence.xml<span class="nt">&lt;/value&gt;</span>
+        <span class="nt">&lt;/list&gt;</span>
+    <span class="nt">&lt;/property&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;dataSources&quot;</span><span class="nt">&gt;</span>
+       <span class="nt">&lt;map&gt;</span>
+        <span class="nt">&lt;entry</span> <span class="na">key=</span><span class="s">&quot;localDataSource&quot;</span> <span class="na">value-ref=</span><span class="s">&quot;local-db&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;entry</span> <span class="na">key=</span><span class="s">&quot;remoteDataSource&quot;</span> <span class="na">value-ref=</span><span class="s">&quot;remote-db&quot;</span><span class="nt">/&gt;</span>
+       <span class="nt">&lt;/map&gt;</span>
+    <span class="nt">&lt;/property&gt;</span>
+    <span class="c">&lt;!-- if no datasource is specified, use this one --&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;defaultDataSource&quot;</span> <span class="na">ref=</span><span class="s">&quot;remoteDataSource&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;entityManagerFactory&quot;</span> <span class="na">class=</span><span class="s">&quot;org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;persistenceUnitManager&quot;</span> <span class="na">ref=</span><span class="s">&quot;persistenceUnitManager&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+</code></pre></div></div>
+
+
+      <div id="pay" style="text-align:center;">
+        ----EOF-----
+        <br>
+        <section>
+  <h4>Sponsor</h4>
+	<img src="http://javachen-rs.qiniudn.com/images/alipay.png" width="150/">
+  <p class="small">觉得此博客对你有帮助，支付宝扫码赞助吧</p>
+</section>
+
+      </div>
+
+      <p class="meta">
+      	
+            Categories:
+      	    
+          	<a class="btn btn-default btn-xs" href="/categories.html#java">java</a>
+          
+      	
+
+      	
+            Tags:
+      	    
+          	<a class="btn btn-default btn-xs" href="/tags.html#java">java</a>
+          
+          	<a class="btn btn-default btn-xs" href="/tags.html#spring">spring</a>
+          
+          	<a class="btn btn-default btn-xs" href="/tags.html#jpa">jpa</a>
+          
+      	
+      </p>
+	</article>
+
+	<ul class="pager">
+	  
+	  <li class="previous"><a class="btn btn-xs" href="/2014/11/18/config-kerberos-in-cdh-zookeeper" title="Zookeeper配置Kerberos认证">&larr; Prev</a></li>
+	  
+	  
+	  <li class="next"><a class="btn btn-xs" href="/2014/11/25/quikstart-for-config-kerberos-ldap-and-sentry-in-hadoop" title="Hadoop集群部署权限总结">Next &rarr;</a></li>
+	  
+	</ul>
+
+  
+<div id="comments">
+  <div class="ds-thread" data-thread-key="/2014/11/24/spring-with-jpa2"  data-title="Spring集成JPA2.0 - 小天的个人博客"></div>
+</div>
+
+
+
+</div>
+
+        </div>
+      </div>
+
+      <footer class="footer text-center">
+  <p>&copy; 2009-2015 <a href="/" target="_blank" title="86后，工作在深圳；Java程序员、Hadoop工程师；主要关注Java、Hadoop、Kettle、关注大数据处理技术。">小天</a>. With Help from <a href="//jekyllrb.com/" target="_blank" title="Transform your plain text into static websites and blogs.">Jekyll</a> and <a href="//getbootstrap.com/" target="_blank" title="Bootstrap is the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web.">Bootstrap</a>, theme from <a href="http://havee.me/" target="_blank" title="http://havee.me/">Havee</a>.
+
+  <span style="float:right;"><a href="/about.html">About</a></span>
+
+	
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+  </p>
+  <div id="toTop" style="display: block;">
+    <a href="#">▲</a><a href="#footer">▼</a>
+  </div>
+</footer>
+
+    </div>
+
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/core.js"></script>
+
+    
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+    
+    <!-- duoshuo Begin -->
+    <script type="text/javascript">
+      var duoshuoQuery = {short_name:"xiaotian120"};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] ||
+        document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+    </script>
+    <!-- duoshuo End -->
+    
+  </body>
+</html>

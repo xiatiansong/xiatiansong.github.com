@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>最近的工作 - 小天的个人博客</title>
+  <meta name="description" content="最近一直在构思这篇博客的内容，到现在还是不知道从何下手。自从将博客从wordpress迁移到github上之后，就很少在博客写一些关于工作和生活的文章，所以想写一篇关于工作的博客，记录最近做过的事情以及一些当时的所思所想。">
+  <meta name="keywords" content="java, hadoop, hive, hbase, spark, linux, scala, python, mysql">
+  <meta name="author" content="小天">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="360-site-verification" content="9b7a87a1d52051c96644f0a9b8b79898" />
+  <meta name="sogou_site_verification" content="ofwXWFdthV"/>
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" >
+
+  <link rel="canonical" href="http://blog.xiaotian.com/2013/09/08/recent-work">
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css" media="all">
+  <link rel="stylesheet" href="/static/css/style.css" media="all">
+  <link rel="stylesheet" href="/static/css/pygments.css" media="all">
+  <link rel="stylesheet" href="/static/css/font-awesome.css" media="all">
+
+  <!-- atom & rss feed -->
+  <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="小天的个人博客 RSS Feed">
+  <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="小天的个人博客 ATOM Feed">
+</head>
+
+
+  <body>
+    <div class="container">
+      <!--[if lte IE 9]>
+<div class="alert alert-warning">
+  <p>Your Internet Explorer is not supported. Please upgrade your Internet Explorer to version 9+, or use latest <a href="http://www.google.com/chrome/" target="_blank" class="alert-link">Google chrome</a>、<a href="http://www.mozilla.org/firefox/" target="_blank" class="alert-link">Mozilla Firefox</a>.</p>
+  <p>If you are using IE 9 or later, make sure you <a href="http://windows.microsoft.com/en-us/internet-explorer/use-compatibility-view#ie=ie-8" target="_blank" class="alert-link">turn off "Compatibility view"</a>.</p>
+</div>
+<![endif]-->
+<header class="header">
+  <div class="title"><a title="小天的个人博客" href="/">小天的个人博客</a></div>
+  <ul class="nav navbar-nav navbar-right visible-lg visible-md">
+    <li>
+    <form id="search-form" class="form-group has-success visible-lg" role="form">
+      <input type="text" class="form-control input-sm" placeholder="Search" id="query" style="width: 160px;">
+    </form>
+    </li>
+    <li><a href="/archive.html" title="Archive"><span class='fa fa-archive fa-2x'></span></a></li>
+    <li><a href="/categories.html" title="Categories"><span class='fa fa-navicon fa-2x'></span></a></li>
+    <li><a href="/tags.html" title="Tags"><span class='fa fa-tags fa-2x'></span></a></li>
+    <li><a href="/about.html" title="About"><span class='fa fa-user fa-2x'></span></a></li>
+    
+    <li><a href="https://github.com/wuskyfantasy" target="_blank" title="Github"><span class='fa fa-github fa-2x'></span></a></li>
+    
+    
+    
+    
+    
+    <li><a href="http://weibo.com/xiaotian120" target="_blank" title="Weibo"><span class="fa fa-weibo fa-2x"></span></a></li>
+    
+
+    <li><a href="/rss.xml" target="_blank" title="RSS"><span class='fa fa-rss fa-2x'></span></a></li>
+  </ul>
+</header>
+
+
+      <div class="wrapper">
+        <div class="row">
+          <div id="search-loader" style="display:none;text-align:center">
+            <img src="http://javachen-rs.qiniudn.com/images/loading.gif">
+          </div>
+          <div class="col-md-12">
+  <article class="news-item">
+
+      <h2  class="news-item"> 最近的工作  
+        <time class="small">2013.09.08</time>
+      </h2>
+
+      <div><p>最近一直在构思这篇博客的内容，到现在还是不知道从何下手。自从将博客从wordpress迁移到github上之后，就很少在博客写一些关于工作和生活的文章，所以想写一篇关于工作的博客，记录最近做过的事情以及一些当时的所思所想。</p>
+
+<p>最近半年多一直在做hadoop方面的工作，也就是接触hadoop才半年多时间。最开始接触hadoop是去年的11月21日，那天去Intel公司参加了两天的hadoop培训。培训的内容很多干货也有很多枯燥的东西，所以边听边瞌睡的听完了两天的培训内容。培训的ppt打印出来了，时不时地会翻看上面讲述的内容，然后在网上搜索些相关的资料。</p>
+
+<p>最先接触的hadoop发行版是Intel的IDH，刚开始使用IDH也就是用他的管理界面安装、部署hadoop集群，然后在8节点的集群上作hive两表关联的测试。测试结果不是很满意，但是对IDH倒是印象深刻。IDH的前端使用GWT开发，界面简洁，操作也比较方便，只是同步配置文件有时候非常慢，要等上一杯咖啡的时间。</p>
+
+<!-- more -->
+
+<p>IDH的源代码不开源，所以遇到一些问题的时候，只能先自己摸索。我不喜欢闭源也不喜欢许可证以及混淆代码什么的。虽然java代码的混淆了，但是shell和puppet脚本还是能够很容易读懂的。参考IDH的部署安装脚本，我在试着用shell编写一个hadoop的安装部署脚本，这个工作还在慢慢进行中。也许在弄懂puppet的原理和代码之后，我会简化、改进IDH的脚本；也许会使用公司使用的saltstack来完善这个部署脚本。</p>
+
+<p>IDH实现了hive over hbase，这是一个很不错的特性，其基于hbase的协作器，代码实现并不复杂。IDH中有个hmon用于监控hadoop，我已经把这部分代码反编译了。</p>
+
+<p>在hadoop版本选择的过程中，体验了Cloudera的CDH。首先是CDH的压缩包手动安装hadoop集群，一点点的修改配置文件，直到最后集群能够成功启动，这种方式安装的hadoop集群不包含本地lib文件；然后又试着解压缩Cloudera-manager.bin文件，尝试在虚拟机中不连接网络的情况下通过Cloudera-manager来安装配置集群，在使用了一段时间之后，发现Cloudera-manager没有使用操作系统的service服务来管理hadoop组件的启动和停止，而是有自己一套实现来管理集群，再加上Cloudera-manager也不开源，故放弃了使用Cloudera-manager来安装集群的方式；最后，最后是使用rpm方式来安装hadoop，安装过程倒是不复杂，只是以后如果自己修改了源代码时候升级不是很方便了，Cloudera的github上有个cdh-package项目，这个其实就是apache的bigtop项目，试过通过这个来编译出hadoop的rpm包，没有成功。</p>
+
+<p>IDH通过本地文件来保存集群的配置信息，而CDH将这些信息保存到数据库了。CDH的Cloudera-manager的web界面基于bootstrap和jquery插件，ui做的很不错，通过反编译java代码，已经知道了其web界面的实现方式以及编译成功了部分java代码。CDH的Cloudera-manager和IDH-manager也很大不同，我想在这两个的基础上也实现一个hadoop的manager，这是我个人想法，还需要研究、整理出他们的实现思路，然后一点点的构思自己该怎么做。Cloudera-manager免费版简称CMF。</p>
+
+<p>差不多两个月前，公司想做个hive的查询界面，这个东西其实就是和hwi、hue差不多的个东西。基于Spring，我很快搭好了框架，然后把CMF其中的css和js都迁移过来了。这是我第一次接触bootstrap，稍微修改下代码一个前台框架就弄好了，CMF最主要是使用了require.js使javascript代码模块化，这东西改起来也很简单，我把CMF中大部分基础javascript代码都移到了我搭好的框架中。搭好这个框架没花多少时间，但后来公司不打算使用这一套框架，以后有时间我会继续基于这个框架开发个hadoop的管理界面。</p>
+
+<p>在使用ganglia监控hadoop的过程中，有时候需要找一个监控指标需要花好长时间，而且一个页面上显示的指标太多的时候，这个页面会反应不过来。hortonworks的HDP发行版中似乎对ganglia做了些修改，具体不知道改了什么。HDP发行版没有使用和研究过，只是下载了1.3和2.0两个版本的VM，然后看了看其中的hue，觉得做的很不错，只可惜是python写的。</p>
+
+<p>在使用hadoop的过程中，觉得hadoop的门槛对于用户来说还是有点高。用户需要学习hive语法，写出的sql语句通常都不是最优sql，如果有个sql优化器自动帮用户优化sql语句就好了。hbase用于监控业务日志，数据建模和编写代码查询数据对于业务人员来说难度也太大了，如果能够适度封装，让业务人员不用关心hadoop的细节，只需要编写sql语句就能查询数据该多好啊！</p>
+
+<p>其他工作：hive和mapreduce调优。</p>
+
+<p>上面是最近在做的一些事情，包括暂停没做的、正在做的以及还未做的。有时候觉得有些事情很简单，但没有时间、没有精力也没有自由一下子做完，有些时候人在江湖，身不由己。</p>
+</div>
+
+
+      <div id="pay" style="text-align:center;">
+        ----EOF-----
+        <br>
+        <section>
+  <h4>Sponsor</h4>
+	<img src="http://javachen-rs.qiniudn.com/images/alipay.png" width="150/">
+  <p class="small">觉得此博客对你有帮助，支付宝扫码赞助吧</p>
+</section>
+
+      </div>
+
+      <p class="meta">
+      	
+            Categories:
+      	    
+          	<a class="btn btn-default btn-xs" href="/categories.html#work">work</a>
+          
+      	
+
+      	
+            Tags:
+      	    
+          	<a class="btn btn-default btn-xs" href="/tags.html#work">work</a>
+          
+      	
+      </p>
+	</article>
+
+	<ul class="pager">
+	  
+	  <li class="previous"><a class="btn btn-xs" href="/2013/09/04/how-to-decide-map-number" title="hive中如何确定map数">&larr; Prev</a></li>
+	  
+	  
+	  <li class="next"><a class="btn btn-xs" href="/2013/10/17/cartesian-product-in-hive-inner-join" title="Hive连接产生笛卡尔集">Next &rarr;</a></li>
+	  
+	</ul>
+
+  
+<div id="comments">
+  <div class="ds-thread" data-thread-key="/2013/09/08/recent-work"  data-title="最近的工作 - 小天的个人博客"></div>
+</div>
+
+
+
+</div>
+
+        </div>
+      </div>
+
+      <footer class="footer text-center">
+  <p>&copy; 2009-2015 <a href="/" target="_blank" title="86后，工作在深圳；Java程序员、Hadoop工程师；主要关注Java、Hadoop、Kettle、关注大数据处理技术。">小天</a>. With Help from <a href="//jekyllrb.com/" target="_blank" title="Transform your plain text into static websites and blogs.">Jekyll</a> and <a href="//getbootstrap.com/" target="_blank" title="Bootstrap is the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web.">Bootstrap</a>, theme from <a href="http://havee.me/" target="_blank" title="http://havee.me/">Havee</a>.
+
+  <span style="float:right;"><a href="/about.html">About</a></span>
+
+	
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+  </p>
+  <div id="toTop" style="display: block;">
+    <a href="#">▲</a><a href="#footer">▼</a>
+  </div>
+</footer>
+
+    </div>
+
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/core.js"></script>
+
+    
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+    
+    <!-- duoshuo Begin -->
+    <script type="text/javascript">
+      var duoshuoQuery = {short_name:"xiaotian120"};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] ||
+        document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+    </script>
+    <!-- duoshuo End -->
+    
+  </body>
+</html>

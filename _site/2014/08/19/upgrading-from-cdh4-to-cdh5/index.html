@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>升级cdh4到cdh5 - 小天的个人博客</title>
+  <meta name="description" content="现在的集群安装的是 cdh4.7 并配置了 NameNode HA，现在需要将其升级到 cdh5.1，本文主要记录升级过程和遇到的问题。">
+  <meta name="keywords" content="java, hadoop, hive, hbase, spark, linux, scala, python, mysql">
+  <meta name="author" content="小天">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="360-site-verification" content="9b7a87a1d52051c96644f0a9b8b79898" />
+  <meta name="sogou_site_verification" content="ofwXWFdthV"/>
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" >
+
+  <link rel="canonical" href="http://blog.xiaotian.com/2014/08/19/upgrading-from-cdh4-to-cdh5">
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css" media="all">
+  <link rel="stylesheet" href="/static/css/style.css" media="all">
+  <link rel="stylesheet" href="/static/css/pygments.css" media="all">
+  <link rel="stylesheet" href="/static/css/font-awesome.css" media="all">
+
+  <!-- atom & rss feed -->
+  <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="小天的个人博客 RSS Feed">
+  <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="小天的个人博客 ATOM Feed">
+</head>
+
+
+  <body>
+    <div class="container">
+      <!--[if lte IE 9]>
+<div class="alert alert-warning">
+  <p>Your Internet Explorer is not supported. Please upgrade your Internet Explorer to version 9+, or use latest <a href="http://www.google.com/chrome/" target="_blank" class="alert-link">Google chrome</a>、<a href="http://www.mozilla.org/firefox/" target="_blank" class="alert-link">Mozilla Firefox</a>.</p>
+  <p>If you are using IE 9 or later, make sure you <a href="http://windows.microsoft.com/en-us/internet-explorer/use-compatibility-view#ie=ie-8" target="_blank" class="alert-link">turn off "Compatibility view"</a>.</p>
+</div>
+<![endif]-->
+<header class="header">
+  <div class="title"><a title="小天的个人博客" href="/">小天的个人博客</a></div>
+  <ul class="nav navbar-nav navbar-right visible-lg visible-md">
+    <li>
+    <form id="search-form" class="form-group has-success visible-lg" role="form">
+      <input type="text" class="form-control input-sm" placeholder="Search" id="query" style="width: 160px;">
+    </form>
+    </li>
+    <li><a href="/archive.html" title="Archive"><span class='fa fa-archive fa-2x'></span></a></li>
+    <li><a href="/categories.html" title="Categories"><span class='fa fa-navicon fa-2x'></span></a></li>
+    <li><a href="/tags.html" title="Tags"><span class='fa fa-tags fa-2x'></span></a></li>
+    <li><a href="/about.html" title="About"><span class='fa fa-user fa-2x'></span></a></li>
+    
+    <li><a href="https://github.com/wuskyfantasy" target="_blank" title="Github"><span class='fa fa-github fa-2x'></span></a></li>
+    
+    
+    
+    
+    
+    <li><a href="http://weibo.com/xiaotian120" target="_blank" title="Weibo"><span class="fa fa-weibo fa-2x"></span></a></li>
+    
+
+    <li><a href="/rss.xml" target="_blank" title="RSS"><span class='fa fa-rss fa-2x'></span></a></li>
+  </ul>
+</header>
+
+
+      <div class="wrapper">
+        <div class="row">
+          <div id="search-loader" style="display:none;text-align:center">
+            <img src="http://javachen-rs.qiniudn.com/images/loading.gif">
+          </div>
+          <div class="col-md-12">
+  <article class="news-item">
+
+      <h2  class="news-item"> 升级cdh4到cdh5  
+        <time class="small">2014.08.19</time>
+      </h2>
+
+      <div><p>现在的集群安装的是 cdh4.7 并配置了 NameNode HA，现在需要将其升级到 cdh5.2，升级原因这里不做说明。</p>
+
+<h1 id="1.-不兼容的变化">1. 不兼容的变化</h1>
+
+<p>升级前，需要注意 cdh5 有哪些不兼容的变化，具体请参考：<a href="http://www.cloudera.com/content/cloudera-content/cloudera-docs/CDH5/latest/CDH5-Release-Notes/cdh5rn_incompatible_changes.html#topic_3">Apache Hadoop Incompatible Changes</a>。这里列出一些关键的地方：</p>
+
+<h2 id="1.1-yarn-的变化">1.1 YARN 的变化</h2>
+
+<ul>
+<li><code class="prettyprint">YARN_HOME</code> 属性修改为<code class="prettyprint">HADOOP_YARN_HOME</code></li>
+<li><code class="prettyprint">yarn-site.xml</code> 中做如下改变：
+
+<ul>
+<li><code class="prettyprint">mapreduce.shuffle to mapreduce_shuffle</code> 修改为 <code class="prettyprint">yarn.nodemanager.aux-services</code></li>
+<li><code class="prettyprint">yarn.nodemanager.aux-services.mapreduce.shuffle.class</code> 改名为 <code class="prettyprint">yarn.nodemanager.aux-services.mapreduce_shuffle.class</code></li>
+<li><code class="prettyprint">yarn.application.classpath</code> 中的环境变量 <code class="prettyprint">YARN_HOME</code> 属性修改为<code class="prettyprint">HADOOP_YARN_HOME</code></li>
+</ul></li>
+</ul>
+
+<p>需要特别注意的是 <code class="prettyprint">YARN_HOME</code> 属性修改为<code class="prettyprint">HADOOP_YARN_HOME</code>，要不然运行 mapreduce 会出现一些异常，我也是花了很长时间才注意到这一点。</p>
+
+<h2 id="1.2-hbase-的变化">1.2 HBase 的变化</h2>
+
+<p>1、CDH 5 Beta 1 (HBase 0.95) 中 <code class="prettyprint">hbase.regionserver.checksum.verify</code> 默认值修改为 true</p>
+
+<p>2、<a href="https://issues.apache.org/jira/browse/HBASE-8218">HBASE-8218</a> 修改了 AggregationClient 的参数类型为 HTable</p>
+
+<p>3、CDH5 不再使用 HTablePool，改为如下方式：</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">HConnection</span> <span class="n">connection</span> <span class="o">=</span> <span class="n">HConnectionManager</span><span class="o">.</span><span class="na">createConnection</span><span class="o">(</span><span class="n">config</span><span class="o">);</span>
+<span class="n">HTableInterface</span> <span class="n">table</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="na">getTable</span><span class="o">(</span><span class="n">tableName</span><span class="o">);</span>
+<span class="n">table</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">put</span><span class="o">);</span>
+<span class="n">table</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+<span class="n">connection</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+</code></pre></div>
+<p>你可以使用 <code class="prettyprint">hbase.hconnection.threads.max</code> 来指定连接池大小：</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">ExecutorService</span> <span class="n">pool</span> <span class="o">=</span> <span class="o">...;</span>
+<span class="n">HConnection</span> <span class="n">connection</span> <span class="o">=</span> <span class="n">HConnectionManager</span><span class="o">.</span><span class="na">createConnection</span><span class="o">(</span><span class="n">conf</span><span class="o">,</span> <span class="n">pool</span><span class="o">);</span>
+</code></pre></div>
+<p>4、删除了一些 API</p>
+
+<ul>
+<li><a href="https://issues.apache.org/jira/browse/HBASE-7315">HBASE-7315</a> 和 <a href="https://issues.apache.org/jira/browse/HBASE-7263">HBASE-7263</a>  Row lock user API has been removed</li>
+<li><a href="https://issues.apache.org/jira/browse/HBASE-6706">HBASE-6706</a>  Removed total order partitioner</li>
+<li><a href="http://www.cloudera.com/content/cloudera-content/cloudera-docs/shared/CDH5-Beta-2-RNs/hbase_jdiff_report-p-cdh4.5-c-cdh5b2/changes.html"> API Differences between CDH 4.5 and CDH 5 Beta </a></li>
+</ul>
+
+<p>5、Operator Interface Changes</p>
+
+<ul>
+<li>CDH 4 的 hbase-default.xml 中的很多默认值做了修改，参考 <a href="https://issues.apache.org/jira/browse/HBASE-8450">HBASE-845</a></li>
+<li><a href="https://issues.apache.org/jira/browse/HBASE-6553">HBASE-6553</a> Removed Avro Gateway</li>
+</ul>
+
+<p>6、HBase User API Incompatibility</p>
+
+<ul>
+<li><a href="https://issues.apache.org/jira/browse/HBASE-8015">HBASE-8015</a> The HBase Namespaces feature has changed HBase’s HDFS file layout</li>
+<li><a href="https://issues.apache.org/jira/browse/HBASE-4451">HBASE-4451</a> 重命名 ZooKeeper 节点名称</li>
+<li><a href="https://issues.apache.org/jira/browse/HBASE-3171">HBASE-3171</a> META表改名为 hbase:meta，ROOT 表被删除</li>
+<li><a href="https://issues.apache.org/jira/browse/HBASE-8352">HBASE-8352</a> snapshots保存在 <code class="prettyprint">/&lt;hbase&gt;/.hbase-snapshot</code></li>
+<li><a href="https://issues.apache.org/jira/browse/HBASE-7660">HBASE-766</a> 删除对HFile V1的支持</li>
+<li><a href="https://issues.cloudera.org/browse/HBASE-6170">HBASE-6170</a> 和 <a href="https://issues.cloudera.org/browse/HBASE-8909">HBASE-8909</a> <code class="prettyprint">hbase.regionserver.lease.period</code>参数过时，使用 <code class="prettyprint">hbase.client.scanner.timeout.period</code> 替换</li>
+</ul>
+
+<h1 id="2.-升级过程">2. 升级过程</h1>
+
+<h2 id="2.1.-备份数据和停止所有服务">2.1. 备份数据和停止所有服务</h2>
+
+<h3 id="2.1.1-让-namenode-进入安全模式">2.1.1 让 namenode 进入安全模式</h3>
+
+<p>在NameNode或者配置了 HA 中的 active NameNode上运行下面命令：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ sudo -u hdfs hdfs dfsadmin -safemode enter
+</code></pre></div>
+<p>保存 fsimage：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ sudo -u hdfs hdfs dfsadmin -saveNamespace
+</code></pre></div>
+<h3 id="2.1.2-备份配置文件、数据库和其他重要文件">2.1.2 备份配置文件、数据库和其他重要文件</h3>
+
+<p>配置文件包括：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">/etc/hadoop/conf
+/etc/hive/conf
+/etc/hbase/conf
+/etc/zookeeper/conf
+/etc/impala/conf
+/etc/default/impala
+</code></pre></div>
+<h3 id="2.1.3-停止所有服务">2.1.3 停止所有服务</h3>
+
+<p>在每个节点上运行：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ for x in `cd /etc/init.d ; ls hbase-*` ; do sudo service $x stop ; done
+$ for x in `cd /etc/init.d ; ls hive-*` ; do sudo service $x stop ; done
+$ for x in `cd /etc/init.d ; ls zookeeper-*` ; do sudo service $x stop ; done
+$ for x in `cd /etc/init.d ; ls hadoop-*` ; do sudo service $x stop ; done
+$ for x in `cd /etc/init.d ; ls impala-*` ; do sudo service $x stop ; done
+</code></pre></div>
+<h3 id="2.1.4-在每个节点上查看进程">2.1.4 在每个节点上查看进程</h3>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ ps -aef | grep java
+</code></pre></div>
+<h2 id="2.2.-备份-hdfs-元数据（可选，防止在操作过程中对数据的误操作）">2.2. 备份 hdfs 元数据（可选，防止在操作过程中对数据的误操作）</h2>
+
+<p>a，查找本地配置的文件目录（属性名为 <code class="prettyprint">dfs.name.dir</code> 或者 <code class="prettyprint">dfs.namenode.name.dir或者hadoop.tmp.dir</code> ）</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">grep -C1 hadoop.tmp.dir /etc/hadoop/conf/hdfs-site.xml
+</code></pre></div>
+<p>通过上面的命令，可以看到一下信息</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">&lt;property&gt;
+&lt;name&gt;hadoop.tmp.dir&lt;/name&gt;
+&lt;value&gt;/data/dfs/nn&lt;/value&gt;
+&lt;/property&gt;
+</code></pre></div>
+<p>b，对hdfs数据进行备份</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">cd</span> /data/dfs/nn
+tar -cvf /root/nn_backup_data.tar .
+</code></pre></div>
+<h2 id="2.3.-更新-yum-源">2.3. 更新 yum 源</h2>
+
+<p>更新 cdh5 仓库，我这里使用的是本地 ftp yum 仓库，故需要下载 cdh5 yum 仓库的压缩包，以 cdh5.3 为例，yum 源配置在 cdh1 节点上：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># 更新 cdh5.3 仓库</span>
+<span class="nb">cd</span> /var/ftp/pub
+rm -rf cdh
+wget http://archive-primary.cloudera.com/cdh5/repo-as-tarball/5.3.0/cdh5.3.0-centos6.tar.gz
+tar zxvf cdh5.3.0-centos6.tar.gz
+
+<span class="c"># 更新 lzo 仓库</span>
+rm -rf cloudera-gplextras5
+wget http://archive-primary.cloudera.com/gplextras5/redhat/6/x86_64/gplextras/cloudera-gplextras5.repo -P /etc/yum.repos.d
+
+reposync --repoid<span class="o">=</span>cloudera-gplextras5
+</code></pre></div>
+<p>这样就可以通过 <a href="ftp://cdh1/cdh">ftp://cdh1/cdh</a> 升级 cdh 组件，通过 <a href="ftp://cdh1/cloudera-gplextras5">ftp://cdh1/cloudera-gplextras5</a> 升级 lzo 相关依赖。</p>
+
+<h2 id="2.4.-升级组件">2.4. 升级组件</h2>
+
+<p>在所有节点上运行：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ sudo yum update hadoop* hbase* hive* zookeeper* bigtop* impala* spark* llama* lzo* sqoop* parquet* sentry* avro* mahout* -y
+</code></pre></div>
+<p>启动ZooKeeper集群，如果配置了 HA，则在原来的所有 Journal Nodes 上启动 hadoop-hdfs-journalnode：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># 在安装zookeeper-server的节点上运行</span>
+<span class="nv">$ </span>/etc/init.d/zookeeper-server start
+
+<span class="c"># 在安装zkfc的节点上运行</span>
+<span class="nv">$ </span>/etc/init.d/hadoop-hdfs-zkfc
+
+<span class="c"># 在安装journalnode的节点上运行</span>
+<span class="nv">$ </span>/etc/init.d/hadoop-hdfs-journalnode start
+</code></pre></div>
+<h2 id="2.5.-更新-hdfs-元数据">2.5. 更新 hdfs 元数据</h2>
+
+<p>在NameNode或者配置了 HA 中的 active NameNode上运行下面命令：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ sudo service hadoop-hdfs-namenode upgrade
+</code></pre></div>
+<p>查看日志，检查是否完成升级，例如查看日志中是否出现<code class="prettyprint">/var/lib/hadoop-hdfs/cache/hadoop/dfs/&lt;name&gt; is complete</code></p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ sudo tail -f /var/log/hadoop-hdfs/hadoop-hdfs-namenode-&lt;hostname&gt;.log
+</code></pre></div>
+<p>如果配置了 HA，在另一个 NameNode 节点上运行：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># 输入 Y</span>
+<span class="nv">$ </span>sudo -u hdfs hdfs namenode -bootstrapStandby
+<span class="nv">$ </span>sudo service hadoop-hdfs-namenode start
+</code></pre></div>
+<p>启动所有的 DataNode：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sudo service hadoop-hdfs-datanode start
+</code></pre></div>
+<p>打开 web 界面查看 hdfs 文件是否都存在。</p>
+
+<p>待集群稳定运行一段时间，可以完成升级：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ sudo -u hdfs hadoop dfsadmin -finalizeUpgrade
+</code></pre></div>
+<h2 id="2.6.-更新-yarn">2.6. 更新 YARN</h2>
+
+<p>更新 YARN 需要注意以下节点：</p>
+
+<ul>
+<li><code class="prettyprint">yarn-site.xml</code> 中做如下改变：
+
+<ul>
+<li><code class="prettyprint">mapreduce.shuffle to mapreduce_shuffle</code> 修改为 <code class="prettyprint">yarn.nodemanager.aux-services</code></li>
+<li><code class="prettyprint">yarn.nodemanager.aux-services.mapreduce.shuffle.class</code> 改名为 <code class="prettyprint">yarn.nodemanager.aux-services.mapreduce_shuffle.class</code></li>
+<li><code class="prettyprint">yarn.application.classpath</code> 中的环境变量 <code class="prettyprint">YARN_HOME</code> 属性修改为<code class="prettyprint">HADOOP_YARN_HOME</code></li>
+</ul></li>
+</ul>
+
+<p>然后在期待 YARN 的相关服务。</p>
+
+<h2 id="2.7.-更新-hbase">2.7. 更新 HBase</h2>
+
+<p>升级 HBase 之前，先启动 zookeeper。</p>
+
+<p>在启动hbase-master进程和hbase-regionserver进程之前，更新 HBase：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ sudo -u hdfs hbase upgrade -execute
+</code></pre></div>
+<p>如果你使用了 phoenix，则请删除 HBase lib 目录下对应的 phoenix 的 jar 包。</p>
+
+<p>启动 HBase：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ service hbase-master start
+$ service hbase-regionserver start
+</code></pre></div>
+<h2 id="2.8.-更新-hive">2.8. 更新 hive</h2>
+
+<p>在启动hive之前，进入 <code class="prettyprint">/usr/lib/hive/bin</code> 执行下面命令升级元数据：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># ./schematool -dbType 数据库类型 -upgradeSchemaFrom 版本号</span>
+<span class="c"># 升级之前 hive 版本为 0.12.0，下面命令会运行  /usr/lib/hive/scripts/metastore/upgrade/mysql/upgrade-0.12.0-to-0.13.0.mysql.sql</span>
+<span class="nv">$ </span>./schematool -dbType mysql -upgradeSchemaFrom 0.12.0
+</code></pre></div>
+<p>确认 /etc/hive/conf/hive-site.xml 和 /etc/hive/conf/hive-env.sh 是否需要修改，例如 /etc/hive/conf/hive-env.sh 配置了如下参数，需要修改到 cdh-5.2 对应的版本：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># 请修改到 cdh5.2对应的 jar 包</span>
+<span class="nb">export </span><span class="nv">HIVE_AUX_JARS_PATH</span><span class="o">=</span>/usr/lib/hive/lib/hive-contrib-0.12.0-cdh5.1.0.jar
+</code></pre></div>
+<p>修改完之后，请同步到其他节点。</p>
+
+<p>然后启动 hive 服务：</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>service hive-metastore start
+<span class="nv">$ </span>service hive-server2 start
+</code></pre></div>
+<h1 id="3.-参考文章">3. 参考文章</h1>
+
+<ul>
+<li><a href="http://www.cloudera.com/content/cloudera-content/cloudera-docs/CDH5/latest/CDH5-Installation-Guide/cdh5ig_cdh4_to_cdh5_upgrade.html">Upgrading from CDH 4 to CDH 5</a></li>
+<li><a href="http://www.cloudera.com/content/cloudera-content/cloudera-docs/CDH5/latest/CDH5-Release-Notes/cdh5rn_incompatible_changes.html">CDH 5 Incompatible Changes</a></li>
+</ul>
+</div>
+
+
+      <div id="pay" style="text-align:center;">
+        ----EOF-----
+        <br>
+        <section>
+  <h4>Sponsor</h4>
+	<img src="http://javachen-rs.qiniudn.com/images/alipay.png" width="150/">
+  <p class="small">觉得此博客对你有帮助，支付宝扫码赞助吧</p>
+</section>
+
+      </div>
+
+      <p class="meta">
+      	
+            Categories:
+      	    
+          	<a class="btn btn-default btn-xs" href="/categories.html#hadoop">hadoop</a>
+          
+      	
+
+      	
+            Tags:
+      	    
+          	<a class="btn btn-default btn-xs" href="/tags.html#hadoop">hadoop</a>
+          
+          	<a class="btn btn-default btn-xs" href="/tags.html#cdh">cdh</a>
+          
+      	
+      </p>
+	</article>
+
+	<ul class="pager">
+	  
+	  <li class="previous"><a class="btn btn-xs" href="/2014/08/04/import-data-to-hive-with-sqoop" title="Sqoop导入关系数据库到Hive">&larr; Prev</a></li>
+	  
+	  
+	  <li class="next"><a class="btn btn-xs" href="/2014/08/25/install-azkaban" title="安装Azkaban">Next &rarr;</a></li>
+	  
+	</ul>
+
+  
+<div id="comments">
+  <div class="ds-thread" data-thread-key="/2014/08/19/upgrading-from-cdh4-to-cdh5"  data-title="升级cdh4到cdh5 - 小天的个人博客"></div>
+</div>
+
+
+
+</div>
+
+        </div>
+      </div>
+
+      <footer class="footer text-center">
+  <p>&copy; 2009-2015 <a href="/" target="_blank" title="86后，工作在深圳；Java程序员、Hadoop工程师；主要关注Java、Hadoop、Kettle、关注大数据处理技术。">小天</a>. With Help from <a href="//jekyllrb.com/" target="_blank" title="Transform your plain text into static websites and blogs.">Jekyll</a> and <a href="//getbootstrap.com/" target="_blank" title="Bootstrap is the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web.">Bootstrap</a>, theme from <a href="http://havee.me/" target="_blank" title="http://havee.me/">Havee</a>.
+
+  <span style="float:right;"><a href="/about.html">About</a></span>
+
+	
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+  </p>
+  <div id="toTop" style="display: block;">
+    <a href="#">▲</a><a href="#footer">▼</a>
+  </div>
+</footer>
+
+    </div>
+
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/core.js"></script>
+
+    
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253501761'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253501761' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+
+    
+    <!-- duoshuo Begin -->
+    <script type="text/javascript">
+      var duoshuoQuery = {short_name:"xiaotian120"};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] ||
+        document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+    </script>
+    <!-- duoshuo End -->
+    
+  </body>
+</html>
