@@ -12,7 +12,7 @@
 - 删除_post下的所有文件
 - 请忽略deploy.sh和 qiniu-images.conf文件的存在
 
-# Tanks TO
+# Thinks TO
 
 主题从 <https://gitcafe.com/Havee> 修改而来，博客源码从<http://javachen.github.com>修改而来，感谢原作者！
 

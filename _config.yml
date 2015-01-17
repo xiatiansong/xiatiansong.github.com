@@ -78,7 +78,7 @@ analytics:
     baidu:
         siteid:         # 百度统计 js 代码后的字符串
     cnzz:
-        uid: 1253501761
+        uid: 1254098866
 # blogroll
 blogroll : false
 brlist :
