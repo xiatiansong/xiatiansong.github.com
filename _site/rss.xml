@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
   <channel>
-    <title>小天的个人博客</title>
-    <description>86后，工作在深圳；Java程序员、Hadoop工程师；主要关注Java、Hadoop、Kettle、关注大数据处理技术。</description>
-    <link>http://blog.xiaotian.com/rss.xml</link>
-    <lastBuildDate>2015-01-16T23:42:29+08:00</lastBuildDate>
-    <pubDate>2015-01-16T23:42:29+08:00</pubDate>
+    <title>夏天松的个人博客</title>
+    <description>86后，工作在深圳；Java程序员、Hadoop工程师；主要关注Java、Scala、Hadoop、Kettle、关注大数据处理技术。</description>
+    <link>http://blog.xiatiansong.com/rss.xml</link>
+    <lastBuildDate>2015-01-17T11:23:43+08:00</lastBuildDate>
+    <pubDate>2015-01-17T11:23:43+08:00</pubDate>
     <ttl>1800</ttl>
 
     
@@ -490,8 +490,8 @@
 &lt;li&gt;&lt;a href=&quot;http://iluoxuan.iteye.com/blog/1703061&quot;&gt;django的模型总结&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2015/01/14/django-model/</link>
-      <guid>http://blog.xiaotian.com/2015/01/14/django-model/</guid>
+      <link>http://blog.xiatiansong.com/2015/01/14/django-model/</link>
+      <guid>http://blog.xiatiansong.com/2015/01/14/django-model/</guid>
       <pubDate>2015-01-14T00:00:00+08:00</pubDate>
     </item>
     
@@ -857,8 +857,8 @@
 &lt;li&gt;&lt;a href=&quot;http://www.cnblogs.com/ElvinLong/p/3939938.html&quot;&gt;Angular 实例项目 angular-phonecat 的一些问题&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2015/01/09/angular-phonecat-examples/</link>
-      <guid>http://blog.xiaotian.com/2015/01/09/angular-phonecat-examples/</guid>
+      <link>http://blog.xiatiansong.com/2015/01/09/angular-phonecat-examples/</link>
+      <guid>http://blog.xiatiansong.com/2015/01/09/angular-phonecat-examples/</guid>
       <pubDate>2015-01-09T00:00:00+08:00</pubDate>
     </item>
     
@@ -1497,8 +1497,8 @@ currency(货币)、date(日期)、filter(子串匹配)、json(格式化json对�
 &lt;li&gt;&lt;a href=&quot;http://www.zouyesheng.com/angular.html#toc34&quot;&gt;AngularJS学习笔记&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2015/01/08/basic-concepts-of-angularjs/</link>
-      <guid>http://blog.xiaotian.com/2015/01/08/basic-concepts-of-angularjs/</guid>
+      <link>http://blog.xiatiansong.com/2015/01/08/basic-concepts-of-angularjs/</link>
+      <guid>http://blog.xiatiansong.com/2015/01/08/basic-concepts-of-angularjs/</guid>
       <pubDate>2015-01-08T00:00:00+08:00</pubDate>
     </item>
     
@@ -1803,8 +1803,8 @@ version = &amp;#39;1.0&amp;#39;
 &lt;li&gt;&lt;a href=&quot;http://www.cnblogs.com/xguo/p/3175377.html&quot;&gt;构建工具之 - Gradle一般使用常见问答&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2015/01/07/build-multi-module-project-with-gradle/</link>
-      <guid>http://blog.xiaotian.com/2015/01/07/build-multi-module-project-with-gradle/</guid>
+      <link>http://blog.xiatiansong.com/2015/01/07/build-multi-module-project-with-gradle/</link>
+      <guid>http://blog.xiatiansong.com/2015/01/07/build-multi-module-project-with-gradle/</guid>
       <pubDate>2015-01-07T00:00:00+08:00</pubDate>
     </item>
     
@@ -2213,8 +2213,8 @@ brew install springboot
 &lt;li&gt;&lt;a href=&quot;http://spring.io/guides/gs/spring-boot/&quot;&gt;Building an Application with Spring Boot&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2015/01/06/build-app-with-spring-boot-and-gradle/</link>
-      <guid>http://blog.xiaotian.com/2015/01/06/build-app-with-spring-boot-and-gradle/</guid>
+      <link>http://blog.xiatiansong.com/2015/01/06/build-app-with-spring-boot-and-gradle/</link>
+      <guid>http://blog.xiatiansong.com/2015/01/06/build-app-with-spring-boot-and-gradle/</guid>
       <pubDate>2015-01-06T00:00:00+08:00</pubDate>
     </item>
     
@@ -2678,8 +2678,8 @@ Exiting Main Thread
 &lt;li&gt;&lt;a href=&quot;http://blog.jobbole.com/52412/&quot;&gt;Python中的生产者消费者问题&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/12/23/thread-in-python/</link>
-      <guid>http://blog.xiaotian.com/2014/12/23/thread-in-python/</guid>
+      <link>http://blog.xiatiansong.com/2014/12/23/thread-in-python/</link>
+      <guid>http://blog.xiatiansong.com/2014/12/23/thread-in-python/</guid>
       <pubDate>2014-12-23T00:00:00+08:00</pubDate>
     </item>
     
@@ -3096,8 +3096,8 @@ python manage.py runserver
 &lt;li&gt;&lt;a href=&quot;http://www.yaconiello.com/blog/part-3-creating-blog-system-using-django-markdown/&quot;&gt;Part 3: Creating a blog system using django + markdown&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/12/19/create-blog-using-django/</link>
-      <guid>http://blog.xiaotian.com/2014/12/19/create-blog-using-django/</guid>
+      <link>http://blog.xiatiansong.com/2014/12/19/create-blog-using-django/</link>
+      <guid>http://blog.xiatiansong.com/2014/12/19/create-blog-using-django/</guid>
       <pubDate>2014-12-19T00:00:00+08:00</pubDate>
     </item>
     
@@ -3721,8 +3721,8 @@ python manage.py runserver
 &lt;li&gt;[2] &lt;a href=&quot;http://blog.csdn.net/chjttony/article/details/6086298&quot;&gt;JPA学习笔记1——JPA基础&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/12/02/some-usages-of-jpa/</link>
-      <guid>http://blog.xiaotian.com/2014/12/02/some-usages-of-jpa/</guid>
+      <link>http://blog.xiatiansong.com/2014/12/02/some-usages-of-jpa/</link>
+      <guid>http://blog.xiatiansong.com/2014/12/02/some-usages-of-jpa/</guid>
       <pubDate>2014-12-02T00:00:00+08:00</pubDate>
     </item>
     
@@ -4174,8 +4174,8 @@ ldapadd -x -D &lt;span class=&quot;s2&quot;&gt;&amp;quot;uid=ldapadmin,ou=people
 
 &lt;p&gt;Enjoy it !&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/11/25/quikstart-for-config-kerberos-ldap-and-sentry-in-hadoop/</link>
-      <guid>http://blog.xiaotian.com/2014/11/25/quikstart-for-config-kerberos-ldap-and-sentry-in-hadoop/</guid>
+      <link>http://blog.xiatiansong.com/2014/11/25/quikstart-for-config-kerberos-ldap-and-sentry-in-hadoop/</link>
+      <guid>http://blog.xiatiansong.com/2014/11/25/quikstart-for-config-kerberos-ldap-and-sentry-in-hadoop/</guid>
       <pubDate>2014-11-25T00:00:00+08:00</pubDate>
     </item>
     
@@ -4315,8 +4315,8 @@ ldapadd -x -D &lt;span class=&quot;s2&quot;&gt;&amp;quot;uid=ldapadmin,ou=people
     &lt;span class=&quot;nt&quot;&gt;&amp;lt;property&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;persistenceUnitManager&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;ref=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;persistenceUnitManager&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;/bean&amp;gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-      <link>http://blog.xiaotian.com/2014/11/24/spring-with-jpa2/</link>
-      <guid>http://blog.xiaotian.com/2014/11/24/spring-with-jpa2/</guid>
+      <link>http://blog.xiatiansong.com/2014/11/24/spring-with-jpa2/</link>
+      <guid>http://blog.xiatiansong.com/2014/11/24/spring-with-jpa2/</guid>
       <pubDate>2014-11-24T00:00:00+08:00</pubDate>
     </item>
     
@@ -4467,8 +4467,8 @@ kadmin.local -q &lt;span class=&quot;s2&quot;&gt;&amp;quot;xst  -k zkcli.keytab 
     &lt;span class=&quot;s1&quot;&gt;&amp;#39;world,&amp;#39;&lt;/span&gt;anyone
     : cdrwa
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-      <link>http://blog.xiaotian.com/2014/11/18/config-kerberos-in-cdh-zookeeper/</link>
-      <guid>http://blog.xiaotian.com/2014/11/18/config-kerberos-in-cdh-zookeeper/</guid>
+      <link>http://blog.xiatiansong.com/2014/11/18/config-kerberos-in-cdh-zookeeper/</link>
+      <guid>http://blog.xiatiansong.com/2014/11/18/config-kerberos-in-cdh-zookeeper/</guid>
       <pubDate>2014-11-18T00:00:00+08:00</pubDate>
     </item>
     
@@ -5067,8 +5067,8 @@ ldappasswd -x -D &lt;span class=&quot;s1&quot;&gt;&amp;#39;uid=ldapadmin,ou=peop
 &lt;li&gt;&lt;a href=&quot;https://github.com/cloudera/sentry/tree/cdh5-1.4.0_5.2.0/conf&quot;&gt;Sentry源码中的配置例子&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/11/14/config-impala-and-hive-with-sentry/</link>
-      <guid>http://blog.xiaotian.com/2014/11/14/config-impala-and-hive-with-sentry/</guid>
+      <link>http://blog.xiatiansong.com/2014/11/14/config-impala-and-hive-with-sentry/</link>
+      <guid>http://blog.xiatiansong.com/2014/11/14/config-impala-and-hive-with-sentry/</guid>
       <pubDate>2014-11-14T00:00:00+08:00</pubDate>
     </item>
     
@@ -5515,8 +5515,8 @@ Enter password &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;jdbc:hive2://cdh
 &lt;li&gt;&lt;a href=&quot;http://techpubs.spinlocksolutions.com/dklar/kerberos.html&quot;&gt;Debian GNU and Ubuntu: Setting up MIT Kerberos&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/11/12/config-ldap-with-kerberos-in-cdh-hadoop/</link>
-      <guid>http://blog.xiaotian.com/2014/11/12/config-ldap-with-kerberos-in-cdh-hadoop/</guid>
+      <link>http://blog.xiatiansong.com/2014/11/12/config-ldap-with-kerberos-in-cdh-hadoop/</link>
+      <guid>http://blog.xiatiansong.com/2014/11/12/config-ldap-with-kerberos-in-cdh-hadoop/</guid>
       <pubDate>2014-11-12T00:00:00+08:00</pubDate>
     </item>
     
@@ -5726,8 +5726,8 @@ CAUSED BY: SocketTimeoutException: Read timed out
   &lt;span class=&quot;nt&quot;&gt;&amp;lt;value&amp;gt;&lt;/span&gt;3600&lt;span class=&quot;nt&quot;&gt;&amp;lt;/value&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;/property&amp;gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-      <link>http://blog.xiaotian.com/2014/11/06/config-kerberos-in-cdh-impala/</link>
-      <guid>http://blog.xiaotian.com/2014/11/06/config-kerberos-in-cdh-impala/</guid>
+      <link>http://blog.xiatiansong.com/2014/11/06/config-kerberos-in-cdh-impala/</link>
+      <guid>http://blog.xiatiansong.com/2014/11/06/config-kerberos-in-cdh-impala/</guid>
       <pubDate>2014-11-06T00:00:00+08:00</pubDate>
     </item>
     
@@ -5919,8 +5919,8 @@ No rows selected &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;1.575 seconds&lt;
 +-----------+------------+----------+--+
 1 row selected &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;0.24 seconds&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-      <link>http://blog.xiaotian.com/2014/11/06/config-kerberos-in-cdh-hive/</link>
-      <guid>http://blog.xiaotian.com/2014/11/06/config-kerberos-in-cdh-hive/</guid>
+      <link>http://blog.xiatiansong.com/2014/11/06/config-kerberos-in-cdh-hive/</link>
+      <guid>http://blog.xiatiansong.com/2014/11/06/config-kerberos-in-cdh-hive/</guid>
       <pubDate>2014-11-06T00:00:00+08:00</pubDate>
     </item>
     
@@ -6148,8 +6148,8 @@ Container exited with a non-zero exit code 1
 Job Finished in 13.428 seconds
 java.io.FileNotFoundException: File does not exist: hdfs://cdh1:8020/user/yarn/QuasiMonteCarlo_1415850045475_708291630/out/reduce-out
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-      <link>http://blog.xiaotian.com/2014/11/05/config-kerberos-in-cdh-yarn/</link>
-      <guid>http://blog.xiaotian.com/2014/11/05/config-kerberos-in-cdh-yarn/</guid>
+      <link>http://blog.xiatiansong.com/2014/11/05/config-kerberos-in-cdh-yarn/</link>
+      <guid>http://blog.xiatiansong.com/2014/11/05/config-kerberos-in-cdh-yarn/</guid>
       <pubDate>2014-11-05T00:00:00+08:00</pubDate>
     </item>
     
@@ -6999,8 +6999,8 @@ ldapsearch -x -b &lt;span class=&quot;s1&quot;&gt;&amp;#39;dc=javachen,dc=com&am
 &lt;li&gt;&lt;a href=&quot;http://www.wuzesheng.com/?p=2345&quot;&gt;Hadoop, Hbase, Zookeeper安全实践&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/11/04/config-kerberos-in-cdh-hdfs/</link>
-      <guid>http://blog.xiaotian.com/2014/11/04/config-kerberos-in-cdh-hdfs/</guid>
+      <link>http://blog.xiatiansong.com/2014/11/04/config-kerberos-in-cdh-hdfs/</link>
+      <guid>http://blog.xiatiansong.com/2014/11/04/config-kerberos-in-cdh-hdfs/</guid>
       <pubDate>2014-11-04T00:00:00+08:00</pubDate>
     </item>
     
@@ -7102,8 +7102,8 @@ Type &lt;span class=&quot;s2&quot;&gt;&amp;quot;help&amp;quot;&lt;/span&gt; &lt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;launchctl unload -w ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
 &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;rm -rf ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-      <link>http://blog.xiaotian.com/2014/10/30/install-postgresql-on-mac-using-homebrew/</link>
-      <guid>http://blog.xiaotian.com/2014/10/30/install-postgresql-on-mac-using-homebrew/</guid>
+      <link>http://blog.xiatiansong.com/2014/10/30/install-postgresql-on-mac-using-homebrew/</link>
+      <guid>http://blog.xiatiansong.com/2014/10/30/install-postgresql-on-mac-using-homebrew/</guid>
       <pubDate>2014-10-30T00:00:00+08:00</pubDate>
     </item>
     
@@ -7523,8 +7523,8 @@ escape 和safe 过滤器不能接受参数，而使用 autoescape 标签用来�
 &lt;li&gt;&lt;a href=&quot;http://raytaylorlin.com/Tech/Script/Python/django-note-3/&quot;&gt;Django学习笔记（3）——Django的模板&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/10/30/django-template/</link>
-      <guid>http://blog.xiaotian.com/2014/10/30/django-template/</guid>
+      <link>http://blog.xiatiansong.com/2014/10/30/django-template/</link>
+      <guid>http://blog.xiatiansong.com/2014/10/30/django-template/</guid>
       <pubDate>2014-10-30T00:00:00+08:00</pubDate>
     </item>
     
@@ -7956,8 +7956,8 @@ Inserted 2 rows in 0.44s
 &lt;li&gt;&lt;a href=&quot;http://www.cloudera.com/content/cloudera/en/documentation/core/latest/topics/impala_joins.html&quot;&gt;Cloudera Impala Guide - Impala Joins&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/10/24/impala-query-table-tutorial/</link>
-      <guid>http://blog.xiaotian.com/2014/10/24/impala-query-table-tutorial/</guid>
+      <link>http://blog.xiatiansong.com/2014/10/24/impala-query-table-tutorial/</link>
+      <guid>http://blog.xiatiansong.com/2014/10/24/impala-query-table-tutorial/</guid>
       <pubDate>2014-10-24T00:00:00+08:00</pubDate>
     </item>
     
@@ -8234,8 +8234,8 @@ python mail.py &lt;span class=&quot;s2&quot;&gt;&amp;quot;Table count in $datest
 &lt;li&gt;hive 和 impala 在字段类型、存储方式、函数的兼容性上存在一些问题&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/10/23/hive-warehouse-in-2014/</link>
-      <guid>http://blog.xiaotian.com/2014/10/23/hive-warehouse-in-2014/</guid>
+      <link>http://blog.xiatiansong.com/2014/10/23/hive-warehouse-in-2014/</link>
+      <guid>http://blog.xiatiansong.com/2014/10/23/hive-warehouse-in-2014/</guid>
       <pubDate>2014-10-23T00:00:00+08:00</pubDate>
     </item>
     
@@ -8620,8 +8620,8 @@ python mail.py &lt;span class=&quot;s2&quot;&gt;&amp;quot;Table count in $datest
 
 &lt;p&gt;本篇文章主要是翻译了 cloudera 官网上关于 CDH5.2 的新特性、不兼容变化、性能改进以及可能存在的问题等相关文档，以便清楚的了解 hadoop 各组件的特性并为是否升级 hadoop 版本做出决策支持。&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/10/20/cdh5.2-release/</link>
-      <guid>http://blog.xiaotian.com/2014/10/20/cdh5.2-release/</guid>
+      <link>http://blog.xiatiansong.com/2014/10/20/cdh5.2-release/</link>
+      <guid>http://blog.xiatiansong.com/2014/10/20/cdh5.2-release/</guid>
       <pubDate>2014-10-20T00:00:00+08:00</pubDate>
     </item>
     
@@ -8837,8 +8837,8 @@ python mail.py &lt;span class=&quot;s2&quot;&gt;&amp;quot;Table count in $datest
 &lt;li&gt;&lt;a href=&quot;http://www.javastar.org/?p=872&quot;&gt;SPRING 3.2.X 源代码分析之三: SPRING源码的整体架构分析&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/09/29/spring-source-codes/</link>
-      <guid>http://blog.xiaotian.com/2014/09/29/spring-source-codes/</guid>
+      <link>http://blog.xiatiansong.com/2014/09/29/spring-source-codes/</link>
+      <guid>http://blog.xiatiansong.com/2014/09/29/spring-source-codes/</guid>
       <pubDate>2014-09-29T00:00:00+08:00</pubDate>
     </item>
     
@@ -8960,8 +8960,8 @@ output-&amp;gt;135
 
 &lt;p&gt;以上仅仅代表个人意见。&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/09/24/compile-and-test-dubbo/</link>
-      <guid>http://blog.xiaotian.com/2014/09/24/compile-and-test-dubbo/</guid>
+      <link>http://blog.xiatiansong.com/2014/09/24/compile-and-test-dubbo/</link>
+      <guid>http://blog.xiatiansong.com/2014/09/24/compile-and-test-dubbo/</guid>
       <pubDate>2014-09-24T00:00:00+08:00</pubDate>
     </item>
     
@@ -9094,8 +9094,8 @@ output-&amp;gt;135
 &lt;li&gt;[1]&lt;a href=&quot;http://blog.fens.me/mahout-recommend-engine/&quot;&gt;从源代码剖析Mahout推荐引擎&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/09/22/mahout-recommend-engine/</link>
-      <guid>http://blog.xiaotian.com/2014/09/22/mahout-recommend-engine/</guid>
+      <link>http://blog.xiatiansong.com/2014/09/22/mahout-recommend-engine/</link>
+      <guid>http://blog.xiatiansong.com/2014/09/22/mahout-recommend-engine/</guid>
       <pubDate>2014-09-22T00:00:00+08:00</pubDate>
     </item>
     
@@ -9349,8 +9349,8 @@ build.gradle    gradle          gradlew         gradlew.bat     settings.gradle
 &lt;li&gt;[2] &lt;a href=&quot;http://sulong.me/2011/01/26/greate_gradle&quot;&gt;gradle太好用了&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/09/15/build-project-with-gradle/</link>
-      <guid>http://blog.xiaotian.com/2014/09/15/build-project-with-gradle/</guid>
+      <link>http://blog.xiatiansong.com/2014/09/15/build-project-with-gradle/</link>
+      <guid>http://blog.xiatiansong.com/2014/09/15/build-project-with-gradle/</guid>
       <pubDate>2014-09-15T00:00:00+08:00</pubDate>
     </item>
     
@@ -9479,8 +9479,8 @@ build.gradle    gradle          gradlew         gradlew.bat     settings.gradle
      &lt;span class=&quot;n&quot;&gt;printWriter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;The first content of file&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;  
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;  
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-      <link>http://blog.xiaotian.com/2014/09/12/file-operation-in-groovy/</link>
-      <guid>http://blog.xiaotian.com/2014/09/12/file-operation-in-groovy/</guid>
+      <link>http://blog.xiatiansong.com/2014/09/12/file-operation-in-groovy/</link>
+      <guid>http://blog.xiatiansong.com/2014/09/12/file-operation-in-groovy/</guid>
       <pubDate>2014-09-12T00:00:00+08:00</pubDate>
     </item>
     
@@ -9629,8 +9629,8 @@ build.gradle    gradle          gradlew         gradlew.bat     settings.gradle
 &lt;li&gt;[2] &lt;a href=&quot;http://www.cloudera.com/content/cloudera-content/cloudera-docs/CDH5/latest/Impala/Installing-and-Using-Impala/ciiu_admission.html&quot;&gt;Admission Control and Query Queuing&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/09/09/llama/</link>
-      <guid>http://blog.xiaotian.com/2014/09/09/llama/</guid>
+      <link>http://blog.xiatiansong.com/2014/09/09/llama/</link>
+      <guid>http://blog.xiatiansong.com/2014/09/09/llama/</guid>
       <pubDate>2014-09-09T00:00:00+08:00</pubDate>
     </item>
     
@@ -10128,8 +10128,8 @@ build.gradle    gradle          gradlew         gradlew.bat     settings.gradle
 &lt;li&gt;[3] &lt;a href=&quot;http://tilt.lib.tsinghua.edu.cn/docs/program/grails/j-grails/section5.html&quot;&gt;使用 Grails 快速开发 Web 应用程序&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/09/09/create-a-grails-app-step-by-step/</link>
-      <guid>http://blog.xiaotian.com/2014/09/09/create-a-grails-app-step-by-step/</guid>
+      <link>http://blog.xiatiansong.com/2014/09/09/create-a-grails-app-step-by-step/</link>
+      <guid>http://blog.xiatiansong.com/2014/09/09/create-a-grails-app-step-by-step/</guid>
       <pubDate>2014-09-09T00:00:00+08:00</pubDate>
     </item>
     
@@ -10416,8 +10416,8 @@ hello world
 &lt;li&gt;[4] &lt;a href=&quot;http://www.vogella.com/tutorials/Groovy/article.html&quot;&gt;Groovy with Eclipse - Tutorial&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/09/05/about-groovy/</link>
-      <guid>http://blog.xiaotian.com/2014/09/05/about-groovy/</guid>
+      <link>http://blog.xiatiansong.com/2014/09/05/about-groovy/</link>
+      <guid>http://blog.xiatiansong.com/2014/09/05/about-groovy/</guid>
       <pubDate>2014-09-05T00:00:00+08:00</pubDate>
     </item>
     
@@ -10522,8 +10522,8 @@ mysql&amp;gt; &lt;span class=&quot;nb&quot;&gt;source &lt;/span&gt;create-all-sq
 &lt;li&gt;plugins/jobtypes/hive/plugin.properties&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/08/25/install-azkaban/</link>
-      <guid>http://blog.xiaotian.com/2014/08/25/install-azkaban/</guid>
+      <link>http://blog.xiatiansong.com/2014/08/25/install-azkaban/</link>
+      <guid>http://blog.xiatiansong.com/2014/08/25/install-azkaban/</guid>
       <pubDate>2014-08-25T00:00:00+08:00</pubDate>
     </item>
     
@@ -10748,8 +10748,8 @@ $ service hbase-regionserver start
 &lt;li&gt;&lt;a href=&quot;http://www.cloudera.com/content/cloudera-content/cloudera-docs/CDH5/latest/CDH5-Release-Notes/cdh5rn_incompatible_changes.html&quot;&gt;CDH 5 Incompatible Changes&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/08/19/upgrading-from-cdh4-to-cdh5/</link>
-      <guid>http://blog.xiaotian.com/2014/08/19/upgrading-from-cdh4-to-cdh5/</guid>
+      <link>http://blog.xiatiansong.com/2014/08/19/upgrading-from-cdh4-to-cdh5/</link>
+      <guid>http://blog.xiatiansong.com/2014/08/19/upgrading-from-cdh4-to-cdh5/</guid>
       <pubDate>2014-08-19T00:00:00+08:00</pubDate>
     </item>
     
@@ -11133,8 +11133,8 @@ Found 5 items
 &lt;li&gt;&lt;a href=&quot;http://www.zihou.me/html/2014/01/28/9114.html&quot;&gt;Sqoop中文手册&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/08/04/import-data-to-hive-with-sqoop/</link>
-      <guid>http://blog.xiaotian.com/2014/08/04/import-data-to-hive-with-sqoop/</guid>
+      <link>http://blog.xiatiansong.com/2014/08/04/import-data-to-hive-with-sqoop/</link>
+      <guid>http://blog.xiatiansong.com/2014/08/04/import-data-to-hive-with-sqoop/</guid>
       <pubDate>2014-08-04T00:00:00+08:00</pubDate>
     </item>
     
@@ -11189,8 +11189,8 @@ Found 5 items
 &lt;li&gt;&lt;a href=&quot;https://github.com/dianping/polestar&quot;&gt;https://github.com/dianping/polestar&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/07/31/summary-of-july-in-2014/</link>
-      <guid>http://blog.xiaotian.com/2014/07/31/summary-of-july-in-2014/</guid>
+      <link>http://blog.xiatiansong.com/2014/07/31/summary-of-july-in-2014/</link>
+      <guid>http://blog.xiatiansong.com/2014/07/31/summary-of-july-in-2014/</guid>
       <pubDate>2014-07-31T00:00:00+08:00</pubDate>
     </item>
     
@@ -11337,8 +11337,8 @@ Found 5 items
 
 &lt;p&gt;已经修复的问题：&lt;a href=&quot;http://www.cloudera.com/content/cloudera-content/cloudera-docs/Impala/latest/Cloudera-Impala-Release-Notes/cirn_fixed_issues.html&quot;&gt;Fixed Issues in Impala&lt;/a&gt;&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/07/29/new-features-in-impala/</link>
-      <guid>http://blog.xiaotian.com/2014/07/29/new-features-in-impala/</guid>
+      <link>http://blog.xiatiansong.com/2014/07/29/new-features-in-impala/</link>
+      <guid>http://blog.xiatiansong.com/2014/07/29/new-features-in-impala/</guid>
       <pubDate>2014-07-29T00:00:00+08:00</pubDate>
     </item>
     
@@ -11661,8 +11661,8 @@ put &amp;#39;t1&amp;#39;, &amp;quot;row5&amp;quot;, &amp;#39;f:q&amp;#39;, 5
 
 &lt;p&gt;这篇文章主要是介绍了什么是 Phoenix 、如何安装以及他的一些特性，然后介绍了他的使用方法，主要包括命令行使用、加载数据以及如何映射存在的 HBase 表，通过该篇文章对 Phoenix 有了一个初步的认识。&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/07/28/phoenix-quick-start/</link>
-      <guid>http://blog.xiaotian.com/2014/07/28/phoenix-quick-start/</guid>
+      <link>http://blog.xiatiansong.com/2014/07/28/phoenix-quick-start/</link>
+      <guid>http://blog.xiatiansong.com/2014/07/28/phoenix-quick-start/</guid>
       <pubDate>2014-07-28T00:00:00+08:00</pubDate>
     </item>
     
@@ -11845,8 +11845,8 @@ put &amp;#39;t1&amp;#39;, &amp;quot;row5&amp;quot;, &amp;#39;f:q&amp;#39;, 5
 
 &lt;p&gt;等日志采集实时性要求变高，以及对 flume 的熟悉程度变深之后，会考虑使用 flume。&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/07/25/collect-log-to-hive/</link>
-      <guid>http://blog.xiaotian.com/2014/07/25/collect-log-to-hive/</guid>
+      <link>http://blog.xiatiansong.com/2014/07/25/collect-log-to-hive/</link>
+      <guid>http://blog.xiatiansong.com/2014/07/25/collect-log-to-hive/</guid>
       <pubDate>2014-07-25T00:00:00+08:00</pubDate>
     </item>
     
@@ -12080,8 +12080,8 @@ put &amp;#39;t1&amp;#39;, &amp;quot;row5&amp;quot;, &amp;#39;f:q&amp;#39;, 5
 
 &lt;p&gt;美团对 flume 的改进代码见 github：&lt;a href=&quot;https://github.com/dashengju/mt-flume&quot;&gt;https://github.com/dashengju/mt-flume&lt;/a&gt;&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/07/22/flume-ng/</link>
-      <guid>http://blog.xiaotian.com/2014/07/22/flume-ng/</guid>
+      <link>http://blog.xiatiansong.com/2014/07/22/flume-ng/</link>
+      <guid>http://blog.xiatiansong.com/2014/07/22/flume-ng/</guid>
       <pubDate>2014-07-22T00:00:00+08:00</pubDate>
     </item>
     
@@ -12272,8 +12272,8 @@ hdfs://cdh1/user/hive/warehouse
 
 &lt;p&gt;不需要做什么修改，但是一定要记住 core-site.xml 中fs.defaultFS参数值要带上端口号。&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/07/18/install-hdfs-ha-in-cdh/</link>
-      <guid>http://blog.xiaotian.com/2014/07/18/install-hdfs-ha-in-cdh/</guid>
+      <link>http://blog.xiatiansong.com/2014/07/18/install-hdfs-ha-in-cdh/</link>
+      <guid>http://blog.xiatiansong.com/2014/07/18/install-hdfs-ha-in-cdh/</guid>
       <pubDate>2014-07-18T00:00:00+08:00</pubDate>
     </item>
     
@@ -12417,8 +12417,8 @@ drwxr-xr-x   - yarn   mapred          0 2014-07-16 11:20 /yarn/apps
 
 &lt;p&gt;其他服务均可以参考此方法来简化安装，这里不做详述。&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/07/17/manual-install-cdh-hadoop/</link>
-      <guid>http://blog.xiaotian.com/2014/07/17/manual-install-cdh-hadoop/</guid>
+      <link>http://blog.xiatiansong.com/2014/07/17/manual-install-cdh-hadoop/</link>
+      <guid>http://blog.xiatiansong.com/2014/07/17/manual-install-cdh-hadoop/</guid>
       <pubDate>2014-07-17T00:00:00+08:00</pubDate>
     </item>
     
@@ -12736,8 +12736,8 @@ You need to build Spark with -Phive.
 
 &lt;p&gt;如果编译成功了，则将 spark-assembly-1.1.0-cdh5.2.0.jar 拷贝到 /usr/lib/spark/assembly/lib 目录，然后再来运行 spark-sql。&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/07/01/spark-install-and-usage/</link>
-      <guid>http://blog.xiaotian.com/2014/07/01/spark-install-and-usage/</guid>
+      <link>http://blog.xiatiansong.com/2014/07/01/spark-install-and-usage/</link>
+      <guid>http://blog.xiatiansong.com/2014/07/01/spark-install-and-usage/</guid>
       <pubDate>2014-07-01T00:00:00+08:00</pubDate>
     </item>
     
@@ -12851,8 +12851,8 @@ IRB.conf[:HISTORY_FILE] = &amp;quot;#{ENV[&amp;#39;HOME&amp;#39;]}/.irb-save-his
 
 &lt;h2 id=&quot;8.4-hlog什么时候会阻塞写？&quot;&gt;8.4 HLog什么时候会阻塞写？&lt;/h2&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/06/26/some-tips-about-hbase/</link>
-      <guid>http://blog.xiaotian.com/2014/06/26/some-tips-about-hbase/</guid>
+      <link>http://blog.xiatiansong.com/2014/06/26/some-tips-about-hbase/</link>
+      <guid>http://blog.xiatiansong.com/2014/06/26/some-tips-about-hbase/</guid>
       <pubDate>2014-06-26T00:00:00+08:00</pubDate>
     </item>
     
@@ -13069,8 +13069,8 @@ IRB.conf[:HISTORY_FILE] = &amp;quot;#{ENV[&amp;#39;HOME&amp;#39;]}/.irb-save-his
 &lt;/ul&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/06/24/tuning-in-mapreduce/</link>
-      <guid>http://blog.xiaotian.com/2014/06/24/tuning-in-mapreduce/</guid>
+      <link>http://blog.xiatiansong.com/2014/06/24/tuning-in-mapreduce/</link>
+      <guid>http://blog.xiatiansong.com/2014/06/24/tuning-in-mapreduce/</guid>
       <pubDate>2014-06-24T00:00:00+08:00</pubDate>
     </item>
     
@@ -13200,8 +13200,8 @@ IRB.conf[:HISTORY_FILE] = &amp;quot;#{ENV[&amp;#39;HOME&amp;#39;]}/.irb-save-his
 &lt;li&gt;[1] &lt;a href=&quot;http://kangfoo.u.qiniudn.com/article/2014/03/hadoop-mapreduce--gong-zuo-ji-zhi/&quot;&gt;Hadoop MapReduce 工作机制&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/06/24/the-running-process-of-mapreduce-job/</link>
-      <guid>http://blog.xiaotian.com/2014/06/24/the-running-process-of-mapreduce-job/</guid>
+      <link>http://blog.xiatiansong.com/2014/06/24/the-running-process-of-mapreduce-job/</link>
+      <guid>http://blog.xiatiansong.com/2014/06/24/the-running-process-of-mapreduce-job/</guid>
       <pubDate>2014-06-24T00:00:00+08:00</pubDate>
     </item>
     
@@ -13310,8 +13310,8 @@ IRB.conf[:HISTORY_FILE] = &amp;quot;#{ENV[&amp;#39;HOME&amp;#39;]}/.irb-save-his
 &lt;p&gt;Facebook开发Cassandra初衷是用于Inbox Search，但是后来的Message System则使用了HBase，Facebook对此给出的解释是Cassandra的&lt;code class=&quot;prettyprint&quot;&gt;最终一致性模型&lt;/code&gt;不适合Message System，HBase具有更简单的一致性模型，当然还有其他的原因。HBase更加的成熟，成功的案例也比较多等等。Twitter和Digg都曾经很高调的选用Cassandra，但是最后也都放弃了，当然Twitter还有部分项目也还在使用Cassandra，但是主要的Tweet已经不是了。&lt;/p&gt;
 &lt;/blockquote&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/06/24/hbase-vs-cassandra/</link>
-      <guid>http://blog.xiaotian.com/2014/06/24/hbase-vs-cassandra/</guid>
+      <link>http://blog.xiatiansong.com/2014/06/24/hbase-vs-cassandra/</link>
+      <guid>http://blog.xiatiansong.com/2014/06/24/hbase-vs-cassandra/</guid>
       <pubDate>2014-06-24T00:00:00+08:00</pubDate>
     </item>
     
@@ -13457,8 +13457,8 @@ Time taken: 24.609 seconds, Fetched: 8 row(s)
 &lt;li&gt;当DISTRIBUTE BY的字段和SORT BY的字段相同时，可以用CLUSTER BY来代替 DISTRIBUTE BY with SORT BY。&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/06/22/sort-in-hive-query/</link>
-      <guid>http://blog.xiaotian.com/2014/06/22/sort-in-hive-query/</guid>
+      <link>http://blog.xiatiansong.com/2014/06/22/sort-in-hive-query/</link>
+      <guid>http://blog.xiatiansong.com/2014/06/22/sort-in-hive-query/</guid>
       <pubDate>2014-06-22T00:00:00+08:00</pubDate>
     </item>
     
@@ -13565,8 +13565,8 @@ Time taken: 24.609 seconds, Fetched: 8 row(s)
 &lt;li&gt;&lt;a href=&quot;https://github.com/yozhao/lucene-examples&quot;&gt;https://github.com/yozhao/lucene-examples&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/06/21/the-introduction-of-lucene/</link>
-      <guid>http://blog.xiaotian.com/2014/06/21/the-introduction-of-lucene/</guid>
+      <link>http://blog.xiatiansong.com/2014/06/21/the-introduction-of-lucene/</link>
+      <guid>http://blog.xiatiansong.com/2014/06/21/the-introduction-of-lucene/</guid>
       <pubDate>2014-06-21T00:00:00+08:00</pubDate>
     </item>
     
@@ -13683,8 +13683,8 @@ export PATH=$PATH:$STORM_HOME/bin
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;然后，你可以访问&lt;a href=&quot;http://cdh2:8081/&quot;&gt;http://cdh2:8081/&lt;/a&gt;查看集群的worker资源使用情况、Topologies的运行状态等信息。&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/06/19/how-to-install-and-deploy-a-storm-cluster/</link>
-      <guid>http://blog.xiaotian.com/2014/06/19/how-to-install-and-deploy-a-storm-cluster/</guid>
+      <link>http://blog.xiatiansong.com/2014/06/19/how-to-install-and-deploy-a-storm-cluster/</link>
+      <guid>http://blog.xiatiansong.com/2014/06/19/how-to-install-and-deploy-a-storm-cluster/</guid>
       <pubDate>2014-06-19T00:00:00+08:00</pubDate>
     </item>
     
@@ -13853,8 +13853,8 @@ Map&amp;lt;String,List&amp;lt;String&amp;gt;&amp;gt; m=HashMap.newInstance();
 &lt;li&gt;(11) 谨慎进行优化&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/06/17/note-about-effective-java/</link>
-      <guid>http://blog.xiaotian.com/2014/06/17/note-about-effective-java/</guid>
+      <link>http://blog.xiatiansong.com/2014/06/17/note-about-effective-java/</link>
+      <guid>http://blog.xiatiansong.com/2014/06/17/note-about-effective-java/</guid>
       <pubDate>2014-06-17T00:00:00+08:00</pubDate>
     </item>
     
@@ -14178,8 +14178,8 @@ Map&amp;lt;String,List&amp;lt;String&amp;gt;&amp;gt; m=HashMap.newInstance();
 &lt;li&gt;判断memstore是否需要flush为store文件&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/06/13/hbase-code-about-htable-put/</link>
-      <guid>http://blog.xiaotian.com/2014/06/13/hbase-code-about-htable-put/</guid>
+      <link>http://blog.xiatiansong.com/2014/06/13/hbase-code-about-htable-put/</link>
+      <guid>http://blog.xiatiansong.com/2014/06/13/hbase-code-about-htable-put/</guid>
       <pubDate>2014-06-13T00:00:00+08:00</pubDate>
     </item>
     
@@ -14233,8 +14233,8 @@ Map&amp;lt;String,List&amp;lt;String&amp;gt;&amp;gt; m=HashMap.newInstance();
 
 &lt;p&gt;暂时不公开。&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/06/12/intro-of-hive-over-hbase/</link>
-      <guid>http://blog.xiaotian.com/2014/06/12/intro-of-hive-over-hbase/</guid>
+      <link>http://blog.xiatiansong.com/2014/06/12/intro-of-hive-over-hbase/</link>
+      <guid>http://blog.xiatiansong.com/2014/06/12/intro-of-hive-over-hbase/</guid>
       <pubDate>2014-06-12T00:00:00+08:00</pubDate>
     </item>
     
@@ -14708,8 +14708,8 @@ Map&amp;lt;String,List&amp;lt;String&amp;gt;&amp;gt; m=HashMap.newInstance();
 
 &lt;p&gt;以上源代码及所做的修改我已提交到我github仓库上hbase的cdh4-0.94.15_4.7.0分支，见提交日志&lt;a href=&quot;https://github.com/javachen/hbase/commit/66268c4179f674a7d64f36c91dd4070f1195d169&quot;&gt;add ParallelClientScanner&lt;/a&gt;。&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/06/12/hbase-parallel-client-scanner/</link>
-      <guid>http://blog.xiaotian.com/2014/06/12/hbase-parallel-client-scanner/</guid>
+      <link>http://blog.xiatiansong.com/2014/06/12/hbase-parallel-client-scanner/</link>
+      <guid>http://blog.xiatiansong.com/2014/06/12/hbase-parallel-client-scanner/</guid>
       <pubDate>2014-06-12T00:00:00+08:00</pubDate>
     </item>
     
@@ -14862,8 +14862,8 @@ The result of avg for table t is 2.5
 
 &lt;p&gt;以上源代码及所做的修改我已提交到我github仓库上hbase的cdh4-0.94.15_4.7.0分支，见提交日志&lt;a href=&quot;https://github.com/javachen/hbase/commit/94e61f28d60cac40f2b499b8530dd1989adf76d3&quot;&gt;add-aggregate-support-in-hbase-shell&lt;/a&gt;。&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/06/12/hbase-aggregate-client/</link>
-      <guid>http://blog.xiaotian.com/2014/06/12/hbase-aggregate-client/</guid>
+      <link>http://blog.xiatiansong.com/2014/06/12/hbase-aggregate-client/</link>
+      <guid>http://blog.xiatiansong.com/2014/06/12/hbase-aggregate-client/</guid>
       <pubDate>2014-06-12T00:00:00+08:00</pubDate>
     </item>
     
@@ -15139,8 +15139,8 @@ Time taken: 18.438 seconds
 &lt;p&gt;在实际情况中，表的输出结果可能太多，不适于显示在控制台上，这时候，将Hive的查询输出结果直接存在一个新的表中是非常方便的，我们称这种情况为CTAS（ &lt;code class=&quot;prettyprint&quot;&gt;create table .. as select&lt;/code&gt;）如下：&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;hive&amp;gt; create table test2 as select * from test;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-      <link>http://blog.xiaotian.com/2014/06/09/hive-data-manipulation-language/</link>
-      <guid>http://blog.xiaotian.com/2014/06/09/hive-data-manipulation-language/</guid>
+      <link>http://blog.xiatiansong.com/2014/06/09/hive-data-manipulation-language/</link>
+      <guid>http://blog.xiatiansong.com/2014/06/09/hive-data-manipulation-language/</guid>
       <pubDate>2014-06-09T00:00:00+08:00</pubDate>
     </item>
     
@@ -15231,8 +15231,8 @@ Time taken: 18.438 seconds
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;从源码中，简单分析可以知道，hive优化器在做FetchTask优化的时候，如果&lt;code class=&quot;prettyprint&quot;&gt;hive.fetch.task.conversion&lt;/code&gt;为more，则会做一些优化。&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/06/09/fetchtask-in-hive/</link>
-      <guid>http://blog.xiaotian.com/2014/06/09/fetchtask-in-hive/</guid>
+      <link>http://blog.xiatiansong.com/2014/06/09/fetchtask-in-hive/</link>
+      <guid>http://blog.xiatiansong.com/2014/06/09/fetchtask-in-hive/</guid>
       <pubDate>2014-06-09T00:00:00+08:00</pubDate>
     </item>
     
@@ -15433,8 +15433,8 @@ COOKIES={
 &lt;p&gt;你可以将上面代码修改如下，以避免出现一个异常：&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;nickname&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;selector&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xpath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;//div[@class=&amp;#39;title-section ellipsis&amp;#39;]/a[@class=&amp;#39;name&amp;#39;]/text()&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;extract&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-      <link>http://blog.xiaotian.com/2014/06/08/using-scrapy-to-cralw-zhihu/</link>
-      <guid>http://blog.xiaotian.com/2014/06/08/using-scrapy-to-cralw-zhihu/</guid>
+      <link>http://blog.xiatiansong.com/2014/06/08/using-scrapy-to-cralw-zhihu/</link>
+      <guid>http://blog.xiatiansong.com/2014/06/08/using-scrapy-to-cralw-zhihu/</guid>
       <pubDate>2014-06-08T00:00:00+08:00</pubDate>
     </item>
     
@@ -15577,8 +15577,8 @@ $ mongoimport --port 9352 -d temple -c user zh_user
 &lt;li&gt;[2] &lt;a href=&quot;http://www.2cto.com/database/201406/306599.html&quot;&gt;MongoDB入门学习(一)：MongoDB的安装和管理&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/06/06/about-mongodb/</link>
-      <guid>http://blog.xiaotian.com/2014/06/06/about-mongodb/</guid>
+      <link>http://blog.xiatiansong.com/2014/06/06/about-mongodb/</link>
+      <guid>http://blog.xiatiansong.com/2014/06/06/about-mongodb/</guid>
       <pubDate>2014-06-06T00:00:00+08:00</pubDate>
     </item>
     
@@ -15789,8 +15789,8 @@ drwxr-xr-x 2 root root  4096 Jun  2 23:10 xslt
 &lt;li&gt;[2] &lt;a href=&quot;http://www.cloudera.com/content/cloudera-content/cloudera-docs/Search/latest/Cloudera-Search-User-Guide/Cloudera-Search-User-Guide.html&quot;&gt;Cloudera-Search-User-Guide&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/06/03/install_cloudera_search_without_cm/</link>
-      <guid>http://blog.xiaotian.com/2014/06/03/install_cloudera_search_without_cm/</guid>
+      <link>http://blog.xiatiansong.com/2014/06/03/install_cloudera_search_without_cm/</link>
+      <guid>http://blog.xiatiansong.com/2014/06/03/install_cloudera_search_without_cm/</guid>
       <pubDate>2014-06-03T00:00:00+08:00</pubDate>
     </item>
     
@@ -15947,8 +15947,8 @@ drwxr-xr-x 2 root root  4096 Jun  2 23:10 xslt
 &lt;li&gt;[3] &lt;a href=&quot;http://blog.csdn.net/godfrey90/article/details/6754884&quot;&gt;NoSQL学习笔记(二)之CAP理论&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/05/30/note-about-brewers-cap-theorem/</link>
-      <guid>http://blog.xiaotian.com/2014/05/30/note-about-brewers-cap-theorem/</guid>
+      <link>http://blog.xiatiansong.com/2014/05/30/note-about-brewers-cap-theorem/</link>
+      <guid>http://blog.xiatiansong.com/2014/05/30/note-about-brewers-cap-theorem/</guid>
       <pubDate>2014-05-30T00:00:00+08:00</pubDate>
     </item>
     
@@ -16367,8 +16367,8 @@ twisted/runner/portmap.c:55: error: &lt;span class=&quot;k&quot;&gt;for &lt;/spa
 
 &lt;p&gt;以上就是最近几天学习 Scrapy 的一个笔记和知识整理，参考了一些网上的文章才写成此文，对此表示感谢，也希望这篇文章能够对你有所帮助。如果你有什么想法，欢迎留言；如果喜欢此文，请帮忙分享，谢谢!&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/05/24/using-scrapy-to-cralw-data/</link>
-      <guid>http://blog.xiaotian.com/2014/05/24/using-scrapy-to-cralw-data/</guid>
+      <link>http://blog.xiatiansong.com/2014/05/24/using-scrapy-to-cralw-data/</link>
+      <guid>http://blog.xiatiansong.com/2014/05/24/using-scrapy-to-cralw-data/</guid>
       <pubDate>2014-05-24T00:00:00+08:00</pubDate>
     </item>
     
@@ -16533,8 +16533,8 @@ Most commands print &lt;span class=&quot;nb&quot;&gt;help &lt;/span&gt;when invo
 &lt;li&gt;&lt;a href=&quot;http://cn.soulmachine.me/blog/20140201/&quot;&gt;Nutch 快速入门(Nutch 2.2.1)&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/05/20/nutch-intro/</link>
-      <guid>http://blog.xiaotian.com/2014/05/20/nutch-intro/</guid>
+      <link>http://blog.xiatiansong.com/2014/05/20/nutch-intro/</link>
+      <guid>http://blog.xiatiansong.com/2014/05/20/nutch-intro/</guid>
       <pubDate>2014-05-20T00:00:00+08:00</pubDate>
     </item>
     
@@ -16628,8 +16628,8 @@ app.run()
 
 &lt;p&gt;本文简单介绍了Flask框架的安装和使用，如果你想要深入研究 Flask 的话，可以查看 &lt;a href=&quot;http://www.pythondoc.com/flask/api.html#api&quot;&gt;API&lt;/a&gt;。 &lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/05/11/flask-intro/</link>
-      <guid>http://blog.xiaotian.com/2014/05/11/flask-intro/</guid>
+      <link>http://blog.xiatiansong.com/2014/05/11/flask-intro/</link>
+      <guid>http://blog.xiatiansong.com/2014/05/11/flask-intro/</guid>
       <pubDate>2014-05-11T00:00:00+08:00</pubDate>
     </item>
     
@@ -17013,8 +17013,8 @@ accidentally published to the registry? (y/N)
 &lt;li&gt;&lt;a href=&quot;http://segmentfault.com/a/1190000000349555&quot;&gt;Day 1: Bower —— 管理你的客户端依赖关系&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/05/10/bower-intro/</link>
-      <guid>http://blog.xiaotian.com/2014/05/10/bower-intro/</guid>
+      <link>http://blog.xiatiansong.com/2014/05/10/bower-intro/</link>
+      <guid>http://blog.xiatiansong.com/2014/05/10/bower-intro/</guid>
       <pubDate>2014-05-10T00:00:00+08:00</pubDate>
     </item>
     
@@ -17480,8 +17480,8 @@ editor for Markdown&lt;/li&gt;
 &lt;li&gt;[5] &lt;a href=&quot;http://joinwee.com/lesson/10/&quot;&gt;Markdown在线写作速成&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/04/24/all-things-markdown/</link>
-      <guid>http://blog.xiaotian.com/2014/04/24/all-things-markdown/</guid>
+      <link>http://blog.xiatiansong.com/2014/04/24/all-things-markdown/</link>
+      <guid>http://blog.xiatiansong.com/2014/04/24/all-things-markdown/</guid>
       <pubDate>2014-04-24T00:00:00+08:00</pubDate>
     </item>
     
@@ -17649,8 +17649,8 @@ echo &amp;#39;source ~/.bash_profile&amp;#39; &amp;gt;&amp;gt;~/.zshrc
 &lt;li&gt;&lt;a href=&quot;http://nootn.com/blog/archives/87/&quot;&gt;MacBook Pro 配置&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/04/23/after-reinstall-mac/</link>
-      <guid>http://blog.xiaotian.com/2014/04/23/after-reinstall-mac/</guid>
+      <link>http://blog.xiatiansong.com/2014/04/23/after-reinstall-mac/</link>
+      <guid>http://blog.xiatiansong.com/2014/04/23/after-reinstall-mac/</guid>
       <pubDate>2014-04-23T00:00:00+08:00</pubDate>
     </item>
     
@@ -17801,8 +17801,8 @@ dpkg-buildpackage: error: unable to determine source changed by
 &lt;li&gt;[1] &lt;a href=&quot;https://cwiki.apache.org/confluence/display/BIGTOP/Building+Bigtop+on+Ubuntu&quot;&gt;Building Bigtop on Ubuntu&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/04/17/building-bigtop-on-ubuntu/</link>
-      <guid>http://blog.xiaotian.com/2014/04/17/building-bigtop-on-ubuntu/</guid>
+      <link>http://blog.xiatiansong.com/2014/04/17/building-bigtop-on-ubuntu/</link>
+      <guid>http://blog.xiatiansong.com/2014/04/17/building-bigtop-on-ubuntu/</guid>
       <pubDate>2014-04-17T00:00:00+08:00</pubDate>
     </item>
     
@@ -18044,8 +18044,8 @@ dpkg-buildpackage: error: unable to determine source changed by
 
 &lt;p&gt;剩余内存空间不足会触发GC，如eden空间不够了就要进行minor collection，old generation空间不够要进行major collection，permanent generation空间不足会引发full GC。&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/04/09/note-about-jvm-memery-model/</link>
-      <guid>http://blog.xiaotian.com/2014/04/09/note-about-jvm-memery-model/</guid>
+      <link>http://blog.xiatiansong.com/2014/04/09/note-about-jvm-memery-model/</link>
+      <guid>http://blog.xiatiansong.com/2014/04/09/note-about-jvm-memery-model/</guid>
       <pubDate>2014-04-09T00:00:00+08:00</pubDate>
     </item>
     
@@ -18142,8 +18142,8 @@ $ tailf catalina.out
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;vi /opt/atlassian/jira/bin/setenv.sh
 &lt;span class=&quot;nv&quot;&gt;JAVA_OPTS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;-Xms1024m -Xmx2048m -XX:MaxPermSize=256m $JAVA_OPTS -Djava.awt.headless=true &amp;quot;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-      <link>http://blog.xiaotian.com/2014/04/09/install-jira5-on-rhel-system/</link>
-      <guid>http://blog.xiaotian.com/2014/04/09/install-jira5-on-rhel-system/</guid>
+      <link>http://blog.xiatiansong.com/2014/04/09/install-jira5-on-rhel-system/</link>
+      <guid>http://blog.xiatiansong.com/2014/04/09/install-jira5-on-rhel-system/</guid>
       <pubDate>2014-04-09T00:00:00+08:00</pubDate>
     </item>
     
@@ -18315,8 +18315,8 @@ statement latencies in milliseconds:
 &lt;li&gt;[1] &lt;a href=&quot;http://www.pgsqldb.com:8079/mwiki/index.php/PGbench&quot;&gt;PGbench&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/04/08/a-benchmark-tool-on-postgresql/</link>
-      <guid>http://blog.xiaotian.com/2014/04/08/a-benchmark-tool-on-postgresql/</guid>
+      <link>http://blog.xiatiansong.com/2014/04/08/a-benchmark-tool-on-postgresql/</link>
+      <guid>http://blog.xiatiansong.com/2014/04/08/a-benchmark-tool-on-postgresql/</guid>
       <pubDate>2014-04-08T00:00:00+08:00</pubDate>
     </item>
     
@@ -18480,8 +18480,8 @@ Average:    742177    1308987   63.82    195809    669444   1390037  33.51
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;这些统计信息可以对照性能问题，查看当时的系统状态。&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/04/07/some-metrics-in-postgresql/</link>
-      <guid>http://blog.xiaotian.com/2014/04/07/some-metrics-in-postgresql/</guid>
+      <link>http://blog.xiatiansong.com/2014/04/07/some-metrics-in-postgresql/</link>
+      <guid>http://blog.xiatiansong.com/2014/04/07/some-metrics-in-postgresql/</guid>
       <pubDate>2014-04-07T00:00:00+08:00</pubDate>
     </item>
     
@@ -18557,8 +18557,8 @@ error: Failed dependencies:
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;初始化数据后，会显示启动数据库的命令。&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/04/07/install-postgresql-on-rhel-system/</link>
-      <guid>http://blog.xiaotian.com/2014/04/07/install-postgresql-on-rhel-system/</guid>
+      <link>http://blog.xiatiansong.com/2014/04/07/install-postgresql-on-rhel-system/</link>
+      <guid>http://blog.xiatiansong.com/2014/04/07/install-postgresql-on-rhel-system/</guid>
       <pubDate>2014-04-07T00:00:00+08:00</pubDate>
     </item>
     
@@ -18737,8 +18737,8 @@ mysql-&amp;gt;reset slave;
 
 &lt;p&gt;如原先的主中有bin日志在从上为实现同步，可以认为读取bin日志的内容，在新的主中执行&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/04/06/mysql-config-for-master-slave-replication/</link>
-      <guid>http://blog.xiaotian.com/2014/04/06/mysql-config-for-master-slave-replication/</guid>
+      <link>http://blog.xiatiansong.com/2014/04/06/mysql-config-for-master-slave-replication/</link>
+      <guid>http://blog.xiatiansong.com/2014/04/06/mysql-config-for-master-slave-replication/</guid>
       <pubDate>2014-04-06T00:00:00+08:00</pubDate>
     </item>
     
@@ -18799,8 +18799,8 @@ innodb_large_prefix=on
 
 &lt;p&gt;数据目录默认：&lt;code class=&quot;prettyprint&quot;&gt;/var/lib/mysql/&lt;/code&gt;&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/04/06/install-mysql-on-rhel-system/</link>
-      <guid>http://blog.xiaotian.com/2014/04/06/install-mysql-on-rhel-system/</guid>
+      <link>http://blog.xiatiansong.com/2014/04/06/install-mysql-on-rhel-system/</link>
+      <guid>http://blog.xiatiansong.com/2014/04/06/install-mysql-on-rhel-system/</guid>
       <pubDate>2014-04-06T00:00:00+08:00</pubDate>
     </item>
     
@@ -19010,8 +19010,8 @@ Spring MVC控制器和 相关项目的 profile 模块&amp;gt; 依赖于on broadl
 &lt;li&gt;[3] &lt;a href=&quot;http://sisopipo.com/blog/archives/553&quot;&gt;认识Java电子商务开源框架BroadleafCommerce&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/04/04/introduction-to-broadleaf-commerce/</link>
-      <guid>http://blog.xiaotian.com/2014/04/04/introduction-to-broadleaf-commerce/</guid>
+      <link>http://blog.xiatiansong.com/2014/04/04/introduction-to-broadleaf-commerce/</link>
+      <guid>http://blog.xiatiansong.com/2014/04/04/introduction-to-broadleaf-commerce/</guid>
       <pubDate>2014-04-04T00:00:00+08:00</pubDate>
     </item>
     
@@ -19155,8 +19155,8 @@ jdk-rmzip:
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;d.参考上面，再次测试一遍&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/04/01/install-jdk-with-saltstack/</link>
-      <guid>http://blog.xiaotian.com/2014/04/01/install-jdk-with-saltstack/</guid>
+      <link>http://blog.xiatiansong.com/2014/04/01/install-jdk-with-saltstack/</link>
+      <guid>http://blog.xiatiansong.com/2014/04/01/install-jdk-with-saltstack/</guid>
       <pubDate>2014-04-01T00:00:00+08:00</pubDate>
     </item>
     
@@ -19771,8 +19771,8 @@ hz 10
 
 &lt;p&gt;其中image为要删除的验证码图片的picgid。&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/04/01/deploy-a-captcha-server-using-lua-and-openresty/</link>
-      <guid>http://blog.xiaotian.com/2014/04/01/deploy-a-captcha-server-using-lua-and-openresty/</guid>
+      <link>http://blog.xiatiansong.com/2014/04/01/deploy-a-captcha-server-using-lua-and-openresty/</link>
+      <guid>http://blog.xiatiansong.com/2014/04/01/deploy-a-captcha-server-using-lua-and-openresty/</guid>
       <pubDate>2014-04-01T00:00:00+08:00</pubDate>
     </item>
     
@@ -19876,8 +19876,8 @@ hz 10
 
 &lt;p&gt;原文地址：&lt;a href=&quot;http://www.cloudera.com/content/cloudera-content/cloudera-docs/CDH4/latest/CDH4-Release-Notes/Whats_New_in_4-5.html&quot;&gt;What&amp;#39;s New in CDH4.5.0&lt;/a&gt;&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/03/31/what-is-new-in-CDH4.5.0/</link>
-      <guid>http://blog.xiaotian.com/2014/03/31/what-is-new-in-CDH4.5.0/</guid>
+      <link>http://blog.xiatiansong.com/2014/03/31/what-is-new-in-CDH4.5.0/</link>
+      <guid>http://blog.xiatiansong.com/2014/03/31/what-is-new-in-CDH4.5.0/</guid>
       <pubDate>2014-03-31T00:00:00+08:00</pubDate>
     </item>
     
@@ -20116,8 +20116,8 @@ hz 10
 
 &lt;p&gt;上面python脚本主要是使用了lxml的xpath语法进行快速查找。&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/03/18/simulate-weibo-login-in-python/</link>
-      <guid>http://blog.xiaotian.com/2014/03/18/simulate-weibo-login-in-python/</guid>
+      <link>http://blog.xiatiansong.com/2014/03/18/simulate-weibo-login-in-python/</link>
+      <guid>http://blog.xiatiansong.com/2014/03/18/simulate-weibo-login-in-python/</guid>
       <pubDate>2014-03-18T00:00:00+08:00</pubDate>
     </item>
     
@@ -20280,8 +20280,8 @@ hz 10
 &lt;li&gt;[2] &lt;a href=&quot;https://cwiki.apache.org/confluence/display/solr/Other+Schema+Elements&quot;&gt;Other Schema Elements&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/03/15/schema-in-solr/</link>
-      <guid>http://blog.xiaotian.com/2014/03/15/schema-in-solr/</guid>
+      <link>http://blog.xiatiansong.com/2014/03/15/schema-in-solr/</link>
+      <guid>http://blog.xiatiansong.com/2014/03/15/schema-in-solr/</guid>
       <pubDate>2014-03-15T00:00:00+08:00</pubDate>
     </item>
     
@@ -20339,8 +20339,8 @@ hz 10
 
 &lt;p&gt;10、可以通过定时任务设置文件压缩合并频率&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/03/15/new-features-in-idh-hbase/</link>
-      <guid>http://blog.xiaotian.com/2014/03/15/new-features-in-idh-hbase/</guid>
+      <link>http://blog.xiatiansong.com/2014/03/15/new-features-in-idh-hbase/</link>
+      <guid>http://blog.xiatiansong.com/2014/03/15/new-features-in-idh-hbase/</guid>
       <pubDate>2014-03-15T00:00:00+08:00</pubDate>
     </item>
     
@@ -20491,8 +20491,8 @@ hz 10
 &lt;li&gt;[1] &lt;a href=&quot;http://blog.csdn.net/zhyh1986/article/details/9856115&quot;&gt;Solr4.4的安装与配置&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/03/14/split-chinese-in-solr/</link>
-      <guid>http://blog.xiaotian.com/2014/03/14/split-chinese-in-solr/</guid>
+      <link>http://blog.xiatiansong.com/2014/03/14/split-chinese-in-solr/</link>
+      <guid>http://blog.xiatiansong.com/2014/03/14/split-chinese-in-solr/</guid>
       <pubDate>2014-03-14T00:00:00+08:00</pubDate>
     </item>
     
@@ -20619,8 +20619,8 @@ hz 10
     &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dbProduct&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-      <link>http://blog.xiaotian.com/2014/03/14/broadleaf-project-with-sendcloud/</link>
-      <guid>http://blog.xiaotian.com/2014/03/14/broadleaf-project-with-sendcloud/</guid>
+      <link>http://blog.xiatiansong.com/2014/03/14/broadleaf-project-with-sendcloud/</link>
+      <guid>http://blog.xiatiansong.com/2014/03/14/broadleaf-project-with-sendcloud/</guid>
       <pubDate>2014-03-14T00:00:00+08:00</pubDate>
     </item>
     
@@ -21024,8 +21024,8 @@ solr.source.reindex=solrReindexServer
 &lt;span class=&quot;c1&quot;&gt;//        deleteAllDocuments();&lt;/span&gt;
 &lt;span class=&quot;c1&quot;&gt;//      }&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-      <link>http://blog.xiaotian.com/2014/03/13/improve-the-search-function-in-broadleaf-project/</link>
-      <guid>http://blog.xiaotian.com/2014/03/13/improve-the-search-function-in-broadleaf-project/</guid>
+      <link>http://blog.xiatiansong.com/2014/03/13/improve-the-search-function-in-broadleaf-project/</link>
+      <guid>http://blog.xiatiansong.com/2014/03/13/improve-the-search-function-in-broadleaf-project/</guid>
       <pubDate>2014-03-13T00:00:00+08:00</pubDate>
     </item>
     
@@ -21382,8 +21382,8 @@ drwxr-xr-x 3 root root 4096 Mar 10 17:02 primary_shard2_replica1
 &lt;li&gt;[3] &lt;a href=&quot;http://www.wxdl.cn/index/solrcloud.html&quot;&gt;SolrCloud使用教程、原理介绍&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/03/10/how-to-install-solrcloud/</link>
-      <guid>http://blog.xiaotian.com/2014/03/10/how-to-install-solrcloud/</guid>
+      <link>http://blog.xiatiansong.com/2014/03/10/how-to-install-solrcloud/</link>
+      <guid>http://blog.xiatiansong.com/2014/03/10/how-to-install-solrcloud/</guid>
       <pubDate>2014-03-10T00:00:00+08:00</pubDate>
     </item>
     
@@ -21571,8 +21571,8 @@ drwxr-xr-x 3 root root 4096 Mar 10 17:02 primary_shard2_replica1
 &lt;li&gt;HealthCheckChore：健康检查&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/03/09/hbase-note-about-hregionserver-startup/</link>
-      <guid>http://blog.xiaotian.com/2014/03/09/hbase-note-about-hregionserver-startup/</guid>
+      <link>http://blog.xiatiansong.com/2014/03/09/hbase-note-about-hregionserver-startup/</link>
+      <guid>http://blog.xiatiansong.com/2014/03/09/hbase-note-about-hregionserver-startup/</guid>
       <pubDate>2014-03-09T00:00:00+08:00</pubDate>
     </item>
     
@@ -22011,8 +22011,8 @@ hbase.master.wait.for.log.splitting
 &lt;li&gt;周期性扫描.META.表上未使用的region并回收&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/03/09/hbase-note-about-hmaster-startup/</link>
-      <guid>http://blog.xiaotian.com/2014/03/09/hbase-note-about-hmaster-startup/</guid>
+      <link>http://blog.xiatiansong.com/2014/03/09/hbase-note-about-hmaster-startup/</link>
+      <guid>http://blog.xiatiansong.com/2014/03/09/hbase-note-about-hmaster-startup/</guid>
       <pubDate>2014-03-09T00:00:00+08:00</pubDate>
     </item>
     
@@ -22048,8 +22048,8 @@ hbase.master.wait.for.log.splitting
 
 &lt;p&gt;2014年，等风来。&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/03/06/summary-of-the-work-in-2013/</link>
-      <guid>http://blog.xiaotian.com/2014/03/06/summary-of-the-work-in-2013/</guid>
+      <link>http://blog.xiatiansong.com/2014/03/06/summary-of-the-work-in-2013/</link>
+      <guid>http://blog.xiatiansong.com/2014/03/06/summary-of-the-work-in-2013/</guid>
       <pubDate>2014-03-06T00:00:00+08:00</pubDate>
     </item>
     
@@ -22177,8 +22177,8 @@ http://localhost:8080/solr/primary/select?q=*:*&amp;amp;fl=productId&amp;amp;fq=
 &lt;li&gt;&lt;code class=&quot;prettyprint&quot;&gt;hl.regex.slop&lt;/code&gt;:这是hl.fragsize能变化以适应正则表达式的因子。默认值是0.6，意思是如果 &lt;code class=&quot;prettyprint&quot;&gt;hlfragsize=100&lt;/code&gt; 那么fragment的大小会从40-160.&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/03/03/solr-query-syntax/</link>
-      <guid>http://blog.xiaotian.com/2014/03/03/solr-query-syntax/</guid>
+      <link>http://blog.xiatiansong.com/2014/03/03/solr-query-syntax/</link>
+      <guid>http://blog.xiatiansong.com/2014/03/03/solr-query-syntax/</guid>
       <pubDate>2014-03-03T00:00:00+08:00</pubDate>
     </item>
     
@@ -22289,8 +22289,8 @@ http://localhost:8080/solr/primary/select?q=*:*&amp;amp;fl=productId&amp;amp;fq=
     &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;URLEncoder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;encode&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;UTF-8&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;+&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-      <link>http://blog.xiaotian.com/2014/02/26/how-to-install-solr/</link>
-      <guid>http://blog.xiaotian.com/2014/02/26/how-to-install-solr/</guid>
+      <link>http://blog.xiatiansong.com/2014/02/26/how-to-install-solr/</link>
+      <guid>http://blog.xiatiansong.com/2014/02/26/how-to-install-solr/</guid>
       <pubDate>2014-02-26T00:00:00+08:00</pubDate>
     </item>
     
@@ -22483,8 +22483,8 @@ gpgcheck=0
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;2.进入 hadoop-install/shell 目录，参考 READEME.md 中说明来安装集群。&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/02/23/create-virtualbox-by-vagrant/</link>
-      <guid>http://blog.xiaotian.com/2014/02/23/create-virtualbox-by-vagrant/</guid>
+      <link>http://blog.xiatiansong.com/2014/02/23/create-virtualbox-by-vagrant/</link>
+      <guid>http://blog.xiatiansong.com/2014/02/23/create-virtualbox-by-vagrant/</guid>
       <pubDate>2014-02-23T00:00:00+08:00</pubDate>
     </item>
     
@@ -23134,8 +23134,8 @@ python有3种表示字符串类型的方式，即单引号、双引号、三引�
 &lt;li&gt;&lt;a href=&quot;http://hujiaweibujidao.github.io/blog/2014/05/10/python-tips1/&quot;&gt;Python Basics&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/02/22/python-introduction-of-basics/</link>
-      <guid>http://blog.xiaotian.com/2014/02/22/python-introduction-of-basics/</guid>
+      <link>http://blog.xiatiansong.com/2014/02/22/python-introduction-of-basics/</link>
+      <guid>http://blog.xiatiansong.com/2014/02/22/python-introduction-of-basics/</guid>
       <pubDate>2014-02-22T00:00:00+08:00</pubDate>
     </item>
     
@@ -23211,8 +23211,8 @@ confluence.home=/data/confluence/confluence-data
 
 &lt;p&gt;请参考：&lt;a href=&quot;http://582033.vicp.net/?p=1085&quot;&gt;http://582033.vicp.net/?p=1085&lt;/a&gt;&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/02/21/install-confluence5-4-2/</link>
-      <guid>http://blog.xiaotian.com/2014/02/21/install-confluence5-4-2/</guid>
+      <link>http://blog.xiatiansong.com/2014/02/21/install-confluence5-4-2/</link>
+      <guid>http://blog.xiatiansong.com/2014/02/21/install-confluence5-4-2/</guid>
       <pubDate>2014-02-21T00:00:00+08:00</pubDate>
     </item>
     
@@ -23370,8 +23370,8 @@ confluence.home=/data/confluence/confluence-data
 
 &lt;p&gt;版本从 1.99.2 更新到 1.99.3.&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/02/21/cdh5rn_whats_new_in_b2/</link>
-      <guid>http://blog.xiaotian.com/2014/02/21/cdh5rn_whats_new_in_b2/</guid>
+      <link>http://blog.xiatiansong.com/2014/02/21/cdh5rn_whats_new_in_b2/</link>
+      <guid>http://blog.xiatiansong.com/2014/02/21/cdh5rn_whats_new_in_b2/</guid>
       <pubDate>2014-02-21T00:00:00+08:00</pubDate>
     </item>
     
@@ -23574,8 +23574,8 @@ confluence.home=/data/confluence/confluence-data
 &lt;li&gt;&lt;a href=&quot;http://www.csser.com/tools/backbone/backbone.js.html&quot;&gt;Backbone.js API中文文档&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/02/16/backbone-model/</link>
-      <guid>http://blog.xiaotian.com/2014/02/16/backbone-model/</guid>
+      <link>http://blog.xiatiansong.com/2014/02/16/backbone-model/</link>
+      <guid>http://blog.xiatiansong.com/2014/02/16/backbone-model/</guid>
       <pubDate>2014-02-16T00:00:00+08:00</pubDate>
     </item>
     
@@ -23670,8 +23670,8 @@ $ cp -a  /usr/share/ganglia/   /var/www/html/ganglia
 &lt;li&gt;[1] &lt;a href=&quot;http://www.elain.org/?p=359&quot;&gt;ganglia监控的搭建部署(从源码安装)&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/01/25/how-to-install-ganglia-on-centos6/</link>
-      <guid>http://blog.xiaotian.com/2014/01/25/how-to-install-ganglia-on-centos6/</guid>
+      <link>http://blog.xiatiansong.com/2014/01/25/how-to-install-ganglia-on-centos6/</link>
+      <guid>http://blog.xiatiansong.com/2014/01/25/how-to-install-ganglia-on-centos6/</guid>
       <pubDate>2014-01-25T00:00:00+08:00</pubDate>
     </item>
     
@@ -23794,8 +23794,8 @@ $ service nagios restart
 &lt;li&gt;&lt;a href=&quot;http://www.elain.org/?p=467&quot;&gt;CentOS下nagios报警飞信部署四步走&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/01/24/how-to-install-nagios-on-rhel6/</link>
-      <guid>http://blog.xiaotian.com/2014/01/24/how-to-install-nagios-on-rhel6/</guid>
+      <link>http://blog.xiatiansong.com/2014/01/24/how-to-install-nagios-on-rhel6/</link>
+      <guid>http://blog.xiatiansong.com/2014/01/24/how-to-install-nagios-on-rhel6/</guid>
       <pubDate>2014-01-24T00:00:00+08:00</pubDate>
     </item>
     
@@ -24178,8 +24178,8 @@ metrics mysql.bytes_sent: [0, 0, -92]
 &lt;li&gt;&lt;a href=&quot;http://dirlt.com/opentsdb.html&quot;&gt;opentsdb&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/01/22/all-things-opentsdb/</link>
-      <guid>http://blog.xiaotian.com/2014/01/22/all-things-opentsdb/</guid>
+      <link>http://blog.xiatiansong.com/2014/01/22/all-things-opentsdb/</link>
+      <guid>http://blog.xiatiansong.com/2014/01/22/all-things-opentsdb/</guid>
       <pubDate>2014-01-22T00:00:00+08:00</pubDate>
     </item>
     
@@ -24390,8 +24390,8 @@ redcarpet:
 &lt;li&gt;&lt;p&gt;&lt;a href=&quot;http://mytharcher.github.io/&quot;&gt;闭门造轮子&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/01/21/all-things-about-jekyll/</link>
-      <guid>http://blog.xiaotian.com/2014/01/21/all-things-about-jekyll/</guid>
+      <link>http://blog.xiatiansong.com/2014/01/21/all-things-about-jekyll/</link>
+      <guid>http://blog.xiatiansong.com/2014/01/21/all-things-about-jekyll/</guid>
       <pubDate>2014-01-21T00:00:00+08:00</pubDate>
     </item>
     
@@ -24699,8 +24699,8 @@ fi
 
 &lt;p&gt;综上，如需修改 PATH，建议修改 bashrc 文件，从而保证任何方式访问时 PATH 的正确性。&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/01/18/bash-problem-when-ssh-access/</link>
-      <guid>http://blog.xiaotian.com/2014/01/18/bash-problem-when-ssh-access/</guid>
+      <link>http://blog.xiatiansong.com/2014/01/18/bash-problem-when-ssh-access/</link>
+      <guid>http://blog.xiatiansong.com/2014/01/18/bash-problem-when-ssh-access/</guid>
       <pubDate>2014-01-18T00:00:00+08:00</pubDate>
     </item>
     
@@ -24811,8 +24811,8 @@ fi
 &lt;li&gt;[4] &lt;a href=&quot;http://blog.toby941.sinaapp.com/hbase-region-split.html&quot;&gt;hbase region split策略&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/01/16/hbase-region-split-policy/</link>
-      <guid>http://blog.xiaotian.com/2014/01/16/hbase-region-split-policy/</guid>
+      <link>http://blog.xiatiansong.com/2014/01/16/hbase-region-split-policy/</link>
+      <guid>http://blog.xiatiansong.com/2014/01/16/hbase-region-split-policy/</guid>
       <pubDate>2014-01-16T00:00:00+08:00</pubDate>
     </item>
     
@@ -24924,8 +24924,8 @@ map &amp;lt;leader&amp;gt;n &amp;lt;plug&amp;gt;NERDTreeTabsToggle &amp;lt;CR&am
 &lt;li&gt;[3] &lt;a href=&quot;http://www.cnblogs.com/ma6174/archive/2011/12/10/2283393.html&quot;&gt;http://www.cnblogs.com/ma6174/archive/2011/12/10/2283393.html&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/01/14/vim-config-and-plugins/</link>
-      <guid>http://blog.xiaotian.com/2014/01/14/vim-config-and-plugins/</guid>
+      <link>http://blog.xiatiansong.com/2014/01/14/vim-config-and-plugins/</link>
+      <guid>http://blog.xiatiansong.com/2014/01/14/vim-config-and-plugins/</guid>
       <pubDate>2014-01-14T00:00:00+08:00</pubDate>
     </item>
     
@@ -25073,8 +25073,8 @@ map &amp;lt;leader&amp;gt;n &amp;lt;plug&amp;gt;NERDTreeTabsToggle &amp;lt;CR&am
 &lt;li&gt;[2] &lt;a href=&quot;https://github.com/springside/springside4/wiki/SiteMesh&quot;&gt;springside4 wiki:SiteMesh&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/01/13/about-sitemesh/</link>
-      <guid>http://blog.xiaotian.com/2014/01/13/about-sitemesh/</guid>
+      <link>http://blog.xiatiansong.com/2014/01/13/about-sitemesh/</link>
+      <guid>http://blog.xiatiansong.com/2014/01/13/about-sitemesh/</guid>
       <pubDate>2014-01-13T00:00:00+08:00</pubDate>
     </item>
     
@@ -25540,8 +25540,8 @@ Quit the server with CONTROL-C.
 &lt;li&gt;&lt;a href=&quot;http://andrew-liu.gitbooks.io/django-blog/content/&quot;&gt;Django搭建简易博客&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/01/11/how-to-create-a-django-site/</link>
-      <guid>http://blog.xiaotian.com/2014/01/11/how-to-create-a-django-site/</guid>
+      <link>http://blog.xiatiansong.com/2014/01/11/how-to-create-a-django-site/</link>
+      <guid>http://blog.xiatiansong.com/2014/01/11/how-to-create-a-django-site/</guid>
       <pubDate>2014-01-11T00:00:00+08:00</pubDate>
     </item>
     
@@ -25691,8 +25691,8 @@ echo &amp;quot;export ANT_HOME=/chan/app/apache/apache-ant-1.9.4&amp;quot; &amp;
 echo &amp;quot;export PATH=\$JAVA_HOME/bin:\$MVN_HOME/bin:\$ANT_HOME/bin:\$PATH&amp;quot; &amp;gt;&amp;gt; ~/.bashrc
 source ~/.bashrc
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-      <link>http://blog.xiaotian.com/2014/01/09/after-reinstall-the-system/</link>
-      <guid>http://blog.xiaotian.com/2014/01/09/after-reinstall-the-system/</guid>
+      <link>http://blog.xiatiansong.com/2014/01/09/after-reinstall-the-system/</link>
+      <guid>http://blog.xiatiansong.com/2014/01/09/after-reinstall-the-system/</guid>
       <pubDate>2014-01-09T00:00:00+08:00</pubDate>
     </item>
     
@@ -25779,8 +25779,8 @@ listen hive             #hive后端定义
 &lt;li&gt;[2] &lt;a href=&quot;http://slaytanic.blog.51cto.com/2057708/803626&quot;&gt;HAProxy+Hive构建高可用数据挖掘集群&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2014/01/08/hive-ha-by-haproxy/</link>
-      <guid>http://blog.xiaotian.com/2014/01/08/hive-ha-by-haproxy/</guid>
+      <link>http://blog.xiatiansong.com/2014/01/08/hive-ha-by-haproxy/</link>
+      <guid>http://blog.xiatiansong.com/2014/01/08/hive-ha-by-haproxy/</guid>
       <pubDate>2014-01-08T00:00:00+08:00</pubDate>
     </item>
     
@@ -25976,8 +25976,8 @@ git ci -m &amp;#39;add patch&amp;#39;
 
 &lt;p&gt;你和你的小伙伴们每个人都在dev分支上干活，每个人都有自己的分支，时不时地往dev分支上合并就可以了。&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2013/12/27/some-git-configs-and-cammands/</link>
-      <guid>http://blog.xiaotian.com/2013/12/27/some-git-configs-and-cammands/</guid>
+      <link>http://blog.xiatiansong.com/2013/12/27/some-git-configs-and-cammands/</link>
+      <guid>http://blog.xiatiansong.com/2013/12/27/some-git-configs-and-cammands/</guid>
       <pubDate>2013-12-27T00:00:00+08:00</pubDate>
     </item>
     
@@ -26576,8 +26576,8 @@ salt.states.cmd.run(name, onlyif=None, unless=None, cwd=None, user=None, group=N
 &lt;li&gt;[1]&lt;a href=&quot;http://zhoulg.blog.51cto.com/48455/1140178&quot;&gt;Saltstack服务器集中管理和并行下发命令工具&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2013/11/18/study-note-of-saltstack/</link>
-      <guid>http://blog.xiaotian.com/2013/11/18/study-note-of-saltstack/</guid>
+      <link>http://blog.xiatiansong.com/2013/11/18/study-note-of-saltstack/</link>
+      <guid>http://blog.xiatiansong.com/2013/11/18/study-note-of-saltstack/</guid>
       <pubDate>2013-11-18T00:00:00+08:00</pubDate>
     </item>
     
@@ -26868,8 +26868,8 @@ sk2:
      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;source&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;salt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;//&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;jboss&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;files&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;jmx&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;users&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;properties&lt;/span&gt;
      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jinja&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-      <link>http://blog.xiaotian.com/2013/11/16/install-jboss-with-saltstack/</link>
-      <guid>http://blog.xiaotian.com/2013/11/16/install-jboss-with-saltstack/</guid>
+      <link>http://blog.xiatiansong.com/2013/11/16/install-jboss-with-saltstack/</link>
+      <guid>http://blog.xiatiansong.com/2013/11/16/install-jboss-with-saltstack/</guid>
       <pubDate>2013-11-16T00:00:00+08:00</pubDate>
     </item>
     
@@ -27052,8 +27052,8 @@ $ python2.6 server_bottle.py -d -C -l debug -s cherrypy
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;然后打开&lt;code class=&quot;prettyprint&quot;&gt;http://ip:8080/app&lt;/code&gt;，通过admin/admin登陆即可。&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2013/11/11/install-saltstack-and-halite/</link>
-      <guid>http://blog.xiaotian.com/2013/11/11/install-saltstack-and-halite/</guid>
+      <link>http://blog.xiatiansong.com/2013/11/11/install-saltstack-and-halite/</link>
+      <guid>http://blog.xiatiansong.com/2013/11/11/install-saltstack-and-halite/</guid>
       <pubDate>2013-11-11T00:00:00+08:00</pubDate>
     </item>
     
@@ -27168,8 +27168,8 @@ log4j.threshold=INFO
           &amp;lt;name&amp;gt;!hadoop.profile&amp;lt;/name&amp;gt;
         &amp;lt;/property&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-      <link>http://blog.xiaotian.com/2013/11/01/debug-hbase-in-eclipse/</link>
-      <guid>http://blog.xiaotian.com/2013/11/01/debug-hbase-in-eclipse/</guid>
+      <link>http://blog.xiatiansong.com/2013/11/01/debug-hbase-in-eclipse/</link>
+      <guid>http://blog.xiatiansong.com/2013/11/01/debug-hbase-in-eclipse/</guid>
       <pubDate>2013-11-01T00:00:00+08:00</pubDate>
     </item>
     
@@ -27378,8 +27378,8 @@ origin  git@github.com:javachen/hbase.git &lt;span class=&quot;o&quot;&gt;(&lt;/
 &lt;li&gt;[4] &lt;a href=&quot;http://smilejay.com/2012/08/generate-a-patch-from-a-commit/&quot;&gt;git根据commit生成patch&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2013/10/28/compile-hbase-source-code-and-apply-patches/</link>
-      <guid>http://blog.xiaotian.com/2013/10/28/compile-hbase-source-code-and-apply-patches/</guid>
+      <link>http://blog.xiatiansong.com/2013/10/28/compile-hbase-source-code-and-apply-patches/</link>
+      <guid>http://blog.xiatiansong.com/2013/10/28/compile-hbase-source-code-and-apply-patches/</guid>
       <pubDate>2013-10-28T00:00:00+08:00</pubDate>
     </item>
     
@@ -27716,8 +27716,8 @@ drwxrwxrwt   - yarn         mapred          0 2013-10-16 07:30 /tmp/logs
 
 &lt;h1 id=&quot;enjoy-it-！&quot;&gt;Enjoy it ！&lt;/h1&gt;
 </description>
-      <link>http://blog.xiaotian.com/2013/10/17/run-mapreduce-with-client-user-in-hive-server2/</link>
-      <guid>http://blog.xiaotian.com/2013/10/17/run-mapreduce-with-client-user-in-hive-server2/</guid>
+      <link>http://blog.xiatiansong.com/2013/10/17/run-mapreduce-with-client-user-in-hive-server2/</link>
+      <guid>http://blog.xiatiansong.com/2013/10/17/run-mapreduce-with-client-user-in-hive-server2/</guid>
       <pubDate>2013-10-17T00:00:00+08:00</pubDate>
     </item>
     
@@ -27817,8 +27817,8 @@ org.apache.hadoop.hive.ql.parse.ParseException: line 1:18 Failed to recognize pr
 &lt;li&gt;[2] &lt;a href=&quot;http://blog.hesey.net/2012/04/hive-tips.html&quot;&gt;Hive Tips&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2013/10/17/cartesian-product-in-hive-inner-join/</link>
-      <guid>http://blog.xiaotian.com/2013/10/17/cartesian-product-in-hive-inner-join/</guid>
+      <link>http://blog.xiatiansong.com/2013/10/17/cartesian-product-in-hive-inner-join/</link>
+      <guid>http://blog.xiatiansong.com/2013/10/17/cartesian-product-in-hive-inner-join/</guid>
       <pubDate>2013-10-17T00:00:00+08:00</pubDate>
     </item>
     
@@ -27850,8 +27850,8 @@ org.apache.hadoop.hive.ql.parse.ParseException: line 1:18 Failed to recognize pr
 
 &lt;p&gt;上面是最近在做的一些事情，包括暂停没做的、正在做的以及还未做的。有时候觉得有些事情很简单，但没有时间、没有精力也没有自由一下子做完，有些时候人在江湖，身不由己。&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2013/09/08/recent-work/</link>
-      <guid>http://blog.xiaotian.com/2013/09/08/recent-work/</guid>
+      <link>http://blog.xiatiansong.com/2013/09/08/recent-work/</link>
+      <guid>http://blog.xiatiansong.com/2013/09/08/recent-work/</guid>
       <pubDate>2013-09-08T00:00:00+08:00</pubDate>
     </item>
     
@@ -28186,8 +28186,8 @@ dfs.blocksize=134217728
 &lt;a href=&quot;http://flyingdutchman.iteye.com/blog/1876400&quot;&gt;Hadoop深入学习：InputFormat组件&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2013/09/04/how-to-decide-map-number/</link>
-      <guid>http://blog.xiaotian.com/2013/09/04/how-to-decide-map-number/</guid>
+      <link>http://blog.xiatiansong.com/2013/09/04/how-to-decide-map-number/</link>
+      <guid>http://blog.xiatiansong.com/2013/09/04/how-to-decide-map-number/</guid>
       <pubDate>2013-09-04T00:00:00+08:00</pubDate>
     </item>
     
@@ -28386,8 +28386,8 @@ background: #f5f5f5;
 &lt;li&gt;添加语法高亮，参考&lt;a href=&quot;http://truongtx.me/2012/12/28/jekyll-bootstrap-syntax-highlighting/&quot;&gt;Jekyll - Syntax highlighting&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2013/08/31/my-jekyll-config/</link>
-      <guid>http://blog.xiaotian.com/2013/08/31/my-jekyll-config/</guid>
+      <link>http://blog.xiatiansong.com/2013/08/31/my-jekyll-config/</link>
+      <guid>http://blog.xiatiansong.com/2013/08/31/my-jekyll-config/</guid>
       <pubDate>2013-08-31T00:00:00+08:00</pubDate>
     </item>
     
@@ -28483,8 +28483,8 @@ background: #f5f5f5;
 &lt;li&gt;&lt;a href=&quot;http://www.code365.org/wp-content/uploads/2012/02/%E5%9F%BA%E4%BA%8EZooKeeper%E7%9A%84%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF%E5%AD%98%E5%82%A8%E6%96%B9%E6%A1%88%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B01.pdf&quot;&gt;基于ZooKeeper的配置信息存储方案的设计与实现1.pdf&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2013/08/23/publish-proerties-using-zookeeper/</link>
-      <guid>http://blog.xiaotian.com/2013/08/23/publish-proerties-using-zookeeper/</guid>
+      <link>http://blog.xiatiansong.com/2013/08/23/publish-proerties-using-zookeeper/</link>
+      <guid>http://blog.xiatiansong.com/2013/08/23/publish-proerties-using-zookeeper/</guid>
       <pubDate>2013-08-23T00:00:00+08:00</pubDate>
     </item>
     
@@ -28743,8 +28743,8 @@ hive.metastore.init.hooks
 &lt;li&gt;&lt;a href=&quot;https://github.com/twitter/ambrose&quot;&gt;twitter ambrose&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 </description>
-      <link>http://blog.xiaotian.com/2013/08/22/hive-Driver/</link>
-      <guid>http://blog.xiaotian.com/2013/08/22/hive-Driver/</guid>
+      <link>http://blog.xiatiansong.com/2013/08/22/hive-Driver/</link>
+      <guid>http://blog.xiatiansong.com/2013/08/22/hive-Driver/</guid>
       <pubDate>2013-08-22T00:00:00+08:00</pubDate>
     </item>
     
@@ -28853,8 +28853,8 @@ hive.metastore.init.hooks
 &lt;li&gt;&lt;a href=&quot;http://www.cnblogs.com/end/archive/2012/12/19/2825320.html&quot;&gt;hive 初始化运行流程&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2013/08/21/hive-CliDriver/</link>
-      <guid>http://blog.xiaotian.com/2013/08/21/hive-CliDriver/</guid>
+      <link>http://blog.xiatiansong.com/2013/08/21/hive-CliDriver/</link>
+      <guid>http://blog.xiatiansong.com/2013/08/21/hive-CliDriver/</guid>
       <pubDate>2013-08-21T00:00:00+08:00</pubDate>
     </item>
     
@@ -28924,8 +28924,8 @@ Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1374551537478_0001
 &lt;p&gt;在&lt;code class=&quot;prettyprint&quot;&gt;/etc/hadoop/conf/hadoop-env.sh&lt;/code&gt;添加如下代码：&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;export HADOOP_JOB_HISTORYSERVER_HEAPSIZE=256
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-      <link>http://blog.xiaotian.com/2013/08/17/some-problems-about-hadoop/</link>
-      <guid>http://blog.xiaotian.com/2013/08/17/some-problems-about-hadoop/</guid>
+      <link>http://blog.xiatiansong.com/2013/08/17/some-problems-about-hadoop/</link>
+      <guid>http://blog.xiatiansong.com/2013/08/17/some-problems-about-hadoop/</guid>
       <pubDate>2013-08-17T00:00:00+08:00</pubDate>
     </item>
     
@@ -29099,8 +29099,8 @@ su -c &amp;quot;cd ; /usr/bin/pg_ctl restart -w -m fast -D /var/lib/pgsql/data&a
 
 &lt;p&gt;更多脚本，请关注github：&lt;a href=&quot;https://github.com/javachen/hadoop-install&quot;&gt;hadoop-install&lt;/a&gt;，你可以下载、使用并修改其中代码！&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2013/08/02/hadoop-install-script/</link>
-      <guid>http://blog.xiaotian.com/2013/08/02/hadoop-install-script/</guid>
+      <link>http://blog.xiatiansong.com/2013/08/02/hadoop-install-script/</link>
+      <guid>http://blog.xiatiansong.com/2013/08/02/hadoop-install-script/</guid>
       <pubDate>2013-08-02T00:00:00+08:00</pubDate>
     </item>
     
@@ -29255,8 +29255,8 @@ fi
 &lt;li&gt;&lt;a href=&quot;http://www.ibm.com/developerworks/cn/opensource/os-eclipse-javadebug/&quot;&gt;使用 Eclipse 远程调试 Java 应用程序&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 </description>
-      <link>http://blog.xiaotian.com/2013/08/01/remote-debug-hadoop/</link>
-      <guid>http://blog.xiaotian.com/2013/08/01/remote-debug-hadoop/</guid>
+      <link>http://blog.xiatiansong.com/2013/08/01/remote-debug-hadoop/</link>
+      <guid>http://blog.xiatiansong.com/2013/08/01/remote-debug-hadoop/</guid>
       <pubDate>2013-08-01T00:00:00+08:00</pubDate>
     </item>
     
@@ -29484,8 +29484,8 @@ library（RHive）
 rhive.connect(&amp;#39;192.168.0.27&amp;#39;)【hive的地址】
 rhive.env()
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-      <link>http://blog.xiaotian.com/2013/07/20/install-rhadoop/</link>
-      <guid>http://blog.xiaotian.com/2013/07/20/install-rhadoop/</guid>
+      <link>http://blog.xiatiansong.com/2013/07/20/install-rhadoop/</link>
+      <guid>http://blog.xiatiansong.com/2013/07/20/install-rhadoop/</guid>
       <pubDate>2013-07-20T00:00:00+08:00</pubDate>
     </item>
     
@@ -29575,8 +29575,8 @@ Could not initialize database server.
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;su -s /bin/bash cloudera-scm -c &lt;span class=&quot;s2&quot;&gt;&amp;quot;touch /var/log/cloudera-scm-server/db.log; /usr/share/cmf/bin/initialize_embedded_db.sh /var/lib/cloudera-scm-server-db/data /var/log/cloudera-scm-server/db.log&amp;quot;&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;su -s /bin/bash cloudera-scm -c &lt;span class=&quot;s2&quot;&gt;&amp;quot;pg_ctl start -w -D /var/lib/cloudera-scm-server-db/data -l /var/log/cloudera-scm-server/db.log&amp;quot;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-      <link>http://blog.xiaotian.com/2013/06/24/install-cdh-by-cloudera-manager/</link>
-      <guid>http://blog.xiaotian.com/2013/06/24/install-cdh-by-cloudera-manager/</guid>
+      <link>http://blog.xiatiansong.com/2013/06/24/install-cdh-by-cloudera-manager/</link>
+      <guid>http://blog.xiatiansong.com/2013/06/24/install-cdh-by-cloudera-manager/</guid>
       <pubDate>2013-06-24T00:00:00+08:00</pubDate>
     </item>
     
@@ -29716,8 +29716,8 @@ Sequence File的value是key时HLogKey对象，其中记录了写入数据的归�
 
 &lt;p&gt;每个region server维护一个HLog，而不是每一个region一个，这样不同region（来自不同的table）的日志会混在一起，这样做的目的是不断追加单个文件相对于同时写多个文件而言，可以减少磁盘寻址次数，因此可以提高table的写性能。带来麻烦的时，如果一个region server下线，为了恢复其上的region，需要讲region server上的log进行拆分，然后分发到其他region server上进行恢复。&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2013/06/15/hbase-note-about-data-structure/</link>
-      <guid>http://blog.xiaotian.com/2013/06/15/hbase-note-about-data-structure/</guid>
+      <link>http://blog.xiatiansong.com/2013/06/15/hbase-note-about-data-structure/</link>
+      <guid>http://blog.xiatiansong.com/2013/06/15/hbase-note-about-data-structure/</guid>
       <pubDate>2013-06-15T00:00:00+08:00</pubDate>
     </item>
     
@@ -29833,8 +29833,8 @@ Sequence File的value是key时HLogKey对象，其中记录了写入数据的归�
 
 &lt;p&gt;&lt;code class=&quot;prettyprint&quot;&gt;java.lang.Runtime#getRuntime()&lt;/code&gt;是 Java 标准库中常用的方法，它返回与当前Java应用关联的运行时对象。&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2013/06/09/note-about-java-singleton-model/</link>
-      <guid>http://blog.xiaotian.com/2013/06/09/note-about-java-singleton-model/</guid>
+      <link>http://blog.xiatiansong.com/2013/06/09/note-about-java-singleton-model/</link>
+      <guid>http://blog.xiatiansong.com/2013/06/09/note-about-java-singleton-model/</guid>
       <pubDate>2013-06-09T00:00:00+08:00</pubDate>
     </item>
     
@@ -29996,8 +29996,8 @@ Sequence File的value是key时HLogKey对象，其中记录了写入数据的归�
 
 &lt;p&gt;&lt;img src=&quot;http://images.cnitblog.com/blog/497634/201310/20234541-d488f6a75e524979acfe8a77ff14ec78.jpg&quot; alt=&quot;&quot; width=&quot;740&quot;/&gt;&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2013/06/09/note-about-java-io/</link>
-      <guid>http://blog.xiaotian.com/2013/06/09/note-about-java-io/</guid>
+      <link>http://blog.xiatiansong.com/2013/06/09/note-about-java-io/</link>
+      <guid>http://blog.xiatiansong.com/2013/06/09/note-about-java-io/</guid>
       <pubDate>2013-06-09T00:00:00+08:00</pubDate>
     </item>
     
@@ -30162,8 +30162,8 @@ Sequence File的value是key时HLogKey对象，其中记录了写入数据的归�
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-      <link>http://blog.xiaotian.com/2013/06/09/note-about-java-factory-model/</link>
-      <guid>http://blog.xiaotian.com/2013/06/09/note-about-java-factory-model/</guid>
+      <link>http://blog.xiatiansong.com/2013/06/09/note-about-java-factory-model/</link>
+      <guid>http://blog.xiatiansong.com/2013/06/09/note-about-java-factory-model/</guid>
       <pubDate>2013-06-09T00:00:00+08:00</pubDate>
     </item>
     
@@ -30328,8 +30328,8 @@ Sequence File的value是key时HLogKey对象，其中记录了写入数据的归�
 
 &lt;p&gt;用户线程一般用户执行用户级任务，而守护线程也就是“后台线程”，一般用来执行后台任务。需要注意的是：Java虚拟机在“用户线程”都结束后会后退出。&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2013/06/08/note-about-java-thread/</link>
-      <guid>http://blog.xiaotian.com/2013/06/08/note-about-java-thread/</guid>
+      <link>http://blog.xiatiansong.com/2013/06/08/note-about-java-thread/</link>
+      <guid>http://blog.xiatiansong.com/2013/06/08/note-about-java-thread/</guid>
       <pubDate>2013-06-08T00:00:00+08:00</pubDate>
     </item>
     
@@ -30692,8 +30692,8 @@ HashSet通过iterator()返回的迭代器是fail-fast的。&lt;/p&gt;
 &lt;li&gt;[2] &lt;a href=&quot;http://blog.hongtium.com/java-map-skiplist/&quot;&gt;Java里多个Map的性能比较（TreeMap、HashMap、ConcurrentSkipListMap）&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2013/06/08/java-collection-framework/</link>
-      <guid>http://blog.xiaotian.com/2013/06/08/java-collection-framework/</guid>
+      <link>http://blog.xiatiansong.com/2013/06/08/java-collection-framework/</link>
+      <guid>http://blog.xiatiansong.com/2013/06/08/java-collection-framework/</guid>
       <pubDate>2013-06-08T00:00:00+08:00</pubDate>
     </item>
     
@@ -30771,8 +30771,8 @@ at java.io.DataInputStream.readInt(DataInputStream.java:375)
 at org.apache.hadoop.hbase.ipc.HBaseClient$Connection.receiveResponse(HBaseClient.java:605)
 at org.apache.hadoop.hbase.ipc.HBaseClient$Connection.run(HBaseClient.java:538)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-      <link>http://blog.xiaotian.com/2013/04/17/access-idh-2.3-hbase-in-kettle/</link>
-      <guid>http://blog.xiaotian.com/2013/04/17/access-idh-2.3-hbase-in-kettle/</guid>
+      <link>http://blog.xiatiansong.com/2013/04/17/access-idh-2.3-hbase-in-kettle/</link>
+      <guid>http://blog.xiatiansong.com/2013/04/17/access-idh-2.3-hbase-in-kettle/</guid>
       <pubDate>2013-04-17T00:00:00+08:00</pubDate>
     </item>
     
@@ -30803,8 +30803,8 @@ at org.apache.hadoop.hbase.ipc.HBaseClient$Connection.run(HBaseClient.java:538)
 
 &lt;p&gt;最后，kettle转换文件下载地址：&lt;a href=&quot;http://javachen-rs.qiniudn.com/images/2013/join-a-paramter-to-input-in-kettle.zip&quot;&gt;在这里&lt;/a&gt;。&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2013/04/07/add-a-field-from-paramter-to-output/</link>
-      <guid>http://blog.xiaotian.com/2013/04/07/add-a-field-from-paramter-to-output/</guid>
+      <link>http://blog.xiatiansong.com/2013/04/07/add-a-field-from-paramter-to-output/</link>
+      <guid>http://blog.xiatiansong.com/2013/04/07/add-a-field-from-paramter-to-output/</guid>
       <pubDate>2013-04-07T00:00:00+08:00</pubDate>
     </item>
     
@@ -31971,8 +31971,8 @@ ADD JAR /usr/lib/hbase/hbase-server.jar;
 &lt;li&gt;[2] &lt;a href=&quot;http://roserouge.iteye.com/blog/1558498&quot;&gt;hadoop cdh 安装笔记&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2013/04/06/install-cloudera-cdh-by-yum/</link>
-      <guid>http://blog.xiaotian.com/2013/04/06/install-cloudera-cdh-by-yum/</guid>
+      <link>http://blog.xiatiansong.com/2013/04/06/install-cloudera-cdh-by-yum/</link>
+      <guid>http://blog.xiatiansong.com/2013/04/06/install-cloudera-cdh-by-yum/</guid>
       <pubDate>2013-04-06T00:00:00+08:00</pubDate>
     </item>
     
@@ -32192,8 +32192,8 @@ Returned 0 row&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;s&lt;span class=&quo
 &lt;li&gt;&lt;a href=&quot;https://ccp.cloudera.com/display/IMPALA10BETADOC/Installing+and+Using+Cloudera+Impala&quot;&gt;Installing and Using Cloudera Impala&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2013/03/29/install-impala/</link>
-      <guid>http://blog.xiaotian.com/2013/03/29/install-impala/</guid>
+      <link>http://blog.xiatiansong.com/2013/03/29/install-impala/</link>
+      <guid>http://blog.xiatiansong.com/2013/03/29/install-impala/</guid>
       <pubDate>2013-03-29T00:00:00+08:00</pubDate>
     </item>
     
@@ -32371,8 +32371,8 @@ Returned 0 row&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;s&lt;span class=&quo
 &lt;li&gt;&lt;a href=&quot;https://ccp.cloudera.com/display/CDH4DOC/Hive+Installation&quot;&gt;Hive Installation&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2013/03/24/manual-install-Cloudera-hive-CDH/</link>
-      <guid>http://blog.xiaotian.com/2013/03/24/manual-install-Cloudera-hive-CDH/</guid>
+      <link>http://blog.xiatiansong.com/2013/03/24/manual-install-Cloudera-hive-CDH/</link>
+      <guid>http://blog.xiatiansong.com/2013/03/24/manual-install-Cloudera-hive-CDH/</guid>
       <pubDate>2013-03-24T00:00:00+08:00</pubDate>
     </item>
     
@@ -32443,8 +32443,8 @@ Returned 0 row&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;s&lt;span class=&quo
 &lt;p&gt;在desktop3、desktop4、desktop5、desktop6、desktop7节点上分别启动hbase：&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;    start-hbase.sh 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-      <link>http://blog.xiaotian.com/2013/03/24/manual-install-Cloudera-hbase-CDH/</link>
-      <guid>http://blog.xiaotian.com/2013/03/24/manual-install-Cloudera-hbase-CDH/</guid>
+      <link>http://blog.xiatiansong.com/2013/03/24/manual-install-Cloudera-hbase-CDH/</link>
+      <guid>http://blog.xiatiansong.com/2013/03/24/manual-install-Cloudera-hbase-CDH/</guid>
       <pubDate>2013-03-24T00:00:00+08:00</pubDate>
     </item>
     
@@ -32835,8 +32835,8 @@ http://desktop2:8042/node
 3124 DataNode
 5711 NodeManager
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-      <link>http://blog.xiaotian.com/2013/03/24/manual-install-Cloudera-Hadoop-CDH/</link>
-      <guid>http://blog.xiaotian.com/2013/03/24/manual-install-Cloudera-Hadoop-CDH/</guid>
+      <link>http://blog.xiatiansong.com/2013/03/24/manual-install-Cloudera-Hadoop-CDH/</link>
+      <guid>http://blog.xiatiansong.com/2013/03/24/manual-install-Cloudera-Hadoop-CDH/</guid>
       <pubDate>2013-03-24T00:00:00+08:00</pubDate>
     </item>
     
@@ -32922,8 +32922,8 @@ export PATH=$PATH:$HADOOP_INSTALL/bin:$JAVA_HOME/bin
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;http://rhel-june:50030/
 http://rhel-june:50070/
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-      <link>http://blog.xiaotian.com/2013/03/08/note-about-installing-hadoop-cluster/</link>
-      <guid>http://blog.xiaotian.com/2013/03/08/note-about-installing-hadoop-cluster/</guid>
+      <link>http://blog.xiatiansong.com/2013/03/08/note-about-installing-hadoop-cluster/</link>
+      <guid>http://blog.xiatiansong.com/2013/03/08/note-about-installing-hadoop-cluster/</guid>
       <pubDate>2013-03-08T00:00:00+08:00</pubDate>
     </item>
     
@@ -32964,8 +32964,8 @@ http://rhel-june:50070/
 
 &lt;p&gt;在经历了2011年和2012年之后，2013年希望自己能够专注细节，深入理解，在技术、管理、交际方面有所成长；希望公司能够重视对团队的培养，能够规范各种规章制度，能够更上一层楼！&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2013/02/20/summary-of-the-work-in-2012/</link>
-      <guid>http://blog.xiaotian.com/2013/02/20/summary-of-the-work-in-2012/</guid>
+      <link>http://blog.xiatiansong.com/2013/02/20/summary-of-the-work-in-2012/</link>
+      <guid>http://blog.xiatiansong.com/2013/02/20/summary-of-the-work-in-2012/</guid>
       <pubDate>2013-02-20T00:00:00+08:00</pubDate>
     </item>
     
@@ -33119,8 +33119,8 @@ rake deploy
 &lt;li&gt;使用独立图床子域名：&lt;a href=&quot;http://log4d.com/2012/05/image-host/&quot;&gt;http://log4d.com/2012/05/image-host/&lt;/a&gt; &lt;a href=&quot;http://log4d.com/2012/05/image-host/&quot;&gt;http://log4d.com/2012/05/image-host/&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2012/06/03/migrate-blog-form-wordpress-to-github-with-octopress/</link>
-      <guid>http://blog.xiaotian.com/2012/06/03/migrate-blog-form-wordpress-to-github-with-octopress/</guid>
+      <link>http://blog.xiatiansong.com/2012/06/03/migrate-blog-form-wordpress-to-github-with-octopress/</link>
+      <guid>http://blog.xiatiansong.com/2012/06/03/migrate-blog-form-wordpress-to-github-with-octopress/</guid>
       <pubDate>2012-06-03T00:00:00+08:00</pubDate>
     </item>
     
@@ -33169,8 +33169,8 @@ svn://source.pentaho.org/svnkettleroot/Kettle/trunk
 &lt;a href=&quot;http://wiki.pentaho.com/display/EAI/Kettle+dependency+management&quot; target=&quot;_blank&quot;&gt;Kettle dependency management&lt;/a&gt;
 &lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2012/04/13/kettle-dependency-management/</link>
-      <guid>http://blog.xiaotian.com/2012/04/13/kettle-dependency-management/</guid>
+      <link>http://blog.xiatiansong.com/2012/04/13/kettle-dependency-management/</link>
+      <guid>http://blog.xiatiansong.com/2012/04/13/kettle-dependency-management/</guid>
       <pubDate>2012-04-13T00:00:00+08:00</pubDate>
     </item>
     
@@ -33395,8 +33395,8 @@ MiltigetHashMap，MapMaker google collection，和CurrentHashMap性能相当，�
 &lt;li&gt;&lt;a href=&quot;http://kantery.iteye.com/blog/441755&quot;&gt;Java Hashtable分析&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2012/03/26/hash-and-hash-functions/</link>
-      <guid>http://blog.xiaotian.com/2012/03/26/hash-and-hash-functions/</guid>
+      <link>http://blog.xiatiansong.com/2012/03/26/hash-and-hash-functions/</link>
+      <guid>http://blog.xiatiansong.com/2012/03/26/hash-and-hash-functions/</guid>
       <pubDate>2012-03-26T00:00:00+08:00</pubDate>
     </item>
     
@@ -33521,8 +33521,8 @@ MiltigetHashMap，MapMaker google collection，和CurrentHashMap性能相当，�
 &lt;li&gt;Pentaho Community Edition (CE) downloads &lt;a href=&quot;http://wiki.pentaho.com/display/BAD/Downloads&quot; target=&quot;_blank&quot;&gt;&lt;a href=&quot;http://wiki.pentaho.com/display/BAD/Downloads&quot;&gt;http://wiki.pentaho.com/display/BAD/Downloads&lt;/a&gt;&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2012/03/23/how-to-implement-cassandra-input-and-output-in-kettle4-2/</link>
-      <guid>http://blog.xiaotian.com/2012/03/23/how-to-implement-cassandra-input-and-output-in-kettle4-2/</guid>
+      <link>http://blog.xiatiansong.com/2012/03/23/how-to-implement-cassandra-input-and-output-in-kettle4-2/</link>
+      <guid>http://blog.xiatiansong.com/2012/03/23/how-to-implement-cassandra-input-and-output-in-kettle4-2/</guid>
       <pubDate>2012-03-23T00:00:00+08:00</pubDate>
     </item>
     
@@ -33544,8 +33544,8 @@ MiltigetHashMap，MapMaker google collection，和CurrentHashMap性能相当，�
 
 &lt;p&gt;2012年，期望明天会更好！&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2012/02/26/summary-of-the-work-in-2011/</link>
-      <guid>http://blog.xiaotian.com/2012/02/26/summary-of-the-work-in-2011/</guid>
+      <link>http://blog.xiatiansong.com/2012/02/26/summary-of-the-work-in-2011/</link>
+      <guid>http://blog.xiatiansong.com/2012/02/26/summary-of-the-work-in-2011/</guid>
       <pubDate>2012-02-26T00:00:00+08:00</pubDate>
     </item>
     
@@ -33600,8 +33600,8 @@ MiltigetHashMap，MapMaker google collection，和CurrentHashMap性能相当，�
 
 &lt;p&gt;如果组件标注为startup，则会构造其实例进行初始化。例如seam于Hibernate的集成，就可以通过此方法初始化Hibernate，对应的组件类为org. jboss. seam. persistence. HibernateSessionFactory。&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2012/02/23/the-process-of-seam-initiation/</link>
-      <guid>http://blog.xiaotian.com/2012/02/23/the-process-of-seam-initiation/</guid>
+      <link>http://blog.xiatiansong.com/2012/02/23/the-process-of-seam-initiation/</link>
+      <guid>http://blog.xiatiansong.com/2012/02/23/the-process-of-seam-initiation/</guid>
       <pubDate>2012-02-23T00:00:00+08:00</pubDate>
     </item>
     
@@ -33680,8 +33680,8 @@ public void executeJob(JobMeta jobMeta, boolean local, boolean remote,
 
 &lt;p&gt;Job继承自Thread类，该类的run方法内部会递归执行该作业内部的作业项，限于篇幅，本文不做深究。&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2012/02/22/the-init-process-before-job-execution/</link>
-      <guid>http://blog.xiaotian.com/2012/02/22/the-init-process-before-job-execution/</guid>
+      <link>http://blog.xiatiansong.com/2012/02/22/the-init-process-before-job-execution/</link>
+      <guid>http://blog.xiatiansong.com/2012/02/22/the-init-process-before-job-execution/</guid>
       <pubDate>2012-02-22T00:00:00+08:00</pubDate>
     </item>
     
@@ -33699,8 +33699,8 @@ public void executeJob(JobMeta jobMeta, boolean local, boolean remote,
 
 &lt;p&gt;What is the detail process of job execution? You should look into the Job.run() method for detail information.&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2012/02/21/the-execution-process-of-kettles-job/</link>
-      <guid>http://blog.xiaotian.com/2012/02/21/the-execution-process-of-kettles-job/</guid>
+      <link>http://blog.xiatiansong.com/2012/02/21/the-execution-process-of-kettles-job/</link>
+      <guid>http://blog.xiatiansong.com/2012/02/21/the-execution-process-of-kettles-job/</guid>
       <pubDate>2012-02-21T00:00:00+08:00</pubDate>
     </item>
     
@@ -33781,8 +33781,8 @@ CREATE TABLE a1&lt;br&gt;
 &lt;li&gt;&lt;a href=&quot;http://wiki.pentaho.com/display/COM/Step+error+handling+codes&quot; target=&quot;_blank&quot;&gt;Step error handling codes&lt;/a&gt;&lt;br&gt;
 &lt;/li&gt;&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2012/02/17/step-error-handling-in-kettle/</link>
-      <guid>http://blog.xiaotian.com/2012/02/17/step-error-handling-in-kettle/</guid>
+      <link>http://blog.xiatiansong.com/2012/02/17/step-error-handling-in-kettle/</link>
+      <guid>http://blog.xiatiansong.com/2012/02/17/step-error-handling-in-kettle/</guid>
       <pubDate>2012-02-17T00:00:00+08:00</pubDate>
     </item>
     
@@ -33819,8 +33819,8 @@ CREATE TABLE a1&lt;br&gt;
 &lt;img src=&quot;http://javachen-rs.qiniudn.com/images/2012/02/this-expression-flow-of-el.jpg&quot; alt=&quot;&quot; title=&quot;this expression flow of el&quot;/&gt;&lt;br&gt;
 &lt;/div&gt;&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2012/02/14/this-expression-of-jsf-el/</link>
-      <guid>http://blog.xiaotian.com/2012/02/14/this-expression-of-jsf-el/</guid>
+      <link>http://blog.xiatiansong.com/2012/02/14/this-expression-of-jsf-el/</link>
+      <guid>http://blog.xiatiansong.com/2012/02/14/this-expression-of-jsf-el/</guid>
       <pubDate>2012-02-14T00:00:00+08:00</pubDate>
     </item>
     
@@ -33970,8 +33970,8 @@ if (!Const.isEmpty(pksql)) {
 1.以上代码使用的是jdbc的方法获取主键或索引，不同的数据库的jdbc驱动实现可能不同而且不同数据库的语法可能不同，故上面代码可能有待完善。
 2.如果一个数据库中存在多库并且这多个库中有相同的表，使用上面的代码针对一个表名会查出多个主键或索引。这一点也是可以改善的&lt;/div&gt;
 </description>
-      <link>http://blog.xiaotian.com/2012/01/05/add-primary-keys-and-indexes-when-migrating-datas-whith-kettle/</link>
-      <guid>http://blog.xiaotian.com/2012/01/05/add-primary-keys-and-indexes-when-migrating-datas-whith-kettle/</guid>
+      <link>http://blog.xiatiansong.com/2012/01/05/add-primary-keys-and-indexes-when-migrating-datas-whith-kettle/</link>
+      <guid>http://blog.xiatiansong.com/2012/01/05/add-primary-keys-and-indexes-when-migrating-datas-whith-kettle/</guid>
       <pubDate>2012-01-05T00:00:00+08:00</pubDate>
     </item>
     
@@ -34061,8 +34061,8 @@ if (!Const.isEmpty(pksql)) {
 &lt;li&gt;解决办法：从db2的安装目录下拷贝jdbc驱动到kettle目录（libext/JDBC）下&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2012/01/04/some-problems-about-migrating-database-datas-with-kettle/</link>
-      <guid>http://blog.xiaotian.com/2012/01/04/some-problems-about-migrating-database-datas-with-kettle/</guid>
+      <link>http://blog.xiatiansong.com/2012/01/04/some-problems-about-migrating-database-datas-with-kettle/</link>
+      <guid>http://blog.xiatiansong.com/2012/01/04/some-problems-about-migrating-database-datas-with-kettle/</guid>
       <pubDate>2012-01-04T00:00:00+08:00</pubDate>
     </item>
     
@@ -34091,8 +34091,8 @@ if (!Const.isEmpty(pksql)) {
 &lt;div class=&quot;note&quot;&gt;
 这是一篇翻译，原文来自http://mondrian.pentaho.com/documentation/olap.php。翻译水平有限，难免翻译不当，请见谅。&lt;/div&gt;&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2011/12/07/mondrian-and-olap/</link>
-      <guid>http://blog.xiaotian.com/2011/12/07/mondrian-and-olap/</guid>
+      <link>http://blog.xiatiansong.com/2011/12/07/mondrian-and-olap/</link>
+      <guid>http://blog.xiatiansong.com/2011/12/07/mondrian-and-olap/</guid>
       <pubDate>2011-12-07T00:00:00+08:00</pubDate>
     </item>
     
@@ -34146,8 +34146,8 @@ XUL用户界面语言是一种可用于开发Mozilla独立应用程序和浏览�
 &lt;li&gt;7.Mozilla XUL教程: &lt;a href=&quot;https://developer.mozilla.org/index.php?title=cn/XUL_%E6%95%99%E7%A8%8B&quot; target=&quot;_blank&quot;&gt;&lt;a href=&quot;https://developer.mozilla.org/index.php&quot;&gt;https://developer.mozilla.org/index.php&lt;/a&gt;&lt;/a&gt;&lt;br&gt;
 &lt;/li&gt;&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2011/11/25/xml-user-interface-language-introuction/</link>
-      <guid>http://blog.xiaotian.com/2011/11/25/xml-user-interface-language-introuction/</guid>
+      <link>http://blog.xiatiansong.com/2011/11/25/xml-user-interface-language-introuction/</link>
+      <guid>http://blog.xiatiansong.com/2011/11/25/xml-user-interface-language-introuction/</guid>
       <pubDate>2011-11-25T00:00:00+08:00</pubDate>
     </item>
     
@@ -34187,8 +34187,8 @@ XUL用户界面语言是一种可用于开发Mozilla独立应用程序和浏览�
 
 &lt;p&gt;4.biserver-ce-3.9.0-stable.zip的lib（&lt;code class=&quot;prettyprint&quot;&gt;biserver-ce/tomcat/webapps/pentaho/WEB-INF/lib&lt;/code&gt;）目录下的servlete jar包的版本为2.3，版本过低需要替换为更高版本知道源码中不在有servlete编译错误&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2011/09/28/build-pentaho-bi-server-source-code-in-eclipse/</link>
-      <guid>http://blog.xiaotian.com/2011/09/28/build-pentaho-bi-server-source-code-in-eclipse/</guid>
+      <link>http://blog.xiatiansong.com/2011/09/28/build-pentaho-bi-server-source-code-in-eclipse/</link>
+      <guid>http://blog.xiatiansong.com/2011/09/28/build-pentaho-bi-server-source-code-in-eclipse/</guid>
       <pubDate>2011-09-28T00:00:00+08:00</pubDate>
     </item>
     
@@ -34218,8 +34218,8 @@ XUL用户界面语言是一种可用于开发Mozilla独立应用程序和浏览�
           选中Details中的field再attribute面板上设置name的名称（如“row-band”），然后通过Format--&gt;Row-Banding，可以设置Visible Color 、Inisible Color，再Element中输入&quot;row-band&quot;&lt;br /&gt;
      9、显示top N  ：托一个message field，在里面输入表达式，如，$（topn）,topn为传入的参数&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2011/09/26/resolved-pentaho-problems-9-16/</link>
-      <guid>http://blog.xiaotian.com/2011/09/26/resolved-pentaho-problems-9-16/</guid>
+      <link>http://blog.xiatiansong.com/2011/09/26/resolved-pentaho-problems-9-16/</link>
+      <guid>http://blog.xiatiansong.com/2011/09/26/resolved-pentaho-problems-9-16/</guid>
       <pubDate>2011-09-26T00:00:00+08:00</pubDate>
     </item>
     
@@ -34234,8 +34234,8 @@ XUL用户界面语言是一种可用于开发Mozilla独立应用程序和浏览�
 
 &lt;p&gt;&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2011/08/20/install-eucalyptus-on-fedora-15/</link>
-      <guid>http://blog.xiaotian.com/2011/08/20/install-eucalyptus-on-fedora-15/</guid>
+      <link>http://blog.xiatiansong.com/2011/08/20/install-eucalyptus-on-fedora-15/</link>
+      <guid>http://blog.xiatiansong.com/2011/08/20/install-eucalyptus-on-fedora-15/</guid>
       <pubDate>2011-08-20T00:00:00+08:00</pubDate>
     </item>
     
@@ -34416,8 +34416,8 @@ public String[] getCells() {
 &lt;li&gt;4.导出后的pdf页面可以直接打印，当然如果在代码上做点处理，可以直接将pdf保存为一个文件，让用户下载。&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2011/08/11/export-dhtmlxgrid-to-pdf-in-java/</link>
-      <guid>http://blog.xiaotian.com/2011/08/11/export-dhtmlxgrid-to-pdf-in-java/</guid>
+      <link>http://blog.xiatiansong.com/2011/08/11/export-dhtmlxgrid-to-pdf-in-java/</link>
+      <guid>http://blog.xiatiansong.com/2011/08/11/export-dhtmlxgrid-to-pdf-in-java/</guid>
       <pubDate>2011-08-11T00:00:00+08:00</pubDate>
     </item>
     
@@ -34636,8 +34636,8 @@ for ( var i = 0; i &amp;lt; header_row.cells.length; i++) {
 &lt;div class=&quot;pic&quot;&gt;&lt;br&gt;
 &lt;img src=&quot;http://javachen-rs.qiniudn.com/images/2011/07/dhtmlxgrid-custom-head-menu.jpg&quot; alt=&quot;&quot; title=&quot;dhtmlxgrid-custom-head-menu&quot; width=&quot;300&quot; height=&quot;154&quot; class=&quot;aligncenter size-medium wp-image-2291&quot; /&gt;&lt;/div&gt;&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2011/07/31/custom-dhtmlxgrid-header-menu/</link>
-      <guid>http://blog.xiaotian.com/2011/07/31/custom-dhtmlxgrid-header-menu/</guid>
+      <link>http://blog.xiatiansong.com/2011/07/31/custom-dhtmlxgrid-header-menu/</link>
+      <guid>http://blog.xiatiansong.com/2011/07/31/custom-dhtmlxgrid-header-menu/</guid>
       <pubDate>2011-07-31T00:00:00+08:00</pubDate>
     </item>
     
@@ -34804,8 +34804,8 @@ Custom Drag Out：&lt;a href=&quot;http://www.dhtmlx.com/docs/products/dhtmlxTre
 &lt;li&gt;dhtmlxTree doc：&lt;a href=&quot;http://docs.dhtmlx.com/doku.php?id=dhtmlxtree:toc&quot; target=&quot;_blank&quot;&gt;&lt;a href=&quot;http://docs.dhtmlx.com/doku.php?id=dhtmlxtree:toc&quot;&gt;http://docs.dhtmlx.com/doku.php?id=dhtmlxtree:toc&lt;/a&gt;&lt;/a&gt;&lt;br&gt;
 &lt;/li&gt;&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2011/07/24/drag-an-item-to-dhtmlxgrid-and-add-a-column/</link>
-      <guid>http://blog.xiaotian.com/2011/07/24/drag-an-item-to-dhtmlxgrid-and-add-a-column/</guid>
+      <link>http://blog.xiatiansong.com/2011/07/24/drag-an-item-to-dhtmlxgrid-and-add-a-column/</link>
+      <guid>http://blog.xiatiansong.com/2011/07/24/drag-an-item-to-dhtmlxgrid-and-add-a-column/</guid>
       <pubDate>2011-07-24T00:00:00+08:00</pubDate>
     </item>
     
@@ -35075,8 +35075,8 @@ alert(&amp;quot;Selected row ID is &amp;quot;+rowID+&amp;quot;\nUser clicked cel
 &amp;lt; div id=&amp;quot;mygrid_container&amp;quot; style=&amp;quot;width:600px;height:150px;&amp;quot;&amp;gt;&amp;lt; /div&amp;gt;
 &amp;lt; /body&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-      <link>http://blog.xiaotian.com/2011/07/19/dhtmlxgrid-quick-start-guide/</link>
-      <guid>http://blog.xiaotian.com/2011/07/19/dhtmlxgrid-quick-start-guide/</guid>
+      <link>http://blog.xiatiansong.com/2011/07/19/dhtmlxgrid-quick-start-guide/</link>
+      <guid>http://blog.xiatiansong.com/2011/07/19/dhtmlxgrid-quick-start-guide/</guid>
       <pubDate>2011-07-19T00:00:00+08:00</pubDate>
     </item>
     
@@ -35143,8 +35143,8 @@ RabbitMQ and Nova：&lt;a href=&quot;http://blog.163.com/clevertanglei900@126/bl
 &lt;li&gt;openstack nova部署完整实例-参考手册-增强部分（3）：&lt;a href=&quot;http://bbs.chinaunix.net/thread-3563049-1-1.html&quot; target=&quot;_blank&quot;&gt;&lt;a href=&quot;http://bbs.chinaunix.net/thread-3563049-1-1.html&quot;&gt;http://bbs.chinaunix.net/thread-3563049-1-1.html&lt;/a&gt;&lt;/a&gt;&lt;br&gt;
 &lt;/li&gt;&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2011/07/07/some-resources-about-openstack/</link>
-      <guid>http://blog.xiaotian.com/2011/07/07/some-resources-about-openstack/</guid>
+      <link>http://blog.xiatiansong.com/2011/07/07/some-resources-about-openstack/</link>
+      <guid>http://blog.xiatiansong.com/2011/07/07/some-resources-about-openstack/</guid>
       <pubDate>2011-07-07T00:00:00+08:00</pubDate>
     </item>
     
@@ -35248,8 +35248,8 @@ $adodb_name = &amp;quot;onemc&amp;quot;;
 &lt;li&gt;[2]&lt;a href=&quot;http://dev.opennebula.org/projects/management-console/wiki/onemc_install_ubuntu&quot;&gt;Install onemc on ubuntu&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2011/06/29/install-opennebula-management-console-in-centos5-6/</link>
-      <guid>http://blog.xiaotian.com/2011/06/29/install-opennebula-management-console-in-centos5-6/</guid>
+      <link>http://blog.xiatiansong.com/2011/06/29/install-opennebula-management-console-in-centos5-6/</link>
+      <guid>http://blog.xiatiansong.com/2011/06/29/install-opennebula-management-console-in-centos5-6/</guid>
       <pubDate>2011-06-29T00:00:00+08:00</pubDate>
     </item>
     
@@ -35434,8 +35434,8 @@ $adodb_name = &amp;quot;onemc&amp;quot;;
 &lt;/tbody&gt;
 &lt;/table&gt;&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2011/06/26/opennebula-2-2-features/</link>
-      <guid>http://blog.xiaotian.com/2011/06/26/opennebula-2-2-features/</guid>
+      <link>http://blog.xiatiansong.com/2011/06/26/opennebula-2-2-features/</link>
+      <guid>http://blog.xiatiansong.com/2011/06/26/opennebula-2-2-features/</guid>
       <pubDate>2011-06-26T00:00:00+08:00</pubDate>
     </item>
     
@@ -35527,8 +35527,8 @@ $adodb_name = &amp;quot;onemc&amp;quot;;
 
 &lt;p&gt;Jetty 是一个开源的servlet容器，它为基于Java的web内容，例如JSP和servlet提供运行环境。Jetty是使用Java语言编写的，它的API以一组JAR包的形式发布。开发人员可以将Jetty容器实例化成一个对象，可以迅速为一些独立运行（stand-alone）的Java应用提供网络和web连接。&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2011/06/22/the-technology-used-in-eucalyptus/</link>
-      <guid>http://blog.xiaotian.com/2011/06/22/the-technology-used-in-eucalyptus/</guid>
+      <link>http://blog.xiatiansong.com/2011/06/22/the-technology-used-in-eucalyptus/</link>
+      <guid>http://blog.xiatiansong.com/2011/06/22/the-technology-used-in-eucalyptus/</guid>
       <pubDate>2011-06-22T00:00:00+08:00</pubDate>
     </item>
     
@@ -35725,8 +35725,8 @@ CC连接着云控制器CLC和控制节点NC。&lt;/td&gt;
 &lt;/table&gt;
 &amp;nbsp;&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2011/06/22/the-introduction-of-eucalyptus-ee-features-and-functions/</link>
-      <guid>http://blog.xiaotian.com/2011/06/22/the-introduction-of-eucalyptus-ee-features-and-functions/</guid>
+      <link>http://blog.xiatiansong.com/2011/06/22/the-introduction-of-eucalyptus-ee-features-and-functions/</link>
+      <guid>http://blog.xiatiansong.com/2011/06/22/the-introduction-of-eucalyptus-ee-features-and-functions/</guid>
       <pubDate>2011-06-22T00:00:00+08:00</pubDate>
     </item>
     
@@ -35772,8 +35772,8 @@ CC连接着云控制器CLC和控制节点NC。&lt;/td&gt;
 &lt;li&gt;[4]&lt;a href=&quot;http://bbs.chinacloud.cn/archiver/showtopic-230.aspx&quot;&gt;ubuntu 9.04 (server)下 eucalyptus 安装（推荐）&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2011/06/16/touch-cloud-environment-which-it-is-eucalyptus/</link>
-      <guid>http://blog.xiaotian.com/2011/06/16/touch-cloud-environment-which-it-is-eucalyptus/</guid>
+      <link>http://blog.xiatiansong.com/2011/06/16/touch-cloud-environment-which-it-is-eucalyptus/</link>
+      <guid>http://blog.xiatiansong.com/2011/06/16/touch-cloud-environment-which-it-is-eucalyptus/</guid>
       <pubDate>2011-06-16T00:00:00+08:00</pubDate>
     </item>
     
@@ -35809,8 +35809,8 @@ CC连接着云控制器CLC和控制节点NC。&lt;/td&gt;
 
 &lt;p&gt;以上仅个人观点，如有雷同，纯属巧合！&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2010/08/06/a-letter-to-boss/</link>
-      <guid>http://blog.xiaotian.com/2010/08/06/a-letter-to-boss/</guid>
+      <link>http://blog.xiatiansong.com/2010/08/06/a-letter-to-boss/</link>
+      <guid>http://blog.xiatiansong.com/2010/08/06/a-letter-to-boss/</guid>
       <pubDate>2010-08-06T00:00:00+08:00</pubDate>
     </item>
     
@@ -35832,8 +35832,8 @@ CC连接着云控制器CLC和控制节点NC。&lt;/td&gt;
 
 &lt;p&gt;最后，衷心祝愿公司健康成长，事业蒸蒸日上！祝愿各位领导与同事：健康快乐，平安幸福！&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2010/03/06/application-for-leave/</link>
-      <guid>http://blog.xiaotian.com/2010/03/06/application-for-leave/</guid>
+      <link>http://blog.xiatiansong.com/2010/03/06/application-for-leave/</link>
+      <guid>http://blog.xiatiansong.com/2010/03/06/application-for-leave/</guid>
       <pubDate>2010-03-06T00:00:00+08:00</pubDate>
     </item>
     
@@ -35861,8 +35861,8 @@ CC连接着云控制器CLC和控制节点NC。&lt;/td&gt;
 
 &lt;p&gt;8：尝试并实现用自己的思维、自己的语言写博客，减少copy、转载的文章数量，用心构建并经营自己的Java城！&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2010/01/06/the-plan-of-2010/</link>
-      <guid>http://blog.xiaotian.com/2010/01/06/the-plan-of-2010/</guid>
+      <link>http://blog.xiatiansong.com/2010/01/06/the-plan-of-2010/</link>
+      <guid>http://blog.xiatiansong.com/2010/01/06/the-plan-of-2010/</guid>
       <pubDate>2010-01-06T00:00:00+08:00</pubDate>
     </item>
     
@@ -35900,8 +35900,8 @@ CC连接着云控制器CLC和控制节点NC。&lt;/td&gt;
 
 &lt;p&gt;如果还有什么不懂或者想要源代码，欢迎email我：javachen.june#gmail.com&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2009/10/31/ext_readxml_in_bjsasc_wuzi_continue/</link>
-      <guid>http://blog.xiaotian.com/2009/10/31/ext_readxml_in_bjsasc_wuzi_continue/</guid>
+      <link>http://blog.xiatiansong.com/2009/10/31/ext_readxml_in_bjsasc_wuzi_continue/</link>
+      <guid>http://blog.xiatiansong.com/2009/10/31/ext_readxml_in_bjsasc_wuzi_continue/</guid>
       <pubDate>2009-10-31T00:00:00+08:00</pubDate>
     </item>
     
@@ -36465,8 +36465,8 @@ CC连接着云控制器CLC和控制节点NC。&lt;/td&gt;
 
 &lt;p&gt;如果你想要获取更详细说明，请移步：&lt;a href=&quot;/2009/10/31/ext_readxml_in_bjsasc_wuzi_continue/&quot;&gt;Extjs读取xml文件生成动态表格和表单(续)&lt;/a&gt;&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2009/10/22/ext_readxml_in_bjsasc_wuzi/</link>
-      <guid>http://blog.xiaotian.com/2009/10/22/ext_readxml_in_bjsasc_wuzi/</guid>
+      <link>http://blog.xiatiansong.com/2009/10/22/ext_readxml_in_bjsasc_wuzi/</link>
+      <guid>http://blog.xiatiansong.com/2009/10/22/ext_readxml_in_bjsasc_wuzi/</guid>
       <pubDate>2009-10-22T00:00:00+08:00</pubDate>
     </item>
     
@@ -36490,8 +36490,8 @@ CC连接着云控制器CLC和控制节点NC。&lt;/td&gt;
 
 &lt;p&gt;做最好的自己！&lt;/p&gt;
 </description>
-      <link>http://blog.xiaotian.com/2009/09/26/be-best-of-myself/</link>
-      <guid>http://blog.xiaotian.com/2009/09/26/be-best-of-myself/</guid>
+      <link>http://blog.xiatiansong.com/2009/09/26/be-best-of-myself/</link>
+      <guid>http://blog.xiatiansong.com/2009/09/26/be-best-of-myself/</guid>
       <pubDate>2009-09-26T00:00:00+08:00</pubDate>
     </item>
     
@@ -36620,8 +36620,8 @@ CC连接着云控制器CLC和控制节点NC。&lt;/td&gt;
 &lt;li&gt;&lt;a href=&quot;http://havee.me/internet/2013-07/jekyll-liquid-extensions.html&quot;&gt;Jekyll 扩展的 Liquid 模板&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <link>http://blog.xiaotian.com/2009/01/01/hello-jekyll/</link>
-      <guid>http://blog.xiaotian.com/2009/01/01/hello-jekyll/</guid>
+      <link>http://blog.xiatiansong.com/2009/01/01/hello-jekyll/</link>
+      <guid>http://blog.xiatiansong.com/2009/01/01/hello-jekyll/</guid>
       <pubDate>2009-01-01T00:00:00+08:00</pubDate>
     </item>
     

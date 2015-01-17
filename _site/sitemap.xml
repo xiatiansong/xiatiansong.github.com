@@ -5,1211 +5,1211 @@
 
   
   <url>
-    <loc>http://blog.xiaotian.com/2015/01/14/django-model/</loc>
+    <loc>http://blog.xiatiansong.com/2015/01/14/django-model/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2015-01-14T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2015/01/09/angular-phonecat-examples/</loc>
+    <loc>http://blog.xiatiansong.com/2015/01/09/angular-phonecat-examples/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2015-01-09T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2015/01/08/basic-concepts-of-angularjs/</loc>
+    <loc>http://blog.xiatiansong.com/2015/01/08/basic-concepts-of-angularjs/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2015-01-08T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2015/01/07/build-multi-module-project-with-gradle/</loc>
+    <loc>http://blog.xiatiansong.com/2015/01/07/build-multi-module-project-with-gradle/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2015-01-07T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2015/01/06/build-app-with-spring-boot-and-gradle/</loc>
+    <loc>http://blog.xiatiansong.com/2015/01/06/build-app-with-spring-boot-and-gradle/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2015-01-06T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/12/23/thread-in-python/</loc>
+    <loc>http://blog.xiatiansong.com/2014/12/23/thread-in-python/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-12-23T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/12/19/create-blog-using-django/</loc>
+    <loc>http://blog.xiatiansong.com/2014/12/19/create-blog-using-django/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-12-19T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/12/02/some-usages-of-jpa/</loc>
+    <loc>http://blog.xiatiansong.com/2014/12/02/some-usages-of-jpa/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-12-02T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/11/25/quikstart-for-config-kerberos-ldap-and-sentry-in-hadoop/</loc>
+    <loc>http://blog.xiatiansong.com/2014/11/25/quikstart-for-config-kerberos-ldap-and-sentry-in-hadoop/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-11-25T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/11/24/spring-with-jpa2/</loc>
+    <loc>http://blog.xiatiansong.com/2014/11/24/spring-with-jpa2/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-11-24T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/11/18/config-kerberos-in-cdh-zookeeper/</loc>
+    <loc>http://blog.xiatiansong.com/2014/11/18/config-kerberos-in-cdh-zookeeper/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-11-18T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/11/14/config-impala-and-hive-with-sentry/</loc>
+    <loc>http://blog.xiatiansong.com/2014/11/14/config-impala-and-hive-with-sentry/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-11-14T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/11/12/config-ldap-with-kerberos-in-cdh-hadoop/</loc>
+    <loc>http://blog.xiatiansong.com/2014/11/12/config-ldap-with-kerberos-in-cdh-hadoop/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-11-12T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/11/06/config-kerberos-in-cdh-impala/</loc>
+    <loc>http://blog.xiatiansong.com/2014/11/06/config-kerberos-in-cdh-impala/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-11-06T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/11/06/config-kerberos-in-cdh-hive/</loc>
+    <loc>http://blog.xiatiansong.com/2014/11/06/config-kerberos-in-cdh-hive/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-11-06T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/11/05/config-kerberos-in-cdh-yarn/</loc>
+    <loc>http://blog.xiatiansong.com/2014/11/05/config-kerberos-in-cdh-yarn/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-11-05T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/11/04/config-kerberos-in-cdh-hdfs/</loc>
+    <loc>http://blog.xiatiansong.com/2014/11/04/config-kerberos-in-cdh-hdfs/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-11-04T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/10/30/install-postgresql-on-mac-using-homebrew/</loc>
+    <loc>http://blog.xiatiansong.com/2014/10/30/install-postgresql-on-mac-using-homebrew/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-10-30T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/10/30/django-template/</loc>
+    <loc>http://blog.xiatiansong.com/2014/10/30/django-template/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-10-30T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/10/24/impala-query-table-tutorial/</loc>
+    <loc>http://blog.xiatiansong.com/2014/10/24/impala-query-table-tutorial/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-10-24T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/10/23/hive-warehouse-in-2014/</loc>
+    <loc>http://blog.xiatiansong.com/2014/10/23/hive-warehouse-in-2014/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-10-23T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/10/20/cdh5.2-release/</loc>
+    <loc>http://blog.xiatiansong.com/2014/10/20/cdh5.2-release/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-10-20T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/09/29/spring-source-codes/</loc>
+    <loc>http://blog.xiatiansong.com/2014/09/29/spring-source-codes/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-09-29T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/09/24/compile-and-test-dubbo/</loc>
+    <loc>http://blog.xiatiansong.com/2014/09/24/compile-and-test-dubbo/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-09-24T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/09/22/mahout-recommend-engine/</loc>
+    <loc>http://blog.xiatiansong.com/2014/09/22/mahout-recommend-engine/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-09-22T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/09/15/build-project-with-gradle/</loc>
+    <loc>http://blog.xiatiansong.com/2014/09/15/build-project-with-gradle/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-09-15T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/09/12/file-operation-in-groovy/</loc>
+    <loc>http://blog.xiatiansong.com/2014/09/12/file-operation-in-groovy/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-09-12T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/09/09/llama/</loc>
+    <loc>http://blog.xiatiansong.com/2014/09/09/llama/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-09-09T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/09/09/create-a-grails-app-step-by-step/</loc>
+    <loc>http://blog.xiatiansong.com/2014/09/09/create-a-grails-app-step-by-step/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-09-09T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/09/05/about-groovy/</loc>
+    <loc>http://blog.xiatiansong.com/2014/09/05/about-groovy/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-09-05T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/08/25/install-azkaban/</loc>
+    <loc>http://blog.xiatiansong.com/2014/08/25/install-azkaban/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-08-25T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/08/19/upgrading-from-cdh4-to-cdh5/</loc>
+    <loc>http://blog.xiatiansong.com/2014/08/19/upgrading-from-cdh4-to-cdh5/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-08-19T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/08/04/import-data-to-hive-with-sqoop/</loc>
+    <loc>http://blog.xiatiansong.com/2014/08/04/import-data-to-hive-with-sqoop/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-08-04T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/07/31/summary-of-july-in-2014/</loc>
+    <loc>http://blog.xiatiansong.com/2014/07/31/summary-of-july-in-2014/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-07-31T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/07/29/new-features-in-impala/</loc>
+    <loc>http://blog.xiatiansong.com/2014/07/29/new-features-in-impala/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-07-29T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/07/28/phoenix-quick-start/</loc>
+    <loc>http://blog.xiatiansong.com/2014/07/28/phoenix-quick-start/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-07-28T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/07/25/collect-log-to-hive/</loc>
+    <loc>http://blog.xiatiansong.com/2014/07/25/collect-log-to-hive/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-07-25T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/07/22/flume-ng/</loc>
+    <loc>http://blog.xiatiansong.com/2014/07/22/flume-ng/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-07-22T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/07/18/install-hdfs-ha-in-cdh/</loc>
+    <loc>http://blog.xiatiansong.com/2014/07/18/install-hdfs-ha-in-cdh/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-07-18T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/07/17/manual-install-cdh-hadoop/</loc>
+    <loc>http://blog.xiatiansong.com/2014/07/17/manual-install-cdh-hadoop/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-07-17T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/07/01/spark-install-and-usage/</loc>
+    <loc>http://blog.xiatiansong.com/2014/07/01/spark-install-and-usage/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-07-01T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/06/26/some-tips-about-hbase/</loc>
+    <loc>http://blog.xiatiansong.com/2014/06/26/some-tips-about-hbase/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-06-26T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/06/24/tuning-in-mapreduce/</loc>
+    <loc>http://blog.xiatiansong.com/2014/06/24/tuning-in-mapreduce/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-06-24T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/06/24/the-running-process-of-mapreduce-job/</loc>
+    <loc>http://blog.xiatiansong.com/2014/06/24/the-running-process-of-mapreduce-job/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-06-24T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/06/24/hbase-vs-cassandra/</loc>
+    <loc>http://blog.xiatiansong.com/2014/06/24/hbase-vs-cassandra/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-06-24T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/06/22/sort-in-hive-query/</loc>
+    <loc>http://blog.xiatiansong.com/2014/06/22/sort-in-hive-query/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-06-22T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/06/21/the-introduction-of-lucene/</loc>
+    <loc>http://blog.xiatiansong.com/2014/06/21/the-introduction-of-lucene/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-06-21T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/06/19/how-to-install-and-deploy-a-storm-cluster/</loc>
+    <loc>http://blog.xiatiansong.com/2014/06/19/how-to-install-and-deploy-a-storm-cluster/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-06-19T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/06/17/note-about-effective-java/</loc>
+    <loc>http://blog.xiatiansong.com/2014/06/17/note-about-effective-java/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-06-17T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/06/13/hbase-code-about-htable-put/</loc>
+    <loc>http://blog.xiatiansong.com/2014/06/13/hbase-code-about-htable-put/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-06-13T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/06/12/intro-of-hive-over-hbase/</loc>
+    <loc>http://blog.xiatiansong.com/2014/06/12/intro-of-hive-over-hbase/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-06-12T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/06/12/hbase-parallel-client-scanner/</loc>
+    <loc>http://blog.xiatiansong.com/2014/06/12/hbase-parallel-client-scanner/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-06-12T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/06/12/hbase-aggregate-client/</loc>
+    <loc>http://blog.xiatiansong.com/2014/06/12/hbase-aggregate-client/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-06-12T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/06/09/hive-data-manipulation-language/</loc>
+    <loc>http://blog.xiatiansong.com/2014/06/09/hive-data-manipulation-language/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-06-09T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/06/09/fetchtask-in-hive/</loc>
+    <loc>http://blog.xiatiansong.com/2014/06/09/fetchtask-in-hive/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-06-09T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/06/08/using-scrapy-to-cralw-zhihu/</loc>
+    <loc>http://blog.xiatiansong.com/2014/06/08/using-scrapy-to-cralw-zhihu/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-06-08T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/06/06/about-mongodb/</loc>
+    <loc>http://blog.xiatiansong.com/2014/06/06/about-mongodb/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-06-06T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/06/03/install_cloudera_search_without_cm/</loc>
+    <loc>http://blog.xiatiansong.com/2014/06/03/install_cloudera_search_without_cm/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-06-03T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/05/30/note-about-brewers-cap-theorem/</loc>
+    <loc>http://blog.xiatiansong.com/2014/05/30/note-about-brewers-cap-theorem/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-05-30T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/05/24/using-scrapy-to-cralw-data/</loc>
+    <loc>http://blog.xiatiansong.com/2014/05/24/using-scrapy-to-cralw-data/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-05-24T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/05/20/nutch-intro/</loc>
+    <loc>http://blog.xiatiansong.com/2014/05/20/nutch-intro/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-05-20T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/05/11/flask-intro/</loc>
+    <loc>http://blog.xiatiansong.com/2014/05/11/flask-intro/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-05-11T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/05/10/bower-intro/</loc>
+    <loc>http://blog.xiatiansong.com/2014/05/10/bower-intro/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-05-10T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/04/24/all-things-markdown/</loc>
+    <loc>http://blog.xiatiansong.com/2014/04/24/all-things-markdown/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-04-24T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/04/23/after-reinstall-mac/</loc>
+    <loc>http://blog.xiatiansong.com/2014/04/23/after-reinstall-mac/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-04-23T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/04/17/building-bigtop-on-ubuntu/</loc>
+    <loc>http://blog.xiatiansong.com/2014/04/17/building-bigtop-on-ubuntu/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-04-17T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/04/09/note-about-jvm-memery-model/</loc>
+    <loc>http://blog.xiatiansong.com/2014/04/09/note-about-jvm-memery-model/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-04-09T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/04/09/install-jira5-on-rhel-system/</loc>
+    <loc>http://blog.xiatiansong.com/2014/04/09/install-jira5-on-rhel-system/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-04-09T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/04/08/a-benchmark-tool-on-postgresql/</loc>
+    <loc>http://blog.xiatiansong.com/2014/04/08/a-benchmark-tool-on-postgresql/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-04-08T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/04/07/some-metrics-in-postgresql/</loc>
+    <loc>http://blog.xiatiansong.com/2014/04/07/some-metrics-in-postgresql/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-04-07T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/04/07/install-postgresql-on-rhel-system/</loc>
+    <loc>http://blog.xiatiansong.com/2014/04/07/install-postgresql-on-rhel-system/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-04-07T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/04/06/mysql-config-for-master-slave-replication/</loc>
+    <loc>http://blog.xiatiansong.com/2014/04/06/mysql-config-for-master-slave-replication/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-04-06T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/04/06/install-mysql-on-rhel-system/</loc>
+    <loc>http://blog.xiatiansong.com/2014/04/06/install-mysql-on-rhel-system/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-04-06T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/04/04/introduction-to-broadleaf-commerce/</loc>
+    <loc>http://blog.xiatiansong.com/2014/04/04/introduction-to-broadleaf-commerce/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-04-04T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/04/01/install-jdk-with-saltstack/</loc>
+    <loc>http://blog.xiatiansong.com/2014/04/01/install-jdk-with-saltstack/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-04-01T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/04/01/deploy-a-captcha-server-using-lua-and-openresty/</loc>
+    <loc>http://blog.xiatiansong.com/2014/04/01/deploy-a-captcha-server-using-lua-and-openresty/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-04-01T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/03/31/what-is-new-in-CDH4.5.0/</loc>
+    <loc>http://blog.xiatiansong.com/2014/03/31/what-is-new-in-CDH4.5.0/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-03-31T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/03/18/simulate-weibo-login-in-python/</loc>
+    <loc>http://blog.xiatiansong.com/2014/03/18/simulate-weibo-login-in-python/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-03-18T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/03/15/schema-in-solr/</loc>
+    <loc>http://blog.xiatiansong.com/2014/03/15/schema-in-solr/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-03-15T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/03/15/new-features-in-idh-hbase/</loc>
+    <loc>http://blog.xiatiansong.com/2014/03/15/new-features-in-idh-hbase/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-03-15T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/03/14/split-chinese-in-solr/</loc>
+    <loc>http://blog.xiatiansong.com/2014/03/14/split-chinese-in-solr/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-03-14T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/03/14/broadleaf-project-with-sendcloud/</loc>
+    <loc>http://blog.xiatiansong.com/2014/03/14/broadleaf-project-with-sendcloud/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-03-14T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/03/13/improve-the-search-function-in-broadleaf-project/</loc>
+    <loc>http://blog.xiatiansong.com/2014/03/13/improve-the-search-function-in-broadleaf-project/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-03-13T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/03/10/how-to-install-solrcloud/</loc>
+    <loc>http://blog.xiatiansong.com/2014/03/10/how-to-install-solrcloud/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-03-10T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/03/09/hbase-note-about-hregionserver-startup/</loc>
+    <loc>http://blog.xiatiansong.com/2014/03/09/hbase-note-about-hregionserver-startup/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-03-09T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/03/09/hbase-note-about-hmaster-startup/</loc>
+    <loc>http://blog.xiatiansong.com/2014/03/09/hbase-note-about-hmaster-startup/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-03-09T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/03/06/summary-of-the-work-in-2013/</loc>
+    <loc>http://blog.xiatiansong.com/2014/03/06/summary-of-the-work-in-2013/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-03-06T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/03/03/solr-query-syntax/</loc>
+    <loc>http://blog.xiatiansong.com/2014/03/03/solr-query-syntax/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-03-03T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/02/26/how-to-install-solr/</loc>
+    <loc>http://blog.xiatiansong.com/2014/02/26/how-to-install-solr/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-02-26T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/02/23/create-virtualbox-by-vagrant/</loc>
+    <loc>http://blog.xiatiansong.com/2014/02/23/create-virtualbox-by-vagrant/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-02-23T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/02/22/python-introduction-of-basics/</loc>
+    <loc>http://blog.xiatiansong.com/2014/02/22/python-introduction-of-basics/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-02-22T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/02/21/install-confluence5-4-2/</loc>
+    <loc>http://blog.xiatiansong.com/2014/02/21/install-confluence5-4-2/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-02-21T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/02/21/cdh5rn_whats_new_in_b2/</loc>
+    <loc>http://blog.xiatiansong.com/2014/02/21/cdh5rn_whats_new_in_b2/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-02-21T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/02/16/backbone-model/</loc>
+    <loc>http://blog.xiatiansong.com/2014/02/16/backbone-model/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-02-16T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/01/25/how-to-install-ganglia-on-centos6/</loc>
+    <loc>http://blog.xiatiansong.com/2014/01/25/how-to-install-ganglia-on-centos6/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-01-25T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/01/24/how-to-install-nagios-on-rhel6/</loc>
+    <loc>http://blog.xiatiansong.com/2014/01/24/how-to-install-nagios-on-rhel6/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-01-24T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/01/22/all-things-opentsdb/</loc>
+    <loc>http://blog.xiatiansong.com/2014/01/22/all-things-opentsdb/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-01-22T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/01/21/all-things-about-jekyll/</loc>
+    <loc>http://blog.xiatiansong.com/2014/01/21/all-things-about-jekyll/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-01-21T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/01/18/bash-problem-when-ssh-access/</loc>
+    <loc>http://blog.xiatiansong.com/2014/01/18/bash-problem-when-ssh-access/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-01-18T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/01/16/hbase-region-split-policy/</loc>
+    <loc>http://blog.xiatiansong.com/2014/01/16/hbase-region-split-policy/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-01-16T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/01/14/vim-config-and-plugins/</loc>
+    <loc>http://blog.xiatiansong.com/2014/01/14/vim-config-and-plugins/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-01-14T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/01/13/about-sitemesh/</loc>
+    <loc>http://blog.xiatiansong.com/2014/01/13/about-sitemesh/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-01-13T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/01/11/how-to-create-a-django-site/</loc>
+    <loc>http://blog.xiatiansong.com/2014/01/11/how-to-create-a-django-site/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-01-11T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/01/09/after-reinstall-the-system/</loc>
+    <loc>http://blog.xiatiansong.com/2014/01/09/after-reinstall-the-system/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-01-09T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2014/01/08/hive-ha-by-haproxy/</loc>
+    <loc>http://blog.xiatiansong.com/2014/01/08/hive-ha-by-haproxy/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2014-01-08T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2013/12/27/some-git-configs-and-cammands/</loc>
+    <loc>http://blog.xiatiansong.com/2013/12/27/some-git-configs-and-cammands/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2013-12-27T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2013/11/18/study-note-of-saltstack/</loc>
+    <loc>http://blog.xiatiansong.com/2013/11/18/study-note-of-saltstack/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2013-11-18T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2013/11/16/install-jboss-with-saltstack/</loc>
+    <loc>http://blog.xiatiansong.com/2013/11/16/install-jboss-with-saltstack/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2013-11-16T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2013/11/11/install-saltstack-and-halite/</loc>
+    <loc>http://blog.xiatiansong.com/2013/11/11/install-saltstack-and-halite/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2013-11-11T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2013/11/01/debug-hbase-in-eclipse/</loc>
+    <loc>http://blog.xiatiansong.com/2013/11/01/debug-hbase-in-eclipse/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2013-11-01T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2013/10/28/compile-hbase-source-code-and-apply-patches/</loc>
+    <loc>http://blog.xiatiansong.com/2013/10/28/compile-hbase-source-code-and-apply-patches/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2013-10-28T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2013/10/17/run-mapreduce-with-client-user-in-hive-server2/</loc>
+    <loc>http://blog.xiatiansong.com/2013/10/17/run-mapreduce-with-client-user-in-hive-server2/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2013-10-17T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2013/10/17/cartesian-product-in-hive-inner-join/</loc>
+    <loc>http://blog.xiatiansong.com/2013/10/17/cartesian-product-in-hive-inner-join/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2013-10-17T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2013/09/08/recent-work/</loc>
+    <loc>http://blog.xiatiansong.com/2013/09/08/recent-work/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2013-09-08T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2013/09/04/how-to-decide-map-number/</loc>
+    <loc>http://blog.xiatiansong.com/2013/09/04/how-to-decide-map-number/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2013-09-04T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2013/08/31/my-jekyll-config/</loc>
+    <loc>http://blog.xiatiansong.com/2013/08/31/my-jekyll-config/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2013-08-31T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2013/08/23/publish-proerties-using-zookeeper/</loc>
+    <loc>http://blog.xiatiansong.com/2013/08/23/publish-proerties-using-zookeeper/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2013-08-23T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2013/08/22/hive-Driver/</loc>
+    <loc>http://blog.xiatiansong.com/2013/08/22/hive-Driver/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2013-08-22T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2013/08/21/hive-CliDriver/</loc>
+    <loc>http://blog.xiatiansong.com/2013/08/21/hive-CliDriver/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2013-08-21T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2013/08/17/some-problems-about-hadoop/</loc>
+    <loc>http://blog.xiatiansong.com/2013/08/17/some-problems-about-hadoop/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2013-08-17T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2013/08/02/hadoop-install-script/</loc>
+    <loc>http://blog.xiatiansong.com/2013/08/02/hadoop-install-script/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2013-08-02T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2013/08/01/remote-debug-hadoop/</loc>
+    <loc>http://blog.xiatiansong.com/2013/08/01/remote-debug-hadoop/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2013-08-01T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2013/07/20/install-rhadoop/</loc>
+    <loc>http://blog.xiatiansong.com/2013/07/20/install-rhadoop/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2013-07-20T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2013/06/24/install-cdh-by-cloudera-manager/</loc>
+    <loc>http://blog.xiatiansong.com/2013/06/24/install-cdh-by-cloudera-manager/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2013-06-24T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2013/06/15/hbase-note-about-data-structure/</loc>
+    <loc>http://blog.xiatiansong.com/2013/06/15/hbase-note-about-data-structure/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2013-06-15T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2013/06/09/note-about-java-singleton-model/</loc>
+    <loc>http://blog.xiatiansong.com/2013/06/09/note-about-java-singleton-model/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2013-06-09T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2013/06/09/note-about-java-io/</loc>
+    <loc>http://blog.xiatiansong.com/2013/06/09/note-about-java-io/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2013-06-09T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2013/06/09/note-about-java-factory-model/</loc>
+    <loc>http://blog.xiatiansong.com/2013/06/09/note-about-java-factory-model/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2013-06-09T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2013/06/08/note-about-java-thread/</loc>
+    <loc>http://blog.xiatiansong.com/2013/06/08/note-about-java-thread/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2013-06-08T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2013/06/08/java-collection-framework/</loc>
+    <loc>http://blog.xiatiansong.com/2013/06/08/java-collection-framework/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2013-06-08T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2013/04/17/access-idh-2.3-hbase-in-kettle/</loc>
+    <loc>http://blog.xiatiansong.com/2013/04/17/access-idh-2.3-hbase-in-kettle/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2013-04-17T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2013/04/07/add-a-field-from-paramter-to-output/</loc>
+    <loc>http://blog.xiatiansong.com/2013/04/07/add-a-field-from-paramter-to-output/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2013-04-07T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2013/04/06/install-cloudera-cdh-by-yum/</loc>
+    <loc>http://blog.xiatiansong.com/2013/04/06/install-cloudera-cdh-by-yum/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2013-04-06T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2013/03/29/install-impala/</loc>
+    <loc>http://blog.xiatiansong.com/2013/03/29/install-impala/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2013-03-29T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2013/03/24/manual-install-Cloudera-hive-CDH/</loc>
+    <loc>http://blog.xiatiansong.com/2013/03/24/manual-install-Cloudera-hive-CDH/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2013-03-24T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2013/03/24/manual-install-Cloudera-hbase-CDH/</loc>
+    <loc>http://blog.xiatiansong.com/2013/03/24/manual-install-Cloudera-hbase-CDH/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2013-03-24T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2013/03/24/manual-install-Cloudera-Hadoop-CDH/</loc>
+    <loc>http://blog.xiatiansong.com/2013/03/24/manual-install-Cloudera-Hadoop-CDH/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2013-03-24T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2013/03/08/note-about-installing-hadoop-cluster/</loc>
+    <loc>http://blog.xiatiansong.com/2013/03/08/note-about-installing-hadoop-cluster/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2013-03-08T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2013/02/20/summary-of-the-work-in-2012/</loc>
+    <loc>http://blog.xiatiansong.com/2013/02/20/summary-of-the-work-in-2012/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2013-02-20T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2012/06/03/migrate-blog-form-wordpress-to-github-with-octopress/</loc>
+    <loc>http://blog.xiatiansong.com/2012/06/03/migrate-blog-form-wordpress-to-github-with-octopress/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2012-06-03T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2012/04/13/kettle-dependency-management/</loc>
+    <loc>http://blog.xiatiansong.com/2012/04/13/kettle-dependency-management/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2012-04-13T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2012/03/26/hash-and-hash-functions/</loc>
+    <loc>http://blog.xiatiansong.com/2012/03/26/hash-and-hash-functions/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2012-03-26T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2012/03/23/how-to-implement-cassandra-input-and-output-in-kettle4-2/</loc>
+    <loc>http://blog.xiatiansong.com/2012/03/23/how-to-implement-cassandra-input-and-output-in-kettle4-2/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2012-03-23T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2012/02/26/summary-of-the-work-in-2011/</loc>
+    <loc>http://blog.xiatiansong.com/2012/02/26/summary-of-the-work-in-2011/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2012-02-26T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2012/02/23/the-process-of-seam-initiation/</loc>
+    <loc>http://blog.xiatiansong.com/2012/02/23/the-process-of-seam-initiation/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2012-02-23T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2012/02/22/the-init-process-before-job-execution/</loc>
+    <loc>http://blog.xiatiansong.com/2012/02/22/the-init-process-before-job-execution/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2012-02-22T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2012/02/21/the-execution-process-of-kettles-job/</loc>
+    <loc>http://blog.xiatiansong.com/2012/02/21/the-execution-process-of-kettles-job/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2012-02-21T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2012/02/17/step-error-handling-in-kettle/</loc>
+    <loc>http://blog.xiatiansong.com/2012/02/17/step-error-handling-in-kettle/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2012-02-17T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2012/02/14/this-expression-of-jsf-el/</loc>
+    <loc>http://blog.xiatiansong.com/2012/02/14/this-expression-of-jsf-el/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2012-02-14T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2012/01/05/add-primary-keys-and-indexes-when-migrating-datas-whith-kettle/</loc>
+    <loc>http://blog.xiatiansong.com/2012/01/05/add-primary-keys-and-indexes-when-migrating-datas-whith-kettle/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2012-01-05T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2012/01/04/some-problems-about-migrating-database-datas-with-kettle/</loc>
+    <loc>http://blog.xiatiansong.com/2012/01/04/some-problems-about-migrating-database-datas-with-kettle/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2012-01-04T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2011/12/07/mondrian-and-olap/</loc>
+    <loc>http://blog.xiatiansong.com/2011/12/07/mondrian-and-olap/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2011-12-07T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2011/11/25/xml-user-interface-language-introuction/</loc>
+    <loc>http://blog.xiatiansong.com/2011/11/25/xml-user-interface-language-introuction/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2011-11-25T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2011/09/28/build-pentaho-bi-server-source-code-in-eclipse/</loc>
+    <loc>http://blog.xiatiansong.com/2011/09/28/build-pentaho-bi-server-source-code-in-eclipse/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2011-09-28T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2011/09/26/resolved-pentaho-problems-9-16/</loc>
+    <loc>http://blog.xiatiansong.com/2011/09/26/resolved-pentaho-problems-9-16/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2011-09-26T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2011/08/20/install-eucalyptus-on-fedora-15/</loc>
+    <loc>http://blog.xiatiansong.com/2011/08/20/install-eucalyptus-on-fedora-15/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2011-08-20T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2011/08/11/export-dhtmlxgrid-to-pdf-in-java/</loc>
+    <loc>http://blog.xiatiansong.com/2011/08/11/export-dhtmlxgrid-to-pdf-in-java/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2011-08-11T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2011/07/31/custom-dhtmlxgrid-header-menu/</loc>
+    <loc>http://blog.xiatiansong.com/2011/07/31/custom-dhtmlxgrid-header-menu/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2011-07-31T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2011/07/24/drag-an-item-to-dhtmlxgrid-and-add-a-column/</loc>
+    <loc>http://blog.xiatiansong.com/2011/07/24/drag-an-item-to-dhtmlxgrid-and-add-a-column/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2011-07-24T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2011/07/19/dhtmlxgrid-quick-start-guide/</loc>
+    <loc>http://blog.xiatiansong.com/2011/07/19/dhtmlxgrid-quick-start-guide/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2011-07-19T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2011/07/07/some-resources-about-openstack/</loc>
+    <loc>http://blog.xiatiansong.com/2011/07/07/some-resources-about-openstack/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2011-07-07T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2011/06/29/install-opennebula-management-console-in-centos5-6/</loc>
+    <loc>http://blog.xiatiansong.com/2011/06/29/install-opennebula-management-console-in-centos5-6/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2011-06-29T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2011/06/26/opennebula-2-2-features/</loc>
+    <loc>http://blog.xiatiansong.com/2011/06/26/opennebula-2-2-features/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2011-06-26T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2011/06/22/the-technology-used-in-eucalyptus/</loc>
+    <loc>http://blog.xiatiansong.com/2011/06/22/the-technology-used-in-eucalyptus/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2011-06-22T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2011/06/22/the-introduction-of-eucalyptus-ee-features-and-functions/</loc>
+    <loc>http://blog.xiatiansong.com/2011/06/22/the-introduction-of-eucalyptus-ee-features-and-functions/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2011-06-22T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2011/06/16/touch-cloud-environment-which-it-is-eucalyptus/</loc>
+    <loc>http://blog.xiatiansong.com/2011/06/16/touch-cloud-environment-which-it-is-eucalyptus/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2011-06-16T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2010/08/06/a-letter-to-boss/</loc>
+    <loc>http://blog.xiatiansong.com/2010/08/06/a-letter-to-boss/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2010-08-06T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2010/03/06/application-for-leave/</loc>
+    <loc>http://blog.xiatiansong.com/2010/03/06/application-for-leave/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2010-03-06T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2010/01/06/the-plan-of-2010/</loc>
+    <loc>http://blog.xiatiansong.com/2010/01/06/the-plan-of-2010/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2010-01-06T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2009/10/31/ext_readxml_in_bjsasc_wuzi_continue/</loc>
+    <loc>http://blog.xiatiansong.com/2009/10/31/ext_readxml_in_bjsasc_wuzi_continue/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2009-10-31T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2009/10/22/ext_readxml_in_bjsasc_wuzi/</loc>
+    <loc>http://blog.xiatiansong.com/2009/10/22/ext_readxml_in_bjsasc_wuzi/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2009-10-22T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2009/09/26/be-best-of-myself/</loc>
+    <loc>http://blog.xiatiansong.com/2009/09/26/be-best-of-myself/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2009-09-26T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>http://blog.xiaotian.com/2009/01/01/hello-jekyll/</loc>
+    <loc>http://blog.xiatiansong.com/2009/01/01/hello-jekyll/</loc>
     <changefreq>daily</changefreq>
     <lastmod>2009-01-01T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
@@ -1217,7 +1217,7 @@
   
 
   <url>
-	<loc>http://blog.xiaotian.com</loc>
+	<loc>http://blog.xiatiansong.com</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
