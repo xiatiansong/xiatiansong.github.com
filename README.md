@@ -1,7 +1,7 @@
-JavaChen Blog
+夏天松的博客
 ======
 
-[http:/blog.javachen.com](http://blog.javachen.com)博客的源码。
+[http:/blog.xiatiansong.com](http://blog.xiatiansong.com)博客的源码。
 
 该博客使用 jekyll+bootstrap-3+Markdown 搭建。
 
@@ -14,5 +14,5 @@ JavaChen Blog
 
 # Tanks TO
 
-主题从 <https://gitcafe.com/Havee> 修改而来，感谢原作者！
+主题从 <https://gitcafe.com/Havee> 修改而来，博客源码从<http://javachen.github.com>修改而来，感谢原作者！
 
